@@ -11,3 +11,7 @@ body {
     )
     rgb(0,0,0);
 }
+
+:root{
+  --nav-text : #788CA0;
+}
