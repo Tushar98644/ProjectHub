@@ -11,17 +11,20 @@ const Home = () => {
   if (!session) {
     return (
       <div className='flex flex-col min-h-screen w-full'>
-        <div className='nav font-bold flex flex-row gap-60 p-8 pl-24 fixed w-full'>
+        <div className='font-bold flex flex-row gap-48 p-8 pl-24 fixed w-full'>
           <p className='text-3xl text-white font-black'>PROJECT HUB</p>
-          <nav className='flex flex-row text-lg text-nav-text gap-16 cursor-pointer hover:transition'>
+          <nav className='flex flex-row text-lg text-nav-text gap-16 cursor-pointer hover:transition '>
             <ul className='hover:text-white'>Template Pages</ul>
             <ul className='hover:text-white'>Utility Pages</ul>
           </nav>
-          <div className='flex flex-row gap-10'>
-            <p className='text-nav-text text-lg border border-gray-600 pl-6 pr-6 pt-2 pb-2 justify-center rounded-lg hover:border-white cursor-pointer'>Log in</p>
-            <p className='text-nav-text text-lg border border-gray-600 pl-6 pr-6 pt-2 pb-2 justify-center rounded-lg hover:border-white cursor-pointer'>Sign up</p>
+          <div className='flex flex-row gap-10 text-center'>
+            <div className='box'>
+              <p className='text-nav-text text-lg cursor-pointer'>Log in</p>
+            </div>
+            <div className='box'>
+              <p className='text-nav-text text-lg justify-center rounded-lg hover:border-white cursor-pointer'>Sign up</p>
+            </div>
           </div>
-
         </div>
         <div className='text-white p-24'>
           <button onClick={() => signIn('github')}>sign in</button>
