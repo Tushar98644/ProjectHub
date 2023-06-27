@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { AI } from '../utils'
 import Lottie from 'lottie-react'
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,21 +14,7 @@ const Home = () => {
   if (!session) {
     return (
       <div className='flex flex-col min-h-screen w-full'>
-        <div className='nav font-bold flex flex-row gap-56 p-8 pl-24 fixed w-full'>
-          <p className='text-3xl text-white font-black animate-pulse'>PROJECT HUB</p>
-          <nav className='flex flex-row text-lg text-nav-text gap-16 cursor-pointer hover:transition '>
-            <ul className='hover:text-white'>Template Pages</ul>
-            <ul className='hover:text-white'>Utility Pages</ul>
-          </nav>
-          <div className='flex flex-row gap-10 text-center'>
-            <div className='box'>
-              <button className='text-nav-text text-lg cursor-pointer' onClick={() => signIn()}>Log in</button>
-            </div>
-            <div className='box'>
-              <p className='text-nav-text text-lg justify-center rounded-lg hover:border-white cursor-pointer'>Sign up</p>
-            </div>
-          </div>
-        </div>
+        <Navbar />
         <div className='flex flex-row'>
           <div className='flex flex-col lg:pt-60 lg:pl-32 gap-8 md:pt-48 md:pl-20 w-2/3 sm:'>
             <div className='lg:text-5xl font-extrabold md:text-4xl sm:text-2xl'>AI Tools for  <span className='text-[#ff2bc1]'>Every Endeavor</span>: Streamline Your Projects, Amplify   <span className='text-[#ff2bc1]'>Success</span></div>
