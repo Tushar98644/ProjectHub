@@ -11,23 +11,24 @@ const Home = () => {
   if (!session) {
     return (
       <div className='flex flex-col min-h-screen w-full'>
-        <div className='font-bold flex flex-row gap-48 p-8 pl-24 fixed w-full'>
-          <p className='text-3xl text-white font-black'>PROJECT HUB</p>
+        <div className='nav font-bold flex flex-row gap-56 p-8 pl-24 fixed w-full'>
+          <p className='text-3xl text-white font-black animate-pulse'>PROJECT HUB</p>
           <nav className='flex flex-row text-lg text-nav-text gap-16 cursor-pointer hover:transition '>
             <ul className='hover:text-white'>Template Pages</ul>
             <ul className='hover:text-white'>Utility Pages</ul>
           </nav>
           <div className='flex flex-row gap-10 text-center'>
             <div className='box'>
-              <p className='text-nav-text text-lg cursor-pointer'>Log in</p>
+              <button className='text-nav-text text-lg cursor-pointer' onClick={() => signIn()}>Log in</button>
             </div>
             <div className='box'>
               <p className='text-nav-text text-lg justify-center rounded-lg hover:border-white cursor-pointer'>Sign up</p>
             </div>
           </div>
         </div>
-        <div className='text-white p-24'>
-          <button onClick={() => signIn('github')}>sign in</button>
+        <div className='flex flex-col lg:pt-60 lg:pl-32 gap-8 md:pt-48 md:pl-20 w-2/3 sm:'> 
+          <div className='lg:text-5xl font-extrabold md:text-4xl sm:text-2xl'>AI Tools for Every Endeavor: Streamline Your Projects, Amplify Success</div>
+          <div className='text-nav-text text-2xl font-serif'>Efficiency Meets Intelligence: Revolutionize Your Workflow with AI Tools</div>
         </div>
       </div>
     )
