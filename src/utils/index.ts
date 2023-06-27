@@ -1,0 +1,1 @@
+export { default as AI} from './lottie/AI.json'

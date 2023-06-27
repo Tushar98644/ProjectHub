@@ -1,18 +1,12 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { AI } from '../utils'
+import Lottie from 'lottie-react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const Home = () => {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
-  }
   const { data: session } = useSession();
   // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
 
@@ -34,10 +28,16 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className='flex flex-col lg:pt-60 lg:pl-32 gap-8 md:pt-48 md:pl-20 w-2/3 sm:'> 
-          <div className='lg:text-5xl font-extrabold md:text-4xl sm:text-2xl'>AI Tools for  <span className='text-[#ff2bc1]'>Every Endeavor</span>: Streamline Your Projects, Amplify   <span className='text-[#ff2bc1]'>Success</span></div>
-          <div className='text-nav-text text-2xl font-serif'>Efficiency Meets Intelligence: Revolutionize Your Workflow with AI Tools</div>
+        <div className='flex flex-row'>
+          <div className='flex flex-col lg:pt-60 lg:pl-32 gap-8 md:pt-48 md:pl-20 w-2/3 sm:'>
+            <div className='lg:text-5xl font-extrabold md:text-4xl sm:text-2xl'>AI Tools for  <span className='text-[#ff2bc1]'>Every Endeavor</span>: Streamline Your Projects, Amplify   <span className='text-[#ff2bc1]'>Success</span></div>
+            <div className='text-nav-text text-2xl font-serif'>Efficiency Meets Intelligence: Revolutionize Your Workflow with AI Tools</div>
+          </div>
+          <div className='w-1/3 flex mt-72'>
+            <Lottie animationData={AI} height={100} width={100} />
+          </div>
         </div>
+
       </div>
     )
   }
