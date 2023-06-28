@@ -7,19 +7,19 @@ const Form = () => {
     const [ image, setImage] = useState(''); 
     const [github, setGithub] = useState('');
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async(e:any) => {
         e.preventDefault();
         const data = {title, description, image,github}
-        console.log(data);
         await axios.post('/api/project', data);
+        console.log(data);
     }
 
     return (
          <form onSubmit={handleSubmit} className='text-black'>
                 <input type="text" placeholder='title here' onChange={(e) => setTitle(e.target.value)} required/>
                 <input type="text" placeholder='description here' onChange={(e) => setDescription(e.target.value)} required/>
-                <input type="text" placeholder='image url' onChange={(e) => setImage(e.target.value)} required/>
-                <input type="text" placeholder='github ' onChange={(e)=>setGithub(e.target.value)}/>
+                <input type="url" placeholder='image url' onChange={(e) => setImage(e.target.value)} required/>
+                <input type="url" placeholder='github ' onChange={(e)=>setGithub(e.target.value)} required/>
                 <button type="submit" className='text-white'>submit </button>
          </form>
     );

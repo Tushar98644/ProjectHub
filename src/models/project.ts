@@ -1,10 +1,10 @@
-import monogoose from 'mongoose'
+import monogoose, { models } from 'mongoose'
 
 const projectSchema = new monogoose.Schema({
     title: {
         type: String,
         required: true,
-        unique: true
+        // unique: true
     },
     description: {
         type: String,
@@ -24,5 +24,5 @@ const projectSchema = new monogoose.Schema({
     }
 })
 
-export default monogoose.models.Project || monogoose.model('Project', projectSchema)
+export default models.Project || monogoose.model('Project', projectSchema)
 
