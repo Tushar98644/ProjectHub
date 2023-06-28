@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
-import { Landing, Home,Form } from '@/components'
+import { Landing, Home } from '@/components'
+import Link from 'next/link';
 
 const Main = () => {
   const { data: session } = useSession();
@@ -11,7 +12,9 @@ const Main = () => {
 
   return (
   <Home>
-    <Form/>
+    <Link href='/project' className='mt-20 cursor-pointer'>
+     <button>add project</button>
+    </Link>
   </Home>
   )
 }
