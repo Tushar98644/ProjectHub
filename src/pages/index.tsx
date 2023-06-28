@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react'
-import {Landing,Home} from '@/components'
+import { Landing, Home,Form } from '@/components'
 
 const Main = () => {
   const { data: session } = useSession();
@@ -9,7 +9,11 @@ const Main = () => {
     return <Landing />
   }
 
-  return <Home />
+  return (
+  <Home>
+    <Form/>
+  </Home>
+  )
 }
 
 export default Main;
