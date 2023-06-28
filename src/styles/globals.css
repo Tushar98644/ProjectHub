@@ -44,11 +44,8 @@ body {
 
 .box {
 	border: 0.32rem solid;
-	/* padding: 0.05vw; */
-  padding-top: 0.3vw;
-  padding-bottom: 0.3vw;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
 	border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.2turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 10;
 	animation: borderRotate var(--d) linear infinite forwards;
 }
