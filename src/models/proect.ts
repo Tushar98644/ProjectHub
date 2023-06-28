@@ -6,8 +6,14 @@ const projectSchema = new monogoose.Schema({
         required: true,
         unique: true
     },
-    description: String,
-    image: String,
+    description: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
