@@ -15,7 +15,13 @@ module.exports = {
       colors: {
         "nav-text": "var(--nav-text)",
       },
-    },
-    plugins: [],
+      screens: {
+        '2xl':'1440px',
+        'lg': '1125px',
+        'md': '700px',
+        'sm': '350px',
+      },
+      plugins: [],
+    }
   }
 }

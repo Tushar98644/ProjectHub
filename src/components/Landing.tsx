@@ -7,8 +7,8 @@ const Landing = () => {
     return (
         <div className='flex flex-col min-h-screen w-full'>
             <Navbar />
-            <div className='flex md:flex-row sm:flex-col-reverse'>
-                <div className='flex flex-col lg:pt-60 lg:pl-32 gap-8 md:pt-48 md:pl-20 w-2/3 sm:'>
+            <div className='flex md:flex-row sm:flex-col-reverse sm:p-24'>
+                <div className='flex flex-col lg:pt-60 lg:pl-32 gap-8 md:pt-48 md:pl-20 w-2/3'>
                     <div className='lg:text-5xl font-extrabold md:text-4xl sm:text-2xl'>AI Tools for  <span className='text-[#ff2bc1]'>Every Endeavor</span>: Streamline <span className='text-[#ff2bc1]'>Your </span>Projects, Amplify   <span className='text-[#ff2bc1]'>Success</span></div>
                     <div className='text-nav-text text-2xl font-serif'>Efficiency Meets Intelligence: Revolutionize Your Workflow with AI Tools</div>
                 </div>
