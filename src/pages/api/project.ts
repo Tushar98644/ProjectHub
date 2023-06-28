@@ -12,13 +12,15 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
     // }
 
     if (method === "POST") {
-        const { title, price, description } = req.body;
+        const { title, description ,image,github} = req.body;
         const NewProduct = await Project.create({
             title,
-            price,
             description,
+            image,
+            github
         });
         console.log(NewProduct);
-        return res.status(201).json({ success: true, data: NewProduct });    }    
+        return res.status(201).json({ success: true, data: NewProduct });    
+    }    
 };
 export default NewProject;

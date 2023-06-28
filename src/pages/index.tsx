@@ -15,6 +15,9 @@ const Main = () => {
     <Link href='/project' className='mt-20 cursor-pointer'>
      <button>add project</button>
     </Link>
+    <div>       
+
+    </div>
   </Home>
   )
 }

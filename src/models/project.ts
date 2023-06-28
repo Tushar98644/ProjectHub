@@ -1,7 +1,7 @@
 import monogoose from 'mongoose'
 
 const projectSchema = new monogoose.Schema({
-    name: {
+    title: {
         type: String,
         required: true,
         unique: true
@@ -11,6 +11,10 @@ const projectSchema = new monogoose.Schema({
         required: true
     },
     image: {
+        type: String,
+        required: true
+    },
+    github: {
         type: String,
         required: true
     },
