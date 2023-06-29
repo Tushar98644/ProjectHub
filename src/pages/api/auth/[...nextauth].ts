@@ -7,12 +7,12 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter"
 export const authOptions = {
   providers: [
     GithubProvider({
-      clientId: GITHUB_ID,
-      clientSecret: GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
     }),
     GoogleProvider({
-        clientId: GOOGLE_ID,
-        clientSecret: GOOGLE_SECRET,
+        clientId: process.env.GOOGLE_ID as string,
+        clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),

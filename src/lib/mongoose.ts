@@ -1,18 +1,12 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 
 const mongooseconnect = async () => {
-  const readyState = mongoose.connections[0].readyState as ConnectionState;
 
-  if (readyState === 1) {
-    return mongoose.connections[0].asPromise();
-  }
-
-  const uri = process.env.MONGODB_URI as string;
-  const options: ConnectOptions = {
-    // Specify any connection options you need here
-  };
-
-  return mongoose.connect(uri, options);
+    if (mongoose.connections[0].readyState === 1)
+        return mongoose.connections[0].asPromise();
+    
+    const uri = process.env.MONGODB_URI as string;
+    return mongoose.connect(uri);
 };
 
 export default mongooseconnect;
