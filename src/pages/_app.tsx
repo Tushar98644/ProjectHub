@@ -6,7 +6,7 @@ import { AuthenticationGuard } from '@/providers';
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <AuthenticationGuard>
+      <AuthenticationGuard >
         <Component {...pageProps} />
       </AuthenticationGuard>
     </SessionProvider>
