@@ -9,7 +9,7 @@ import axios from 'axios';
 const Main = () => {
   const { data: session } = useSession();
   // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     axios.get('/api/project')
