@@ -54,8 +54,8 @@ body:
        - Safari
        - Microsoft Edge
        - Brave
-    validations:
-      required: false
+  validations:
+     required: false
 - type: textarea
   attributes:
     label: Environment
