@@ -28,7 +28,7 @@ const Admin = () => {
             <Navbar />
             <div className="pt-28 pl-28 text-nav-text text-4xl font-bold flex flex-row items-center">
                 <div className="text-[#ff2bc1] text-4xl text-center mr-[26vw]">
-                    <p>Pending approval</p>
+                    <p className=" animate-pulse">Pending approval</p>
                 </div>
                 <div className="w-[15vw]">
                     <Lottie animationData={HI} height={50} width={50} className="" />
