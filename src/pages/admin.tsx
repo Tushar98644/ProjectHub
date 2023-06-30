@@ -103,6 +103,16 @@ const Admin = () => {
                         </tbody>
                     </table>
                 </div>
+                <div className="grid grid-cols-4 pl-[35vw] py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700">
+                    <div className="text-gray-500 dark:text-gray-400"></div>
+                    <div>
+                        <a href="#" className="text-white block w-full bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                    </div>
+
+                    <div>
+                        <a href="#" className="text-white block w-full bg-red-600 hover:bg-red-900 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
+                    </div>
+                </div>
             </div>
         </div>
     );
