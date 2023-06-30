@@ -93,25 +93,25 @@ const Admin = () => {
                         {projects.map((project) => (
                             <tbody>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td className="w-4 p-4">
-                                        <div className="flex items-center">
+                                    <td className="">
+                                        {/* <div className="flex items-center">
                                             <input id="checkbox-table-search-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                             <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
-                                        </div>
+                                        </div> */}
                                     </td>
                                     <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                        <img className="w-10 h-10 rounded-full" src={session?.user?.image} alt="Jese image" />
+                                        <img className="w-10 h-10 rounded-full" src={project.image} alt="Jese image" />
                                         <div className="pl-3">
-                                            <div className="text-base font-semibold">{session?.user?.name}</div>
+                                            <div className="text-base font-semibold">{project.title}</div>
                                             <div className="font-normal text-gray-500">{session?.user?.email}</div>
                                         </div>
                                     </th>
-                                    <td className="px-6 py-4">
+                                    <td className="px-12 py-4">
                                         {project.description}
-                                    </td>
-                                    <td className="px-6 py-4">
+                                    </td>                                    
+                                    <td className="px-6 py-4 cursor-pointer hover:underline">
                                         <div className="flex items-center">
-                                            {project.github}
+                                            <a href={project.github}>{project.github}</a>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
@@ -119,12 +119,12 @@ const Admin = () => {
                                             <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
                                                 {/* <div className="text-gray-500 dark:text-gray-400"></div> */}
                                                 <div>
-                                                    <a href="#" className="text-white block w-full bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                                                    <a href="#" className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                                                </div>
+                                                <div>
+                                                    <a href="#" className="text-white block w-full bg-gradient-to-r from-red-800 to-orange-200 hover:from-orange-500 hover:to-red-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
                                                 </div>
 
-                                                <div>
-                                                    <a href="#" className="text-white block w-full bg-red-600 hover:bg-red-900 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
-                                                </div>
                                             </div>
                                         </a>
                                     </td>
