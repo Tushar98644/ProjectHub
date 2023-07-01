@@ -12,15 +12,39 @@ const Admin = () => {
     const { data: session } = useSession();
     const [projects, setProject] = useState<Project[]>([]);
 
-    useEffect(() => {
-        axios.get('/api/admin')
-            .then(res => {
+    const Approve_project = async (projectId: string) => {
+        try {
+            await axios.post('/api/admin', { projectId, approvalstatus: true })
+        }
+        catch (err) {
+            console.log(err)
+        }
+        fetchProjects();
+    }
+
+    const Reject_project = async (projectId: string) => {
+        try {
+            await axios.post('/api/admin', { projectId, approvalstatus: false })
+        }
+        catch (err) {
+            console.log(err)
+        }
+        fetchProjects();
+    }
+
+    const fetchProjects = async () => {
+            await axios.get('/api/admin')
+            .then (res => {
                 console.log(res.data);
                 setProject(res.data);
             })
             .catch(err => {
                 console.log(err);
             })
+    }
+
+    useEffect(() => {
+        fetchProjects();
     }, [])
 
     return (
@@ -35,7 +59,7 @@ const Admin = () => {
                 </div>
                 <p>Welcome {session?.user?.name}</p>
             </div>
-            <div className="w-full pt-4">
+            <div className=" px-20">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12">
                         <div>
@@ -79,7 +103,7 @@ const Admin = () => {
                                 <th scope="col" className="px-6 py-3 pl-16">
                                     Project Title
                                 </th>
-                                <th scope="col" className="px-12 py-3">
+                                <th scope="col" className="px-6 py-3">
                                     Project Description
                                 </th>
                                 <th scope="col" className="px-6 py-3">
@@ -103,12 +127,12 @@ const Admin = () => {
                                         <img className="w-10 h-10 rounded-full" src={project.image} alt="Jese image" />
                                         <div className="pl-3">
                                             <div className="text-base font-semibold">{project.title}</div>
-                                            <div className="font-normal text-gray-500">{session?.user?.email}</div>
+                                            {/* <div className="font-normal text-gray-500">{session?.user?.email}</div> */}
                                         </div>
                                     </th>
-                                    <td className="px-12 py-4">
+                                    <td className="px-6 py-4">
                                         {project.description}
-                                    </td>                                    
+                                    </td>
                                     <td className="px-6 py-4 cursor-pointer hover:underline">
                                         <div className="flex items-center">
                                             <a href={project.github}>{project.github}</a>
@@ -119,10 +143,10 @@ const Admin = () => {
                                             <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
                                                 {/* <div className="text-gray-500 dark:text-gray-400"></div> */}
                                                 <div>
-                                                    <a href="#" className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                                                    <a href="#" onClick={()=>Approve_project(project._id)} className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
                                                 </div>
                                                 <div>
-                                                    <a href="#" className="text-white block w-full bg-gradient-to-r from-red-800 to-orange-200 hover:from-orange-500 hover:to-red-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
+                                                    <a href="#" onClick={()=>Reject_project(project._id)} className="text-white block w-full bg-gradient-to-r from-red-800 to-orange-200 hover:from-orange-500 hover:to-red-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
                                                 </div>
 
                                             </div>
