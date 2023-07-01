@@ -11,11 +11,14 @@ import { useEffect, useState } from "react";
 const Admin = () => {
     const { data: session } = useSession();
     const [projects, setProject] = useState<Project[]>([]);
+    const [approvalStatus, setApprovalStatus] = useState<{ [key: string]: string }>({});
+
 
     const Approve_project = async (projectId: string) => {
         await axios.post('/api/admin', { projectId, approved: true })
             .then(res => {
                 console.log(`project approved details:${res.data}`)
+                setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
             })
             .catch(err => {
                 console.log(err)
@@ -25,6 +28,7 @@ const Admin = () => {
     const Reject_project = async (projectId: string) => {
         try {
             await axios.post('/api/admin', { projectId, approved: false })
+            setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
         }
         catch (err) {
             console.log(err)
@@ -32,9 +36,10 @@ const Admin = () => {
         console.log('project rejected')
     }
 
+
     useEffect(() => {
         const fetchProjects = async () => {
-            const projectdata = await axios.get('/api/admin')
+            await axios.get('/api/admin')
                 .then(res => {
                     console.log(res.data);
                     setProject(res.data);
@@ -138,19 +143,24 @@ const Admin = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500">
-                                            <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
-                                                {/* <div className="text-gray-500 dark:text-gray-400"></div> */}
-                                                <div>
-                                                    <a href="#" onClick={() => Approve_project(project._id)} className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                                        {approvalStatus[project._id] ? (
+                                            <span className={approvalStatus[project._id] === 'Approved' ? 'text-green-500' : 'text-red-500'}>
+                                                {approvalStatus[project._id]}!
+                                            </span>
+                                        ) : (
+                                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500">
+                                                <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
+                                                    <div>
+                                                        <a href="#" onClick={() => Approve_project(project._id)} className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                                                    </div>
+                                                    <div>
+                                                        <a href="#" onClick={() => Reject_project(project._id)} className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <a href="#" onClick={() => Reject_project(project._id)} className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
-                                                </div>
-
-                                            </div>
-                                        </a>
+                                            </a>
+                                        )}
                                     </td>
+
                                 </tr>
                                 <tr>
                                 </tr>
