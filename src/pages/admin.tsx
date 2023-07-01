@@ -139,10 +139,10 @@ const Admin = () => {
                                             {/* <div className="font-normal text-gray-500">{session?.user?.email}</div> */}
                                         </div>
                                     </th>
-                                    <td className="px-6 py-4 overflow-auto text-hidden whitespace-nowrap max-w-xs">
+                                    <td className="px-6 py-4 overflow-auto whitespace-nowrap max-w-xs">
                                         {project.description}
                                     </td>
-                                    <td className="px-6 py-4 cursor-pointer hover:underline overflow-auto text-overflow-ellipsis whitespace-nowrap max-w-xs ">
+                                    <td className="px-6 py-4 cursor-pointer hover:underline overflow-auto whitespace-nowrap max-w-xs">
                                         <div className="flex items-center">
                                             <a href={project.github}>{project.github}</a>
                                         </div>
