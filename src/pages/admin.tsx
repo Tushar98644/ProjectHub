@@ -14,13 +14,13 @@ const Admin = () => {
 
     const Approve_project = async (projectId: string) => {
         await axios.post('/api/admin', { projectId, approved: true })
-        .then(res => {
-            console.log(`project approved details:${res.data}`)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-        }
+            .then(res => {
+                console.log(`project approved details:${res.data}`)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     const Reject_project = async (projectId: string) => {
         try {
@@ -32,25 +32,24 @@ const Admin = () => {
         console.log('project rejected')
     }
 
-    const fetchProjects = async () => {
-            await axios.get('/api/admin')
-            .then (res => {
-                console.log(res.data);
-                setProject(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
     useEffect(() => {
+        const fetchProjects = async () => {
+            const projectdata = await axios.get('/api/admin')
+                .then(res => {
+                    console.log(res.data);
+                    setProject(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
         fetchProjects();
     }, [])
 
     return (
         <div>
             <Navbar />
-            <div className="pt-28 pl-28 text-nav-text text-4xl font-bold flex flex-row items-center">
+            <div className="pt-28 pl-28 text-nav-text text-3xl font-bold flex flex-row items-center">
                 <div className="text-[#ff2bc1] text-4xl text-center mr-[26vw]">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>
@@ -90,7 +89,7 @@ const Admin = () => {
                             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                             </div>
-                            <input type="text" id="table-search-users" className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users" />
+                            <input type="text" id="table-search-users" className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for projects" />
                         </div>
                     </div>
                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -100,7 +99,7 @@ const Admin = () => {
                                     <div className="flex items-center">
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 pl-16">
+                                <th scope="col" className="px-4 py-3 ">
                                     Project Title
                                 </th>
                                 <th scope="col" className="px-6 py-3">
@@ -143,10 +142,10 @@ const Admin = () => {
                                             <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
                                                 {/* <div className="text-gray-500 dark:text-gray-400"></div> */}
                                                 <div>
-                                                    <a href="#" onClick={()=>Approve_project(project._id)} className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
+                                                    <a href="#" onClick={() => Approve_project(project._id)} className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900">Approve</a>
                                                 </div>
                                                 <div>
-                                                    <a href="#" onClick={()=>Reject_project(project._id)} className="text-white block w-full bg-gradient-to-r from-red-800 to-orange-200 hover:from-orange-500 hover:to-red-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
+                                                    <a href="#" onClick={() => Reject_project(project._id)} className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900">Reject</a>
                                                 </div>
 
                                             </div>
