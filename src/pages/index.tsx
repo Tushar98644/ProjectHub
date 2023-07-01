@@ -26,7 +26,11 @@ const Main = () => {
       <Navbar />
       <div className='py-40'>
         <Link href='/project' className='cursor-pointer ml-20'>
-          <button className='bg-blue-800 px-12 py-4 rounded-[5vw] shadow-lg'>Add project</button>
+          <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Add Project
+            </span>
+          </button>
         </Link>
         <div className='mt-20 grid lg:grid-cols-3 lg:m-0 md:m-0 md:grid-cols-2 sm:grid-cols-1 sm:mx-12 xsm:p-12 gap-16 auto-rows-max'>
           {projects.map((project: Project) => (
