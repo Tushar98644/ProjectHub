@@ -18,7 +18,6 @@ const Form = () => {
     }
 
     return (
-
         <form onSubmit={handleSubmit}>
             <div className="mb-6">
                 <label htmlFor="email" className="block mb-2 text-md font-medium text-gray-900 dark:text-white">Project Title</label>

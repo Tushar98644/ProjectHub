@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
-import { signOut } from 'next-auth/react'
-import { Home } from '@/components'
+import { Navbar } from '@/components'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -22,39 +21,32 @@ const Main = () => {
       })
   }, [])
 
-    return (
-      <Home>
-        <div>
-          <Link href='/project' className='mt-20 cursor-pointer'>
-            <button>add project</button>
-          </Link>
-          <div className='w-full flex flex-row gap-48'>
-            {projects.map((project) => (
-              <div className='pt-20 w-full'>
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                  <img src={project.image} alt='hello' height={300} width={300} />
-                  <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{project.title}</div>
-                    <p className="text-gray-700 text-base">
-                      {project.description}
-                    </p>
-                  </div>
-                  <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
-                  </div>
-                </div>
-                <div>
-                  <button onClick={() => signOut()}>edit</button>
-                </div>
-              </div>
-            ))
-            }
+  return (
+    <><Navbar /><div>
+      <Link href='/project' className='mt-20 cursor-pointer'>
+        <button>add project</button>
+      </Link>
+      <div className='mt-20'>
+        {projects.map((project: Project) => (
+          <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a href="#">
+              <img className="rounded-t-lg" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="" />
+            </a>
+            <div className="p-5">
+              <a href="#">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.title}</h5>
+              </a>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{project.description}</p>
+              <a href={project.github} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                view github
+                <svg aria-hidden="true" className="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              </a>
+            </div>
           </div>
-        </div>
-      </Home>
-    )
-  }
+        ))}
+      </div>
+    </div></>
+  )
+}
 
 export default Main;
