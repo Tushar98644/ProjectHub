@@ -18,7 +18,6 @@ const Admin = () => {
         await axios.post('/api/admin', { projectId, approved: true })
             .then(res => {
                 console.log(`project approved details:${res.data}`)
-                setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
             })
             .catch(err => {
                 console.log(err)
@@ -28,7 +27,6 @@ const Admin = () => {
     const Reject_project = async (projectId: string) => {
         try {
             await axios.post('/api/admin', { projectId, approved: false })
-            setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
         }
         catch (err) {
             console.log(err)
@@ -43,7 +41,14 @@ const Admin = () => {
                 .then(res => {
                     console.log(res.data);
                     setProject(res.data);
+                    // Set initial approval status
+                    const initialApprovalStatus = res.data.reduce((accumulator:any, project:Project) => {
+                        accumulator[project._id] = project.approved ? 'Approved' : 'Rejected';
+                        return accumulator;
+                    }, {});
+                    setApprovalStatus(initialApprovalStatus);
                 })
+
                 .catch(err => {
                     console.log(err);
                 })

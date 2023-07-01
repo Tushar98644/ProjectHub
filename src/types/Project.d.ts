@@ -4,5 +4,6 @@ interface Project {
     description: string;
     image: string;
     github: string;
+    approved: boolean;
     createdAt: Date;
 }
