@@ -7,8 +7,8 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
     await mongooseconnect();
 
     if (method === "GET") {
-        res.json(await Project.find());
-        console.log(await Project.find());
+        const approved_projects = res.json(await Project.find({approved: true}));
+        console.log(approved_projects);
     }
 
     if (method === "POST") {
@@ -17,7 +17,8 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
             title,
             description,
             image,
-            github
+            github,
+            approved: false
         });
         console.log(NewProduct);
         return res.status(201).json({ success: true, data: NewProduct });    
