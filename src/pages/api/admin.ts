@@ -21,7 +21,7 @@ const Admin = async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(404).json({ success: false, message: 'Project not found' });
         }
 
-        console.log(updatedProject);
+        console.log("aprroval granted",updatedProject);
         return res.status(201).json({ success: true, data: updatedProject });
     }
 };

@@ -24,4 +24,5 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(201).json({ success: true, data: NewProduct });    
     }    
 };
+
 export default NewProject;

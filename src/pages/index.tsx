@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
-import { signOut, useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import { Home } from '@/components'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
