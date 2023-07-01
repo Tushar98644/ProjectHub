@@ -22,11 +22,13 @@ const Main = () => {
   }, [])
 
   return (
-    <><Navbar /><div>
-      <Link href='/project' className='mt-20 cursor-pointer'>
-        <button>add project</button>
+    <>
+    <Navbar />
+    <div className='py-40'>
+      <Link href='/project' className='cursor-pointer ml-20'>
+        <button className='bg-blue-800 px-12 py-4 rounded-[5vw] shadow-lg'>Add project</button>
       </Link>
-      <div className='mt-20'>
+      <div className='mt-20 grid lg:grid-cols-3 lg:m-0 md:m-0 md:grid-cols-2 sm:grid-cols-1 sm:mx-12 xsm:p-12 gap-16 auto-rows-max'>
         {projects.map((project: Project) => (
           <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
@@ -45,7 +47,8 @@ const Main = () => {
           </div>
         ))}
       </div>
-    </div></>
+    </div>
+    </>
   )
 }
 
