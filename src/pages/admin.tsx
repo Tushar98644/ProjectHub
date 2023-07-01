@@ -13,23 +13,23 @@ const Admin = () => {
     const [projects, setProject] = useState<Project[]>([]);
 
     const Approve_project = async (projectId: string) => {
-        try {
-            await axios.post('/api/admin', { projectId, approvalstatus: true })
-        }
-        catch (err) {
+        await axios.post('/api/admin', { projectId, approved: true })
+        .then(res => {
+            console.log(`project approved details:${res.data}`)
+        })
+        .catch(err => {
             console.log(err)
+        })
         }
-        fetchProjects();
-    }
 
     const Reject_project = async (projectId: string) => {
         try {
-            await axios.post('/api/admin', { projectId, approvalstatus: false })
+            await axios.post('/api/admin', { projectId, approved: false })
         }
         catch (err) {
             console.log(err)
         }
-        fetchProjects();
+        console.log('project rejected')
     }
 
     const fetchProjects = async () => {

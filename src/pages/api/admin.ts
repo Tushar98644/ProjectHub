@@ -7,8 +7,22 @@ const Admin = async (req: NextApiRequest, res: NextApiResponse) => {
     await mongooseconnect();
 
     if (method === "GET") {
-        res.json(await Project.find());
-        console.log(await Project.find());
+        const projects = res.json(await Project.find());
+        console.log(projects);
+    } 
+    
+    if (method === "POST") {
+        const { projectId , approved} = req.body;
+
+        const updatedProject = await Project.findByIdAndUpdate(projectId, {approved: approved}, {new: true });
+
+        if (!updatedProject) {
+            console.log("Project not found");
+            return res.status(404).json({ success: false, message: 'Project not found' });
+        }
+
+        console.log(updatedProject);
+        return res.status(201).json({ success: true, data: updatedProject });
     }
 };
 export default Admin;

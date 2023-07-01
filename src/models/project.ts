@@ -24,7 +24,7 @@ const projectSchema = new monogoose.Schema({
     },
     approved : {
         type: Boolean,
-        default: false
+        default: false,
     }
 })
 

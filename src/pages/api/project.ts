@@ -18,8 +18,8 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
             description,
             image,
             github,
-            approved: false
-        });
+        },
+        );
         console.log(NewProduct);
         return res.status(201).json({ success: true, data: NewProduct });    
     }    
