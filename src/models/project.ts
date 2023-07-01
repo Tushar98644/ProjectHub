@@ -21,6 +21,10 @@ const projectSchema = new monogoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    approved : {
+        type: Boolean,
+        default: false
     }
 })
 
