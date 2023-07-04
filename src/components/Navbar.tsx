@@ -12,15 +12,15 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    window.innerWidth <= 638 ? setIsMobile(true) : setIsMobile(false);
+    window.innerWidth <= 768 ? setIsMobile(true) : setIsMobile(false);
     window.addEventListener("resize", () => {
-      window.innerWidth <= 638 ? setIsMobile(true) : setIsMobile(false);
+      window.innerWidth <= 768 ? setIsMobile(true) : setIsMobile(false);
     });
   }, []);
 
   return (
-    <div className='nav font-bold grid sm:grid-cols-7 grid-cols-2 lg:mx-12 xl:mx-12 md:mx-10 mx-6 py-10 fixed items-center md:gap-4 z-10'>
-      <p className='sm:col-span-2 sm:block hidden text-center px-2 lg:text-3xl md:text-2xl text-[#ff2bc1] font-black animate-pulse'>PROJECT HUB</p>
+    <div className='nav font-bold grid md:grid-cols-7 grid-cols-2 py-10 px-6 z-10 gap-2'>
+      <p className='md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl text-[#ff2bc1] font-black animate-pulse'>PROJECT HUB</p>
       {isMobile ? (
         <>
           <div className=''>
@@ -31,8 +31,8 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-          <div className='items-center'>
-            <p className='sm:text-3xl text-2xl text-[#ff2bc1] font-black animate-pulse'>PROJECT HUB</p>
+          <div className='justify-self-end'>
+            <p className='sm:text-2xl text-xl text-[#ff2bc1] font-black animate-pulse'>PROJECT HUB</p>
           </div>
           {isMenuOpen && (
             <div className="items-center justify-between w-full md:flex md:w-auto" id="navbar-cta">
@@ -54,13 +54,13 @@ const Navbar = () => {
           )}
         </>
       ) : (
-        <><nav className='col-span-3 sm:block hidden'>
-          <ul className='sm:grid grid-cols-3 hidden xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-6'>
+        <><nav className='col-span-3 md:block hidden'>
+          <ul className='md:grid grid-cols-3 hidden xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-6'>
             <li className='hover:text-white'><Link href='/project'>Add project</Link></li>
             <li className='hover:text-white'><Link href='/'>View Projects</Link></li>
             <li className='hover:text-white'><Link href='/admin'>Admin Panel</Link></li>
           </ul>
-        </nav><div className='sm:grid grid-cols-2 md:col-span-2 hidden md:gap-8 sm:gap-28'>
+        </nav><div className='md:grid grid-cols-2 md:col-span-2 hidden md:gap-8 sm:gap-28'>
             <div className='box w-[12vw] text-center lg:h-12 md:h-10 sm:h-9 h-8'>
               <button className='text-nav-text text-[1.5vw] pt-1 cursor-pointer' onClick={() => signIn('google')}>Log in</button>
             </div>
