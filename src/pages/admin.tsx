@@ -13,11 +13,11 @@ const Admin = () => {
     const [projects, setProject] = useState<Project[]>([]);
     const [approvalStatus, setApprovalStatus] = useState<{ [key: string]: string }>({});
 
-
     const Approve_project = async (projectId: string) => {
         await axios.post('/api/admin', { projectId, approved: true })
             .then(res => {
                 console.log(`project approved details:${res.data}`)
+                setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
             })
             .catch(err => {
                 console.log(err)
@@ -27,6 +27,7 @@ const Admin = () => {
     const Reject_project = async (projectId: string) => {
         try {
             await axios.post('/api/admin', { projectId, approved: false })
+            setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
         }
         catch (err) {
             console.log(err)
@@ -43,12 +44,16 @@ const Admin = () => {
                     setProject(res.data);
                     // Set initial approval status
                     const initialApprovalStatus = res.data.reduce((accumulator: any, project: Project) => {
-                        accumulator[project._id] = project.approved ? 'Approved' : 'Rejected';
+                        if (project.approved === undefined) {
+                            accumulator[project._id] = undefined;
+                        } else {
+                            accumulator[project._id] = project.approved ? 'Approved' : 'Rejected';
+                        }
                         return accumulator;
                     }, {});
                     setApprovalStatus(initialApprovalStatus);
-                })
 
+                })
                 .catch(err => {
                     console.log(err);
                 })
@@ -59,7 +64,7 @@ const Admin = () => {
     return (
         <div>
             <Navbar />
-            <div className="pt-36 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
+            <div className="pt-8 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
                 <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-lg text-center justify-self-start">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>

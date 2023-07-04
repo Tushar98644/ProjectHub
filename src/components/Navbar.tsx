@@ -19,8 +19,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className='nav font-bold grid md:grid-cols-7 grid-cols-2 py-10 px-6 z-10 gap-2'>
-      <p className='md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl text-[#ff2bc1] font-black animate-pulse'>PROJECT HUB</p>
+    <div className='nav font-bold grid md:grid-cols-7 grid-cols-2 py-7 px-6 z-10 gap-2 border-b border-black shadow-xl bg-black items-center'>
+      <p className='md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl text-white font-black animate-pulse'>PROJECT HUB</p>
       {isMobile ? (
         <>
           <div className=''>
