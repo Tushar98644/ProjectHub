@@ -59,7 +59,7 @@ const Admin = () => {
     return (
         <div>
             <Navbar />
-            <div className="pt-36 px-20 text-nav-text font-bold grid grid-cols-2 items-center">
+            <div className="pt-36 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
                 <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-lg text-center justify-self-start">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>
@@ -70,7 +70,7 @@ const Admin = () => {
                     <p className="lg:text-4xl md:text-3xl sm:text-2xl text-lg">Welcome {session?.user?.name}</p>
                 </div>
             </div>
-            <div className=" px-20">
+            <div className=" md:px-20 px-4">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12">
                         <div>
