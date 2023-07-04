@@ -60,7 +60,7 @@ const Admin = () => {
         <div>
             <Navbar />
             <div className="pt-36 px-20 text-nav-text font-bold grid grid-cols-2 items-center">
-                <div className="text-[#ff2bc1] lg:text-4xl md:text-2xl sm:text-2xl text-lg text-center justify-self-start">
+                <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-lg text-center justify-self-start">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>
                 <div className="flex flex-row items-center gap-0 justify-self-end">
