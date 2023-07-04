@@ -42,7 +42,7 @@ const Admin = () => {
                     console.log(res.data);
                     setProject(res.data);
                     // Set initial approval status
-                    const initialApprovalStatus = res.data.reduce((accumulator:any, project:Project) => {
+                    const initialApprovalStatus = res.data.reduce((accumulator: any, project: Project) => {
                         accumulator[project._id] = project.approved ? 'Approved' : 'Rejected';
                         return accumulator;
                     }, {});
@@ -59,14 +59,16 @@ const Admin = () => {
     return (
         <div>
             <Navbar />
-            <div className="pt-28 pl-28 text-nav-text text-3xl font-bold flex flex-row items-center">
-                <div className="text-[#ff2bc1] text-4xl text-center mr-[26vw]">
+            <div className="pt-36 px-20 text-nav-text font-bold grid grid-cols-2 items-center">
+                <div className="text-[#ff2bc1] lg:text-4xl md:text-2xl sm:text-2xl text-lg text-center justify-self-start">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>
-                <div className="w-[15vw]">
-                    <Lottie animationData={HI} height={50} width={50} className="" />
+                <div className="flex flex-row items-center gap-0 justify-self-end">
+                    <div className="w-[15vw]">
+                        <Lottie animationData={HI} height={50} width={50} className="" />
+                    </div>
+                    <p className="lg:text-4xl md:text-3xl sm:text-2xl text-lg">Welcome {session?.user?.name}</p>
                 </div>
-                <p>Welcome {session?.user?.name}</p>
             </div>
             <div className=" px-20">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
