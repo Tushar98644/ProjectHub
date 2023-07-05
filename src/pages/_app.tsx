@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <AuthenticationGuard >
+      <AuthenticationGuard>
         <ToastContainer />
         <Component {...pageProps} />
       </AuthenticationGuard>

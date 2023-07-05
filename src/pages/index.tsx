@@ -5,7 +5,6 @@ import { Navbar } from '@/components'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 const Main = () => {
   // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
