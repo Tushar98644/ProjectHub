@@ -9,8 +9,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   return (
     <SessionProvider session={session}>
       <AuthenticationGuard >
-        <ToastContainer/>
-        <Component {...pageProps}/>
+        <ToastContainer />
+        <Component {...pageProps} />
       </AuthenticationGuard>
     </SessionProvider >
   );
