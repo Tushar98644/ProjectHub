@@ -30,7 +30,6 @@ const Form = () => {
         });
     }
 
-
     return (
         <form onSubmit={handleSubmit}>
             <div className="mb-6">
