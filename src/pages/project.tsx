@@ -4,7 +4,7 @@ const Add_Project = () => {
     return (
         <div className='flex flex-col'>
             <Navbar />
-            <div className='p-60'>
+            <div className='py-60 sm:px-20 px-8'>
                 <Form />
             </div>
         </div>

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { signIn } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link';
 import { useEffect } from 'react';
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,7 +20,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className='nav font-bold grid md:grid-cols-7 grid-cols-2 py-7 px-6 z-10 gap-2 border-b border-black shadow-xl bg-black items-center'>
+    <div className='nav font-bold grid md:grid-cols-7 grid-cols-2 py-7 px-6 z-10 gap-2 border-b border-black shadow-xl bg-black items-center fixed w-full'>
       <p className='md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl text-white font-black animate-pulse'>PROJECT HUB</p>
       {isMobile ? (
         <>
@@ -54,20 +55,31 @@ const Navbar = () => {
           )}
         </>
       ) : (
-        <><nav className='col-span-3 md:block hidden'>
-          <ul className='md:grid grid-cols-3 hidden xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-6'>
-            <li className='hover:text-white'><Link href='/project'>Add project</Link></li>
-            <li className='hover:text-white'><Link href='/'>View Projects</Link></li>
-            <li className='hover:text-white'><Link href='/admin'>Admin Panel</Link></li>
-          </ul>
-        </nav><div className='md:grid grid-cols-2 md:col-span-2 hidden md:gap-8 sm:gap-28'>
-            <div className='box w-[12vw] text-center lg:h-12 md:h-10 sm:h-9 h-8'>
-              <button className='text-nav-text text-[1.5vw] pt-1 cursor-pointer' onClick={() => signIn('google')}>Log in</button>
+        <>
+          <nav className='col-span-3 md:block hidden'>
+            <ul className='md:grid grid-cols-3 hidden xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-6'>
+              <li className='hover:text-white'><Link href='/project'>Add project</Link></li>
+              <li className='hover:text-white'><Link href='/'>View Projects</Link></li>
+              <li className='hover:text-white'><Link href='/admin'>Admin Panel</Link></li>
+            </ul>
+          </nav>
+          {session ? (
+            <div className='grid grid-cols-1 col-span-2 justify-items-center'>
+              <div className='box w-[12vw] text-center lg:h-12 md:h-10 sm:h-9 h-8 justify-center'>
+                <button className='text-nav-text text-[1.4vw] pt-1 cursor-pointer' onClick={() => signOut()}>Log out</button>
+              </div>
             </div>
-            <div className='box w-[12vw] text-center lg:h-12 md:h-10 sm:h-9 h-8'>
-              <button className='text-nav-text text-[1.4vw] pt-1 cursor-pointer' onClick={() => signIn('github')}>Sign up</button>
+          ) : (
+            <div className='md:grid grid-cols-2 md:col-span-2 hidden md:gap-8 sm:gap-28'>
+              <div className='box w-[12vw] text-center lg:h-12 md:h-10 sm:h-9 h-8'>
+                <button className='text-nav-text text-[1.5vw] pt-1 cursor-pointer' onClick={() => signIn('google')}>Log in</button>
+              </div>
+              <div className='box w-[12vw] text-center lg:h-12 md:h-10 sm:h-9 h-8'>
+                <button className='text-nav-text text-[1.4vw] pt-1 cursor-pointer' onClick={() => signIn('github')}>Sign up</button>
+              </div>
             </div>
-          </div></>
+          )}
+        </>
       )}
     </div >
 

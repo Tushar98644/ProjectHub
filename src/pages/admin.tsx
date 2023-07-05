@@ -7,6 +7,7 @@ import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Admin = () => {
     const { data: session } = useSession();
@@ -18,6 +19,7 @@ const Admin = () => {
             .then(res => {
                 console.log(`project approved details:${res.data}`)
                 setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
+                toast.success('Project Approved',{theme:'dark',autoClose:3000,closeButton:true})
             })
             .catch(err => {
                 console.log(err)
@@ -28,6 +30,7 @@ const Admin = () => {
         try {
             await axios.post('/api/admin', { projectId, approved: false })
             setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
+            toast.error('Project Rejected',{theme:'dark',autoClose:3000,closeButton:true})
         }
         catch (err) {
             console.log(err)
@@ -64,7 +67,7 @@ const Admin = () => {
     return (
         <div>
             <Navbar />
-            <div className="pt-8 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
+            <div className="pt-28 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
                 <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-lg text-center justify-self-start">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>

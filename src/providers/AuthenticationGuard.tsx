@@ -1,24 +1,27 @@
+import {Loader} from '@/components';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { getSession } from 'next-auth/react'
+import { useEffect } from 'react';
 
 export default function AuthenticationGuard({ children }: { children: React.ReactNode }) {
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(true);
-  
+
   useEffect(() => {
-    getSession().then((session) => {
-      if (!session && router.pathname !== '/login') {
-        router.push('/login');
-      } else if (session && router.pathname === '/login') {
+    if (status === 'authenticated') {
+      if (router.pathname === '/login') {
         router.push('/');
       }
-      setLoading(false);
-    });
-  }, []);
+    } 
+    else if (status === 'unauthenticated') {
+      if (router.pathname !== '/login') {
+        router.push('/login');
+      }
+    }
+  }, [status, router]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (status === 'loading') {
+    return <Loader />;
   }
   
   return (
