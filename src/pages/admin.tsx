@@ -7,6 +7,7 @@ import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Admin = () => {
     const { data: session } = useSession();
@@ -18,6 +19,7 @@ const Admin = () => {
             .then(res => {
                 console.log(`project approved details:${res.data}`)
                 setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
+                toast.success('Project Approved',{theme:'dark',autoClose:3000,closeButton:true})
             })
             .catch(err => {
                 console.log(err)
@@ -28,6 +30,7 @@ const Admin = () => {
         try {
             await axios.post('/api/admin', { projectId, approved: false })
             setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
+            toast.error('Project Rejected',{theme:'dark',autoClose:3000,closeButton:true})
         }
         catch (err) {
             console.log(err)
