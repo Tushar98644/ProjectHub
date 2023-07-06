@@ -5,6 +5,7 @@ import { Navbar } from '@/components'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
 const Main = () => {
   // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
@@ -37,14 +38,15 @@ const Main = () => {
         <div className='grid lg:grid-cols-3 sm:grid-cols-2 justify-items-center items-center grid-cols-1 gap-12 auto-rows-max sm:mx-16 mx-6'>
           {projects.map((project: Project) => (
             <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <a href="#">
+              <Link href="#">
                 <img className="rounded-t-lg"
                   src={project.image}
                   onError={(e: any) => {
                     e.target.onerror = null;
-                    e.target.src = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
+                    e.target.src = "/logo.png"
                   }}
-                  alt="" />            </a>
+                  alt="" width={400} height={250}/>
+              </Link>
               <div className="p-5">
                 <a href="#">
                   <h5 className="mb-2 sm:text-2xl text-base font-bold tracking-tight text-gray-900 dark:text-white">{project.title}</h5>

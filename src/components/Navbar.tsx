@@ -33,7 +33,7 @@ const Navbar = () => {
             </button>
           </div>
           <div className='justify-self-end'>
-            <p className='sm:text-2xl text-xl text-[#ff2bc1] font-black animate-pulse'>PROJECT HUB</p>
+            <img src="" alt="" />
           </div>
           {isMenuOpen && (
             <div className="items-center justify-between w-full md:flex md:w-auto" id="navbar-cta">
