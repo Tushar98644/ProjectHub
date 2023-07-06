@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link';
@@ -33,7 +34,7 @@ const Navbar = () => {
             </button>
           </div>
           <div className='justify-self-end'>
-            <img src="" alt="" />
+            <img src="/logo-1.png" alt="" width={100} height={100} />
           </div>
           {isMenuOpen && (
             <div className="items-center justify-between w-full md:flex md:w-auto" id="navbar-cta">
@@ -56,8 +57,8 @@ const Navbar = () => {
           <nav className='col-span-3 md:block hidden'>
             <ul className='md:grid grid-cols-3 hidden xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-6'>
               {session ? (
-              <><li className='hover:text-white'><Link href='/project'>Add project</Link></li><li className='hover:text-white'><Link href='/'>View Projects</Link></li><li className='hover:text-white'><Link href='/admin'>Admin Panel</Link></li></>
-              ):(
+                <><li className='hover:text-white'><Link href='/project'>Add project</Link></li><li className='hover:text-white'><Link href='/'>View Projects</Link></li><li className='hover:text-white'><Link href='/admin'>Admin Panel</Link></li></>
+              ) : (
                 null
               )}
             </ul>
