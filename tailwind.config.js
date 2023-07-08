@@ -22,6 +22,9 @@ module.exports = {
       //   'sm': '500px',
       //   'xsm': '375px',
       // },
+      backgroundImage:{
+        'dark-bg': "url('/public/dark.jpeg.svg')",
+      },
       plugins: [],
     }
   }

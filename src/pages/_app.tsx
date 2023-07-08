@@ -10,7 +10,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     <SessionProvider session={session}>
       <AuthenticationGuard>
         <ToastContainer />
-        <Component {...pageProps} />
+        <div className="video-background">
+          <video playsInline autoPlay muted loop>
+            <source src='/dark-bg-video.mp4' type="video/mp4" />
+          </video>
+        </div>
+        <Component {...pageProps}/>
       </AuthenticationGuard>
     </SessionProvider >
   );
