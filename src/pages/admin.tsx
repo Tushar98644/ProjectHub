@@ -3,6 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Navbar } from "@/components";
 import { HI } from "@/shared";
+import { Project } from "@/types/Project";
 import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
