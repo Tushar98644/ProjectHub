@@ -3,16 +3,12 @@
 import { Project } from "@/types/Project";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {Tilt} from "react-tilt";
+import Tilt from "react-parallax-tilt";
 
 const Card = ({ title, description, image, github }: Project) => {
     return (
         <motion.div>
-            <Tilt options={{
-                max: 45,
-                scale: 1,
-                speed: 450,
-            }}
+            <Tilt tiltReverse={true} tiltMaxAngleX={30} tiltMaxAngleY={30} gyroscope={true} scale={1.05} transitionSpeed={1500}
             >
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <Link href="#">
@@ -37,8 +33,6 @@ const Card = ({ title, description, image, github }: Project) => {
                 </div>
             </Tilt>
         </motion.div>
-
-
     );
 }
 
