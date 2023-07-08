@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
-import { Card, Navbar } from '@/components'
+import { Card } from '@/components'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -23,8 +23,6 @@ const Main = () => {
   }, [])
 
   return (
-    <>
-      <Navbar />
       <div className='py-32'>
         <div className='text-center py-4'>
           <Link href='/project' className='cursor-pointer'>
@@ -41,7 +39,6 @@ const Main = () => {
           ))}
         </div>
       </div>
-    </>
   )
 }
 

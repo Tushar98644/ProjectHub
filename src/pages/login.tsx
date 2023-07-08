@@ -1,4 +1,3 @@
-import { Navbar } from "@/components";
 import { AI } from "@/shared";
 import Lottie from "lottie-react";
 import { signIn } from "next-auth/react";
@@ -6,7 +5,6 @@ import { signIn } from "next-auth/react";
 const Login = () => {
     return (
         <div>
-            <Navbar />
             <div className='md:grid grid-cols-3 flex flex-col-reverse lg:mx-20 md:mx-12 mx-8 sm:mx-12 gap-0 md:pt-60 pt-24 items-center'>
                 <div className='flex flex-col gap-6 col-span-2'>
                     <div className='lg:text-5xl font-extrabold sm:text-3xl text-2xl'>AI Tools for  <span className='text-[#ff2bc1]'>Every Endeavor</span>: Streamline <span className='text-[#ff2bc1]'>Your </span>Projects, Amplify   <span className='text-[#ff2bc1]'>Success</span></div>
