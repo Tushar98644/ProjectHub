@@ -65,8 +65,8 @@ const Admin = () => {
     }, [])
 
     return (
-        <div>
-            <div className="pt-28 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
+        <div className="flex flex-col md:gap-4 gap-12">
+            <div className="md:pt-28 pt-40 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
                 <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-lg text-center justify-self-start">
                     <p className=" animate-pulse">Pending approval</p>
                 </div>
