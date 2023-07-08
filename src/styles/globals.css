@@ -6,53 +6,50 @@
 
 .video-background {
 	position: fixed;
-	right: 0; 
+	right: 0;
 	bottom: 0;
-	min-width: 100%; 
+	min-width: 100%;
 	min-height: 100%;
 	z-index: -1;
-  }
-  
-  .video-background > video {
+}
+
+.video-background>video {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-  }  
+}
 
 body {
-  color: rgb(255, 255, 255);
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(0, 0, 0)
-    )
-    rgb(0,0,0);
+	color: rgb(255, 255, 255);
+	background: linear-gradient(to bottom,
+			transparent,
+			rgb(0, 0, 0)) rgb(0, 0, 0);
 	/* background-image: url('../../public/cool-background.png');
 	background-repeat:repeat;
 	background-size: contain; */
 }
 
 @property --angle {
-  syntax: '<angle>';
-  initial-value: 90deg;
-  inherits: true;
+	syntax: '<angle>';
+	initial-value: 90deg;
+	inherits: true;
 }
 
 @property --gradX {
-  syntax: '<percentage>';
-  initial-value: 50%;
-  inherits: true;
+	syntax: '<percentage>';
+	initial-value: 50%;
+	inherits: true;
 }
 
 @property --gradY {
-  syntax: '<percentage>';
-  initial-value: 0%;
-  inherits: true;
+	syntax: '<percentage>';
+	initial-value: 0%;
+	inherits: true;
 }
 
 :root {
-  --nav-text: #788ca0;
+	--nav-text: #788ca0;
 	--d: 2500ms;
 	--angle: 90deg;
 	--gradX: 100%;
@@ -63,14 +60,14 @@ body {
 
 .box {
 	border: 0.32rem solid;
-    padding-left: 2.5vw;
-    padding-right: 2.5vw;
+	padding-left: 2.5vw;
+	padding-right: 2.5vw;
 	border-image: conic-gradient(from var(--angle), var(--c2), var(--c1) 0.2turn, var(--c1) 0.15turn, var(--c2) 0.25turn) 10;
 	animation: borderRotate var(--d) linear infinite forwards;
 }
 
 .box:hover {
-  animation-play-state: paused;
+	animation-play-state: paused;
 }
 
 @keyframes borderRotate {
@@ -84,31 +81,36 @@ body {
 		--gradX: 100%;
 		--gradY: 50%;
 	}
+
 	40% {
 		--gradX: 100%;
 		--gradY: 100%;
 	}
+
 	60% {
 		--gradX: 50%;
 		--gradY: 100%;
 	}
+
 	80% {
 		--gradX: 0%;
 		--gradY: 50%;
 	}
+
 	100% {
 		--gradX: 50%;
 		--gradY: 0%;
 	}
 }
 
-  .custom-toast{
-	background-color: #2f7ecd; /* bg-gray-800 */
-  }
-  
+.custom-toast {
+	background-color: #2f7ecd;
+	/* bg-gray-800 */
+}
 
-  .Toastify__toast-body {
-	color: #dee0e6 ;
+
+.Toastify__toast-body {
+	color: #dee0e6;
 	font-size: 16px;
 	padding-left: 20px;
 	line-height: 20px;
@@ -117,5 +119,4 @@ body {
 	width: 100%;
 	font-weight: 400;
 	margin-left: 25px !important;
-  } 
-  
+}

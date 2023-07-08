@@ -11,9 +11,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       <AuthenticationGuard>
         <ToastContainer />
         <div className="video-background">
-          <video playsInline autoPlay muted loop>
+          {/* <video playsInline autoPlay muted loop>
             <source src='/dark-bg-video.mp4' type="video/mp4" />
-          </video>
+          </video> */}
         </div>
         <Component {...pageProps}/>
       </AuthenticationGuard>
