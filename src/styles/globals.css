@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.nav-text{
+	background: linear-gradient(90deg,#4ca5ff 2.34%,#b673f8 100.78%);
+}
+
 .video-background {
 	position: fixed;
 	right: 0;
@@ -101,22 +105,4 @@ body {
 		--gradX: 50%;
 		--gradY: 0%;
 	}
-}
-
-.custom-toast {
-	background-color: #2f7ecd;
-	/* bg-gray-800 */
-}
-
-
-.Toastify__toast-body {
-	color: #dee0e6;
-	font-size: 16px;
-	padding-left: 20px;
-	line-height: 20px;
-	padding: 0px;
-	padding-top: 25px;
-	width: 100%;
-	font-weight: 400;
-	margin-left: 25px !important;
 }
