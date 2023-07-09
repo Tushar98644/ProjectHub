@@ -179,8 +179,6 @@ const Admin = () => {
                                 <tr>
                                 </tr>
                             </tbody>
-
-
                         ))}
                     </table>
                 </div>
