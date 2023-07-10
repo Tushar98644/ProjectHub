@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 const Admin = () => {
     const { data: session } = useSession();
+    // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
     const [projects, setProject] = useState<Project[]>([]);
     const [approvalStatus, setApprovalStatus] = useState<{ [key: string]: string }>({});
 

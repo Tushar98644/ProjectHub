@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <div className='nav font-bold grid md:grid-cols-7 grid-cols-2 py-7 px-6 z-10 gap-2 border-b border-black shadow-xl bg-black items-center fixed w-full'>
-      <span className='bg-gradient-to-r from-[#4ca5ff] to-[#b673f8] md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl font-black animate-pulse bg-clip-text text-transparent'>PROJECT HUB</span>
+      <span className='bg-gradient-to-r from-[#4ca5ff] to-[#b673f8] md:col-span-2 md:block hidden text-center px-2 lg:text-4xl md:text-2xl font-black animate-pulse bg-clip-text text-transparent'>PROJECT HUB</span>
       {isMobile ? (
         <>
           <div className=''>

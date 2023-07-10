@@ -8,7 +8,6 @@ import axios from 'axios';
 import { Project } from '@/types/Project';
 
 const Main = () => {
-  // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
