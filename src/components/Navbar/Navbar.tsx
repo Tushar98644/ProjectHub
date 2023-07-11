@@ -66,7 +66,7 @@ const Navbar = () => {
                     </li></>
                   ) : (
                     <><li className='hover:text-white'><Link href='/project'>Add project</Link></li><li className='hover:text-white'><Link href='/'>View Projects</Link></li><li className='hover:text-white'>
-                      <Link href='/admin'>
+                      <Link href='/contact'>
                         Contact Admin
                       </Link>
                     </li></>
