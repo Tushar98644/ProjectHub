@@ -12,8 +12,13 @@ const Form = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const data = { title, description, image, github }
-        await axios.post('/api/project', data);
+        const data = { title, description, image, github };
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        await axios.post('/api/project', data,config);
         console.log(data);
         router.push('/');
         notify();
