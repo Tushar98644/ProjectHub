@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Contact = () => {
     return (
         <div>
@@ -30,7 +32,7 @@ const Contact = () => {
                         <div>
                             <h2 className="text-4xl lg:text-5xl font-bold leading-tight text-gray-400">Lets talk about everything!</h2>
                             <div className="text-gray-500 mt-8">
-                                Hate forms? Send us an <span className="underline">email</span> instead.
+                                Hate forms? Send us an <Link href='mailto:evilden982@gmail.com'><span className="underline">email</span> </Link>instead.
                             </div>
                         </div>
                         <div className="mt-8 text-center">
@@ -531,7 +533,7 @@ const Contact = () => {
                             </svg>
                         </div>
                     </div>
-                    <div className="">
+                    <div>
                         <div>
                             <span className="uppercase text-sm text-gray-600 font-bold">Full Name</span>
                             <input className="w-full bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"

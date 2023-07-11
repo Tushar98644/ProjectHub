@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 import { Card } from '@/components'
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Project } from '@/types/Project';
