@@ -12,12 +12,13 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (method === "POST") {
-        const { title, description ,image,github} = req.body;
+        const { title, description ,image,github,name} = req.body;
         const NewProduct = await Project.create({
             title,
             description,
             image,
             github,
+            name
         },
         );
         console.log(NewProduct);

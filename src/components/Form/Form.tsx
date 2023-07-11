@@ -2,17 +2,22 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 
 const Form = () => {
+    const { data: session } = useSession();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [github, setGithub] = useState('');
+    const [name, setName] = useState('');
     const router = useRouter();
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const data = { title, description, image, github };
+        const name_data = session?.user?.name || 'Anonymous'; 
+        setName(name_data);
+        const data = { title, description, image, github, name };
         const config = {
             headers: {
                 'Content-Type': 'application/json',

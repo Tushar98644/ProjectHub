@@ -9,4 +9,5 @@ export interface Project {
     github: string;
     approved: boolean;
     createdAt: Date;
+    name: string;
 }

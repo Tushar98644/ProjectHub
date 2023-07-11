@@ -24,7 +24,10 @@ const projectSchema = new monogoose.Schema({
     },
     approved : {
         type: Boolean,
-    }
+    },
+    name: {
+        type: String,
+    },
 })
 
 export default models.Project || monogoose.model('Project', projectSchema)
