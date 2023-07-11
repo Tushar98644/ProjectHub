@@ -1,6 +1,42 @@
 import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+
+    const router = useRouter();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const data = { name, email, message };
+        // const config = {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // };
+        // await axios.post('/api/contact', data, config);
+        console.log(data);
+        // router.push('/');
+        notify();
+    }
+
+    const notify = () => {
+        toast.success('Your message has been sent.', {
+            // className: 'items-center justify-center rounded-lg bg-cyan-100 text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200',
+            // progressClassName: 'text-cyan-200',
+            // bodyClassName: "text-sm font-medium bg-cyan-800",
+            closeButton: true,
+            position: "top-right",
+            autoClose: 3000,
+            theme: 'dark'
+        });
+    }
+
     return (
         <div>
             <body className="bg-gray-800 text-gray-100 px-8 py-12">
@@ -534,27 +570,30 @@ const Contact = () => {
                         </div>
                     </div>
                     <div>
-                        <div>
-                            <span className="uppercase text-sm text-gray-600 font-bold">Full Name</span>
-                            <input className="w-full bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                type="text" placeholder="" />
-                        </div>
-                        <div className="mt-8">
-                            <span className="uppercase text-sm text-gray-600 font-bold">Email</span>
-                            <input className="w-full bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                                type="text" />
-                        </div>
-                        <div className="mt-8">
-                            <span className="uppercase text-sm text-gray-600 font-bold">Message</span>
-                            <textarea
-                                className="w-full h-32 bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
-                        </div>
-                        <div className="mt-8">
-                            <button
-                                className="uppercase text-sm font-bold tracking-wide bg-indigo-500 text-gray-400 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
-                                Send Message
-                            </button>
-                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <span className="uppercase text-sm text-gray-600 font-bold">Full Name</span>
+                                <input className="w-full bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                    type="text" placeholder="" required onChange={(e)=>{setName(e.target.value)}}/>
+                            </div>
+                            <div className="mt-8">
+                                <span className="uppercase text-sm text-gray-600 font-bold">Email</span>
+                                <input className="w-full bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                                    type="text" required onChange={(e)=>{setEmail(e.target.value)}} />
+                            </div>
+                            <div className="mt-8">
+                                <span className="uppercase text-sm text-gray-600 font-bold">Message</span>
+                                <textarea
+                                    className="w-full h-32 bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" required onChange={(e)=>{setMessage(e.target.value)}}></textarea>
+                            </div>
+                            <div className="mt-8">
+                                <button
+                                    className="uppercase text-sm font-bold tracking-wide bg-indigo-500 text-gray-400 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </body>

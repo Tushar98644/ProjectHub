@@ -31,12 +31,10 @@ const Form = () => {
 
     const notify = () => {
         toast('Your project has been sent for approval.', {
-            className: 'items-center justify-center rounded-lg bg-cyan-100 text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200',
-            progressClassName: 'text-cyan-200',
-            bodyClassName: "text-sm font-medium bg-cyan-800",
             closeButton: true,
             position: "top-right",
-            autoClose: 4000,
+            autoClose: 3000,
+            theme: 'dark',
         });
     }
 

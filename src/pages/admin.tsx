@@ -16,7 +16,12 @@ const Admin = () => {
     const [approvalStatus, setApprovalStatus] = useState<{ [key: string]: string }>({});
 
     const Approve_project = async (projectId: string) => {
-        await axios.post('/api/admin', { projectId, approved: true })
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        await axios.post('/api/admin', { projectId, approved: true }, config)
             .then(res => {
                 console.log(`project approved details:${res.data}`)
                 setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
@@ -28,8 +33,13 @@ const Admin = () => {
     }
 
     const Reject_project = async (projectId: string) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
         try {
-            await axios.post('/api/admin', { projectId, approved: false })
+            await axios.post('/api/admin', { projectId, approved: false }, config)
             setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
             toast.error('Project Rejected',{theme:'dark',autoClose:3000,closeButton:true})
         }

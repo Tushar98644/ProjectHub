@@ -8,7 +8,7 @@ import { Project } from '@/types/Project';
 
 const Main = () => {
   const [projects, setProjects] = useState<Project[]>([]);
-
+  
   useEffect(() => {
     const config = {
       headers: {
