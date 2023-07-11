@@ -56,10 +56,23 @@ const Navbar = () => {
         <>
           <nav className='col-span-3 md:block hidden'>
             <ul className='md:grid grid-cols-3 hidden xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-6'>
-              {session ? (
-                <><li className='hover:text-white'><Link href='/project'>Add project</Link></li><li className='hover:text-white'><Link href='/'>View Projects</Link></li><li className='hover:text-white'><Link href='/admin'>Admin Panel</Link></li></>
-              ) : (
-                null
+              {session && (
+                <>
+                  {session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
+                    <><li className='hover:text-white'><Link href='/project'>Add project</Link></li><li className='hover:text-white'><Link href='/'>View Projects</Link></li><li className='hover:text-white'>
+                      <Link href='/admin'>
+                        Admin Panel
+                      </Link>
+                    </li></>
+                  ) : (
+                    <><li className='hover:text-white'><Link href='/project'>Add project</Link></li><li className='hover:text-white'><Link href='/'>View Projects</Link></li><li className='hover:text-white'>
+                      <Link href='/admin'>
+                        Contact Admin
+                      </Link>
+                    </li></>
+                  )
+                  }
+                </>
               )}
             </ul>
           </nav>

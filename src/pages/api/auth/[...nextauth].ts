@@ -11,12 +11,14 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
     GoogleProvider({
-        clientId: process.env.GOOGLE_ID as string,
-        clientSecret: process.env.GOOGLE_SECRET as string,
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
     }),
+
   ],
   secret: process.env.SECRET,
   adapter: MongoDBAdapter(clientPromise),
 }
+
 
 export default NextAuth(authOptions)
