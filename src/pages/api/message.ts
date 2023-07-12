@@ -5,7 +5,7 @@ const Messages = async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
 
     if (method === "GET") {
-        const messages = res.json(await Message.find());
+        const messages = res.json(await Message.find().sort({ createdAt: -1 }));
         console.log(messages);
     }
 

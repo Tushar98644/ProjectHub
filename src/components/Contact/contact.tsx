@@ -19,9 +19,9 @@ const Contact = () => {
                 'Content-Type': 'application/json',
             },
         };
-        await axios.post('/api/contact', data, config);
+        await axios.post('/api/message', data, config);
         console.log(data);
-        // router.push('/contact');
+        router.push('/contact');
         notify();
     }
 
