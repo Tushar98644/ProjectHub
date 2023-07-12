@@ -185,7 +185,6 @@ const Admin = () => {
                                             </a>
                                         )}
                                     </td>
-
                                 </tr>
                                 <tr>
                                 </tr>
