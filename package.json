@@ -39,7 +39,7 @@
     "@storybook/blocks": "^7.0.26",
     "@storybook/nextjs": "^7.0.26",
     "@storybook/react": "^7.0.26",
-    "@storybook/testing-library": "^0.0.14-next.2",
+    "@storybook/testing-library": "^0.2.0",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "eslint-plugin-storybook": "^0.6.12",
