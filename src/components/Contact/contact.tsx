@@ -14,14 +14,14 @@ const Contact = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const data = { name, email, message };
-        // const config = {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        // };
-        // await axios.post('/api/contact', data, config);
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+        await axios.post('/api/message', data, config);
         console.log(data);
-        // router.push('/');
+        router.push('/contact');
         notify();
     }
 

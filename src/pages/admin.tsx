@@ -52,7 +52,12 @@ const Admin = () => {
 
     useEffect(() => {
         const fetchProjects = async () => {
-            await axios.get('/api/admin')
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            await axios.get('/api/admin', config)
                 .then(res => {
                     console.log(res.data);
                     setProject(res.data);
@@ -185,7 +190,6 @@ const Admin = () => {
                                             </a>
                                         )}
                                     </td>
-
                                 </tr>
                                 <tr>
                                 </tr>

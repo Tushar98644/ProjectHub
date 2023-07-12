@@ -7,7 +7,7 @@ const Admin = async (req: NextApiRequest, res: NextApiResponse) => {
     await mongooseconnect();
 
     if (method === "GET") {
-        const projects = res.json(await Project.find());
+        const projects = res.json(await Project.find().sort({createdAt: -1}).limit(10));
         console.log(projects);
     } 
     

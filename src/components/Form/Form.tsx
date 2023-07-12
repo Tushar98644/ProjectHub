@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 
@@ -15,7 +15,7 @@ const Form = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const name_data = session?.user?.name || 'Anonymous'; 
+        const name_data = session?.user?.name || 'Anonymous';
         setName(name_data);
         const data = { title, description, image, github, name };
         const config = {
@@ -23,7 +23,7 @@ const Form = () => {
                 'Content-Type': 'application/json',
             },
         };
-        await axios.post('/api/project', data,config);
+        await axios.post('/api/project', data, config);
         console.log(data);
         router.push('/');
         notify();
