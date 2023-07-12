@@ -7,7 +7,7 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
     await mongooseconnect();
 
     if (method === "GET") {
-        const approved_projects = res.json(await Project.find({approved: true}));
+        const approved_projects = res.json(await Project.find({approved: true}).sort({createdAt: -1}));
         console.log(approved_projects);
     }
 
