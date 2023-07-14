@@ -54,8 +54,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
   react-parallax-tilt:
-    specifier: ^1.7.151
-    version: 1.7.151(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.7.153
+    version: 1.7.153(react-dom@18.2.0)(react@18.2.0)
   react-toastify:
     specifier: ^9.1.3
     version: 9.1.3(react-dom@18.2.0)(react@18.2.0)
@@ -9639,8 +9639,8 @@ packages:
     resolution: {integrity: sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==}
     dev: true
 
-  /react-parallax-tilt@1.7.151(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-gizWQRbJfsMmQ1NNc6S7bolSnvvopw1YP6Lu04deV3NHDK/XA2M3v0/GkwvVTpOuFTPqcaek4p3PSM8cFezk7g==}
+  /react-parallax-tilt@1.7.153(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-qy9ES20XT5h4Csctt9Z1doG2JLyE4iR0V+l2PAkiTw9JFNgIxWt1TwCBTQX5vj43v3lpYdDfrQ9O8Lh9Y1DYlQ==}
     peerDependencies:
       react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0

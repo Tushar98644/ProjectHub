@@ -27,7 +27,7 @@
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-parallax-tilt": "^1.7.151",
+    "react-parallax-tilt": "^1.7.153",
     "react-toastify": "^9.1.3",
     "tailwindcss": "3.3.2",
     "typescript": "5.1.6"
