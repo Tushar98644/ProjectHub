@@ -25,7 +25,7 @@ const Admin = () => {
             .then(res => {
                 console.log(`project approved details:${res.data}`)
                 setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Approved' }));
-                toast.success('Project Approved',{theme:'dark',autoClose:3000,closeButton:true})
+                toast.success('Project Approved', { theme: 'dark', autoClose: 3000, closeButton: true })
             })
             .catch(err => {
                 console.log(err)
@@ -41,7 +41,7 @@ const Admin = () => {
         try {
             await axios.post('/api/admin', { projectId, approved: false }, config)
             setApprovalStatus(prevState => ({ ...prevState, [projectId]: 'Rejected' }));
-            toast.error('Project Rejected',{theme:'dark',autoClose:3000,closeButton:true})
+            toast.error('Project Rejected', { theme: 'dark', autoClose: 3000, closeButton: true })
         }
         catch (err) {
             console.log(err)
