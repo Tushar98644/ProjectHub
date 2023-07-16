@@ -62,7 +62,7 @@ SECRET=""
 MONGODB_URI=""
 NEXT_PUBLIC_ADMIN_EMAIL=""
 ```
-Now, create your own credentials for the providers and MongoDB cluster and place them in the corresponding fields ,put the email in the NEXT_PUBLIC_ADMIN_EMAIL field which you want to give admin privileges
+Now, create your own credentials for the providers and MongoDB cluster and place them in the corresponding fields ,put the email in the `NEXT_PUBLIC_ADMIN_EMAIL` field which you want to give admin privileges
 
 From the project folder, run these commands in the console (terminal) to install dependencies and run the app:
 
