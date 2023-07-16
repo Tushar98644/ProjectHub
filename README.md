@@ -43,11 +43,38 @@ Required to install and run the software:
 
 If you don't have pnpm installed, you can install it by following the below steps : 
 
-Using npm <br>
+### Using npm
 
 ```bash
 npm install -g pnpm
 ```
+### Using Homebrew
+If you have the package manager installed, you can install pnpm using the following command:
+
+```
+brew install pnpm
+````
+### Using winget
+If you have winget installed, you can install pnpm using the following command:
+
+```
+winget install pnpm
+```
+
+### Using Scoop
+If you have Scoop installed, you can install pnpm using the following command:
+
+```
+scoop install nodejs-lts pnpm
+```
+
+### Using Choco
+If you have Chocolatey installed, you can install pnpm using the following command:
+
+```
+choco install pnpm
+```
+
 Alternatively you can delete the pnpm-lock.yaml file and install the dependencies with either ``yarn`` or ``npm`` <br>
 
 This is a Next.js project bootstrapped with create-next-app
