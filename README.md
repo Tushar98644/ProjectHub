@@ -7,18 +7,20 @@ A comprehensive platform that integrates various ai-powered tools and useful web
 The site is deployed through Vercel, which you can view from [here](https://project-hub-olive.vercel.app/) <br>
 
 ## 🚀 Main Features
-
 * Login Page
-* Data storage in MongoDB cluster
+* 3D Animations
 * Approval System
 * Role-based Authentication
+* Custom Loader
+* Notifications
+* Data storage in MongoDB cluster
+
+## 📃Pages
 * Homepage
 * Add project page
 * Contact page
 * Admin page (accessible only to admin)
 * Message page (admin only)
-* Custom Loader
-* Notifications
 
 ## 💻 Tech Stack
 
@@ -30,7 +32,8 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 * Docker
 * React-Toast
 
-🤝 Credits
+## 🤝 Credits
+3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d)
 
 ## Prerequisites
 
