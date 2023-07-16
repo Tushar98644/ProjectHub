@@ -15,9 +15,10 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+    "baseurl": ["."]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx","**/*.d.ts", "src/pages/api/auth/[...nextauth].ts"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx","**/*.d.ts", "src/pages/api/auth/[...nextauth].ts", "jest.config.ts"],
+  "exclude": ["node_modules",".vscode"]
 }
