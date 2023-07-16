@@ -1,6 +1,6 @@
 # Welcome to Project HUB
 
-A comprehensive platform that integrates various ai-powered tools and useful websites. It is a one-stop hub for resources such as language translator ,an image generator etc .Whether they secure have developed a new Al authentication, tool, a useful website, or enhancing any other digital project, application users can submit for approval . Once approved by the admin , the project will be added to the project section providig a platform for sharing their work with the community.
+A comprehensive platform that integrates various ai-powered tools and useful websites. It is a one-stop hub for resources such as language translator ,an image generator etc .Whether users have developed a new AI authentication, tool, a useful website, or enhancing any other digital project, application users can submit for approval . Once approved by the admin , the project will be added to the project section providig a platform for sharing their work with the community.
 
 ## Live demo
 
