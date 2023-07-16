@@ -30,7 +30,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 * Tailwindcss
 * MongoDB
 * Docker
-* React-Toast
+* Jest
 
 ## 🤝 Credits
 3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d)
