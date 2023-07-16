@@ -4,7 +4,6 @@ const projectSchema = new monogoose.Schema({
     title: {
         type: String,
         required: true,
-        // unique: true
     },
     description: {
         type: String,
@@ -20,7 +19,7 @@ const projectSchema = new monogoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     approved : {
         type: Boolean,

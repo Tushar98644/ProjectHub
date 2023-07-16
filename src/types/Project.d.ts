@@ -8,6 +8,5 @@ export interface Project {
     image: string;
     github: string;
     approved: boolean;
-    createdAt: Date;
     name: string;
 }
