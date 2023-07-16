@@ -1,8 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Welcome to Project HUB
 
-## Getting Started
+A comprehensive platform that integrates various ai-powered tools and useful websites. It is a one-stop hub for resources such as language translator ,an image generator etc .Whether users have developed a new AI authentication, tool, a useful website, or enhancing any other digital project, application users can submit for approval . Once approved by the admin , the project will be added to the project section providig a platform for sharing their work with the community.
 
-First, run the development server:
+## Live demo
+
+The site is deployed through Vercel, which you can view from [here](https://project-hub-olive.vercel.app/) <br>
+
+## 🚀 Main Features
+* Login Page
+* 3D Animations
+* Approval System
+* Role-based Authentication
+* Custom Loader
+* Notifications
+* Data storage in MongoDB cluster
+
+## 📃Pages
+* Homepage
+* Add project page
+* Contact page
+* Admin page (accessible only to admin)
+* Message page (admin only)
+
+## 💻 Tech Stack
+
+* Nextjs
+* Typescript
+* NextAuth
+* Tailwindcss
+* MongoDB
+* Docker
+* React-Toast
+
+## 🤝 Credits
+3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d)
+
+## Prerequisites
+
+Required to install and run the software:
+
+* pnpm
+
+If you don't have pnpm installed, you can install it by following the below steps : 
+
+### Using npm
+
+```bash
+npm install -g pnpm
+```
+### Using Homebrew
+If you have the package manager installed, you can install pnpm using the following command:
+
+```
+brew install pnpm
+````
+### Using winget
+If you have winget installed, you can install pnpm using the following command:
+
+```
+winget install pnpm
+```
+
+### Using Scoop
+If you have Scoop installed, you can install pnpm using the following command:
+
+```
+scoop install nodejs-lts pnpm
+```
+
+### Using Choco
+If you have Chocolatey installed, you can install pnpm using the following command:
+
+```
+choco install pnpm
+```
+
+Alternatively you can delete the pnpm-lock.yaml file and install the dependencies with either ``yarn`` or ``npm`` <br>
+
+This is a Next.js project bootstrapped with create-next-app
+
+## 🌟 Getting Started
+
+create a .env file and paste the follwing content in there : 
+
+```
+GITHUB_ID=""
+GITHUB_SECRET=""
+GOOGLE_ID=""
+GOOGLE_SECRET=""
+SECRET=""
+MONGODB_URI=""
+NEXT_PUBLIC_ADMIN_EMAIL=""
+```
+Now, create your own credentials for the providers and MongoDB cluster and place them in the corresponding fields ,put the email in the `NEXT_PUBLIC_ADMIN_EMAIL` field which you want to give admin privileges
+
+From the project folder, run these commands in the console (terminal) to install dependencies and run the app:
 
 ```bash
 npm run dev
@@ -14,25 +106,46 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+# 🖼️ Some glimpse of the site
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Login Page 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<img width="1440" alt="Screenshot 2023-07-16 at 7 17 10 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/1faa0b9a-afca-443e-815c-ddfa35154121">
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Home Page
 
-## Learn More
+<img width="1440" alt="Screenshot 2023-07-16 at 7 20 59 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/b81a1a90-9585-47ed-b781-d1f3b76acae3">
 
-To learn more about Next.js, take a look at the following resources:
+### Add Project Page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img width="1440" alt="Screenshot 2023-07-16 at 7 23 03 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/cbb315fa-a970-4e6b-b4df-d6d0f83248f4">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Contact Page 
+
+<img width="1440" alt="Screenshot 2023-07-16 at 7 25 11 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/412f1518-8b87-489e-83cc-024aa957973a">
+
+### Admin Page
+
+<img width="1440" alt="Screenshot 2023-07-16 at 7 24 40 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/da4e7314-36db-492a-9307-c98a1825229f">
+
+### Message Page
+
+<img width="1440" alt="Screenshot 2023-07-16 at 7 27 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/f83c3497-e2fa-4be5-8929-ace92ab9457f">
+
+## 🐛 Bug Reporting
+Feel free to open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+%3Ctitle%3E) on GitHub if you find any bug.
+
+## ⭐ Feature Request
+Feel free to Open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new/choose) on GitHub to request any additional features you might need for your use case.
+
+## 🤝 Contributing to the Project
+If you wish to contribute to the project, we advise checking out the [CONTRIBUTING.md](https://github.com/Tushar98644/ProjectHub/blob/main/CONTRIBUTING.md) file as a starting point. We expect that you adhere to the guidelines mentioned in the CONTRIBUTING.md and [CODE_OF_CONDUCT.md](https://github.com/Tushar98644/ProjectHub/blob/main/CODE_OF_CONDUCT.md).
+
+## 📜 License
+This software is open-source, licensed under the [MIT License](https://github.com/Tushar98644/ProjectHub/blob/main/LICENSE).
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
