@@ -139,7 +139,7 @@ Feel free to open an [issue](https://github.com/Tushar98644/ProjectHub/issues/ne
 Feel free to Open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new/choose) on GitHub to request any additional features you might need for your use case.
 
 ## 🤝 Contributing to the Project
-If you wish to contribute to the project, we advise checking out the [CONTRIBUTING.md](https://github.com/Tushar98644/ProjectHub/blob/main/CONTRIBUTING.md) file as a starting point. We expect that you adhere to the guidelines mentioned in the CONTRIBUTING.md .
+If you wish to contribute to the project, we advise checking out the [CONTRIBUTING.md](https://github.com/Tushar98644/ProjectHub/blob/main/CONTRIBUTING.md) file as a starting point. We expect that you adhere to the guidelines mentioned in the CONTRIBUTING.md and [CODE_OF_CONDUCT.md](https://github.com/Tushar98644/ProjectHub/blob/main/CODE_OF_CONDUCT.md).
 
 ## 📜 License
 This software is open-source, licensed under the [MIT License](https://github.com/Tushar98644/ProjectHub/blob/main/LICENSE).
