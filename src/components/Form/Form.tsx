@@ -1,8 +1,9 @@
-import { useState } from 'react';
+/* eslint-disable react/jsx-no-undef */
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
 const Form = () => {
     const { data: session } = useSession();
@@ -11,6 +12,7 @@ const Form = () => {
     const [image, setImage] = useState('');
     const [github, setGithub] = useState('');
     const [name, setName] = useState('');
+    const [tags, setTags] = useState([]);
     const router = useRouter();
 
     const handleSubmit = async (e: any) => {
@@ -55,6 +57,10 @@ const Form = () => {
             <div className="mb-6">
                 <label htmlFor="repeat-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image Link</label>
                 <input type="url" onChange={(e) => setImage(e.target.value)} id="repeat-password" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="enter a image url" required />
+            </div>
+            <div className="mb-6">
+                <label htmlFor="repeat-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags</label>
+                <input type="text" data-role="taginput" data-tag-trigger="Space" className='text-black'/>
             </div>
             <div className="flex items-start mb-6">
                 <div className="flex items-center h-5">

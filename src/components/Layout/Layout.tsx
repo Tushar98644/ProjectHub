@@ -1,6 +1,6 @@
-import { Navbar } from ".";
+import { Navbar } from "..";
 
-const Layout = ({ children }:any) => {
+const Layout = ({ children }: React.PropsWithChildren) => {
     return (
         <div>
             <Navbar />

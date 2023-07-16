@@ -37,9 +37,7 @@ const Message_page = () => {
                             <Message_list key={message._id} {...message} />
                         ))}
                 </div>
-
             </div>
-
         </Layout>
     );
 }
