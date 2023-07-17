@@ -88,7 +88,7 @@ const Admin = () => {
                 </div>
                 <div className="flex flex-row items-center gap-0 justify-self-end">
                     <div className="w-[15vw]">
-                        <Lottie animationData={HI} height={50} width={50} className="" />
+                        <Lottie animationData={HI} height={50} width={50}/>
                     </div>
                     <p className="lg:text-4xl md:text-3xl sm:text-2xl text-lg">Welcome {session?.user?.name}</p>
                 </div>
