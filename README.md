@@ -21,6 +21,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 * Contact page
 * Admin page (accessible only to admin)
 * Message page (admin only)
+* 404 Error page
 
 ## 💻 Tech Stack
 
@@ -131,6 +132,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Message Page
 
 <img width="1440" alt="Screenshot 2023-07-16 at 7 27 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/f83c3497-e2fa-4be5-8929-ace92ab9457f">
+
+### 404 Page
+
+<img width="1440" alt="Screenshot 2023-07-17 at 1 22 06 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/64421692-ec30-4294-9ffc-741e7f175169">
 
 ## 🐛 Bug Reporting
 Feel free to open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+%3Ctitle%3E) on GitHub if you find any bug.
