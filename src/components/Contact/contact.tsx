@@ -39,7 +39,7 @@ const Contact = () => {
 
     return (
         <div>
-            <body className="bg-gray-800 text-gray-100 px-8 py-12">
+            <body className="bg-gray-900 text-gray-100 px-8 py-12">
                 <div className="text-center w-full">
                     <svg className="text-gray-100 h-8 mx-auto" viewBox="0 0 150 29" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" >
@@ -588,7 +588,7 @@ const Contact = () => {
                             </div>
                             <div className="mt-8">
                                 <button
-                                    className="uppercase text-sm font-bold tracking-wide bg-indigo-500 text-gray-400 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
+                                    className="uppercase text-sm font-bold tracking-wide bg-indigo-500 text-gray-200 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline">
                                     Send Message
                                 </button>
                             </div>
