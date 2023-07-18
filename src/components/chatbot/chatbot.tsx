@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useChat } from 'ai/react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 const Chat = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const { data: session } = useSession();
 
   const toggleChat = () => {
     setIsChatOpen((prevState) => !prevState);
@@ -13,11 +15,15 @@ const Chat = () => {
 
   return (
     <div className='text-gray-500'>
-      <div
-        className="fixed bottom-6 right-10 cursor-pointer z-50"
-        onClick={toggleChat}>
-        <Image src="/chatbot.webp" alt="Chatbot Icon" className="w-20 h-20" width={100} height={100} />
-      </div>
+      {
+        session && (
+          <div
+            className="fixed bottom-6 right-10 cursor-pointer z-50"
+            onClick={toggleChat}>
+            <Image src="/chatbot.webp" alt="Chatbot Icon" className="w-20 h-20" width={100} height={100} />
+          </div>
+        )
+      }
       {isChatOpen && (
         <div className="fixed bottom-24 right-10 z-40">
           <div className="bg-white rounded-lg shadow-lg w-500 h-400 p-4">
