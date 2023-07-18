@@ -30,7 +30,7 @@ const Chat = () => {
         </div>
       )}
       {isChatOpen && (
-        <div className="fixed md:bottom-24 bottom-28 right-10 z-40 md:w-96 w-80">
+        <div className="fixed bottom-28 right-10 z-40 md:w-96 w-80">
           <div className="bg-white rounded-lg shadow-lg w-500 h-400 p-4">
             <div className="h-60 overflow-y-auto whitespace-normal">
               {messages.map((m) => (
