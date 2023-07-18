@@ -12,8 +12,8 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 * Approval System
 * Role-based Authentication
 * Custom Loader
-* Notifications
-* Data storage in MongoDB cluster
+* Real-time Notifications
+* Real-Time data updates
 
 ## 📃Pages
 * Homepage
