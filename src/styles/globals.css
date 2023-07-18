@@ -13,7 +13,6 @@
     background-color: rgb(22 27 34/var(--tw-bg-opacity));
 }
 
-
 .video-background {
 	position: fixed;
 	right: 0;
@@ -35,9 +34,6 @@ body {
 	background: linear-gradient(to bottom,
 			transparent,
 			rgb(0, 0, 0)) rgb(0, 0, 0);
-	/* background-image: url('../../public/cool-background.png');
-	background-repeat:repeat;
-	background-size: contain; */
 }
 
 @property --angle {
@@ -113,15 +109,9 @@ body {
 	}
 }
 
-
-
 .gradient{
     background-color: rgb(21 16 48 );
 }
-
-
-
-
 
 .loader {
 	position: relative;
@@ -158,16 +148,6 @@ body {
 	to   { transform: rotate3d(1, 1, 1, 360deg); }
   }
   
-
-
-
-
-
-
-
-
-
-
   @import url("https://fonts.googleapis.com/css?family=Overpass");
 
   * {
@@ -242,5 +222,3 @@ body {
 	  width: calc(100vw - 32px);
 	}
   }
-
-

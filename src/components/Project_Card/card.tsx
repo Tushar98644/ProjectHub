@@ -17,7 +17,7 @@ const Card = ({ title, description, image, github, name }: Project) => {
                                 src={image}
                                 onError={(e: any) => {
                                     e.target.onerror = null;
-                                    e.target.src = "/logo.png"
+                                    e.target.src = "/alternate.jpeg"
                                 }}
                                 alt="" width={400} height={250} />
                         </Link>
