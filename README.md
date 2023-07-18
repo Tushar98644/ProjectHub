@@ -35,6 +35,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 
 ## 🤝 Credits
 3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d)
+ChatBot Model : [OpenAI Api](https://platform.openai.com/account/usage)
 
 ## Prerequisites
 
@@ -92,8 +93,9 @@ GOOGLE_SECRET=""
 SECRET=""
 MONGODB_URI=""
 NEXT_PUBLIC_ADMIN_EMAIL=""
+OPENAI_API_KEY=""
 ```
-Now, create your own credentials for the providers and MongoDB cluster and place them in the corresponding fields ,put the email in the `NEXT_PUBLIC_ADMIN_EMAIL` field which you want to give admin privileges
+Now, create your own credentials for the providers , OpenAI api and MongoDB cluster and place them in the corresponding fields ,put the email in the `NEXT_PUBLIC_ADMIN_EMAIL` field which you want to give admin privileges
 
 From the project folder, run these commands in the console (terminal) to install dependencies and run the app:
 
