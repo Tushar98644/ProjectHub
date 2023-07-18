@@ -34,7 +34,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 * Jest
 
 ## 🤝 Credits
-3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d)
+3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d) <br>
 ChatBot Model : [OpenAI Api](https://platform.openai.com/account/usage)
 
 ## Prerequisites
