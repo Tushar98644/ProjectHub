@@ -7,7 +7,7 @@ A comprehensive platform that integrates various ai-powered tools and useful web
 The site is deployed through Vercel, which you can view from [here](https://project-hub-olive.vercel.app/) <br>
 
 ## 🚀 Main Features
-* Login Page
+* ChatBot
 * 3D Animations
 * Approval System
 * Role-based Authentication
@@ -115,11 +115,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Home Page
 
-<img width="1440" alt="Screenshot 2023-07-16 at 7 20 59 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/b81a1a90-9585-47ed-b781-d1f3b76acae3">
+<img width="1440" alt="Screenshot 2023-07-18 at 4 20 58 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a3f5981b-19eb-4660-898d-7272ae765eed">
 
 ### Add Project Page
 
-<img width="1440" alt="Screenshot 2023-07-16 at 7 23 03 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/cbb315fa-a970-4e6b-b4df-d6d0f83248f4">
+<img width="1440" alt="Screenshot 2023-07-18 at 4 22 20 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/ff56fcb2-ad88-40b3-8efb-fb7893d92ef9">
 
 ### Contact Page 
 
@@ -131,11 +131,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Message Page
 
-<img width="1440" alt="Screenshot 2023-07-16 at 7 27 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/f83c3497-e2fa-4be5-8929-ace92ab9457f">
+<img width="1440" alt="Screenshot 2023-07-18 at 4 24 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/d55d9dfd-ff1e-4441-ae6c-bf5fd9061f45">
 
 ### 404 Page
 
-<img width="1440" alt="Screenshot 2023-07-17 at 1 22 06 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/64421692-ec30-4294-9ffc-741e7f175169">
+<img width="1440" alt="Screenshot 2023-07-18 at 4 23 17 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a1f34be6-863d-4cd3-b9ee-6f55f8a298e2">
+
+## ChatBot 
+
+<img width="1438" alt="Screenshot 2023-07-18 at 4 19 33 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/824f2b33-6d13-489f-a57d-e07d6f2c7939">
 
 ## 🐛 Bug Reporting
 Feel free to open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+%3Ctitle%3E) on GitHub if you find any bug.
