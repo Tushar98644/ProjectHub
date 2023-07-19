@@ -2,6 +2,12 @@
   "name": "project_hub",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0",
+    "pnpm": ">=7.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
