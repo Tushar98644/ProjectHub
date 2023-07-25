@@ -13,7 +13,7 @@ dependencies:
     version: 20.4.4
   ai:
     specifier: ^2.1.22
-    version: 2.1.22(react@18.2.0)(svelte@4.0.5)(vue@3.3.4)
+    version: 2.1.22(react@18.2.0)(svelte@4.1.1)(vue@3.3.4)
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.26)
@@ -5787,7 +5787,7 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ai@2.1.22(react@18.2.0)(svelte@4.0.5)(vue@3.3.4):
+  /ai@2.1.22(react@18.2.0)(svelte@4.1.1)(vue@3.3.4):
     resolution: {integrity: sha512-aj9cfaEKyqdu1ypNKZ+6bmySp1+EwOokOL62Pmz7RsGSz803H31+z3fzeoPT64s8ARr2SRvIjjhwOEehKYrj2g==}
     engines: {node: '>=14.6'}
     peerDependencies:
@@ -5805,8 +5805,8 @@ packages:
       eventsource-parser: 1.0.0
       nanoid: 3.3.6
       react: 18.2.0
-      sswr: 1.11.0(svelte@4.0.5)
-      svelte: 4.0.5
+      sswr: 1.11.0(svelte@4.1.1)
+      svelte: 4.1.1
       swr: 2.1.5(react@18.2.0)
       swrv: 1.0.3(vue@3.3.4)
       vue: 3.3.4
@@ -12278,12 +12278,12 @@ packages:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
 
-  /sswr@1.11.0(svelte@4.0.5):
+  /sswr@1.11.0(svelte@4.1.1):
     resolution: {integrity: sha512-D7nEdEH0A1TKZjA1wRP6frxw/dtTCuV70EK5/pELP+FrcPmyaP8jLC49mrg86Ez5cb5z3NQb2MPx2M7ZZlSupQ==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
-      svelte: 4.0.5
+      svelte: 4.1.1
       swrev: 3.0.0
     dev: false
 
@@ -12531,8 +12531,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte@4.0.5:
-    resolution: {integrity: sha512-PHKPWP1wiWHBtsE57nCb8xiWB3Ht7/3Kvi3jac0XIxUM2rep8alO7YoAtgWeGD7++tFy46krilOrPW0mG3Dx+A==}
+  /svelte@4.1.1:
+    resolution: {integrity: sha512-Enick5fPFISLoVy0MFK45cG+YlQt6upw8skEK9zzTpJnH1DqEv8xOZwizCGSo3Q6HZ7KrZTM0J18poF7aQg5zw==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
