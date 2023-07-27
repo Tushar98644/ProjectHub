@@ -3883,7 +3883,7 @@ packages:
       '@storybook/preview-api': 7.1.0
       '@storybook/theming': 7.1.0(react-dom@18.2.0)(react@18.2.0)
       '@storybook/types': 7.1.0
-      '@types/lodash': 4.14.195
+      '@types/lodash': 4.14.196
       color-convert: 2.0.1
       dequal: 2.0.3
       lodash: 4.17.21
@@ -3919,7 +3919,7 @@ packages:
       '@storybook/preview-api': 7.1.1
       '@storybook/theming': 7.1.1(react-dom@18.2.0)(react@18.2.0)
       '@storybook/types': 7.1.1
-      '@types/lodash': 4.14.195
+      '@types/lodash': 4.14.196
       color-convert: 2.0.1
       dequal: 2.0.3
       lodash: 4.17.21
@@ -5355,8 +5355,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
 
-  /@types/lodash@4.14.195:
-    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
+  /@types/lodash@4.14.196:
+    resolution: {integrity: sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==}
     dev: true
 
   /@types/mdx@2.0.5:
