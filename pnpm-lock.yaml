@@ -3118,8 +3118,8 @@ packages:
       jest-mock: 29.6.1
     dev: true
 
-  /@jest/expect-utils@29.6.1:
-    resolution: {integrity: sha512-o319vIf5pEMx0LmzSxxkYYxo4wrRLKHq9dP1yJU7FoPTB0LfAKSz8SWD6D/6U3v/O52t9cF5t+MeJiRsfk7zMw==}
+  /@jest/expect-utils@29.6.2:
+    resolution: {integrity: sha512-6zIhM8go3RV2IG4aIZaZbxwpOzz3ZiM23oxAlkquOIole+G6TrbeXnykxWYlqF7kz2HlBjdKtca20x9atkEQYg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       jest-get-type: 29.4.3
@@ -8230,7 +8230,7 @@ packages:
     resolution: {integrity: sha512-XEdDLonERCU1n9uR56/Stx9OqojaLAQtZf9PrCHH9Hl8YXiEIka3H4NXJ3NOIBmQJTg7+j7buh34PMHfJujc8g==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/expect-utils': 29.6.1
+      '@jest/expect-utils': 29.6.2
       '@types/node': 20.4.5
       jest-get-type: 29.4.3
       jest-matcher-utils: 29.6.1
@@ -9818,7 +9818,7 @@ packages:
       '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.22.9)
       '@babel/plugin-syntax-typescript': 7.22.5(@babel/core@7.22.9)
       '@babel/types': 7.22.5
-      '@jest/expect-utils': 29.6.1
+      '@jest/expect-utils': 29.6.2
       '@jest/transform': 29.6.1
       '@jest/types': 29.6.1
       '@types/prettier': 2.7.3
