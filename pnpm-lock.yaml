@@ -6296,8 +6296,8 @@ packages:
       '@babel/core': 7.22.9
     dev: true
 
-  /babel-jest@29.6.1(@babel/core@7.22.9):
-    resolution: {integrity: sha512-qu+3bdPEQC6KZSPz+4Fyjbga5OODNcp49j6GKzG1EKbkfyJBxEYGVUmVGpwCSeGouG52R4EgYMLb6p9YeEEQ4A==}
+  /babel-jest@29.6.2(@babel/core@7.22.9):
+    resolution: {integrity: sha512-BYCzImLos6J3BH/+HvUCHG1dTf2MzmAB4jaVxHV+29RZLjR29XuYTmsf2sdDwkrb+FczkGo3kOhE7ga6sI0P4A==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       '@babel/core': ^7.8.0
@@ -9585,7 +9585,7 @@ packages:
       '@jest/test-sequencer': 29.6.1
       '@jest/types': 29.6.1
       '@types/node': 20.4.5
-      babel-jest: 29.6.1(@babel/core@7.22.9)
+      babel-jest: 29.6.2(@babel/core@7.22.9)
       chalk: 4.1.2
       ci-info: 3.8.0
       deepmerge: 4.3.1
