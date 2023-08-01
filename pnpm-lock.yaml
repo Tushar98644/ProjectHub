@@ -9652,7 +9652,7 @@ packages:
       '@types/jsdom': 20.0.1
       '@types/node': 20.4.5
       jest-mock: 29.6.1
-      jest-util: 29.6.1
+      jest-util: 29.6.2
       jsdom: 20.0.3
     transitivePeerDependencies:
       - bufferutil
@@ -9886,18 +9886,6 @@ packages:
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /jest-util@29.6.1:
-    resolution: {integrity: sha512-NRFCcjc+/uO3ijUVyNOQJluf8PtGCe/W6cix36+M3cTFgiYqFOOW5MgN4JOOcvbUhcKTYVd1CvHz/LWi8d16Mg==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/types': 29.6.1
-      '@types/node': 20.4.5
-      chalk: 4.1.2
-      ci-info: 3.8.0
-      graceful-fs: 4.2.11
-      picomatch: 2.3.1
     dev: true
 
   /jest-util@29.6.2:
