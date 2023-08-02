@@ -9435,7 +9435,7 @@ packages:
       co: 4.6.0
       dedent: 0.7.0
       is-generator-fn: 2.1.0
-      jest-each: 29.6.1
+      jest-each: 29.6.2
       jest-matcher-utils: 29.6.2
       jest-message-util: 29.6.2
       jest-runtime: 29.6.2
@@ -9535,8 +9535,8 @@ packages:
       detect-newline: 3.1.0
     dev: true
 
-  /jest-each@29.6.1:
-    resolution: {integrity: sha512-n5eoj5eiTHpKQCAVcNTT7DRqeUmJ01hsAL0Q1SMiBHcBcvTKDELixQOGMCpqhbIuTcfC4kMfSnpmDqRgRJcLNQ==}
+  /jest-each@29.6.2:
+    resolution: {integrity: sha512-MsrsqA0Ia99cIpABBc3izS1ZYoYfhIy0NNWqPSE0YXbQjwchyt6B1HD2khzyPe1WiJA7hbxXy77ZoUQxn8UlSw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.1
