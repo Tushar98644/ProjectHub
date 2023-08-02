@@ -4227,7 +4227,7 @@ packages:
       fs-extra: 11.1.1
       glob: 8.1.0
       glob-promise: 6.0.3(glob@8.1.0)
-      handlebars: 4.7.7
+      handlebars: 4.7.8
       lazy-universal-dotenv: 4.0.0
       node-fetch: 2.6.12
       picomatch: 2.3.1
@@ -4257,7 +4257,7 @@ packages:
       find-up: 5.0.0
       fs-extra: 11.1.1
       glob: 10.3.3
-      handlebars: 4.7.7
+      handlebars: 4.7.8
       lazy-universal-dotenv: 4.0.0
       node-fetch: 2.6.12
       picomatch: 2.3.1
@@ -4287,7 +4287,7 @@ packages:
       find-up: 5.0.0
       fs-extra: 11.1.1
       glob: 10.3.3
-      handlebars: 4.7.7
+      handlebars: 4.7.8
       lazy-universal-dotenv: 4.0.0
       node-fetch: 2.6.12
       picomatch: 2.3.1
@@ -8780,8 +8780,8 @@ packages:
       through2: 2.0.5
     dev: true
 
-  /handlebars@4.7.7:
-    resolution: {integrity: sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==}
+  /handlebars@4.7.8:
+    resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
     hasBin: true
     dependencies:
