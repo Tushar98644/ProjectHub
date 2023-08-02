@@ -3076,7 +3076,7 @@ packages:
         optional: true
     dependencies:
       '@jest/console': 29.6.2
-      '@jest/reporters': 29.6.1
+      '@jest/reporters': 29.6.2
       '@jest/test-result': 29.6.2
       '@jest/transform': 29.6.2
       '@jest/types': 29.6.1
@@ -3181,8 +3181,8 @@ packages:
       - supports-color
     dev: true
 
-  /@jest/reporters@29.6.1:
-    resolution: {integrity: sha512-9zuaI9QKr9JnoZtFQlw4GREQbxgmNYXU6QuWtmuODvk5nvPUeBYapVR/VYMyi2WSx3jXTLJTJji8rN6+Cm4+FA==}
+  /@jest/reporters@29.6.2:
+    resolution: {integrity: sha512-sWtijrvIav8LgfJZlrGCdN0nP2EWbakglJY49J1Y5QihcQLfy7ovyxxjJBRXMNltgt4uPtEcFmIMbVshEDfFWw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
