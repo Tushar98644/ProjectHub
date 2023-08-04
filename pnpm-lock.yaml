@@ -60,8 +60,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
   react-parallax-tilt:
-    specifier: ^1.7.153
-    version: 1.7.153(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.7.156
+    version: 1.7.156(react-dom@18.2.0)(react@18.2.0)
   react-tag-input:
     specifier: ^6.8.1
     version: 6.8.1(react-dnd-html5-backend@14.1.0)(react-dnd@14.0.5)(react-dom@18.2.0)(react@18.2.0)
@@ -12861,8 +12861,8 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
 
-  /react-parallax-tilt@1.7.153(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-qy9ES20XT5h4Csctt9Z1doG2JLyE4iR0V+l2PAkiTw9JFNgIxWt1TwCBTQX5vj43v3lpYdDfrQ9O8Lh9Y1DYlQ==}
+  /react-parallax-tilt@1.7.156(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-bKrHeYXlWtvuCiYhdkDC/OWI6g1/UwWgOBEwnsSMzee5e97IJEtNcIaKtdSpEdNrZNOEYBsF5tDFoNu7GK2PbQ==}
     peerDependencies:
       react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0

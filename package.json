@@ -36,7 +36,7 @@
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-parallax-tilt": "^1.7.153",
+    "react-parallax-tilt": "^1.7.156",
     "react-tag-input": "^6.8.1",
     "react-tag-input-component": "^2.0.2",
     "react-toastify": "^9.1.3",
