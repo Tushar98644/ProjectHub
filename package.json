@@ -50,7 +50,7 @@
     "@storybook/addon-links": "^7.1.0",
     "@storybook/blocks": "^7.2.1",
     "@storybook/nextjs": "^7.2.0",
-    "@storybook/react": "^7.0.26",
+    "@storybook/react": "^7.2.1",
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
