@@ -3039,7 +3039,7 @@ packages:
       '@storybook/preview-api': 7.1.0
       '@storybook/theming': 7.1.0(react-dom@18.2.0)(react@18.2.0)
       '@storybook/types': 7.1.0
-      jest-mock: 29.6.1
+      jest-mock: 29.6.2
       polished: 4.2.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -9277,7 +9277,7 @@ packages:
       '@jest/types': 29.6.1
       '@types/jsdom': 20.0.1
       '@types/node': 20.4.6
-      jest-mock: 29.6.1
+      jest-mock: 29.6.2
       jest-util: 29.6.2
       jsdom: 20.0.3
     transitivePeerDependencies:
@@ -9353,15 +9353,6 @@ packages:
       pretty-format: 29.6.2
       slash: 3.0.0
       stack-utils: 2.0.6
-    dev: true
-
-  /jest-mock@29.6.1:
-    resolution: {integrity: sha512-brovyV9HBkjXAEdRooaTQK42n8usKoSRR3gihzUpYeV/vwqgSoNfrksO7UfSACnPmxasO/8TmHM3w9Hp3G1dgw==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/types': 29.6.1
-      '@types/node': 20.4.6
-      jest-util: 29.6.2
     dev: true
 
   /jest-mock@29.6.2:
