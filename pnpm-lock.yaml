@@ -13,7 +13,7 @@ dependencies:
     version: 20.4.6
   ai:
     specifier: ^2.1.26
-    version: 2.1.26(react@18.2.0)(solid-js@1.7.9)(svelte@4.1.1)(vue@3.3.4)
+    version: 2.1.26(react@18.2.0)(solid-js@1.7.9)(svelte@4.1.2)(vue@3.3.4)
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.27)
@@ -5578,7 +5578,7 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ai@2.1.26(react@18.2.0)(solid-js@1.7.9)(svelte@4.1.1)(vue@3.3.4):
+  /ai@2.1.26(react@18.2.0)(solid-js@1.7.9)(svelte@4.1.2)(vue@3.3.4):
     resolution: {integrity: sha512-WlE9zausBM6rFvBPpMNsu3MpRY3Q85x9ZsurPWCS0AQ613gTDyuunYTLcBY0+QYWtl2H/8SWx9vyCjgRwwXMqg==}
     engines: {node: '>=14.6'}
     peerDependencies:
@@ -5601,8 +5601,8 @@ packages:
       react: 18.2.0
       solid-js: 1.7.9
       solid-swr-store: 0.10.7(solid-js@1.7.9)(swr-store@0.10.6)
-      sswr: 2.0.0(svelte@4.1.1)
-      svelte: 4.1.1
+      sswr: 2.0.0(svelte@4.1.2)
+      svelte: 4.1.2
       swr: 2.2.0(react@18.2.0)
       swr-store: 0.10.6
       swrv: 1.0.4(vue@3.3.4)
@@ -12148,12 +12148,12 @@ packages:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
 
-  /sswr@2.0.0(svelte@4.1.1):
+  /sswr@2.0.0(svelte@4.1.2):
     resolution: {integrity: sha512-mV0kkeBHcjcb0M5NqKtKVg/uTIYNlIIniyDfSGrSfxpEdM9C365jK0z55pl9K0xAkNTJi2OAOVFQpgMPUk+V0w==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
-      svelte: 4.1.1
+      svelte: 4.1.2
       swrev: 4.0.0
     dev: false
 
@@ -12403,8 +12403,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte@4.1.1:
-    resolution: {integrity: sha512-Enick5fPFISLoVy0MFK45cG+YlQt6upw8skEK9zzTpJnH1DqEv8xOZwizCGSo3Q6HZ7KrZTM0J18poF7aQg5zw==}
+  /svelte@4.1.2:
+    resolution: {integrity: sha512-/evA8U6CgOHe5ZD1C1W3va9iJG7mWflcCdghBORJaAhD2JzrVERJty/2gl0pIPrJYBGZwZycH6onYf+64XXF9g==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
