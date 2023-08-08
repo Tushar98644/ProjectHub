@@ -13,7 +13,7 @@ dependencies:
     version: 20.4.6
   ai:
     specifier: ^2.1.26
-    version: 2.1.26(react@18.2.0)(solid-js@1.7.8)(svelte@4.1.1)(vue@3.3.4)
+    version: 2.1.26(react@18.2.0)(solid-js@1.7.9)(svelte@4.1.1)(vue@3.3.4)
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.27)
@@ -5578,7 +5578,7 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ai@2.1.26(react@18.2.0)(solid-js@1.7.8)(svelte@4.1.1)(vue@3.3.4):
+  /ai@2.1.26(react@18.2.0)(solid-js@1.7.9)(svelte@4.1.1)(vue@3.3.4):
     resolution: {integrity: sha512-WlE9zausBM6rFvBPpMNsu3MpRY3Q85x9ZsurPWCS0AQ613gTDyuunYTLcBY0+QYWtl2H/8SWx9vyCjgRwwXMqg==}
     engines: {node: '>=14.6'}
     peerDependencies:
@@ -5599,8 +5599,8 @@ packages:
       eventsource-parser: 1.0.0
       nanoid: 3.3.6
       react: 18.2.0
-      solid-js: 1.7.8
-      solid-swr-store: 0.10.7(solid-js@1.7.8)(swr-store@0.10.6)
+      solid-js: 1.7.9
+      solid-swr-store: 0.10.7(solid-js@1.7.9)(swr-store@0.10.6)
       sswr: 2.0.0(svelte@4.1.1)
       svelte: 4.1.1
       swr: 2.2.0(react@18.2.0)
@@ -12074,21 +12074,21 @@ packages:
       smart-buffer: 4.2.0
     dev: false
 
-  /solid-js@1.7.8:
-    resolution: {integrity: sha512-XHBWk1FvFd0JMKljko7FfhefJMTSgYEuVKcQ2a8hzRXfiuSJAGsrPPafqEo+f6l+e8Oe3cROSpIL6kbzjC1fjQ==}
+  /solid-js@1.7.9:
+    resolution: {integrity: sha512-p1orXnauMQmwYULZtuPAXyKNRGEN2qh60kLX4YURa3jvulxAqjlh2kWEljXCtAVR6UZPC16NXdj9ASHcH383Fg==}
     dependencies:
       csstype: 3.1.2
       seroval: 0.5.1
     dev: false
 
-  /solid-swr-store@0.10.7(solid-js@1.7.8)(swr-store@0.10.6):
+  /solid-swr-store@0.10.7(solid-js@1.7.9)(swr-store@0.10.6):
     resolution: {integrity: sha512-A6d68aJmRP471aWqKKPE2tpgOiR5fH4qXQNfKIec+Vap+MGQm3tvXlT8n0I8UgJSlNAsSAUuw2VTviH2h3Vv5g==}
     engines: {node: '>=10'}
     peerDependencies:
       solid-js: ^1.2
       swr-store: ^0.10
     dependencies:
-      solid-js: 1.7.8
+      solid-js: 1.7.9
       swr-store: 0.10.6
     dev: false
 
