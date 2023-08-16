@@ -12,8 +12,8 @@ dependencies:
     specifier: 20.5.0
     version: 20.5.0
   ai:
-    specifier: ^2.1.26
-    version: 2.1.26(react@18.2.0)(solid-js@1.7.11)(svelte@4.1.2)(vue@3.3.4)
+    specifier: ^2.1.34
+    version: 2.1.34(react@18.2.0)(solid-js@1.7.11)(svelte@4.1.2)(vue@3.3.4)
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.27)
@@ -5625,8 +5625,8 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ai@2.1.26(react@18.2.0)(solid-js@1.7.11)(svelte@4.1.2)(vue@3.3.4):
-    resolution: {integrity: sha512-WlE9zausBM6rFvBPpMNsu3MpRY3Q85x9ZsurPWCS0AQ613gTDyuunYTLcBY0+QYWtl2H/8SWx9vyCjgRwwXMqg==}
+  /ai@2.1.34(react@18.2.0)(solid-js@1.7.11)(svelte@4.1.2)(vue@3.3.4):
+    resolution: {integrity: sha512-gZawUnYhZHJ1PiE+x7iDuy2GQg67AKs0uHgdS8Jw3o/3NouGeJ/5ytyqbgHqczgvoquSpykumR+5TyRieF8x/w==}
     engines: {node: '>=14.6'}
     peerDependencies:
       react: ^18.2.0
