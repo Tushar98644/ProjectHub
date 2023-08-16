@@ -128,8 +128,8 @@ devDependencies:
     specifier: ^29.6.1
     version: 29.6.1(@types/node@20.5.0)(ts-node@10.9.1)
   jest-environment-jsdom:
-    specifier: ^29.6.1
-    version: 29.6.1
+    specifier: ^29.6.2
+    version: 29.6.2
   storybook:
     specifier: ^7.2.1
     version: 7.2.1
@@ -9344,8 +9344,8 @@ packages:
       pretty-format: 29.6.2
     dev: true
 
-  /jest-environment-jsdom@29.6.1:
-    resolution: {integrity: sha512-PoY+yLaHzVRhVEjcVKSfJ7wXmJW4UqPYNhR05h7u/TK0ouf6DmRNZFBL/Z00zgQMyWGMBXn69/FmOvhEJu8cIw==}
+  /jest-environment-jsdom@29.6.2:
+    resolution: {integrity: sha512-7oa/+266AAEgkzae8i1awNEfTfjwawWKLpiw2XesZmaoVVj9u9t8JOYx18cG29rbPNtkUlZ8V4b5Jb36y/VxoQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     peerDependencies:
       canvas: ^2.5.0
