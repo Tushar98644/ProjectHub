@@ -1,4 +1,4 @@
-import monogoose, { models } from 'mongoose'
+import monogoose, { models } from "mongoose";
 
 const projectSchema = new monogoose.Schema({
     title: {
@@ -7,27 +7,26 @@ const projectSchema = new monogoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        required: true,
     },
     image: {
         type: String,
-        required: true
+        required: true,
     },
     github: {
         type: String,
-        required: true
+        required: true,
     },
     createdAt: {
         type: Date,
         default: Date.now,
     },
-    approved : {
+    approved: {
         type: Boolean,
     },
     name: {
         type: String,
     },
-})
+});
 
-export default models.Project || monogoose.model('Project', projectSchema)
-
+export default models.Project || monogoose.model("Project", projectSchema);

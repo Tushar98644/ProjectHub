@@ -7,33 +7,36 @@ A comprehensive platform that integrates various ai-powered tools and useful web
 The site is deployed through Vercel, which you can view from [here](https://project-hub-olive.vercel.app/) <br>
 
 ## 🚀 Main Features
-* ChatBot
-* 3D Animations
-* Approval System
-* Role-based Authentication
-* Custom Loader
-* Real-time Notifications
-* Real-Time data updates
+
+-   ChatBot
+-   3D Animations
+-   Approval System
+-   Role-based Authentication
+-   Custom Loader
+-   Real-time Notifications
+-   Real-Time data updates
 
 ## 📃Pages
-* Homepage
-* Add project page
-* Contact page
-* Admin page (accessible only to admin)
-* Message page (admin only)
-* 404 Error page
+
+-   Homepage
+-   Add project page
+-   Contact page
+-   Admin page (accessible only to admin)
+-   Message page (admin only)
+-   404 Error page
 
 ## 💻 Tech Stack
 
-* Nextjs
-* Typescript
-* NextAuth
-* Tailwindcss
-* MongoDB
-* Docker
-* Jest
+-   Nextjs
+-   Typescript
+-   NextAuth
+-   Tailwindcss
+-   MongoDB
+-   Docker
+-   Jest
 
 ## 🤝 Credits
+
 3D Animation : [LottieFiles](https://lottiefiles.com/animation/3d) <br>
 ChatBot Model : [OpenAI Api](https://platform.openai.com/account/usage)
 
@@ -41,22 +44,26 @@ ChatBot Model : [OpenAI Api](https://platform.openai.com/account/usage)
 
 Required to install and run the software:
 
-* pnpm
+-   pnpm
 
-If you don't have pnpm installed, you can install it by following the below steps : 
+If you don't have pnpm installed, you can install it by following the below steps :
 
 ### Using npm
 
 ```bash
 npm install -g pnpm
 ```
+
 ### Using Homebrew
+
 If you have the package manager installed, you can install pnpm using the following command:
 
 ```
 brew install pnpm
-````
+```
+
 ### Using winget
+
 If you have winget installed, you can install pnpm using the following command:
 
 ```
@@ -64,6 +71,7 @@ winget install pnpm
 ```
 
 ### Using Scoop
+
 If you have Scoop installed, you can install pnpm using the following command:
 
 ```
@@ -71,19 +79,20 @@ scoop install nodejs-lts pnpm
 ```
 
 ### Using Choco
+
 If you have Chocolatey installed, you can install pnpm using the following command:
 
 ```
 choco install pnpm
 ```
 
-Alternatively you can delete the pnpm-lock.yaml file and install the dependencies with either ``yarn`` or ``npm`` <br>
+Alternatively you can delete the pnpm-lock.yaml file and install the dependencies with either `yarn` or `npm` <br>
 
 This is a Next.js project bootstrapped with create-next-app
 
 ## 🌟 Getting Started
 
-create a .env file and paste the follwing content in there : 
+create a .env file and paste the follwing content in there :
 
 ```
 GITHUB_ID=""
@@ -95,6 +104,7 @@ MONGODB_URI=""
 NEXT_PUBLIC_ADMIN_EMAIL=""
 OPENAI_API_KEY=""
 ```
+
 Now, create your own credentials for the providers , OpenAI api and MongoDB cluster and place them in the corresponding fields ,put the email in the `NEXT_PUBLIC_ADMIN_EMAIL` field which you want to give admin privileges
 
 From the project folder, run these commands in the console (terminal) to install dependencies and run the app:
@@ -111,7 +121,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # 🖼️ Some glimpse of the site
 
-### Login Page 
+### Login Page
 
 <img width="1440" alt="Screenshot 2023-07-16 at 7 17 10 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/1faa0b9a-afca-443e-815c-ddfa35154121">
 
@@ -123,7 +133,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 <img width="1440" alt="Screenshot 2023-07-18 at 4 22 20 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/ff56fcb2-ad88-40b3-8efb-fb7893d92ef9">
 
-### Contact Page 
+### Contact Page
 
 <img width="1440" alt="Screenshot 2023-07-17 at 1 26 30 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/6f0e3812-ebd0-4dd0-88d6-defecf30a045">
 
@@ -139,20 +149,24 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 <img width="1440" alt="Screenshot 2023-07-18 at 4 23 17 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a1f34be6-863d-4cd3-b9ee-6f55f8a298e2">
 
-## ChatBot 
+## ChatBot
 
 <img width="1438" alt="Screenshot 2023-07-18 at 4 19 33 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/824f2b33-6d13-489f-a57d-e07d6f2c7939">
 
 ## 🐛 Bug Reporting
+
 Feel free to open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+%3Ctitle%3E) on GitHub if you find any bug.
 
 ## ⭐ Feature Request
+
 Feel free to Open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new/choose) on GitHub to request any additional features you might need for your use case.
 
 ## 🤝 Contributing to the Project
+
 If you wish to contribute to the project, we advise checking out the [CONTRIBUTING.md](https://github.com/Tushar98644/ProjectHub/blob/main/CONTRIBUTING.md) file as a starting point. We expect that you adhere to the guidelines mentioned in the CONTRIBUTING.md and [CODE_OF_CONDUCT.md](https://github.com/Tushar98644/ProjectHub/blob/main/CODE_OF_CONDUCT.md).
 
 ## 📜 License
+
 This software is open-source, licensed under the [MIT License](https://github.com/Tushar98644/ProjectHub/blob/main/LICENSE).
 
 ## Deploy on Vercel

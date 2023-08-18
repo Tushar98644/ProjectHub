@@ -1,11 +1,11 @@
 import { Contact, Layout } from "@/components";
 
 const Contact_page = () => {
-    return ( 
+    return (
         <Layout>
             <Contact />
         </Layout>
-     );
-}
- 
+    );
+};
+
 export default Contact_page;

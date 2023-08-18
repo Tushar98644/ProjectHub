@@ -7,6 +7,6 @@ const Layout = ({ children }: React.PropsWithChildren) => {
             {children}
         </div>
     );
-}
+};
 
 export default Layout;

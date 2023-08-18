@@ -24,5 +24,3 @@ const Messages = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default Messages;
-
-    
