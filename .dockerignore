@@ -1,2 +1,38 @@
-.DS_Store
-node_modules
+# Editor and IDE files
+.vscode
+.idea
+*.sublime-*
+*.swp
+
+# Testing and coverage reports
+coverage
+.cypress
+
+# Build tools
+webpack-*
+jest-*
+Gruntfile.js
+gulpfile.js
+
+# Dependency manager files
+package-lock.json
+yarn.lock
+yarn-error.log
+.pnpm-lock.yaml
+
+# OS and system files
+Thumbs.db
+Desktop.ini
+Icon?
+ehthumbs.db
+ehthumbs_vista.db
+*.DS_Store
+*.AppleDouble
+*.LSOverride
+
+# Logs and debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+yarn.lock
