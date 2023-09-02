@@ -6,9 +6,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/Project";
 
+declare global {
+    interface Window {
+        webkitSpeechRecognition: any;
+    }
+}
+
 const Main = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [recognizedSpeech, setRecognizedSpeech] = useState<string>("");
+    const [isListening, setIsListening] = useState(false);
 
     const handleSearchInputChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -19,6 +27,22 @@ const Main = () => {
     const filteredProjects = projects.filter(project =>
         project.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const startListening = () => {
+        setIsListening(true);
+
+        const recognition = new window.webkitSpeechRecognition();
+
+        recognition.onresult = (event: {
+            results: { transcript: any }[][];
+        }) => {
+            const transcript = event.results[0][0].transcript;
+            setSearchQuery(transcript);
+            setRecognizedSpeech(transcript);
+            setIsListening(false);
+        };
+        recognition.start();
+    };
 
     useEffect(() => {
         const config = {
@@ -74,6 +98,7 @@ const Main = () => {
                         <button
                             type="button"
                             className="absolute inset-y-0 right-0 flex items-center pr-3"
+                            onClick={startListening}
                         >
                             <svg
                                 className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
@@ -115,7 +140,6 @@ const Main = () => {
                     </button>
                 </form>
             </div>
-
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-items-center items-center grid-cols-1 gap-12 auto-rows-max sm:mx-16 mx-6">
                 {filteredProjects.map(project => (
                     <Card key={project._id} {...project} />
