@@ -68,7 +68,7 @@
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.10",
     "postcss": "8.4.27",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "10.4.15",
     "tailwindcss": "3.3.3",
     "ts-node": "^10.9.1",
     "typescript": "5.1.6",
