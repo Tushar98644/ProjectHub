@@ -1,6 +1,5 @@
 import { SessionProvider } from "next-auth/react";
 import AuthenticationGuard from "./AuthenticationGuard";
-import { AppProps } from "next/app";
 import { Session } from "next-auth";
 
 interface CustomAppProps {

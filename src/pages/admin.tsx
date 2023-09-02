@@ -13,9 +13,18 @@ const Admin = () => {
     const { data: session } = useSession();
     // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
     const [projects, setProject] = useState<Project[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const [approvalStatus, setApprovalStatus] = useState<{
         [key: string]: string;
     }>({});
+
+    const handleSearchInputChange = (event: any) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredProjects = projects.filter(project =>
+        project.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const Approve_project = async (projectId: string) => {
         const config = {
@@ -214,6 +223,8 @@ const Admin = () => {
                                 id="table-search-users"
                                 className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Search for projects"
+                                value={searchQuery}
+                                onChange={handleSearchInputChange}
                             />
                         </div>
                     </div>
@@ -237,15 +248,10 @@ const Admin = () => {
                                 </th>
                             </tr>
                         </thead>
-                        {projects.map(project => (
+                        {filteredProjects.map(project => (
                             <tbody>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td>
-                                        {/* <div className="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                            <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
-                                        </div> */}
-                                    </td>
+                                    <td></td>
                                     <th
                                         scope="row"
                                         className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
@@ -259,7 +265,6 @@ const Admin = () => {
                                             <div className="text-base font-semibold">
                                                 {project.title}
                                             </div>
-                                            {/* <div className="font-normal text-gray-500">{session?.user?.email}</div> */}
                                         </div>
                                     </th>
                                     <td className="px-6 py-4 overflow-auto whitespace-nowrap max-w-xs">
