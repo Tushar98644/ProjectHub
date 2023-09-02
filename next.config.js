@@ -4,7 +4,7 @@ const nextConfig = {
     images: {
         domains: ["localhost"],
     },
-    distDir: "build",
+    // distDir: "build",
 };
 
 module.exports = nextConfig;
