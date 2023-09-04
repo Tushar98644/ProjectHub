@@ -5,6 +5,7 @@ import { Card } from "@/components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/Project";
+import { useSession } from "next-auth/react";
 
 declare global {
     interface Window {
@@ -17,6 +18,7 @@ const Main = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [recognizedSpeech, setRecognizedSpeech] = useState<string>("");
     const [isListening, setIsListening] = useState(false);
+    const { data: session } = useSession();
 
     const handleSearchInputChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -45,6 +47,7 @@ const Main = () => {
     };
 
     useEffect(() => {
+        console.log(`the user is ${session?.user?.name}`);
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -53,7 +56,9 @@ const Main = () => {
         axios
             .get("/api/project", config)
             .then(res => {
-                console.log(res.data);
+                console.log(
+                    `The final projects to be displayed are ${res.data}`
+                );
                 setProjects(res.data);
             })
             .catch(err => {
@@ -63,7 +68,7 @@ const Main = () => {
 
     return (
         <div className="py-28 md:py-36 flex flex-col gap-8">
-            <div className="mt-0 w-full sm:px-20 px-8">
+            <div className="mt-0 w-full sm:px-16 px-8">
                 <form className="flex items-center">
                     <label htmlFor="voice-search" className="sr-only">
                         Search

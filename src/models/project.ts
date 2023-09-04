@@ -27,6 +27,9 @@ const projectSchema = new monogoose.Schema({
     name: {
         type: String,
     },
+    tags: {
+        type: Array,
+    },
 });
 
 export default models.Project || monogoose.model("Project", projectSchema);

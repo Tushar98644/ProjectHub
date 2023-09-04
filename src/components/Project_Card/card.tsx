@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable @next/next/no-img-element */
 import { Project } from "@/types/Project";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 
-const Card = ({ title, description, image, github, name }: Project) => {
+const Card = ({ title, description, image, github, name, tags }: Project) => {
     return (
         <motion.div>
             <Tilt
@@ -70,9 +71,11 @@ const Card = ({ title, description, image, github, name }: Project) => {
                             tabIndex={0}
                             className="focus:outline-none grid grid-cols-3 mt-4 gap-4"
                         >
-                            <div className="py-3 px-6 text-xs leading-3 text-white text-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-                                #dogecoin
-                            </div>
+                            {tags.map(tag => (
+                                <div className="py-3 px-6 text-xs leading-3 text-white text-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                                    {tag}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

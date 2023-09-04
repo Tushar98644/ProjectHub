@@ -26,7 +26,7 @@ const Login = () => {
             <div className="text-center pt-12">
                 <button
                     className="text-nav-text text-lg cursor-pointer pt-2 pl-12 pr-12 pb-2 border border-gray-700 hover:text-white hover:border-white"
-                    onClick={() => signIn("google")}
+                    onClick={() => signIn()}
                 >
                     Log in
                 </button>

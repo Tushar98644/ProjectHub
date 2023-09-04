@@ -67,6 +67,7 @@ const Admin = () => {
                 ...prevState,
                 [projectId]: "Rejected",
             }));
+            console.log(`project reject details:${approvalStatus[projectId]}`);
             toast.error("Project Rejected", {
                 theme: "dark",
                 autoClose: 3000,
@@ -88,7 +89,7 @@ const Admin = () => {
             await axios
                 .get("/api/admin", config)
                 .then(res => {
-                    console.log(res.data);
+                    console.log(`The project data returned is ${res.data}`);
                     setProject(res.data);
                     // Set initial approval status
                     const initialApprovalStatus = res.data.reduce(

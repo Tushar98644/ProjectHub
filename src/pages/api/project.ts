@@ -10,19 +10,20 @@ const NewProject = async (req: NextApiRequest, res: NextApiResponse) => {
         const approved_projects = res.json(
             await Project.find({ approved: true }).sort({ createdAt: -1 })
         );
-        console.log(approved_projects);
+        console.log(`The approved projects are ${approved_projects}`);
     }
 
     if (method === "POST") {
-        const { title, description, image, github, name } = req.body;
+        const { title, description, image, github, name, tags } = req.body;
         const NewProduct = await Project.create({
             title,
             description,
             image,
             github,
             name,
+            tags,
         });
-        console.log(NewProduct);
+        console.log(`The project sent for approval is ${NewProduct}`);
         return res.status(201).json({ success: true, data: NewProduct });
     }
 };
