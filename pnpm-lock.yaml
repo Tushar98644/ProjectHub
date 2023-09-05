@@ -2030,10 +2030,10 @@ packages:
     resolution: {integrity: sha512-AEcW43C7huGd/vogTddNNTDRpO6vQ2zaQNrttvWV18ArBx9Z56h7BIsXkNFJVOO4/kblWEQz30ckw0+L3izc+Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/fake-timers': 29.6.2
+      '@jest/fake-timers': 29.6.4
       '@jest/types': 29.6.3
       '@types/node': 20.5.0
-      jest-mock: 29.6.2
+      jest-mock: 29.6.3
     dev: true
 
   /@jest/environment@29.6.4:
@@ -2051,16 +2051,6 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       jest-get-type: 29.6.3
-    dev: true
-
-  /@jest/expect@29.6.2:
-    resolution: {integrity: sha512-m6DrEJxVKjkELTVAztTLyS/7C92Y2b0VYqmDROYKLLALHn8T/04yPs70NADUYPrV3ruI+H3J0iUIuhkjp7vkfg==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      expect: 29.6.4
-      jest-snapshot: 29.6.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@jest/expect@29.6.4:
@@ -2081,7 +2071,7 @@ packages:
       '@sinonjs/fake-timers': 10.3.0
       '@types/node': 20.5.0
       jest-message-util: 29.6.3
-      jest-mock: 29.6.2
+      jest-mock: 29.6.3
       jest-util: 29.6.3
     dev: true
 
@@ -2095,18 +2085,6 @@ packages:
       jest-message-util: 29.6.3
       jest-mock: 29.6.3
       jest-util: 29.6.3
-    dev: true
-
-  /@jest/globals@29.6.2:
-    resolution: {integrity: sha512-cjuJmNDjs6aMijCmSa1g2TNG4Lby/AeU7/02VtpW+SLcZXzOLK2GpN2nLqcFjmhy3B3AoPeQVx7BnyOf681bAw==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/environment': 29.6.2
-      '@jest/expect': 29.6.2
-      '@jest/types': 29.6.3
-      jest-mock: 29.6.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@jest/globals@29.6.4:
@@ -9835,8 +9813,8 @@ packages:
     resolution: {integrity: sha512-G9mN+KOYIUe2sB9kpJkO9Bk18J4dTDArNFPwoZ7WKHKel55eKIS/u2bLthxgojwlf9NLCVQfgzM/WsOVvoC6Fw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/environment': 29.6.2
-      '@jest/expect': 29.6.2
+      '@jest/environment': 29.6.4
+      '@jest/expect': 29.6.4
       '@jest/test-result': 29.6.2
       '@jest/types': 29.6.3
       '@types/node': 20.5.0
@@ -10073,11 +10051,11 @@ packages:
     resolution: {integrity: sha512-YGdFeZ3T9a+/612c5mTQIllvWkddPbYcN2v95ZH24oWMbGA4GGS2XdIF92QMhUhvrjjuQWYgUGW2zawOyH63MQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/environment': 29.6.2
-      '@jest/fake-timers': 29.6.2
+      '@jest/environment': 29.6.4
+      '@jest/fake-timers': 29.6.4
       '@jest/types': 29.6.3
       '@types/node': 20.5.0
-      jest-mock: 29.6.2
+      jest-mock: 29.6.3
       jest-util: 29.6.3
     dev: true
 
@@ -10258,7 +10236,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/console': 29.6.2
-      '@jest/environment': 29.6.2
+      '@jest/environment': 29.6.4
       '@jest/test-result': 29.6.2
       '@jest/transform': 29.6.4
       '@jest/types': 29.6.3
@@ -10315,9 +10293,9 @@ packages:
     resolution: {integrity: sha512-2X9dqK768KufGJyIeLmIzToDmsN0m7Iek8QNxRSI/2+iPFYHF0jTwlO3ftn7gdKd98G/VQw9XJCk77rbTGZnJg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/environment': 29.6.2
-      '@jest/fake-timers': 29.6.2
-      '@jest/globals': 29.6.2
+      '@jest/environment': 29.6.4
+      '@jest/fake-timers': 29.6.4
+      '@jest/globals': 29.6.4
       '@jest/source-map': 29.6.0
       '@jest/test-result': 29.6.2
       '@jest/transform': 29.6.4
@@ -10330,7 +10308,7 @@ packages:
       graceful-fs: 4.2.11
       jest-haste-map: 29.6.4
       jest-message-util: 29.6.3
-      jest-mock: 29.6.2
+      jest-mock: 29.6.3
       jest-regex-util: 29.6.3
       jest-resolve: 29.6.2
       jest-snapshot: 29.6.4
