@@ -1017,8 +1017,8 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-transform-logical-assignment-operators@7.22.5(@babel/core@7.22.10):
-    resolution: {integrity: sha512-MQQOUW1KL8X0cDWfbwYP+TbVbZm16QmQXJQ+vndPtH/BoO0lOKpVoEDMI7+PskYxH+IiE0tS8xZye0qr1lGzSA==}
+  /@babel/plugin-transform-logical-assignment-operators@7.22.11(@babel/core@7.22.10):
+    resolution: {integrity: sha512-qQwRTP4+6xFCDV5k7gZBF3C31K34ut0tbEcTKxlX/0KXxm9GLcO14p570aWxFvVzx6QAfPgq7gaeIHXJC8LswQ==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1461,7 +1461,7 @@ packages:
       '@babel/plugin-transform-function-name': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-json-strings': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-literals': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-logical-assignment-operators': 7.22.5(@babel/core@7.22.10)
+      '@babel/plugin-transform-logical-assignment-operators': 7.22.11(@babel/core@7.22.10)
       '@babel/plugin-transform-member-expression-literals': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-modules-amd': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-modules-commonjs': 7.22.5(@babel/core@7.22.10)
