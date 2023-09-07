@@ -1362,8 +1362,8 @@ packages:
       '@babel/plugin-syntax-typescript': 7.22.5(@babel/core@7.22.10)
     dev: true
 
-  /@babel/plugin-transform-unicode-escapes@7.22.5(@babel/core@7.22.10):
-    resolution: {integrity: sha512-biEmVg1IYB/raUO5wT1tgfacCef15Fbzhkx493D3urBI++6hpJ+RFG4SrWMn0NEZLfvilqKf3QDrRVZHo08FYg==}
+  /@babel/plugin-transform-unicode-escapes@7.22.10(@babel/core@7.22.10):
+    resolution: {integrity: sha512-lRfaRKGZCBqDlRU3UIFovdp9c9mEvlylmpod0/OatICsSfuQ9YFthRo1tpTkGsklEefZdqlEFdY4A2dwTb6ohg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1481,7 +1481,7 @@ packages:
       '@babel/plugin-transform-sticky-regex': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-template-literals': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-typeof-symbol': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-unicode-escapes': 7.22.5(@babel/core@7.22.10)
+      '@babel/plugin-transform-unicode-escapes': 7.22.10(@babel/core@7.22.10)
       '@babel/plugin-transform-unicode-property-regex': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-unicode-regex': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-unicode-sets-regex': 7.22.5(@babel/core@7.22.10)
