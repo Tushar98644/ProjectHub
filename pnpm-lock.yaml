@@ -231,8 +231,8 @@ packages:
       '@babel/types': 7.22.15
     dev: true
 
-  /@babel/helper-builder-binary-assignment-operator-visitor@7.22.5:
-    resolution: {integrity: sha512-m1EP3lVOPptR+2DwD125gziZNcmoNSHGmJROKoy87loWUQyJaVXDgpmruWqDARZSmtYQ+Dl25okU8+qhVzuykw==}
+  /@babel/helper-builder-binary-assignment-operator-visitor@7.22.15:
+    resolution: {integrity: sha512-QkBXwGgaoC2GtGZRoma6kv7Szfv06khvhFav67ZExau2RaXzy8MpHSMO2PNoP2XtmQphJQRHFfg77Bq731Yizw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.22.15
@@ -943,7 +943,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.22.10
-      '@babel/helper-builder-binary-assignment-operator-visitor': 7.22.5
+      '@babel/helper-builder-binary-assignment-operator-visitor': 7.22.15
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
