@@ -991,8 +991,8 @@ packages:
       '@babel/plugin-syntax-flow': 7.22.5(@babel/core@7.22.10)
     dev: true
 
-  /@babel/plugin-transform-for-of@7.22.5(@babel/core@7.22.10):
-    resolution: {integrity: sha512-3kxQjX1dU9uudwSshyLeEipvrLjBCVthCgeTp6CzE/9JYrlAIaeekVxRpCWsDDfYTfRZRoCeZatCQvwo+wvK8A==}
+  /@babel/plugin-transform-for-of@7.22.15(@babel/core@7.22.10):
+    resolution: {integrity: sha512-me6VGeHsx30+xh9fbDLLPi0J1HzmeIIyenoOQHuw2D4m2SAU3NrspX5XxJLBpqn5yrLzrlw2Iy3RA//Bx27iOA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1474,7 +1474,7 @@ packages:
       '@babel/plugin-transform-dynamic-import': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-exponentiation-operator': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-export-namespace-from': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-for-of': 7.22.5(@babel/core@7.22.10)
+      '@babel/plugin-transform-for-of': 7.22.15(@babel/core@7.22.10)
       '@babel/plugin-transform-function-name': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-json-strings': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-literals': 7.22.5(@babel/core@7.22.10)
