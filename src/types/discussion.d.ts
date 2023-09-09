@@ -4,4 +4,5 @@ export interface Discussion {
     message: string[];
     profile: string;
     createdAt: Date;
+    page_id: string;
 }

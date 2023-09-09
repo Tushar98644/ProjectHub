@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { Discussion } from "@/types/Discussion";
+import { Discussion } from "@/types/discussion";
 import { useRouter } from "next/router";
 
 /* eslint-disable @next/next/no-img-element */
@@ -25,7 +26,7 @@ const Discussion_page = () => {
         if (started_discussion) {
             setShowdiscussion(true);
         }
-    }, []);
+    }, [id]);
 
     const handleComment = (e: { preventDefault: () => void }) => {
         e.preventDefault();
