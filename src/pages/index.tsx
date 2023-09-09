@@ -2,10 +2,11 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 import { Card } from "@/components";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/Project";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 declare global {
     interface Window {
@@ -19,6 +20,12 @@ const Main = () => {
     const [recognizedSpeech, setRecognizedSpeech] = useState<string>("");
     const [isListening, setIsListening] = useState(false);
     const { data: session } = useSession();
+    const router = useRouter();
+
+    const redirectToDiscussion = (id: string) => {
+        //   axios.post(`/api/discussion?id=${id}`);
+        router.push(`/discussion/${id}`);
+    };
 
     const handleSearchInputChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -26,9 +33,11 @@ const Main = () => {
         setSearchQuery(e.target.value);
     };
 
-    const filteredProjects = projects.filter(project =>
-        project.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredProjects = useMemo(() => {
+        return projects.filter(project =>
+            project.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [projects, searchQuery]);
 
     const startListening = () => {
         setIsListening(true);
@@ -147,7 +156,11 @@ const Main = () => {
             </div>
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-items-center items-center grid-cols-1 gap-12 auto-rows-max sm:mx-16 mx-6">
                 {filteredProjects.map(project => (
-                    <Card key={project._id} {...project} />
+                    <Card
+                        key={project._id}
+                        {...project}
+                        discussion={() => redirectToDiscussion(project._id)}
+                    />
                 ))}
             </div>
         </div>

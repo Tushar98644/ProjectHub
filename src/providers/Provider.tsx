@@ -1,6 +1,8 @@
 import { SessionProvider } from "next-auth/react";
 import AuthenticationGuard from "./AuthenticationGuard";
 import { Session } from "next-auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface CustomAppProps {
     session?: Session;
@@ -10,7 +12,10 @@ interface CustomAppProps {
 const Provider = ({ children, session }: CustomAppProps) => {
     return (
         <SessionProvider session={session}>
-            <AuthenticationGuard>{children}</AuthenticationGuard>
+            <AuthenticationGuard>
+                <ToastContainer />
+                {children}
+            </AuthenticationGuard>
         </SessionProvider>
     );
 };

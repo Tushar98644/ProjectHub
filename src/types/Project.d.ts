@@ -10,4 +10,6 @@ export interface Project {
     approved: boolean;
     name: string;
     tags: string[];
+    createdAt: Date;
+    discussion: function;
 }

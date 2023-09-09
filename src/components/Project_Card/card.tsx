@@ -6,7 +6,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 
-const Card = ({ title, description, image, github, name, tags }: Project) => {
+const Card = ({
+    title,
+    description,
+    image,
+    github,
+    name,
+    tags,
+    discussion,
+}: Project) => {
     return (
         <motion.div>
             <Tilt
@@ -67,12 +75,31 @@ const Card = ({ title, description, image, github, name, tags }: Project) => {
                                 ></path>
                             </svg>
                         </a>
+                        <button onClick={discussion}>
+                            <a className="inline-flex mx-4 items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <p>Discussion</p>
+                                <svg
+                                    aria-hidden="true"
+                                    className="w-4 h-4 ml-2 -mr-1"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </a>
+                        </button>
+
                         <div
                             tabIndex={0}
                             className="focus:outline-none grid grid-cols-3 mt-4 gap-4"
                         >
                             {tags.map(tag => (
-                                <div className="py-3 px-6 text-xs leading-3 text-white text-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                                <div className="flex py-3 px-6 text-xs leading-3 text-white text-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                                     {tag}
                                 </div>
                             ))}

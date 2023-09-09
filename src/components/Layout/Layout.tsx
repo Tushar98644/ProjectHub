@@ -1,15 +1,13 @@
 import { ChatBot, Navbar } from "..";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { Fragment } from "react";
 
 const Layout = ({ children }: React.PropsWithChildren) => {
     return (
-        <div>
-            <ToastContainer />
+        <Fragment>
             <Navbar />
             <ChatBot />
             {children}
-        </div>
+        </Fragment>
     );
 };
 
