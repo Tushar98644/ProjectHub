@@ -13,6 +13,8 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 -   Approval System
 -   Role-based Authentication
 -   Custom Loader
+-   Discussion section
+-   Search and voice-to-text
 -   Real-time Notifications
 -   Real-Time data updates
 
@@ -22,6 +24,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 -   Add project page
 -   Contact page
 -   Admin page (accessible only to admin)
+-   Discussion page(for each project)
 -   Message page (admin only)
 -   404 Error page
 
@@ -127,11 +130,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Home Page
 
-<img width="1440" alt="Screenshot 2023-07-18 at 4 20 58 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a3f5981b-19eb-4660-898d-7272ae765eed">
+<img width="1440" alt="Screenshot 2023-09-09 at 11 46 37 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/33a84958-7dc3-470b-94f2-cd1c6ea21493">
 
 ### Add Project Page
 
-<img width="1440" alt="Screenshot 2023-07-18 at 4 22 20 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/ff56fcb2-ad88-40b3-8efb-fb7893d92ef9">
+<img width="1440" alt="Screenshot 2023-09-09 at 11 50 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/bea62e18-fccf-4d21-af81-a9f119d794c4">
 
 ### Contact Page
 
@@ -140,6 +143,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Admin Page
 
 <img width="1440" alt="Screenshot 2023-07-16 at 7 24 40 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/da4e7314-36db-492a-9307-c98a1825229f">
+
+### Discussion Page
+
+<img width="1440" alt="Screenshot 2023-09-09 at 11 48 18 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/f4857fd3-9b32-473d-901a-0ee8c352684e">
 
 ### Message Page
 
@@ -152,6 +159,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## ChatBot
 
 <img width="1438" alt="Screenshot 2023-07-18 at 4 19 33 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/824f2b33-6d13-489f-a57d-e07d6f2c7939">
+
+### Search and voice-to-text
+
+<img width="1440" alt="Screenshot 2023-09-09 at 11 51 25 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c4276b38-2806-4c0a-90fd-d2c33127600d">
 
 ## 🐛 Bug Reporting
 
