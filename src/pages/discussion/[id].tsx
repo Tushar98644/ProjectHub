@@ -45,6 +45,7 @@ const Discussion_page = () => {
         console.log(data);
         axios.post(`/api/discussion/${id}`, data, config);
         console.log(`The data sent to discussion api is ${data}`);
+        router.reload();
     };
 
     const fetchDiscussion = useCallback(async () => {
@@ -58,7 +59,6 @@ const Discussion_page = () => {
             .then(res => {
                 setDiscussionData(res.data);
                 console.log(`Data fetched successfully : ${res.data}`);
-                router.push(`/discussion/${id}`);
             })
             .catch(err => {
                 console.log(err);
@@ -105,7 +105,7 @@ const Discussion_page = () => {
                     </div>
                 </div>
             ) : (
-                <div className="py-24 h-screen w-screen">
+                <div className="py-24 dark:bg-gray-900 min-h-screen">
                     <section className="bg-white dark:bg-gray-900 antialiased py-8">
                         <div className="max-w-2xl mx-auto px-4 ">
                             <div className="flex justify-between items-center mb-6">

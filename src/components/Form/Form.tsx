@@ -39,7 +39,7 @@ const Form = () => {
             },
         };
         await axios.post("/api/project", data, config);
-        console.log(data);
+        // console.log(data);
         router.push("/");
         notify();
     };
