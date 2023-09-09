@@ -6,7 +6,7 @@ import { Project } from "@/types/Project";
 import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 const Admin = () => {
@@ -22,9 +22,11 @@ const Admin = () => {
         setSearchQuery(event.target.value);
     };
 
-    const filteredProjects = projects.filter(project =>
-        project.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredProjects = useMemo(() => {
+        return projects.filter(project =>
+            project.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, []);
 
     const Approve_project = async (projectId: string) => {
         const config = {
