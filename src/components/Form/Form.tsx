@@ -11,7 +11,6 @@ const Form = () => {
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
     const [github, setGithub] = useState("");
-    const [name, setName] = useState("");
     const [tags, setTags] = useState<string[]>([]);
     const router = useRouter();
     const [newTag, setNewTag] = useState("");
@@ -30,9 +29,8 @@ const Form = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const name_data = session?.user?.name || "Anonymous";
-        setName(name_data);
-        console.log(`the contributor is ${name_data}`);
+        const name = session?.user?.name || "Anonymous";
+        console.log(`the contributor is ${name}`);
         const data = { title, description, image, github, name, tags };
         console.log(`the tags are ${tags}`);
         const config = {

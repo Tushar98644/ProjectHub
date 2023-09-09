@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 import { Card } from "@/components";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/Project";
 import { useSession } from "next-auth/react";
@@ -55,14 +55,13 @@ const Main = () => {
         recognition.start();
     };
 
-    useEffect(() => {
-        console.log(`the user is ${session?.user?.name}`);
+    const fetchprojects = useCallback(async () => {
         const config = {
             headers: {
                 "Content-Type": "application/json",
             },
         };
-        axios
+        await axios
             .get("/api/project", config)
             .then(res => {
                 console.log(
@@ -74,6 +73,10 @@ const Main = () => {
                 console.log(err);
             });
     }, []);
+
+    useEffect(() => {
+        fetchprojects();
+    }, [fetchprojects]);
 
     return (
         <div className="py-28 md:py-36 flex flex-col gap-8">

@@ -26,7 +26,7 @@ const Admin = () => {
         return projects.filter(project =>
             project.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
-    }, []);
+    }, [projects, searchQuery]);
 
     const Approve_project = async (projectId: string) => {
         const config = {
