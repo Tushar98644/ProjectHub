@@ -3544,7 +3544,7 @@ packages:
       terser-webpack-plugin: 5.3.9(@swc/core@1.3.83)(esbuild@0.18.20)(webpack@5.88.2)
       ts-dedent: 2.2.0
       typescript: 5.1.6
-      url: 0.11.1
+      url: 0.11.2
       util: 0.12.5
       util-deprecate: 1.0.2
       webpack: 5.88.2(@swc/core@1.3.83)(esbuild@0.18.20)
@@ -11483,7 +11483,7 @@ packages:
       timers-browserify: 2.0.12
       tty-browserify: 0.0.1
       type-fest: 2.19.0
-      url: 0.11.1
+      url: 0.11.2
       util: 0.12.5
       vm-browserify: 1.1.2
       webpack: 5.88.2(@swc/core@1.3.83)(esbuild@0.18.20)
@@ -14298,8 +14298,8 @@ packages:
       requires-port: 1.0.0
     dev: true
 
-  /url@0.11.1:
-    resolution: {integrity: sha512-rWS3H04/+mzzJkv0eZ7vEDGiQbgquI1fGfOad6zKvgYQi1SzMmhl7c/DdRGxhaWrVH6z0qWITo8rpnxK/RfEhA==}
+  /url@0.11.2:
+    resolution: {integrity: sha512-7yIgNnrST44S7PJ5+jXbdIupfU1nWUdQJBFBeJRclPXiWgCvrSq5Frw8lr/i//n5sqDfzoKmBymMS81l4U/7cg==}
     dependencies:
       punycode: 1.4.1
       qs: 6.11.2
