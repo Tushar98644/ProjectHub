@@ -1,32 +1,21 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { NextApiRequest, NextApiResponse } from "next";
-import { Discussion } from "@/models";
+import { createDiscussion, getDiscussions } from "@/utils";
 
-const Discussions = async (req: NextApiRequest, res: NextApiResponse) => {
+const handleDiscussions = async (req: NextApiRequest, res: NextApiResponse) => {
     const { method } = req;
-    const { id: page_id } = req.query;
-    console.log(`The id is ${page_id}`);
 
-    if (method == "GET") {
-        const discussion = res.json(
-            await Discussion.find({ page_id }).sort({ createdAt: -1 })
-        );
-        console.log(`The discussion data the api sending is ${discussion}`);
-    }
+    switch (method) {
+        case "GET":
+            await getDiscussions(req, res);
+            break;
 
-    if (method == "POST") {
-        const { name, profile, message } = req.body;
+        case "POST":
+            await createDiscussion(req, res);
+            break;
 
-        const NewDiscussion = await Discussion.create({
-            name,
-            profile,
-            message,
-            page_id,
-        });
-
-        console.log(`The discussion recieved is ${NewDiscussion}`);
-        return res.status(201).json({ success: true, data: NewDiscussion });
+        default:
+            res.status(500).json({ message: "Method not allowed" });
     }
 };
 
-export default Discussions;
+export default handleDiscussions;

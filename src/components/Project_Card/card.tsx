@@ -105,7 +105,7 @@ const Card = ({
                         >
                             {tags.map(tag => (
                                 <div className="flex justify-center items-center text-center p-3 text-xs text-white rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-                                    {tag}
+                                    # {tag}
                                 </div>
                             ))}
                         </div>
