@@ -3783,7 +3783,7 @@ packages:
       '@storybook/csf-tools': 7.3.1
       '@storybook/node-logger': 7.3.1
       '@storybook/types': 7.3.1
-      '@types/cross-spawn': 6.0.2
+      '@types/cross-spawn': 6.0.3
       cross-spawn: 7.0.3
       globby: 11.1.0
       jscodeshift: 0.14.0(@babel/preset-env@7.22.9)
@@ -5389,8 +5389,8 @@ packages:
       '@types/node': 20.5.9
     dev: true
 
-  /@types/cross-spawn@6.0.2:
-    resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
+  /@types/cross-spawn@6.0.3:
+    resolution: {integrity: sha512-BDAkU7WHHRHnvBf5z89lcvACsvkz/n7Tv+HyD/uW76O29HoH1Tk/W6iQrepaZVbisvlEek4ygwT8IW7ow9XLAA==}
     dependencies:
       '@types/node': 20.5.9
     dev: true
