@@ -36,8 +36,8 @@ dependencies:
     specifier: ^4.23.0
     version: 4.23.0(next@13.4.19)(react-dom@18.2.0)(react@18.2.0)
   openai-edge:
-    specifier: ^1.2.0
-    version: 1.2.0
+    specifier: ^1.2.2
+    version: 1.2.2
   prop-types:
     specifier: ^15.8.1
     version: 15.8.1
@@ -11396,8 +11396,8 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openai-edge@1.2.0:
-    resolution: {integrity: sha512-eaQs+O/1k6OZMUibNlBzWPXdHFxpUNLMy4BwhtXCFDub5iz7ve/PxOJTL8GBG3/1S1j6LIL93xjdlzCPQpbdgQ==}
+  /openai-edge@1.2.2:
+    resolution: {integrity: sha512-C3/Ao9Hkx5uBPv9YFBpX/x59XMPgPUU4dyGg/0J2sOJ7O9D98kD+lfdOc7v/60oYo5xzMGct80uFkYLH+X2qgw==}
     engines: {node: '>=18'}
     dev: false
 
