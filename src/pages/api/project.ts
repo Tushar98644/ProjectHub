@@ -1,4 +1,5 @@
 // import mongooseconnect from "@/lib/mongoose";
+import mongooseconnect from "@/lib/mongoose";
 import { createProject, getProjects } from "@/utils";
 import { NextApiResponse, NextApiRequest } from "next";
 
@@ -6,6 +7,7 @@ export const projectHandler = async (
     req: NextApiRequest,
     res: NextApiResponse
 ) => {
+    mongooseconnect();
     const { method } = req;
 
     switch (method) {

@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Project } from "@/models";
-import project from "@/models/project";
 
 export const createProject = async (
     req: NextApiRequest,
@@ -34,13 +33,13 @@ export const getProjects = async (
     res: NextApiResponse
 ) => {
     try {
-        // const approved_projects = res.json(
-        //     await Project.find({ approved: true }).sort({ createdAt: -1 })
-        // );
-        const approved_projects = await Project.find({ approved: "true" }).sort(
-            { createdAt: -1 }
+        const approved_projects = res.json(
+            await Project.find({ approved: true }).sort({ createdAt: -1 })
         );
-        return res.status(200).json(approved_projects);
+        // const approved_projects = await Project.find({ approved: "true" }).sort(
+        //     { createdAt: -1 }
+        // );
+        // return res.status(200).json(approved_projects);
     } catch (err) {
         console.log(err);
         return res.status(400).json({ err: "Error in fetching projects" });

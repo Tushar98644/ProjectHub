@@ -43,7 +43,8 @@ const Discussion_page = () => {
             },
         };
         console.log(data);
-        axios.post(`/api/discussion/${id}`, data, config);
+        const apiUrl = `/api/discussion/${id}`;
+        axios.post(apiUrl, data, config);
         console.log(`The data sent to discussion api is ${data}`);
         router.reload();
     };
@@ -54,8 +55,9 @@ const Discussion_page = () => {
                 "Content-Type": "application/json",
             },
         };
+        const apiUrl = `/api/discussion/${id}`;
         await axios
-            .get(`/api/discussion/${id}`, config)
+            .get(apiUrl, config)
             .then(res => {
                 setDiscussionData(res.data);
                 console.log(`Data fetched successfully : ${res.data}`);

@@ -1,4 +1,3 @@
-import { Message } from "@/models";
 import { createMessage, getMessages } from "@/utils";
 import { NextApiRequest, NextApiResponse } from "next";
 
