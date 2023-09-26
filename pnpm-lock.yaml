@@ -9909,7 +9909,7 @@ packages:
       import-local: 3.1.0
       jest-config: 29.6.4(@types/node@20.5.9)(ts-node@10.9.1)
       jest-util: 29.7.0
-      jest-validate: 29.6.3
+      jest-validate: 29.7.0
       prompts: 2.4.2
       yargs: 17.7.2
     transitivePeerDependencies:
@@ -9948,7 +9948,7 @@ packages:
       jest-resolve: 29.6.4
       jest-runner: 29.6.4
       jest-util: 29.7.0
-      jest-validate: 29.6.3
+      jest-validate: 29.7.0
       micromatch: 4.0.5
       parse-json: 5.2.0
       pretty-format: 29.7.0
@@ -10263,7 +10263,7 @@ packages:
       jest-haste-map: 29.6.4
       jest-pnp-resolver: 1.2.3(jest-resolve@29.6.4)
       jest-util: 29.7.0
-      jest-validate: 29.6.3
+      jest-validate: 29.7.0
       resolve: 1.22.4
       resolve.exports: 2.0.2
       slash: 3.0.0
@@ -10468,18 +10468,6 @@ packages:
       ci-info: 3.8.0
       graceful-fs: 4.2.11
       picomatch: 2.3.1
-    dev: true
-
-  /jest-validate@29.6.3:
-    resolution: {integrity: sha512-e7KWZcAIX+2W1o3cHfnqpGajdCs1jSM3DkXjGeLSNmCazv1EeI1ggTeK5wdZhF+7N+g44JI2Od3veojoaumlfg==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/types': 29.6.3
-      camelcase: 6.3.0
-      chalk: 4.1.2
-      jest-get-type: 29.6.3
-      leven: 3.1.0
-      pretty-format: 29.7.0
     dev: true
 
   /jest-validate@29.7.0:
