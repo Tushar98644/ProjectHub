@@ -1989,18 +1989,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /@jest/console@29.6.4:
-    resolution: {integrity: sha512-wNK6gC0Ha9QeEPSkeJedQuTQqxZYnDPuDcDhVuVatRvMkL4D0VTvFVZj+Yuh6caG2aOfzkUZ36KtCmLNtR02hw==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@jest/types': 29.6.3
-      '@types/node': 20.5.9
-      chalk: 4.1.2
-      jest-message-util: 29.7.0
-      jest-util: 29.7.0
-      slash: 3.0.0
-    dev: true
-
   /@jest/console@29.7.0:
     resolution: {integrity: sha512-5Ni4CU7XHQi32IJ398EEP4RrB8eV09sXP2ROqD4bksHrnTree52PsxvX8tpL8LvTZ3pFzXyPbNQReSN41CAhOg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -2193,7 +2181,7 @@ packages:
     resolution: {integrity: sha512-uQ1C0AUEN90/dsyEirgMLlouROgSY+Wc/JanVVk0OiUKa5UFh7sJpMEM3aoUBAz2BRNvUJ8j3d294WFuRxSyOQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/console': 29.6.4
+      '@jest/console': 29.7.0
       '@jest/types': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.4
       collect-v8-coverage: 1.0.2
@@ -10230,7 +10218,7 @@ packages:
     resolution: {integrity: sha512-SDaLrMmtVlQYDuG0iSPYLycG8P9jLI+fRm8AF/xPKhYDB2g6xDWjXBrR5M8gEWsK6KVFlebpZ4QsrxdyIX1Jaw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jest/console': 29.6.4
+      '@jest/console': 29.7.0
       '@jest/environment': 29.7.0
       '@jest/test-result': 29.6.4
       '@jest/transform': 29.6.4
