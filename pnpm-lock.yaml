@@ -476,7 +476,7 @@ packages:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-skip-transparent-expression-wrappers': 7.22.5
-      '@babel/plugin-transform-optional-chaining': 7.22.6(@babel/core@7.22.10)
+      '@babel/plugin-transform-optional-chaining': 7.23.0(@babel/core@7.22.10)
     dev: true
 
   /@babel/plugin-proposal-class-properties@7.18.6(@babel/core@7.22.10):
@@ -1149,8 +1149,8 @@ packages:
       '@babel/plugin-syntax-optional-catch-binding': 7.8.3(@babel/core@7.22.10)
     dev: true
 
-  /@babel/plugin-transform-optional-chaining@7.22.6(@babel/core@7.22.10):
-    resolution: {integrity: sha512-Vd5HiWml0mDVtcLHIoEU5sw6HOUW/Zk0acLs/SAeuLzkGNOPc9DB4nkUajemhCmTIz3eiaKREZn2hQQqF79YTg==}
+  /@babel/plugin-transform-optional-chaining@7.23.0(@babel/core@7.22.10):
+    resolution: {integrity: sha512-sBBGXbLJjxTzLBF5rFWaikMnOGOk/BmK6vVByIdEggZ7Vn6CvWXZyRkkLFK6WE0IF8jSliyOkUN6SScFgzCM0g==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1459,7 +1459,7 @@ packages:
       '@babel/plugin-transform-object-rest-spread': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-object-super': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-optional-catch-binding': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-optional-chaining': 7.22.6(@babel/core@7.22.10)
+      '@babel/plugin-transform-optional-chaining': 7.23.0(@babel/core@7.22.10)
       '@babel/plugin-transform-parameters': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-private-methods': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-private-property-in-object': 7.22.5(@babel/core@7.22.10)
