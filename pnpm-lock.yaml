@@ -1023,8 +1023,8 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-transform-modules-amd@7.22.5(@babel/core@7.22.10):
-    resolution: {integrity: sha512-R+PTfLTcYEmb1+kK7FNkhQ1gP4KgjpSO6HfH9+f8/yfp2Nt3ggBjiVpRwmwTlfqZLafYKJACy36yDXlEmI9HjQ==}
+  /@babel/plugin-transform-modules-amd@7.23.0(@babel/core@7.22.10):
+    resolution: {integrity: sha512-xWT5gefv2HGSm4QHtgc1sYPbseOyf+FFDo2JbpE25GWl5BqTGO9IMwTYJRoIdjsF85GE+VegHxSCUt5EvoYTAw==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1448,7 +1448,7 @@ packages:
       '@babel/plugin-transform-literals': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-logical-assignment-operators': 7.22.11(@babel/core@7.22.10)
       '@babel/plugin-transform-member-expression-literals': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-modules-amd': 7.22.5(@babel/core@7.22.10)
+      '@babel/plugin-transform-modules-amd': 7.23.0(@babel/core@7.22.10)
       '@babel/plugin-transform-modules-commonjs': 7.23.0(@babel/core@7.22.10)
       '@babel/plugin-transform-modules-systemjs': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-modules-umd': 7.22.5(@babel/core@7.22.10)
