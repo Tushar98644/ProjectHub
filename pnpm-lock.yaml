@@ -822,8 +822,8 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-transform-block-scoping@7.22.5(@babel/core@7.22.10):
-    resolution: {integrity: sha512-EcACl1i5fSQ6bt+YGuU/XGCeZKStLmyVGytWkpyhCLeQVA0eu6Wtiw92V+I1T/hnezUv7j74dA/Ro69gWcU+hg==}
+  /@babel/plugin-transform-block-scoping@7.23.0(@babel/core@7.22.10):
+    resolution: {integrity: sha512-cOsrbmIOXmf+5YbL99/S49Y3j46k/T16b9ml8bm9lP6N9US5iQ2yBK7gpui1pg0V/WMcXdkfKbTb7HXq9u+v4g==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1431,7 +1431,7 @@ packages:
       '@babel/plugin-transform-async-generator-functions': 7.22.7(@babel/core@7.22.10)
       '@babel/plugin-transform-async-to-generator': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-block-scoped-functions': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-block-scoping': 7.22.5(@babel/core@7.22.10)
+      '@babel/plugin-transform-block-scoping': 7.23.0(@babel/core@7.22.10)
       '@babel/plugin-transform-class-properties': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-class-static-block': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-classes': 7.22.6(@babel/core@7.22.10)
