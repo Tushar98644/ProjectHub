@@ -951,8 +951,8 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
-  /@babel/plugin-transform-export-namespace-from@7.22.5(@babel/core@7.22.10):
-    resolution: {integrity: sha512-X4hhm7FRnPgd4nDA4b/5V280xCx6oL7Oob5+9qVS5C13Zq4bh1qq7LU0GgRU6b5dBWBvhGaXYVB4AcN6+ol6vg==}
+  /@babel/plugin-transform-export-namespace-from@7.22.11(@babel/core@7.22.10):
+    resolution: {integrity: sha512-xa7aad7q7OiT8oNZ1mU7NrISjlSkVdMbNxn9IuLZyL9AJEhs1Apba3I+u5riX1dIkdptP5EKDG5XDPByWxtehw==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1455,7 +1455,7 @@ packages:
       '@babel/plugin-transform-duplicate-keys': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-dynamic-import': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-exponentiation-operator': 7.22.5(@babel/core@7.22.10)
-      '@babel/plugin-transform-export-namespace-from': 7.22.5(@babel/core@7.22.10)
+      '@babel/plugin-transform-export-namespace-from': 7.22.11(@babel/core@7.22.10)
       '@babel/plugin-transform-for-of': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-function-name': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-json-strings': 7.22.5(@babel/core@7.22.10)
