@@ -107,8 +107,8 @@ devDependencies:
     specifier: 18.2.7
     version: 18.2.7
   '@types/react-tag-input':
-    specifier: ^6.6.1
-    version: 6.6.1
+    specifier: ^6.6.2
+    version: 6.6.2
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.27)
@@ -5627,8 +5627,8 @@ packages:
       '@types/react': 18.2.21
     dev: true
 
-  /@types/react-tag-input@6.6.1:
-    resolution: {integrity: sha512-IaCnZu4gplbt2pR+3bD/yy9SdzsuT+fTOLeJcwYuyBw0aoHAuiTg8lKPii1fPPrV+nisxOWU3SmEqL9VwqaXuw==}
+  /@types/react-tag-input@6.6.2:
+    resolution: {integrity: sha512-R01HpqtiHl0fFyZpa0tt0UaM1WHBaIVI5bXs/5QmjtDLyrMdORpUgaYH6cNFGLZdA/5gPlLELFk+F4rLdJxWAg==}
     dependencies:
       '@types/react': 18.2.21
     dev: true
