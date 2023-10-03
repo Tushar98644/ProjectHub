@@ -10860,7 +10860,7 @@ packages:
       jose: 4.14.4
       next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
-      openid-client: 5.4.3
+      openid-client: 5.5.0
       preact: 10.17.0
       preact-render-to-string: 5.2.6(preact@10.17.0)
       react: 18.2.0
@@ -11162,8 +11162,8 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /openid-client@5.4.3:
-    resolution: {integrity: sha512-sVQOvjsT/sbSfYsQI/9liWQGVZH/Pp3rrtlGEwgk/bbHfrUDZ24DN57lAagIwFtuEu+FM9Ev7r85s8S/yPjimQ==}
+  /openid-client@5.5.0:
+    resolution: {integrity: sha512-Y7Xl8BgsrkzWLHkVDYuroM67hi96xITyEDSkmWaGUiNX6CkcXC3XyQGdv5aWZ6dukVKBFVQCADi9gCavOmU14w==}
     dependencies:
       jose: 4.14.4
       lru-cache: 6.0.0
