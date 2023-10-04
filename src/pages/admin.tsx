@@ -131,8 +131,8 @@ const Admin = () => {
                     </p>
                 </div>
             </div>
-            <div className=" md:px-20 px-4">
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div className="md:px-20 px-4 flex flex-col min-h-[300px]">
+                <div className="relative overflow-x-auto max-w-full shadow-md sm:rounded-lg">
                     <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12">
                         <div>
                             <button
@@ -152,9 +152,9 @@ const Admin = () => {
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
                                         d="M19 9l-7 7-7-7"
                                     ></path>
                                 </svg>
@@ -172,7 +172,7 @@ const Admin = () => {
                                             href="#"
                                             className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                         >
-                                            Reward
+                                            Rewa
                                         </a>
                                     </li>
                                     <li>
@@ -215,16 +215,16 @@ const Admin = () => {
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <path
-                                        fill-rule="evenodd"
+                                        fillRule="evenodd"
                                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                        clip-rule="evenodd"
+                                        clipRule="evenodd"
                                     ></path>
                                 </svg>
                             </div>
                             <input
                                 type="text"
                                 id="table-search-users"
-                                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Search for projects"
                                 value={searchQuery}
                                 onChange={handleSearchInputChange}
@@ -237,27 +237,39 @@ const Admin = () => {
                                 <th scope="col" className="p-4">
                                     <div className="flex items-center"></div>
                                 </th>
-                                <th scope="col" className="px-4 py-3 ">
+                                <th
+                                    scope="col"
+                                    className="px-4 py-3 whitespace-nowrap"
+                                >
                                     Project Title
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th
+                                    scope="col"
+                                    className="px-4 py-3 whitespace-nowrap"
+                                >
                                     Project Description
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th
+                                    scope="col"
+                                    className="px-4 py-3 whitespace-nowrap"
+                                >
                                     Github link
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th
+                                    scope="col"
+                                    className="px-4 py-3 whitespace-nowrap"
+                                >
                                     Action
                                 </th>
                             </tr>
                         </thead>
                         {filteredProjects.map(project => (
-                            <tbody>
+                            <tbody key={project._id}>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td></td>
                                     <th
                                         scope="row"
-                                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                        className="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white"
                                     >
                                         <img
                                             className="w-10 h-10 rounded-full"
@@ -266,21 +278,21 @@ const Admin = () => {
                                         />
                                         <div className="pl-3">
                                             <div className="text-base font-semibold">
-                                                {project.title}
+                                                Project Title
                                             </div>
                                         </div>
                                     </th>
-                                    <td className="px-6 py-4 overflow-auto whitespace-nowrap max-w-xs">
-                                        {project.description}
+                                    <td className="px-4 py-4 overflow-auto whitespace-normal max-w-xs">
+                                        Project Description
                                     </td>
-                                    <td className="px-6 py-4 cursor-pointer hover:underline overflow-auto whitespace-nowrap max-w-xs">
+                                    <td className="px-4 py-4 cursor-pointer hover:underline overflow-auto whitespace-normal max-w-xs">
                                         <div className="flex items-center">
                                             <a href={project.github}>
                                                 {project.github}
                                             </a>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-4 py-4 whitespace-nowrap">
                                         {approvalStatus[project._id] ? (
                                             <span
                                                 className={
@@ -294,43 +306,37 @@ const Admin = () => {
                                                 {approvalStatus[project._id]}!
                                             </span>
                                         ) : (
-                                            <a
-                                                href="#"
-                                                className="font-medium text-blue-600 dark:text-blue-500"
-                                            >
-                                                <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
-                                                    <div>
-                                                        <a
-                                                            href="#"
-                                                            onClick={() =>
-                                                                Approve_project(
-                                                                    project._id
-                                                                )
-                                                            }
-                                                            className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900"
-                                                        >
-                                                            Approve
-                                                        </a>
-                                                    </div>
-                                                    <div>
-                                                        <a
-                                                            href="#"
-                                                            onClick={() =>
-                                                                Reject_project(
-                                                                    project._id
-                                                                )
-                                                            }
-                                                            className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900"
-                                                        >
-                                                            Reject
-                                                        </a>
-                                                    </div>
+                                            <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
+                                                <div>
+                                                    <a
+                                                        href="#"
+                                                        onClick={() =>
+                                                            Approve_project(
+                                                                project._id
+                                                            )
+                                                        }
+                                                        className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900"
+                                                    >
+                                                        Approve
+                                                    </a>
                                                 </div>
-                                            </a>
+                                                <div>
+                                                    <a
+                                                        href="#"
+                                                        onClick={() =>
+                                                            Reject_project(
+                                                                project._id
+                                                            )
+                                                        }
+                                                        className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900"
+                                                    >
+                                                        Reject
+                                                    </a>
+                                                </div>
+                                            </div>
                                         )}
                                     </td>
                                 </tr>
-                                <tr></tr>
                             </tbody>
                         ))}
                     </table>
