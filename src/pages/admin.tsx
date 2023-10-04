@@ -264,7 +264,7 @@ const Admin = () => {
                             </tr>
                         </thead>
                         {filteredProjects.map(project => (
-                            <tbody key={project._id}>
+                            <tbody>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td></td>
                                     <th
@@ -278,12 +278,12 @@ const Admin = () => {
                                         />
                                         <div className="pl-3">
                                             <div className="text-base font-semibold">
-                                                Project Title
+                                                {Project Title}
                                             </div>
                                         </div>
                                     </th>
                                     <td className="px-4 py-4 overflow-auto whitespace-normal max-w-xs">
-                                        Project Description
+                                        {Project Description}
                                     </td>
                                     <td className="px-4 py-4 cursor-pointer hover:underline overflow-auto whitespace-normal max-w-xs">
                                         <div className="flex items-center">
