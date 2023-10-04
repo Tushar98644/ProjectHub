@@ -278,12 +278,12 @@ const Admin = () => {
                                         />
                                         <div className="pl-3">
                                             <div className="text-base font-semibold">
-                                                {Project Title}
+                                                {project.title}
                                             </div>
                                         </div>
                                     </th>
                                     <td className="px-4 py-4 overflow-auto whitespace-normal max-w-xs">
-                                        {Project Description}
+                                               {project.description}
                                     </td>
                                     <td className="px-4 py-4 cursor-pointer hover:underline overflow-auto whitespace-normal max-w-xs">
                                         <div className="flex items-center">
