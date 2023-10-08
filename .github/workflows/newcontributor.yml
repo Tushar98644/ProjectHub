@@ -1,0 +1,54 @@
+name: Welcome New Contributors
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check First Contribution
+        id: check-contribution
+        run: |
+          USER_CONTRIBUTIONS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                             "https://api.github.com/repos/${{ github.repository }}/contributors/${{ github.event.issue.user.login }}/events")
+
+          # Check if there are no previous contributions (issues or pull requests) by the user in your repository
+          if [[ $(echo "$USER_CONTRIBUTIONS" | jq 'map(select(.type | test("^(IssuesEvent|PullRequestEvent)$") | not)) | length') -eq 0 ]]; then
+            echo "::set-output name=first-contribution::true"
+          else
+            echo "::set-output name=first-contribution::false"
+          fi
+        env:
+          FIRST_CONTRIBUTION: ${{ steps.check-contribution.outputs.first-contribution }}
+
+      - name: Select Random Welcome Meme
+        id: random-meme
+        run: |
+          memes=(".github/workflows/225.png" ".github/workflows/224.png" ".github/workflows/223.png")
+          random_index=$((RANDOM % ${#memes[@]}))
+          selected_meme=${memes[$random_index]}
+          echo "MEME_PATH=$selected_meme" >> $GITHUB_ENV
+
+      - name: Post Welcome Comment
+        if: steps.check-contribution.outputs.first-contribution == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.VIVEK_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const memeData = fs.readFileSync('${{ env.MEME_PATH }}', 'base64');
+            const body = `Thank you for your first contribution to our project! :tada:\n\nWelcome to our community!`;
+
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
