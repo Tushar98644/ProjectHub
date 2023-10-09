@@ -5086,7 +5086,7 @@ packages:
       '@babel/types': 7.23.0
       '@types/babel__generator': 7.6.5
       '@types/babel__template': 7.4.1
-      '@types/babel__traverse': 7.20.1
+      '@types/babel__traverse': 7.20.2
     dev: true
 
   /@types/babel__generator@7.6.5:
@@ -5102,8 +5102,8 @@ packages:
       '@babel/types': 7.23.0
     dev: true
 
-  /@types/babel__traverse@7.20.1:
-    resolution: {integrity: sha512-MitHFXnhtgwsGZWtT68URpOvLN4EREih1u3QtQiN4VdAxWKRVvGCSvw/Qth0M0Qq3pJpnGOu5JaM/ydK7OGbqg==}
+  /@types/babel__traverse@7.20.2:
+    resolution: {integrity: sha512-ojlGK1Hsfce93J0+kn3H5R73elidKUaZonirN33GSmgTUMpzI/MIFfSpF3haANe3G1bEBS9/9/QEqwTzwqFsKw==}
     dependencies:
       '@babel/types': 7.23.0
     dev: true
@@ -6223,7 +6223,7 @@ packages:
       '@babel/template': 7.22.15
       '@babel/types': 7.23.0
       '@types/babel__core': 7.20.1
-      '@types/babel__traverse': 7.20.1
+      '@types/babel__traverse': 7.20.2
     dev: true
 
   /babel-plugin-named-exports-order@0.0.2:
