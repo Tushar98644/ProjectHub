@@ -6,6 +6,13 @@ import Link from "next/link";
 const Page_Error = () => {
     return (
         <Layout>
+            <head>
+                <link
+                    rel="icon"
+                    type="image/x-icon"
+                    href="/images/favicon.png"
+                />
+            </head>
             <div className="grid md:grid-cols-5 md:gap-12 gap-0 pt-32 text-gray-400 text-4xl font-bold md:mx-12 mx-8 text-center justify-items-center">
                 <div className="flex flex-col gap-4 md:pt-20 items-center md:col-span-3 md:order-first">
                     <h1 className="">404</h1>
