@@ -86,8 +86,8 @@ devDependencies:
     specifier: ^7.3.1
     version: 7.3.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
   '@storybook/testing-library':
-    specifier: ^0.2.0
-    version: 0.2.0
+    specifier: ^0.2.2
+    version: 0.2.2
   '@testing-library/jest-dom':
     specifier: ^5.17.0
     version: 5.17.0
@@ -4783,8 +4783,8 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/testing-library@0.2.0:
-    resolution: {integrity: sha512-Ff6jNnrsosmDshgCf0Eb5Cz7IA34p/1Ps5N3Kp3598kfXpBSccSkQQvVFUXC3kIHw/isIXWPqntZuKqnWUz7Gw==}
+  /@storybook/testing-library@0.2.2:
+    resolution: {integrity: sha512-L8sXFJUHmrlyU2BsWWZGuAjv39Jl1uAqUHdxmN42JY15M4+XCMjGlArdCCjDe1wpTSW6USYISA9axjZojgtvnw==}
     dependencies:
       '@testing-library/dom': 9.3.3
       '@testing-library/user-event': 14.4.3(@testing-library/dom@9.3.3)
