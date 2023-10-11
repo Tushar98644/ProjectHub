@@ -28,13 +28,6 @@ const Message_page = () => {
 
     return (
         <Layout>
-            <head>
-                <link
-                    rel="icon"
-                    type="image/x-icon"
-                    href="/images/favicon.png"
-                />
-            </head>
             <div className="flex flex-col md:gap-8 gap-0">
                 <div className="font-extrabold text-white text-center pt-40 md:text-5xl text-4xl mx-8">
                     See what{" "}
