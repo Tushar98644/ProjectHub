@@ -10,7 +10,7 @@ dependencies:
     version: 1.1.3(mongodb@5.8.0)(next-auth@4.23.2)
   ai:
     specifier: ^2.1.34
-    version: 2.1.34(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.0)(vue@3.3.4)
+    version: 2.1.34(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.1)(vue@3.3.4)
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -5815,7 +5815,7 @@ packages:
       indent-string: 4.0.0
     dev: true
 
-  /ai@2.1.34(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.0)(vue@3.3.4):
+  /ai@2.1.34(react@18.2.0)(solid-js@1.7.11)(svelte@4.2.1)(vue@3.3.4):
     resolution: {integrity: sha512-gZawUnYhZHJ1PiE+x7iDuy2GQg67AKs0uHgdS8Jw3o/3NouGeJ/5ytyqbgHqczgvoquSpykumR+5TyRieF8x/w==}
     engines: {node: '>=14.6'}
     peerDependencies:
@@ -5838,8 +5838,8 @@ packages:
       react: 18.2.0
       solid-js: 1.7.11
       solid-swr-store: 0.10.7(solid-js@1.7.11)(swr-store@0.10.6)
-      sswr: 2.0.0(svelte@4.2.0)
-      svelte: 4.2.0
+      sswr: 2.0.0(svelte@4.2.1)
+      svelte: 4.2.1
       swr: 2.2.0(react@18.2.0)
       swr-store: 0.10.6
       swrv: 1.0.4(vue@3.3.4)
@@ -12768,12 +12768,12 @@ packages:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
 
-  /sswr@2.0.0(svelte@4.2.0):
+  /sswr@2.0.0(svelte@4.2.1):
     resolution: {integrity: sha512-mV0kkeBHcjcb0M5NqKtKVg/uTIYNlIIniyDfSGrSfxpEdM9C365jK0z55pl9K0xAkNTJi2OAOVFQpgMPUk+V0w==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
-      svelte: 4.2.0
+      svelte: 4.2.1
       swrev: 4.0.0
     dev: false
 
@@ -13030,8 +13030,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte@4.2.0:
-    resolution: {integrity: sha512-kVsdPjDbLrv74SmLSUzAsBGquMs4MPgWGkGLpH+PjOYnFOziAvENVzgJmyOCV2gntxE32aNm8/sqNKD6LbIpeQ==}
+  /svelte@4.2.1:
+    resolution: {integrity: sha512-LpLqY2Jr7cRxkrTc796/AaaoMLF/1ax7cto8Ot76wrvKQhrPmZ0JgajiWPmg9mTSDqO16SSLiD17r9MsvAPTmw==}
     engines: {node: '>=16'}
     dependencies:
       '@ampproject/remapping': 2.2.1
