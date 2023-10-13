@@ -150,15 +150,15 @@ const Admin = () => {
                     <Lottie animationData={HI} height={50} width={50} />
                 </div>
                 <p className="text-lg" style={{marginTop: "-0.5rem",marginBottom:"0.5rem"}}>Welcome {session?.user?.name}</p>
-                <p className="text-lg text-[#ff2bc1]  animate-pulse">Pending approval</p>
+                <p className="text-lg text-[#ff2bc1]  animate-pulse">Pending approval!</p>
             </div>
             {/* For medium and larger screens */}
             <div className="md:pt-28 md:px-20 px-8 pb-4 text-nav-text font-bold
              items-center" style={{paddingTop: "1rem"}}>
   {/* For medium and larger screens */}
-  <div className="hidden sm:flex items-center justify-center">
+  <div className="hidden sm:flex items-center justify-center" style={{paddingTop: "6rem"}}>
     <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-xs text-center justify-self-start">
-      <p className="animate-pulse">Pending approval</p>
+      <p className="animate-pulse">Pending approval!</p>
     </div>
     <div className="flex flex-row items-center gap-0 justify-self-end">
       <div className="w-[15vw]">
