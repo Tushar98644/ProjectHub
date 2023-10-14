@@ -37,9 +37,6 @@ const Contact = () => {
 
     return (
         <>
-            {/* <head>
-        <link rel="icon" type="image/x-icon" href="/images/favicon.png"/>
-        </head> */}
             <div>
                 <body className="bg-gray-900 text-gray-100 px-8 py-12">
                     <div className="text-center w-full">
