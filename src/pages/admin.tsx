@@ -144,33 +144,47 @@ const Admin = () => {
     return (
         <div className="flex flex-col">
             {/* For smaller screens (centered) */}
-            <div className="sm:hidden md:pt-28  md:px-20 px-8 text-nav-text font-bold flex flex-col items-center justify-center"
-            style={{paddingTop: "4rem"}}>
-                <div style={{width: "10rem"}}>
+            <div
+                className="sm:hidden md:pt-28  md:px-20 px-8 text-nav-text font-bold flex flex-col items-center justify-center"
+                style={{ paddingTop: "4rem" }}
+            >
+                <div style={{ width: "10rem" }}>
                     <Lottie animationData={HI} height={50} width={50} />
                 </div>
-                <p className="text-lg" style={{marginTop: "-0.5rem",marginBottom:"0.5rem"}}>Welcome {session?.user?.name}</p>
-                <p className="text-lg text-[#ff2bc1]  animate-pulse">Pending approval!</p>
+                <p
+                    className="text-lg"
+                    style={{ marginTop: "-0.5rem", marginBottom: "0.5rem" }}
+                >
+                    Welcome {session?.user?.name}
+                </p>
+                <p className="text-lg text-[#ff2bc1]  animate-pulse">
+                    Pending approval!
+                </p>
             </div>
             {/* For medium and larger screens */}
-            <div className="md:pt-28 md:px-20 px-8 pb-4 text-nav-text font-bold
-             items-center" style={{paddingTop: "1rem"}}>
-  {/* For medium and larger screens */}
-  <div className="hidden sm:flex items-center justify-center" style={{paddingTop: "6rem"}}>
-    <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-xs text-center justify-self-start">
-      <p className="animate-pulse">Pending approval!</p>
-    </div>
-    <div className="flex flex-row items-center gap-0 justify-self-end">
-      <div className="w-[15vw]">
-        <Lottie animationData={HI} height={50} width={50} />
-      </div>
-      <p className="lg:text-4xl md:text-3xl sm:text-2xl text-xs">
-        Welcome {session?.user?.name}
-      </p>
-    </div>
-  </div>
-</div>
-
+            <div
+                className="md:pt-28 md:px-20 px-8 pb-4 text-nav-text font-bold
+             items-center"
+                style={{ paddingTop: "1rem" }}
+            >
+                {/* For medium and larger screens */}
+                <div
+                    className="hidden sm:flex items-center justify-center"
+                    style={{ paddingTop: "6rem" }}
+                >
+                    <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-xs text-center justify-self-start">
+                        <p className="animate-pulse">Pending approval!</p>
+                    </div>
+                    <div className="flex flex-row items-center gap-0 justify-self-end">
+                        <div className="w-[15vw]">
+                            <Lottie animationData={HI} height={50} width={50} />
+                        </div>
+                        <p className="lg:text-4xl md:text-3xl sm:text-2xl text-xs">
+                            Welcome {session?.user?.name}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <div className="md:px-20 px-4">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -178,7 +192,7 @@ const Admin = () => {
                         id="search-action-section"
                         className="flex flex-wrap items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12"
                     >
-                        <div className="flex items-center">
+                        <div className="flex items-center mr-4">
                             <button
                                 id="dropdownActionButton"
                                 data-dropdown-toggle="dropdownAction"
