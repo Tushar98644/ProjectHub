@@ -6,12 +6,11 @@ import { Project } from "@/types/Project";
 import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { toast } from "react-toastify";
 
 const Admin = () => {
     const { data: session } = useSession();
-    // returned object is being destructured to extract the data property. Then, the data property is being aliased as session.
     const [projects, setProject] = useState<Project[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [approvalStatus, setApprovalStatus] = useState<{
@@ -27,6 +26,20 @@ const Admin = () => {
             project.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
     }, [projects, searchQuery]);
+
+    const tableRef = useRef<HTMLElement | null>(null);
+
+    const adjustSearchActionWidth = () => {
+        if (tableRef.current) {
+            const tableWidth = tableRef.current.clientWidth;
+            const searchActionSection = document.getElementById(
+                "search-action-section"
+            );
+            if (searchActionSection) {
+                searchActionSection.style.width = `${tableWidth}px`;
+            }
+        }
+    };
 
     const Approve_project = async (projectId: string) => {
         const config = {
@@ -116,29 +129,74 @@ const Admin = () => {
         fetchProjects();
     }, []);
 
+    useEffect(() => {
+        adjustSearchActionWidth();
+        window.addEventListener("resize", adjustSearchActionWidth);
+        return () => {
+            window.removeEventListener("resize", adjustSearchActionWidth);
+        };
+    }, []);
+
+    useEffect(() => {
+        adjustSearchActionWidth();
+    }, [filteredProjects]);
+
     return (
-        <div className="flex flex-col md:gap-4 gap-12">
-            <div className="md:pt-28 pt-40 md:px-20 px-8 text-nav-text font-bold grid grid-cols-2 items-center">
-                <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-lg text-center justify-self-start">
-                    <p className=" animate-pulse">Pending approval</p>
+        <div className="flex flex-col">
+            {/* For smaller screens (centered) */}
+            <div
+                className="sm:hidden md:pt-28  md:px-20 px-8 text-nav-text font-bold flex flex-col items-center justify-center"
+                style={{ paddingTop: "4rem" }}
+            >
+                <div style={{ width: "10rem" }}>
+                    <Lottie animationData={HI} height={50} width={50} />
                 </div>
-                <div className="flex flex-row items-center gap-0 justify-self-end">
-                    <div className="w-[15vw]">
-                        <Lottie animationData={HI} height={50} width={50} />
+                <p
+                    className="text-lg"
+                    style={{ marginTop: "-0.5rem", marginBottom: "0.5rem" }}
+                >
+                    Welcome {session?.user?.name}
+                </p>
+                <p className="text-lg text-[#ff2bc1]  animate-pulse">
+                    Pending approval!
+                </p>
+            </div>
+            {/* For medium and larger screens */}
+            <div
+                className="md:pt-28 md:px-20 px-8 pb-4 text-nav-text font-bold
+             items-center"
+                style={{ paddingTop: "1rem" }}
+            >
+                {/* For medium and larger screens */}
+                <div
+                    className="hidden sm:flex items-center justify-center"
+                    style={{ paddingTop: "6rem" }}
+                >
+                    <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-xs text-center justify-self-start">
+                        <p className="animate-pulse">Pending approval!</p>
                     </div>
-                    <p className="lg:text-4xl md:text-3xl sm:text-2xl text-lg">
-                        Welcome {session?.user?.name}
-                    </p>
+                    <div className="flex flex-row items-center gap-0 justify-self-end">
+                        <div className="w-[15vw]">
+                            <Lottie animationData={HI} height={50} width={50} />
+                        </div>
+                        <p className="lg:text-4xl md:text-3xl sm:text-2xl text-xs">
+                            Welcome {session?.user?.name}
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div className=" md:px-20 px-4">
+
+            <div className="md:px-20 px-4">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12">
-                        <div>
+                    <div
+                        id="search-action-section"
+                        className="flex flex-wrap items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12"
+                    >
+                        <div className="flex items-center mr-4">
                             <button
                                 id="dropdownActionButton"
                                 data-dropdown-toggle="dropdownAction"
-                                className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                className="md:pl-4 inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                 type="button"
                             >
                                 <span className="sr-only">Action button</span>
@@ -152,13 +210,14 @@ const Admin = () => {
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
                                         d="M19 9l-7 7-7-7"
                                     ></path>
                                 </svg>
                             </button>
+
                             <div
                                 id="dropdownAction"
                                 className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
@@ -205,39 +264,44 @@ const Admin = () => {
                         <label htmlFor="table-search" className="sr-only">
                             Search
                         </label>
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg
-                                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                        clip-rule="evenodd"
-                                    ></path>
-                                </svg>
+                        <div className="flex-grow">
+                            <div className="relative w-full">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg
+                                        className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                            clipRule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <input
+                                    type="text"
+                                    id="table-search-users"
+                                    className="block p-2 pl-8 pr-3 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Search for projects"
+                                    value={searchQuery}
+                                    onChange={handleSearchInputChange}
+                                />
                             </div>
-                            <input
-                                type="text"
-                                id="table-search-users"
-                                className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search for projects"
-                                value={searchQuery}
-                                onChange={handleSearchInputChange}
-                            />
                         </div>
                     </div>
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <table
+                        ref={tableRef as React.RefObject<HTMLTableElement>}
+                        className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                    >
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="p-4">
                                     <div className="flex items-center"></div>
                                 </th>
-                                <th scope="col" className="px-4 py-3 ">
+                                <th scope="col" className="px-4 py-3">
                                     Project Title
                                 </th>
                                 <th scope="col" className="px-6 py-3">
@@ -252,12 +316,12 @@ const Admin = () => {
                             </tr>
                         </thead>
                         {filteredProjects.map(project => (
-                            <tbody>
+                            <tbody key={project._id}>
                                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td></td>
-                                    <th
+                                    <td
                                         scope="row"
-                                        className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                        className="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white"
                                     >
                                         <img
                                             className="w-10 h-10 rounded-full"
@@ -269,18 +333,18 @@ const Admin = () => {
                                                 {project.title}
                                             </div>
                                         </div>
-                                    </th>
-                                    <td className="px-6 py-4 overflow-auto whitespace-nowrap max-w-xs">
+                                    </td>
+                                    <td className="px-4 py-4 overflow-auto whitespace-normal max-w-xs">
                                         {project.description}
                                     </td>
-                                    <td className="px-6 py-4 cursor-pointer hover:underline overflow-auto whitespace-nowrap max-w-xs">
+                                    <td className="px-4 py-4 cursor-pointer hover:underline overflow-auto whitespace-normal max-w-xs">
                                         <div className="flex items-center">
                                             <a href={project.github}>
                                                 {project.github}
                                             </a>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-4 py-4 whitespace-nowrap">
                                         {approvalStatus[project._id] ? (
                                             <span
                                                 className={
@@ -294,43 +358,37 @@ const Admin = () => {
                                                 {approvalStatus[project._id]}!
                                             </span>
                                         ) : (
-                                            <a
-                                                href="#"
-                                                className="font-medium text-blue-600 dark:text-blue-500"
-                                            >
-                                                <div className=" text-sm text-gray-700  border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
-                                                    <div>
-                                                        <a
-                                                            href="#"
-                                                            onClick={() =>
-                                                                Approve_project(
-                                                                    project._id
-                                                                )
-                                                            }
-                                                            className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900"
-                                                        >
-                                                            Approve
-                                                        </a>
-                                                    </div>
-                                                    <div>
-                                                        <a
-                                                            href="#"
-                                                            onClick={() =>
-                                                                Reject_project(
-                                                                    project._id
-                                                                )
-                                                            }
-                                                            className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900"
-                                                        >
-                                                            Reject
-                                                        </a>
-                                                    </div>
+                                            <div className="text-sm text-gray-700 border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
+                                                <div>
+                                                    <a
+                                                        href="#"
+                                                        onClick={() =>
+                                                            Approve_project(
+                                                                project._id
+                                                            )
+                                                        }
+                                                        className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900"
+                                                    >
+                                                        Approve
+                                                    </a>
                                                 </div>
-                                            </a>
+                                                <div>
+                                                    <a
+                                                        href="#"
+                                                        onClick={() =>
+                                                            Reject_project(
+                                                                project._id
+                                                            )
+                                                        }
+                                                        className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900"
+                                                    >
+                                                        Reject
+                                                    </a>
+                                                </div>
+                                            </div>
                                         )}
                                     </td>
                                 </tr>
-                                <tr></tr>
                             </tbody>
                         ))}
                     </table>
