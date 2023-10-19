@@ -1,17 +1,34 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useReducer } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+
+const reducer = (state: any, action: any) => {
+    switch (action.type) {
+        case 'name':
+            return { ...state, name: action.payload }
+        case 'email':
+            return { ...state, email: action.payload }
+        case 'message':
+            return { ...state, message: action.payload }
+    }
+}
+
 const Contact = () => {
     const router = useRouter();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
+
+    const initialstate = {
+        name: "",
+        email: "",
+        message: "",
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialstate);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const data = { name, email, message };
+        const data = { ...state };
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -25,9 +42,6 @@ const Contact = () => {
 
     const notify = () => {
         toast.success("Your message has been sent.", {
-            // className: 'items-center justify-center rounded-lg bg-cyan-100 text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200',
-            // progressClassName: 'text-cyan-200',
-            // bodyClassName: "text-sm font-medium bg-cyan-800",
             closeButton: true,
             position: "top-right",
             autoClose: 3000,
@@ -1104,8 +1118,9 @@ const Contact = () => {
                                         type="text"
                                         placeholder=""
                                         required
+                                        value={state.name}
                                         onChange={e => {
-                                            setName(e.target.value);
+                                            dispatch({type:"name",payload:e.target.value})
                                         }}
                                     />
                                 </div>
@@ -1117,8 +1132,9 @@ const Contact = () => {
                                         className="w-full bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         type="text"
                                         required
+                                        value={state.email}
                                         onChange={e => {
-                                            setEmail(e.target.value);
+                                            dispatch({type:"email",payload:e.target.value})
                                         }}
                                     />
                                 </div>
@@ -1129,8 +1145,9 @@ const Contact = () => {
                                     <textarea
                                         className="w-full h-32 bg-gray-300 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
                                         required
+                                        value={state.message}
                                         onChange={e => {
-                                            setMessage(e.target.value);
+                                            dispatch({type: 'message', payload: e.target.value})
                                         }}
                                     ></textarea>
                                 </div>

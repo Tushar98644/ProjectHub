@@ -3,36 +3,61 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useReducer } from "react";
+
+const initialState = {
+    title: "",
+    description: "",
+    image: "",
+    github: "",
+    tags: [],
+    newTag: "",
+}
+
+const reducer = (state: any, action: any) => {
+    switch (action.type) {
+        case 'SET_TITLE':
+            return { ...state, title: action.payload };
+        case 'SET_DESCRIPTION':
+            return { ...state, description: action.payload };
+        case 'SET_IMAGE':
+            return { ...state, image: action.payload };
+        case 'SET_GITHUB':
+            return { ...state, github: action.payload };
+        case 'SET_TAGS':
+            return { ...state, tags: action.payload };
+        case 'SET_NEW_TAG':
+            return { ...state, newTag: action.payload };
+        
+        default:
+            return state;
+    }
+}
 
 const Form = () => {
-    const { data: session } = useSession();
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
-    const [github, setGithub] = useState("");
-    const [tags, setTags] = useState<string[]>([]);
+
     const router = useRouter();
-    const [newTag, setNewTag] = useState("");
+    const { data: session } = useSession();
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleAddTag = () => {
-        if (newTag.trim() !== "" && tags.length < 10) {
-            setTags([...tags, newTag.trim()]);
-            setNewTag("");
+        if (state.newTag.trim() !== "" && state.tags.length < 10) {
+            dispatch({ type: "SET_TAGS", payload: [...state.tags, state.newTag.trim()] });
+            dispatch({ type: "SET_NEW_TAG", payload: "" })
         }
     };
 
     const handleRemoveTag = (tagToRemove: string) => {
-        const updatedTags = tags.filter(tag => tag !== tagToRemove);
-        setTags(updatedTags);
+        const updatedTags = state.tags.filter((tag: string) => tag !== tagToRemove);
+        dispatch({ type: "SET_TAGS", payload: updatedTags });
     };
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const name = session?.user?.name || "Anonymous";
         console.log(`the contributor is ${name}`);
-        const data = { title, description, image, github, name, tags };
-        console.log(`the tags are ${tags}`);
+        const data = { ...state, name };
+        console.log(`the tags are ${state.tags}`);
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -65,7 +90,8 @@ const Form = () => {
                 <input
                     type="text"
                     id="title"
-                    onChange={e => setTitle(e.target.value)}
+                    value={state.title}
+                    onChange={e => dispatch({type: 'SET_TITLE', payload: e.target.value})}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a project title"
                     required
@@ -81,7 +107,8 @@ const Form = () => {
                 <input
                     type="text"
                     id="description"
-                    onChange={e => setDescription(e.target.value)}
+                    value={state.description}
+                    onChange={e => dispatch({ type: 'SET_DESCRIPTION', payload: e.target.value })}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a project description"
                     required
@@ -97,7 +124,8 @@ const Form = () => {
                 <input
                     type="text"
                     id="github link"
-                    onChange={e => setGithub(e.target.value)}
+                    value={state.github}
+                    onChange={e => dispatch({ type: 'SET_GITHUB', payload: e.target.value })}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter the project's github link"
                     required
@@ -112,7 +140,8 @@ const Form = () => {
                 </label>
                 <input
                     type="url"
-                    onChange={e => setImage(e.target.value)}
+                    value={state.image}
+                    onChange={e => dispatch({ type: 'SET_IMAGE', payload: e.target.value })}
                     id="repeat-password"
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a image url"
@@ -129,8 +158,8 @@ const Form = () => {
                             <input
                                 id="input1"
                                 minLength={3}
-                                value={newTag}
-                                onChange={e => setNewTag(e.target.value)}
+                                value={state.newTag}
+                                onChange={e => dispatch({ type: 'SET_NEW_TAG', payload: e.target.value })}
                                 className="mt-1 py-3 px-5 w-full border-2 border-purple-300 rounded-xl outline-none placeholder:text-gray-400 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-300 dark:invalid:text-pink-300 dark:border-gray-600"
                                 type="text"
                                 placeholder="Enter tags (optional)"
@@ -147,9 +176,9 @@ const Form = () => {
                         <span>Add</span>
                     </div>
                 </div>
-                {tags.length > 0 && (
+                {state.tags.length > 0 && (
                     <div className="px-2 pt-2 pb-11 mb-3 flex flex-wrap rounded-lg bg-purple-200 dark:bg-gray-400">
-                        {tags.map(tag => (
+                        {state.tags.map((tag:string) => (
                             <span
                                 key={tag}
                                 className="flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-purple-500 text-gray-200 hover:bg-purple-600 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100"
