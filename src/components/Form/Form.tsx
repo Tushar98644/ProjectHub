@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";

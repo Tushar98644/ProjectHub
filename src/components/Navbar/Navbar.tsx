@@ -1,23 +1,38 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+import { useReducer , useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect } from "react";
+
+const initialState = {
+   isMobile : false,
+   isMenuOpen : false,
+}
+
+const reducer =(state:any,action:any)=>{
+    switch (action.type){
+        case 'SET_MOBILE_VIEW':
+            return {...state, isMobile: action.payload}
+        case 'TOOGLE_MENU':
+            return {...state, isMenuOpen: !state.isMenuOpen}
+
+        default :
+            return state
+    }
+
+}
 
 const Navbar = () => {
-    const [isMobile, setIsMobile] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [state , dispatch] = useReducer(reducer,initialState);
     const { data: session } = useSession();
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
+        dispatch({type:"TOOGLE_MENU"})
     };
 
     useEffect(() => {
-        window.innerWidth <= 768 ? setIsMobile(true) : setIsMobile(false);
-        window.addEventListener("resize", () => {
-            window.innerWidth <= 768 ? setIsMobile(true) : setIsMobile(false);
-        });
+        window.innerWidth <= 768 ?
+        dispatch({ type: "SET_MOBILE_VIEW", payload: true }) : 
+        dispatch({ type: "SET_MOBILE_VIEW", payload: false });
     }, []);
 
     return (
@@ -25,14 +40,14 @@ const Navbar = () => {
             <span className="bg-gradient-to-r from-[#4ca5ff] to-[#b673f8] md:col-span-2 md:block hidden text-center px-2 lg:text-4xl md:text-2xl font-black animate-pulse bg-clip-text text-transparent">
                 PROJECT HUB
             </span>
-            {isMobile ? (
+            {state.isMobile ? (
                 <>
                     <div>
                         <button
                             type="button"
                             className=" justify-self-start items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                             aria-controls="navbar-cta"
-                            aria-expanded={isMenuOpen}
+                            aria-expanded={state.isMenuOpen}
                             onClick={toggleMenu}
                         >
                             <svg
@@ -60,7 +75,7 @@ const Navbar = () => {
                             height={100}
                         />
                     </div>
-                    {isMenuOpen && (
+                    {state.isMenuOpen && (
                         <div className="">
                             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                                 <li>
