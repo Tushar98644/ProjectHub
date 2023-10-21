@@ -27,7 +27,7 @@ const reducer = (state: any, action: any) => {
             return { ...state, tags: action.payload };
         case 'SET_NEW_TAG':
             return { ...state, newTag: action.payload };
-        
+
         default:
             return state;
     }
@@ -62,10 +62,21 @@ const Form = () => {
                 "Content-Type": "application/json",
             },
         };
-        await axios.post("/api/project", data, config);
-        // console.log(data);
-        router.push("/");
-        notify();
+        
+        try {
+            await axios.post("/api/project", data, config);
+            router.push("/");
+            notify();
+        } catch (error) {
+            console.error(error);
+            toast("An error occurred while sending your project for approval.", {
+                closeButton: true,
+                position: "top-right",
+                autoClose: 3000,
+                theme: "dark",
+            });
+        }
+
     };
 
     const notify = () => {
@@ -90,7 +101,7 @@ const Form = () => {
                     type="text"
                     id="title"
                     value={state.title}
-                    onChange={e => dispatch({type: 'SET_TITLE', payload: e.target.value})}
+                    onChange={e => dispatch({ type: 'SET_TITLE', payload: e.target.value })}
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a project title"
                     required
@@ -177,7 +188,7 @@ const Form = () => {
                 </div>
                 {state.tags.length > 0 && (
                     <div className="px-2 pt-2 pb-11 mb-3 flex flex-wrap rounded-lg bg-purple-200 dark:bg-gray-400">
-                        {state.tags.map((tag:string) => (
+                        {state.tags.map((tag: string) => (
                             <span
                                 key={tag}
                                 className="flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-purple-500 text-gray-200 hover:bg-purple-600 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100"

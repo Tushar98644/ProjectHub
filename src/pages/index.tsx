@@ -5,7 +5,6 @@ import { Card } from "@/components";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/Project";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 declare global {
@@ -19,7 +18,6 @@ const Main = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [recognizedSpeech, setRecognizedSpeech] = useState<string>("");
     const [isListening, setIsListening] = useState(false);
-    const { data: session } = useSession();
     const router = useRouter();
 
     const redirectToDiscussion = (id: string) => {

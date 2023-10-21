@@ -3,6 +3,7 @@ import Message_list from "@/components/Message_card/Message_list";
 import { Message } from "@/types/Message";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Message_page = () => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -14,14 +15,24 @@ const Message_page = () => {
                     "Content-Type": "application/json",
                 },
             };
-            await axios
-                .get("/api/message", config)
-                .then(res => {
-                    setMessages(res.data);
-                })
-                .catch(err => {
-                    console.log(err);
+            try {
+                await axios
+                    .get("/api/message", config)
+                    .then(res => {
+                        setMessages(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+            catch (err) {
+                toast("An error occurred while fetching the messages", {
+                    closeButton: true,
+                    position: "top-right",
+                    autoClose: 3000,
+                    theme: "dark",
                 });
+            }
         };
         getMessages();
     }, []);

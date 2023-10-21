@@ -8,7 +8,7 @@ export default function AuthenticationGuard({
 }: {
     children: React.ReactNode;
 }) {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
