@@ -32,7 +32,7 @@ const Card = ({
                     <div>
                         <Link href="#">
                             <img
-                                className="p-4 rounded-[2vw] object-fill w-full sm:h-[25vw] h-60"
+                                className="p-4 rounded-[2vw] object-fill w-full sm:h-[23vw] h-60"
                                 src={image}
                                 onError={(e: any) => {
                                     e.target.onerror = null;
