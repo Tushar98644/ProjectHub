@@ -11,43 +11,47 @@ const initialState = {
     github: "",
     tags: [],
     newTag: "",
-}
+};
 
 const reducer = (state: any, action: any) => {
     switch (action.type) {
-        case 'SET_TITLE':
+        case "SET_TITLE":
             return { ...state, title: action.payload };
-        case 'SET_DESCRIPTION':
+        case "SET_DESCRIPTION":
             return { ...state, description: action.payload };
-        case 'SET_IMAGE':
+        case "SET_IMAGE":
             return { ...state, image: action.payload };
-        case 'SET_GITHUB':
+        case "SET_GITHUB":
             return { ...state, github: action.payload };
-        case 'SET_TAGS':
+        case "SET_TAGS":
             return { ...state, tags: action.payload };
-        case 'SET_NEW_TAG':
+        case "SET_NEW_TAG":
             return { ...state, newTag: action.payload };
 
         default:
             return state;
     }
-}
+};
 
 const Form = () => {
-
     const router = useRouter();
     const { data: session } = useSession();
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleAddTag = () => {
         if (state.newTag.trim() !== "" && state.tags.length < 10) {
-            dispatch({ type: "SET_TAGS", payload: [...state.tags, state.newTag.trim()] });
-            dispatch({ type: "SET_NEW_TAG", payload: "" })
+            dispatch({
+                type: "SET_TAGS",
+                payload: [...state.tags, state.newTag.trim()],
+            });
+            dispatch({ type: "SET_NEW_TAG", payload: "" });
         }
     };
 
     const handleRemoveTag = (tagToRemove: string) => {
-        const updatedTags = state.tags.filter((tag: string) => tag !== tagToRemove);
+        const updatedTags = state.tags.filter(
+            (tag: string) => tag !== tagToRemove
+        );
         dispatch({ type: "SET_TAGS", payload: updatedTags });
     };
 
@@ -62,21 +66,23 @@ const Form = () => {
                 "Content-Type": "application/json",
             },
         };
-        
+
         try {
             await axios.post("/api/project", data, config);
             router.push("/");
             notify();
         } catch (error) {
             console.error(error);
-            toast("An error occurred while sending your project for approval.", {
-                closeButton: true,
-                position: "top-right",
-                autoClose: 3000,
-                theme: "dark",
-            });
+            toast(
+                "An error occurred while sending your project for approval.",
+                {
+                    closeButton: true,
+                    position: "top-right",
+                    autoClose: 3000,
+                    theme: "dark",
+                }
+            );
         }
-
     };
 
     const notify = () => {
@@ -101,7 +107,9 @@ const Form = () => {
                     type="text"
                     id="title"
                     value={state.title}
-                    onChange={e => dispatch({ type: 'SET_TITLE', payload: e.target.value })}
+                    onChange={e =>
+                        dispatch({ type: "SET_TITLE", payload: e.target.value })
+                    }
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a project title"
                     required
@@ -118,7 +126,12 @@ const Form = () => {
                     type="text"
                     id="description"
                     value={state.description}
-                    onChange={e => dispatch({ type: 'SET_DESCRIPTION', payload: e.target.value })}
+                    onChange={e =>
+                        dispatch({
+                            type: "SET_DESCRIPTION",
+                            payload: e.target.value,
+                        })
+                    }
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a project description"
                     required
@@ -135,7 +148,12 @@ const Form = () => {
                     type="text"
                     id="github link"
                     value={state.github}
-                    onChange={e => dispatch({ type: 'SET_GITHUB', payload: e.target.value })}
+                    onChange={e =>
+                        dispatch({
+                            type: "SET_GITHUB",
+                            payload: e.target.value,
+                        })
+                    }
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter the project's github link"
                     required
@@ -151,7 +169,9 @@ const Form = () => {
                 <input
                     type="url"
                     value={state.image}
-                    onChange={e => dispatch({ type: 'SET_IMAGE', payload: e.target.value })}
+                    onChange={e =>
+                        dispatch({ type: "SET_IMAGE", payload: e.target.value })
+                    }
                     id="repeat-password"
                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     placeholder="enter a image url"
@@ -168,14 +188,20 @@ const Form = () => {
                             <input
                                 id="input1"
                                 minLength={3}
+                                maxLength={10}
                                 value={state.newTag}
-                                onChange={e => dispatch({ type: 'SET_NEW_TAG', payload: e.target.value })}
+                                onChange={e =>
+                                    dispatch({
+                                        type: "SET_NEW_TAG",
+                                        payload: e.target.value,
+                                    })
+                                }
                                 className="mt-1 py-3 px-5 w-full border-2 border-purple-300 rounded-xl outline-none placeholder:text-gray-400 invalid:text-pink-700 invalid:focus:ring-pink-700 invalid:focus:border-pink-700 peer dark:bg-gray-700 dark:text-gray-200 dark:placeholder:text-gray-300 dark:invalid:text-pink-300 dark:border-gray-600"
                                 type="text"
                                 placeholder="Enter tags (optional)"
                             />
                             <p className="ml-2 text-xs text-pink-700 invisible peer-invalid:visible dark:text-gray-200">
-                                Less than 10 characters
+                                Less than 7 characters
                             </p>
                         </label>
                     </div>

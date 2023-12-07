@@ -27,12 +27,12 @@ const Card = ({
             >
                 <div
                     data-testid="card"
-                    className="border rounded-2xl shadow gradient dark:border-gray-700"
+                    className="border rounded-2xl my-4 shadow gradient dark:border-gray-700"
                 >
                     <div>
                         <Link href="#">
                             <img
-                                className="p-4 rounded-[2vw]"
+                                className="p-4 rounded-[2vw] object-fill w-full sm:h-[25vw] h-60"
                                 src={image}
                                 onError={(e: any) => {
                                     e.target.onerror = null;
@@ -104,7 +104,7 @@ const Card = ({
                             className="focus:outline-none grid grid-cols-3 my-2 gap-4"
                         >
                             {tags.map(tag => (
-                                <div className="flex justify-center items-center text-center p-3 text-xs text-white rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+                                <div className="flex justify-center items-center overflow-scroll text-center p-3 text-xs text-white rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
                                     # {tag}
                                 </div>
                             ))}
