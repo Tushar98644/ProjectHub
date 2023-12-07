@@ -8,7 +8,7 @@ export default function AuthenticationGuard({
 }: {
     children: React.ReactNode;
 }) {
-    const { status } = useSession();
+    const { status, data: session } = useSession();
     const router = useRouter();
 
     useEffect(() => {
@@ -21,7 +21,13 @@ export default function AuthenticationGuard({
                 router.push("/login");
             }
         }
-    }, [status, router]);
+
+        if (session?.user?.email != process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+            if (router.pathname === "/admin") {
+                router.push("/");
+            }
+        }
+    }, [status, router, session?.user?.email]);
 
     if (status === "loading") {
         return <Loader />;
