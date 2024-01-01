@@ -9,6 +9,3 @@ services:
     volumes: 
       - /app/node_modules
       - .:/app
-
-  # redis-server:
-  #   image: 'redis'

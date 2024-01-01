@@ -2,6 +2,7 @@ FROM node:18-alpine3.18
 WORKDIR /app
 COPY package.json  .
 RUN npm install -g pnpm
+RUN npm install --global pm2
 RUN pnpm install --prod
 COPY . .
-CMD ["pnpm", "dev"]
+CMD ["pm2-runtime","pnpm","--","dev"]
