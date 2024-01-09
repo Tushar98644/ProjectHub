@@ -1,18 +1,25 @@
 version: '3'
 services:
-  nextjs:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    # ports:
-    #   - "3000:3000"
-    volumes: 
-      - /app/node_modules
-      - .:/app
+#   nextjs:
+#     build: 
+#       context: .
+#       dockerfile: Dockerfile.dev
+#     ports:
+#       - "3000:3000"
+#     volumes: 
+#       - /app/node_modules
+#       - .:/app
 
-  ngnix:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
+  # ngnix:
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+
+  prom-server:
+    image: prom/prometheus
     ports:
-      - "3000:3000"
+      - 9090:9090
+    volumes:
+      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
