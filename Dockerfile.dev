@@ -5,4 +5,4 @@ RUN npm install -g pnpm
 RUN npm install --global pm2
 RUN pnpm install --prod
 COPY . .
-CMD ["pm2-runtime","pnpm","--","dev"]
+CMD ["pm2-runtime","pnpm","--","dev","--","-p","5000"]

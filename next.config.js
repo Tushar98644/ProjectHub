@@ -11,6 +11,10 @@ const nextConfig = {
                 source: "/metrics",
                 destination: "/api/metrics",
             },
+            {
+                source: "/logs",
+                destination: "/api/logs",
+            },
         ];
     },
     // distDir: "build",

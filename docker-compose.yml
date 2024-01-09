@@ -1,14 +1,14 @@
 version: '3'
 services:
-#   nextjs:
-#     build: 
-#       context: .
-#       dockerfile: Dockerfile.dev
-#     ports:
-#       - "3000:3000"
-#     volumes: 
-#       - /app/node_modules
-#       - .:/app
+  nextjs:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:5000"
+    volumes: 
+      - /app/node_modules
+      - .:/app
 
   # ngnix:
   #   build:
@@ -35,3 +35,12 @@ services:
     volumes:
       # - grafana-storage:/var/lib/grafana
       - ./config/custom.ini:/etc/grafana/grafana.ini:ro
+
+  grafana-loki:
+    image: grafana/loki:latest
+    container_name: grafana-loki
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    # volumes:
+    #   - ./config/loki-config.yaml:/etc/loki/local-config.yaml

@@ -9,7 +9,7 @@ const mockProject = {
     title: "Test Project",
     description: "This is a test project.",
     image: "/test-image.jpg",
-    github: "https://localhost:3000/",
+    github: "https://localhost:5000/",
     approved: true,
     name: "Test User",
     tags: ["tag1", "tag2"],
