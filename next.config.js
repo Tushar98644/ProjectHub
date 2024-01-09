@@ -4,6 +4,15 @@ const nextConfig = {
     images: {
         domains: ["localhost"],
     },
+
+    async rewrites() {
+        return [
+            {
+                source: "/metrics",
+                destination: "/api/metrics",
+            },
+        ];
+    },
     // distDir: "build",
 };
 
