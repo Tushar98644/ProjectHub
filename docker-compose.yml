@@ -22,9 +22,9 @@ services:
     container_name: prometheus
     restart: unless-stopped
     ports:
-      - 9090:9090
+      - "9090:9090"
     volumes:
-      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
+      - prometheus-storage:/etc/prometheus/
 
   grafana:
     image: grafana/grafana-oss
@@ -34,7 +34,7 @@ services:
       - "3000:3000"
     volumes:
       # - grafana-storage:/var/lib/grafana
-      - ./config/custom.ini:/etc/grafana/grafana.ini:ro
+      - grafana-storage:/var/lib/grafana
 
   grafana-loki:
     image: grafana/loki:latest
@@ -42,5 +42,9 @@ services:
     restart: unless-stopped
     ports:
       - "3100:3100"
-    # volumes:
-    #   - ./config/loki-config.yaml:/etc/loki/local-config.yaml
+    volumes:
+      - loki-storage:/tmp/loki/
+volumes:
+  prometheus-storage:
+  grafana-storage:
+  loki-storage:
