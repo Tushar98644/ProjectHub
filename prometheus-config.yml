@@ -6,3 +6,8 @@ scrape_configs:
     static_configs:
       - targets: ["192.168.0.101:5000"]
       # target is the IP address of the machine running the node exporter (prom-client)
+
+  - job_name: jenkins
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ["192.168.0.101:8080"]
