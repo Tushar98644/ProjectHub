@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import { register, collectDefaultMetrics } from "prom-client";
 
-// collectDefaultMetrics();
+collectDefaultMetrics();
 
 const metricsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader("Content-type", register.contentType);

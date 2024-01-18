@@ -1,6 +1,7 @@
 version: '3'
 services:
   nextjs:
+    container_name: nextjs
     build: 
       context: .
       dockerfile: Dockerfile.dev
@@ -9,6 +10,13 @@ services:
     volumes: 
       - /app/node_modules
       - .:/app
+
+  # nextjs:
+  #   image: 973347056683.dkr.ecr.ap-south-1.amazonaws.com/projecthub:latest
+  #   container_name: nextjs
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5000:5000"
 
   # ngnix:
   #   build:
@@ -24,7 +32,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - prometheus-storage:/etc/prometheus/
+      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
 
   grafana:
     image: grafana/grafana-oss
@@ -33,7 +41,6 @@ services:
     ports:  
       - "3000:3000"
     volumes:
-      # - grafana-storage:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
 
   grafana-loki:
@@ -44,7 +51,31 @@ services:
       - "3100:3100"
     volumes:
       - loki-storage:/tmp/loki/
+  
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube-storage:/opt/sonarqube/data
+      - SonarQube_extensions:/opt/SonarQube/extensions
+      - SonarQube_logs:/opt/SonarQube/logs
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins-storage:/var/jenkins_home
+
 volumes:
-  prometheus-storage:
   grafana-storage:
   loki-storage:
+  sonarqube-storage:
+  SonarQube_extensions:
+  SonarQube_logs:
+  jenkins-storage:
