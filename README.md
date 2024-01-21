@@ -106,6 +106,7 @@ SECRET=""
 MONGODB_URI=""
 NEXT_PUBLIC_ADMIN_EMAIL=""
 OPENAI_API_KEY=""
+NEXTAUTH_URL=""
 ```
 
 Now, create your own credentials for the providers , OpenAI api and MongoDB cluster and place them in the corresponding fields ,put the email in the `NEXT_PUBLIC_ADMIN_EMAIL` field which you want to give admin privileges
@@ -113,14 +114,44 @@ Now, create your own credentials for the providers , OpenAI api and MongoDB clus
 From the project folder, run these commands in the console (terminal) to install dependencies and run the app:
 
 ```bash
-npm run dev
+npm run dev -p 5000
 # or
-yarn dev
+yarn dev -p 5000
 # or
-pnpm dev
+pnpm dev -p 5000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
+
+## 🐳 Run using Docker
+
+The project can also be run using docker. To run the project using docker, run the following command in the terminal:
+
+```bash
+docker-compose up
+```
+
+This command will start all the containers listed in the docker-compose.yml file. There are two Dockerfile in the project. The command will build the Dockerfile.dev and start the server. The Dockerfile.dev file is used for development purposes. The Dockerfile file is used for production purposes.
+
+To build the Dockerfile instead, run the following command in the terminal:
+
+```bash
+docker build . -f Dockerfile -t <image-name>
+```
+
+The above command will build the Dockerfile file and create an image. To run the image, run the following command in the terminal:
+
+```bash
+docker run -p 5000:5000 <image-id>
+```
+
+or you can simply change the image name in the docker-compose.yml file and run the following command in the terminal:
+
+```bash
+docker-compose up
+```
+
+`Note` : You need to have docker installed on your system. Also make sure to add the credentials in the .env file before running the above command. The above command will start the server on port 5000.You can change the default port by changing the `NEXTAUTH_URL` in the .env file.
 
 # 🖼️ Some glimpse of the site
 
@@ -186,14 +217,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-
 ## 🙏Support
 
 Don't forget to leave a star ⭐️
 
 ## Thank You to Our Contributors❤️
+
 <details><summary> <b>See Contributors</b> </summary>
 <Link href="https://github.com/Tushar98644/ProjectHub/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Tushar98644/ProjectHub" />
 <Link/>
-</details> 
+</details>
