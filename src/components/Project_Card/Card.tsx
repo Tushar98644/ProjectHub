@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable @next/next/no-img-element */
-import { Project } from "../../types/Project";
+import { Project } from "@/types/project";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";

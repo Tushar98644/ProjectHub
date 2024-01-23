@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import { HI } from "@/shared";
-import { Project } from "@/types/Project";
+import { Project } from "@/types/project";
 import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";

@@ -1,16 +1,11 @@
 'use client'
 import { SessionProvider } from "next-auth/react";
 import AuthenticationGuard from "./AuthenticationGuard";
-import { Session } from "next-auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppProps } from "@/types/app-props";
 
-interface CustomAppProps {
-    session?: Session;
-    children?: React.ReactNode;
-}
-
-const Provider = ({ children, session }: CustomAppProps) => {
+const Provider = ({ children, session }: AppProps) => {
     return (
         <SessionProvider session={session}>
             <AuthenticationGuard>

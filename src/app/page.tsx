@@ -6,14 +6,8 @@
 import { Card } from "@/components";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { Project } from "../types/Project";
+import { Project } from "@/types/project";
 import { useRouter } from "next/navigation";
-
-declare global {
-  interface Window {
-    webkitSpeechRecognition: any;
-  }
-}
 
 const Main = () => {
   const [projects, setProjects] = useState<Project[]>([]);
