@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client'
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Discussion } from "@/types/discussion";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 
 /* eslint-disable @next/next/no-img-element */
-const Discussion_page = () => {
+const Discussion_page = ({ params }: { params: { id: string } }) => {
     const [showdiscussion, setShowdiscussion] = useState(false);
     const [message, setMessage] = useState("");
     const { data: session } = useSession();
     const [discussionData, setDiscussionData] = useState<Discussion[]>([]);
     const router = useRouter();
-    const { id } = router.query;
+    const searchParams = useSearchParams();
+    const id = params.id;
     console.log(id);
     const startDiscussion = () => {
         setShowdiscussion(prev => !prev);
@@ -46,7 +48,7 @@ const Discussion_page = () => {
         const apiUrl = `/api/discussion/${id}`;
         axios.post(apiUrl, data, config);
         console.log(`The data sent to discussion api is ${data}`);
-        router.reload();
+        router.push(`/discussion/${id}`);
     };
 
     const fetchDiscussion = useCallback(async () => {

@@ -1,3 +1,4 @@
+'use client'
 import { SessionProvider } from "next-auth/react";
 import AuthenticationGuard from "./AuthenticationGuard";
 import { Session } from "next-auth";

@@ -1,7 +1,8 @@
+'use client'
 import Link from "next/link";
 import { useReducer } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const reducer = (state: any, action: any) => {
@@ -36,8 +37,9 @@ const Contact = () => {
         };
         await axios.post("/api/message", data, config);
         console.log(data);
-        router.push("/contact");
         notify();
+        router.push("/");
+
     };
 
     const notify = () => {
@@ -50,9 +52,8 @@ const Contact = () => {
     };
 
     return (
-        <>
             <div>
-                <body className="bg-gray-900 text-gray-100 px-8 py-12">
+                <div className="bg-gray-900 text-gray-100 px-8 py-12">
                     <div className="text-center w-full">
                         <svg
                             className="text-gray-100 h-8 mx-auto"
@@ -1159,9 +1160,8 @@ const Contact = () => {
                             </form>
                         </div>
                     </div>
-                </body>
+                </div>
             </div>
-        </>
     );
 };
 

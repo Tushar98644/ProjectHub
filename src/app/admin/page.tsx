@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import { HI } from "@/shared";
 import { Project } from "@/types/Project";
 import axios from "axios";

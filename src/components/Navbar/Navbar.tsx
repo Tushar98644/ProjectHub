@@ -1,26 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import { useReducer, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
-const initialState = {
-    isMobile: false,
-    isMenuOpen: false,
-};
-
-const reducer = (state: any, action: any) => {
-    switch (action.type) {
-        case "SET_MOBILE_VIEW":
-            return { ...state, isMobile: action.payload };
-        case "TOOGLE_MENU":
-            return { ...state, isMenuOpen: !state.isMenuOpen };
-
-        default:
-            return state;
-    }
-};
-
 const Navbar = () => {
+    
+    const initialState = {
+        isMobile: false,
+        isMenuOpen: false,
+    };
+    
+    const reducer = (state: any, action: any) => {
+        switch (action.type) {
+            case "SET_MOBILE_VIEW":
+                return { ...state, isMobile: action.payload };
+            case "TOOGLE_MENU":
+                return { ...state, isMenuOpen: !state.isMenuOpen };
+    
+            default:
+                return state;
+        }
+    };
+    
     const [state, dispatch] = useReducer(reducer, initialState);
     const { data: session } = useSession();
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
-import { Message } from "@/types/Message";
+import { Message } from "../../types/Message";
 
 const Message_list = ({ name, email, message }: Message) => {
     return (

@@ -1,10 +1,9 @@
-import { Contact, Layout } from "@/components";
+'use client'
+import { Contact } from "@/components";
 
 const Contact_page = () => {
     return (
-        <Layout>
             <Contact />
-        </Layout>
     );
 };
 

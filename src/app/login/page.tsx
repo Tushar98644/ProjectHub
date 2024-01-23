@@ -1,3 +1,4 @@
+'use client'
 import { AI } from "@/shared";
 import Lottie from "lottie-react";
 import { signIn } from "next-auth/react";

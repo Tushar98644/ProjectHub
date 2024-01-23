@@ -1,3 +1,4 @@
+'use client'
 import { Form } from "@/components";
 import { useSession } from "next-auth/react";
 

@@ -1,5 +1,5 @@
-import { Layout } from "@/components";
-import Message_list from "@/components/Message_card/Message_list";
+'use client'
+import {Message_list} from "@/components";
 import { Message } from "@/types/Message";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -38,7 +38,6 @@ const Message_page = () => {
     }, []);
 
     return (
-        <Layout>
             <div className="flex flex-col md:gap-8 gap-0">
                 <div className="font-extrabold text-white text-center pt-40 md:text-5xl text-4xl mx-8">
                     See what{" "}
@@ -53,7 +52,6 @@ const Message_page = () => {
                     ))}
                 </div>
             </div>
-        </Layout>
     );
 };
 

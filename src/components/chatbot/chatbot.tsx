@@ -1,9 +1,10 @@
+'use client'
 import { useState } from "react";
 import { useChat } from "ai/react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
-const Chat = () => {
+const Chatbot = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const { data: session } = useSession();
 
@@ -61,4 +62,4 @@ const Chat = () => {
     );
 };
 
-export default Chat;
+export default Chatbot;
