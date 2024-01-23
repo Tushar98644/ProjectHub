@@ -4,7 +4,7 @@ import { useChat } from "ai/react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
-const Chatbot = () => {
+const Chat = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const { data: session } = useSession();
 
@@ -62,4 +62,4 @@ const Chatbot = () => {
     );
 };
 
-export default Chatbot;
+export default Chat;
