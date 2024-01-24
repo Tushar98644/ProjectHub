@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Loader } from "@/components";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ export default function AuthenticationGuard({
     const { status, data: session } = useSession();
     console.log(status);
     const pathname = usePathname();
+    // return a string of the current path
     const router = useRouter();
 
     useEffect(() => {
@@ -34,7 +35,7 @@ export default function AuthenticationGuard({
     }, [status, pathname, session?.user?.email, router]);
 
     if (status === "loading") {
-        return (<Loader />);
+        return <Loader />;
     }
 
     return <>{children}</>;

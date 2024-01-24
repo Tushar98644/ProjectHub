@@ -10,6 +10,7 @@ if (!process.env.MONGODB_URI) {
 
 const uri = process.env.MONGODB_URI;
 const options = {};
+// options is an optional object that can be passed to MongoClient.connect().
 
 let client;
 let clientPromise: Promise<MongoClient>;

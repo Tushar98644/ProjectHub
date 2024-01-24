@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client'
+"use client";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Discussion } from "@/types/discussion";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 /* eslint-disable @next/next/no-img-element */
 const Discussion_page = ({ params }: { params: { id: string } }) => {
@@ -13,8 +13,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
     const { data: session } = useSession();
     const [discussionData, setDiscussionData] = useState<Discussion[]>([]);
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const id = params.id;
+    const { id } = params;
     console.log(id);
     const startDiscussion = () => {
         setShowdiscussion(prev => !prev);
@@ -38,6 +37,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
             name,
             profile,
             message,
+            page_id: id,
         };
         const config = {
             headers: {
@@ -48,7 +48,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
         const apiUrl = `/api/discussion/${id}`;
         axios.post(apiUrl, data, config);
         console.log(`The data sent to discussion api is ${data}`);
-        router.push(`/discussion/${id}`);
+        router.push(`/`);
     };
 
     const fetchDiscussion = useCallback(async () => {
@@ -59,7 +59,14 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
         };
         const apiUrl = `/api/discussion/${id}`;
         await axios
-            .get(apiUrl, config)
+            .get(
+                apiUrl,
+                //     {
+                //     params: {id},
+                //     ...config,
+                // }
+                config
+            )
             .then(res => {
                 setDiscussionData(res.data);
                 console.log(`Data fetched successfully : ${res.data}`);

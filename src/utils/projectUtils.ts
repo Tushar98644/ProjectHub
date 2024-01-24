@@ -19,6 +19,7 @@ export const createProject = async (
             name,
             tags,
         });
+        console.log(`The project recieved is ${NewProject}`);
         return res
             .status(200)
             .json({ message: "Project created successfully" });
@@ -36,10 +37,7 @@ export const getProjects = async (
         const approved_projects = res.json(
             await Project.find({ approved: true }).sort({ createdAt: -1 })
         );
-        // const approved_projects = await Project.find({ approved: "true" }).sort(
-        //     { createdAt: -1 }
-        // );
-        // return res.status(200).json(approved_projects);
+        console.log(`The approved projects are ${approved_projects}`);
     } catch (err) {
         console.log(err);
         return res.status(400).json({ err: "Error in fetching projects" });

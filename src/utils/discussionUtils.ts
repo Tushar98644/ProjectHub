@@ -5,8 +5,7 @@ export const createDiscussion = async (
     req: NextApiRequest,
     res: NextApiResponse
 ) => {
-    const { name, profile, message } = req.body;
-    const { id: page_id } = req.query;
+    const { name, profile, message, page_id } = req.body;
 
     if (!name || !profile || !message)
         return res.status(400).json({ message: "Please fill all fields" });
@@ -31,6 +30,7 @@ export const getDiscussions = async (
     res: NextApiResponse
 ) => {
     const { id: page_id } = req.query;
+    console.log(`The page id is ${page_id}`);
 
     try {
         const discussions = await Discussion.find({ page_id }).sort({
