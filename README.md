@@ -197,7 +197,13 @@ docker-compose up
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Tushar98644/ProjectHub&type=Date)](https://star-history.com/#Peppermint-Lab/peppermint&Date)
+<a href="https://star-history.com/#Tushar98644/ProjectHub&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Tushar98644/ProjectHub&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Tushar98644/ProjectHub&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Tushar98644/ProjectHub&type=Date" />
+  </picture>
+</a>
 
 ## Activity
 ![Alt](https://repobeats.axiom.co/api/embed/c79d4b8da007a35d2bc3ab8239132c50e6f4fdfb.svg "Repobeats analytics image")
