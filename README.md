@@ -195,6 +195,17 @@ docker-compose up
 
 <img width="1440" alt="Screenshot 2023-09-09 at 11 51 25 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c4276b38-2806-4c0a-90fd-d2c33127600d">
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Tushar98644/ProjectHub&type=Date)](https://star-history.com/#Peppermint-Lab/peppermint&Date)
+
+## Activity
+![Alt](https://repobeats.axiom.co/api/embed/c79d4b8da007a35d2bc3ab8239132c50e6f4fdfb.svg "Repobeats analytics image")
+
+## Author
+
+👤 **Jack Andrews**
+
 ## 🐛 Bug Reporting
 
 Feel free to open an [issue](https://github.com/Tushar98644/ProjectHub/issues/new?assignees=&labels=bug&projects=&template=bug_report.yaml&title=%5BBUG%5D+%3Ctitle%3E) on GitHub if you find any bug.
