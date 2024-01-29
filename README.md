@@ -204,7 +204,7 @@ docker-compose up
 
 ## Author
 
-👤 **Jack Andrews**
+👤 **Tushar Banik**
 
 ## 🐛 Bug Reporting
 
