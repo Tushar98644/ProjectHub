@@ -1,9 +1,22 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@next-auth/mongodb-adapter':
     specifier: ^1.1.3
     version: 1.1.3(mongodb@5.8.0)(next-auth@4.24.5)
+  '@tsparticles/engine':
+    specifier: ^3.2.1
+    version: 3.2.1
+  '@tsparticles/react':
+    specifier: ^3.0.0
+    version: 3.0.0(@tsparticles/engine@3.2.1)(react-dom@18.2.0)(react@18.2.0)
+  '@tsparticles/slim':
+    specifier: ^3.2.1
+    version: 3.2.1
   '@vercel/speed-insights':
     specifier: ^1.0.7
     version: 1.0.7(next@14.1.0)(react@18.2.0)(svelte@4.2.9)(vue@3.4.15)
@@ -13,6 +26,9 @@ dependencies:
   axios:
     specifier: ^1.6.0
     version: 1.6.0
+  clsx:
+    specifier: ^2.1.0
+    version: 2.1.0
   framer-motion:
     specifier: ^10.16.4
     version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
@@ -67,6 +83,9 @@ dependencies:
   redis:
     specifier: ^4.6.10
     version: 4.6.10
+  tailwind-merge:
+    specifier: ^2.2.1
+    version: 2.2.1
   winston:
     specifier: ^3.11.0
     version: 3.11.0
@@ -5392,6 +5411,279 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
+  /@tsparticles/basic@3.2.1:
+    resolution: {integrity: sha512-Hg7qg8bnIjgA+M5+eW49hmm6J2njXW0PfiefO91quujzbY6gKgysuO44j+VKs5lZubUS4m3WybyXuG2qvc0blg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+      '@tsparticles/move-base': 3.2.1
+      '@tsparticles/shape-circle': 3.2.1
+      '@tsparticles/updater-color': 3.2.1
+      '@tsparticles/updater-opacity': 3.2.1
+      '@tsparticles/updater-out-modes': 3.2.1
+      '@tsparticles/updater-size': 3.2.1
+    dev: false
+
+  /@tsparticles/engine@3.2.1:
+    resolution: {integrity: sha512-mVzdwkOtRdT6/UOS0+GPGcKJsdvYCkqTTwg7df43TfXixsdZedpUkuVg30rwtNhTgPMH2nimOXqx2wmgL7bAZw==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    requiresBuild: true
+    dev: false
+
+  /@tsparticles/interaction-external-attract@3.2.1:
+    resolution: {integrity: sha512-u3Nc8ZRqaZeV6aOG44lrbjLyyGsDmL/k5YUHpynf8B1h2P7Rh4CUlz1FfFkbyFEe/bxoopTMl3IAGPfH+ZpzYA==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-bounce@3.2.1:
+    resolution: {integrity: sha512-quDVwQpaLcVYFHdPYSM3vEAqRrHPMDsfjpzvtLhAuXVvGX0FW4HLBFF1uuIQg6UTDKaVZSPcw6Y8A8zbUItRmw==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-bubble@3.2.1:
+    resolution: {integrity: sha512-Z5/clQcfQF8ldk1QjXl6cRi/5fH92uL6Ev/W6zskY6L1RG3Y8jisHLU44tWFwXleONu/NB+IDFn39Ei6uNjmzQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-connect@3.2.1:
+    resolution: {integrity: sha512-tY//lUEcu3ZbKFvDc1bUhS9r2LdiwN4jsBU0o4JuGKBWPH/Cd0P9sUVIthEsoxf1lY/6xCV5AgBP8SA+o3Cj2Q==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-grab@3.2.1:
+    resolution: {integrity: sha512-mau9wixUqy+mOiYGMofBUiQ9gsSk7pMkyHKtOZVrE6Lvi0JvJrIAjSndjsUKNt5GmB+kKJPTlPCaN5mpBY/iUQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-pause@3.2.1:
+    resolution: {integrity: sha512-vV5sAls6JyjueheYqeZsESVKhAQCl0Yz5h9yqFIBSllJ8sppVXqtMx/XcGyJValp2R0ptiI0jULAqTBtHqcQBg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-push@3.2.1:
+    resolution: {integrity: sha512-BchfXv/ltD2oec9xz8mg3H8k7N/oYxNb2gTy8zqkdcnXLZzBlST8ApUx+PMvBh2pZ8LaqcGqVw1GK6/2PjL3zA==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-remove@3.2.1:
+    resolution: {integrity: sha512-NGKPhshUdh5ttatM448k8PxbdgWbAM2sVqpnMyEJQSXoYfDrheuKPg27l5+G+IqmmTnTqorWXmc6cxN+1Es2hg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-repulse@3.2.1:
+    resolution: {integrity: sha512-HxGzjQuFpfTykHG0w5JPY3jpFNSr9wW4i8d9XHLjzlY/LHpDoRYfarAtpXtwUq0DyLFogZVkhbzo8+euP11PUA==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-external-slow@3.2.1:
+    resolution: {integrity: sha512-Fq3EyozDqwKfRZnnVixO81kxKHlR+N8HtBD2Ga2lJt4ZfncnUTRlyMjX49pL6Cj293o1RAboH1xfR9kyNDWTOQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-particles-attract@3.2.1:
+    resolution: {integrity: sha512-jbBI1RilgJbG/XkV73wmRwBfFWo86NtWqcbIcIwVku7+QtsllYVTpi1ty59JGqklLUWRYiz6i/4i8R31cZDCoA==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-particles-collisions@3.2.1:
+    resolution: {integrity: sha512-30YxBuIOD1XUOpjo5evv0j/5+/K6VP29lAlmxmGDx7EWaInG9UwldJo+lh+1A0xvEVr1hjNMaBOjD5Rbs1iN7A==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/interaction-particles-links@3.2.1:
+    resolution: {integrity: sha512-Py4BLQZbcipVyJ1PrIEPbYzzLDBy/jKIdnaGYRBCgZyf4zuTK5UvACPLS5zeiXXzCh4kx3LBM1z96zMOmJdNsw==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/move-base@3.2.1:
+    resolution: {integrity: sha512-R+ALCs7eJTehoNDNJ6kcGESaLY3kNYmj1OkYwe7XIHSYCpRAq93jRj5NEVqrVTxk1ZIPt8pYdkerDlBuSphDEg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/move-parallax@3.2.1:
+    resolution: {integrity: sha512-q7ipu/avG2TzPauQpLUVjpLRJeFha8k7IdnpRns1Q286eWgHT0X/6A+qgroV+JLhUkTT9kdGVQGdOntHaOvgkQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/plugin-easing-quad@3.2.1:
+    resolution: {integrity: sha512-l9NPrOh+6PI7v2GGq5GDliimhH+sFg9EUfH0jmsS3ZBMl/jWsD97RdTzutARMelH+PEZKGCtURKj2F0rzQtYtQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/react@3.0.0(@tsparticles/engine@3.2.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-hjGEtTT1cwv6BcjL+GcVgH++KYs52bIuQGW3PWv7z3tMa8g0bd6RI/vWSLj7p//NZ3uTjEIeilYIUPBh7Jfq/Q==}
+    peerDependencies:
+      '@tsparticles/engine': ^3.0.2
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@tsparticles/shape-circle@3.2.1:
+    resolution: {integrity: sha512-DgO21XrwZ5nX/BfO9ItXV3AEhZmTXX0yHf+ogvKiwkkhd9qqCL9yDSAwwUqOPlU5St6AoAWKp8QCByFE7icl6g==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/shape-emoji@3.2.1:
+    resolution: {integrity: sha512-55q5eCQQvEZpk3WO8aMhqGmkca1BRd9az3itZDWJRhi74n+2sln4JYpWgqpEbsWHCP95z/IaVpkLiZalq2Wepw==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/shape-image@3.2.1:
+    resolution: {integrity: sha512-mWBVikRQTIlhHKFlNE5WPOPGwUGdyDKPxAEC1XFJnx7juPADaaLiGaQtc8bgbCRpe7GLALaWwyvn1KmGxBnFlw==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/shape-line@3.2.1:
+    resolution: {integrity: sha512-q1UWB3OT/MDi7vklEiYFWFyjHAQpkLx/lPCU2yzAxU8ikv6XhrbFMNL1/41ozrKoBIAEA50ADn9s7D8W4ZGq/Q==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/shape-polygon@3.2.1:
+    resolution: {integrity: sha512-j8dNbnP03Q8iRde4YiegKP1a6tIZ86m6pqqIFqSJk+Lz2V0EN4Wv2pJMUklyP60VMll4SwBAJO1aLlIdqedSAQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/shape-square@3.2.1:
+    resolution: {integrity: sha512-b6QDajcALbOAUsiKipZLrp6rzl5dbDmwWRjkU7dzrnxfWtkQQShxEGVtn0jOGJQnTQOwB/voce1UgAVjvyNDkQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/shape-star@3.2.1:
+    resolution: {integrity: sha512-iqVsZiQFTLyc3wiU46P8l4k3zl8hJc57WROgQiHCcJxbps8DmlPZhLzaLPE03WgvPSfUQfc8QVtojdNaQh406g==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/slim@3.2.1:
+    resolution: {integrity: sha512-XChPCNOybUFRp7SSbHICnlxGfG0ay0iFBH3kKn5hJ4Wsp8SOGg5vaJlLoArLvL7A555J4kEc5uFdpSRsJDdwKg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/basic': 3.2.1
+      '@tsparticles/engine': 3.2.1
+      '@tsparticles/interaction-external-attract': 3.2.1
+      '@tsparticles/interaction-external-bounce': 3.2.1
+      '@tsparticles/interaction-external-bubble': 3.2.1
+      '@tsparticles/interaction-external-connect': 3.2.1
+      '@tsparticles/interaction-external-grab': 3.2.1
+      '@tsparticles/interaction-external-pause': 3.2.1
+      '@tsparticles/interaction-external-push': 3.2.1
+      '@tsparticles/interaction-external-remove': 3.2.1
+      '@tsparticles/interaction-external-repulse': 3.2.1
+      '@tsparticles/interaction-external-slow': 3.2.1
+      '@tsparticles/interaction-particles-attract': 3.2.1
+      '@tsparticles/interaction-particles-collisions': 3.2.1
+      '@tsparticles/interaction-particles-links': 3.2.1
+      '@tsparticles/move-parallax': 3.2.1
+      '@tsparticles/plugin-easing-quad': 3.2.1
+      '@tsparticles/shape-emoji': 3.2.1
+      '@tsparticles/shape-image': 3.2.1
+      '@tsparticles/shape-line': 3.2.1
+      '@tsparticles/shape-polygon': 3.2.1
+      '@tsparticles/shape-square': 3.2.1
+      '@tsparticles/shape-star': 3.2.1
+      '@tsparticles/updater-life': 3.2.1
+      '@tsparticles/updater-rotate': 3.2.1
+      '@tsparticles/updater-stroke-color': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-color@3.2.1:
+    resolution: {integrity: sha512-IVUMmCR4amASTkZ/Fhs2Zu6VywRjkC54lJNpZ86jNONhzdHC4bGAmporMfEsNoa2stsPRZpMHvQCSD5dYoSbZg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-life@3.2.1:
+    resolution: {integrity: sha512-FvdFDvt8zFpel7LgtiVbZil7kkPtom9BVtnIw5r1lGwluSLTkzamwhtvp7KCudSBRZ6PziX4QUWaVk/NI4njxQ==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-opacity@3.2.1:
+    resolution: {integrity: sha512-cvwx21T4bn8s5TArQq3Gq0Zy/WDjqT/S/9jsZcLKC5xgYcpTKptTtWeNaOxSbLR7WRrmIKSx9gUhz6SwHvTePw==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-out-modes@3.2.1:
+    resolution: {integrity: sha512-y1+K05ao6z/oRvl6dBVrXLVQ33Rt9dpPDVJfMeGI9EyafZAzbX28ohBPm+K7pXbXDeoUnSPrKC160KOPPRsGgA==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-rotate@3.2.1:
+    resolution: {integrity: sha512-oVHe6kLFTJz6mfuVBImYVxhqFYeres5d3KyptLIzVguSPG5NNN5ZSBULD/CjjSlFeRCaZNdhLGLCvquxaD1/7A==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-size@3.2.1:
+    resolution: {integrity: sha512-GqkNEjGttjQBdFSteZ6WdhciJqKDTniha2B1vHZrEd+XDoSFwb8JwVw+kdMwHshNfsL4cuM3zQypGMVoQOcldg==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
+  /@tsparticles/updater-stroke-color@3.2.1:
+    resolution: {integrity: sha512-niG2IVlh8O0xCHnTDtfOXxbMWKESCiXTjRouuJfTch1qDEuIMVOwDpynHAemQcVKLiHLAzfJf2b8A6K74+3N+A==}
+    deprecated: 3.2.0 and 3.2.1 have issues with some bundlers, deprecating those until solved with 3.2.2
+    dependencies:
+      '@tsparticles/engine': 3.2.1
+    dev: false
+
   /@types/aria-query@5.0.4:
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
     dev: true
@@ -7203,6 +7495,11 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /clsx@2.1.0:
+    resolution: {integrity: sha512-m3iNNWpd9rl3jvvcBnu70ylMdrXt8Vlq4HYadnU5fwcOtvkSQWPmj7amUcDT2qYI7risszBjI5AUIUox9D16pg==}
+    engines: {node: '>=6'}
+    dev: false
+
   /cluster-key-slot@1.1.2:
     resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
     engines: {node: '>=0.10.0'}
@@ -8222,7 +8519,7 @@ packages:
       eslint: 8.50.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.19.1)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.50.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.19.1)(eslint-import-resolver-typescript@3.6.1)(eslint@8.50.0)
+      eslint-plugin-import: 2.29.1(eslint@8.50.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.50.0)
       eslint-plugin-react: 7.33.2(eslint@8.50.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.50.0)
@@ -8262,7 +8559,7 @@ packages:
       enhanced-resolve: 5.15.0
       eslint: 8.50.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.19.1)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.50.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.19.1)(eslint-import-resolver-typescript@3.6.1)(eslint@8.50.0)
+      eslint-plugin-import: 2.29.1(eslint@8.50.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -8304,7 +8601,35 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.19.1)(eslint-import-resolver-typescript@3.6.1)(eslint@8.50.0):
+  /eslint-module-utils@2.8.0(eslint-import-resolver-node@0.3.9)(eslint@8.50.0):
+    resolution: {integrity: sha512-aWajIYfsqCKRDgUfjEXNN/JlrzauMuSEy5sbd7WXbtW3EH6A6MpwEh42c7qD+MqQo9QMJ6fWLAeIJynx0g6OAw==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint: '*'
+      eslint-import-resolver-node: '*'
+      eslint-import-resolver-typescript: '*'
+      eslint-import-resolver-webpack: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+      eslint:
+        optional: true
+      eslint-import-resolver-node:
+        optional: true
+      eslint-import-resolver-typescript:
+        optional: true
+      eslint-import-resolver-webpack:
+        optional: true
+    dependencies:
+      debug: 3.2.7
+      eslint: 8.50.0
+      eslint-import-resolver-node: 0.3.9
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /eslint-plugin-import@2.29.1(eslint@8.50.0):
     resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -8314,7 +8639,6 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 6.19.1(eslint@8.50.0)(typescript@5.2.2)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
@@ -8323,7 +8647,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.50.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.19.1)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.50.0)
+      eslint-module-utils: 2.8.0(eslint-import-resolver-node@0.3.9)(eslint@8.50.0)
       hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -13604,6 +13928,12 @@ packages:
   /synchronous-promise@2.0.17:
     resolution: {integrity: sha512-AsS729u2RHUfEra9xJrE39peJcc2stq2+poBXX8bcM08Y6g9j/i/PUzwNQqkaJde7Ntg1TO7bSREbR5sdosQ+g==}
     dev: true
+
+  /tailwind-merge@2.2.1:
+    resolution: {integrity: sha512-o+2GTLkthfa5YUt4JxPfzMIpQzZ3adD1vLVkvKE1Twl9UAhGsEbIZhHHZVRttyW177S8PDJI3bTQNaebyofK3Q==}
+    dependencies:
+      '@babel/runtime': 7.23.8
+    dev: false
 
   /tailwindcss@3.3.3(ts-node@10.9.1):
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}

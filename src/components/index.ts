@@ -5,3 +5,4 @@ export { default as Contact } from "./Contact/Contact";
 export { default as Message_list } from "./Message_card/Message_list";
 export { default as Chatbot } from "./Chatbot/Chatbot";
 export { default as Nav } from "./Navbar/Navbar";
+export { default as Sparkles } from "./SparkleParticles/SparkleParticles";
