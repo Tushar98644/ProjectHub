@@ -5,7 +5,7 @@ import { Provider } from "@/providers";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="relative w-full bg-black flex">
+        <div className="relative w-full bg-black">
             <div className="w-full absolute inset-0">
                 <Sparkles
                     id="tsparticlesfullpage"

@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 
 const Login = () => {
     return (
-        <div>
+        <div className="pb-28">
             <div className="md:grid grid-cols-3 flex flex-col-reverse lg:mx-20 md:mx-12 mx-8 sm:mx-12 gap-0 md:pt-60 pt-24 items-center">
                 <div className="flex flex-col gap-6 col-span-2">
                     <div className="lg:text-5xl font-extrabold sm:text-3xl text-2xl">
