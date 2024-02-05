@@ -46,7 +46,7 @@ const Message_page = () => {
                 </span>{" "}
                 to say about us !
             </div>
-            <div className="py-8 md:mx-12 mx-6 gap-8 grid md:grid-cols-2 grid-cols-1">
+            <div className="py-8 pb-40 md:mx-12 mx-6 gap-8 grid md:grid-cols-2 grid-cols-1">
                 {messages.map(message => (
                     <Message_list key={message._id} {...message} />
                 ))}

@@ -17,13 +17,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     particleColor="#FFFFFF"
                 />
             </div>
-            <h1 className="md:text-7xl text-3xl lg:text-6xl font-bold text-white relative z-20">
+            <>
                 <Provider>
                     <Navbar />
                     <Chatbot />
                     {children}
                 </Provider>
-            </h1>
+            </>
         </div>
     );
 }
