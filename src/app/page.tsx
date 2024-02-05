@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/project";
 import { useRouter } from "next/navigation";
+import { PinContainer } from "@/components/3d";
 
 const Main = () => {
     const [projects, setProjects] = useState<Project[]>([]);
