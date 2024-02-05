@@ -96,7 +96,7 @@ const Form = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="z-[2]">
             <div className="mb-6">
                 <label
                     htmlFor="email"
