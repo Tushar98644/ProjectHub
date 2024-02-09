@@ -16,7 +16,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 -   Discussion section
 -   Search and voice-to-text
 -   Real-time Notifications
--   Real-Time data updates
+-   Real-time data updates
 
 ## 📃Pages
 
@@ -157,43 +157,39 @@ docker-compose up
 
 ### Login Page
 
-<img width="1440" alt="Screenshot 2023-07-16 at 7 17 10 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/1faa0b9a-afca-443e-815c-ddfa35154121">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 05 05 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a151c612-bff5-4d49-b69f-fc8b00f6ea80">
 
 ### Home Page
 
-<img width="1440" alt="Screenshot 2023-09-09 at 11 46 37 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/33a84958-7dc3-470b-94f2-cd1c6ea21493">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 04 28 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/48cdd422-f1f9-4089-92af-1229b11f2136">
 
 ### Add Project Page
 
-<img width="1440" alt="Screenshot 2023-09-09 at 11 50 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/bea62e18-fccf-4d21-af81-a9f119d794c4">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 02 29 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/46025133-c50d-4ddc-b59b-44baf7a032df">
 
 ### Contact Page
 
-<img width="1440" alt="Screenshot 2023-07-17 at 1 26 30 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/6f0e3812-ebd0-4dd0-88d6-defecf30a045">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 03 45 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/5d73b9b0-be12-453c-9a7e-a643c76baab2">
 
 ### Admin Page
 
-<img width="1440" alt="Screenshot 2023-07-16 at 7 24 40 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/da4e7314-36db-492a-9307-c98a1825229f">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 02 42 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/7bb52975-20f5-4b23-a5c5-af7d6c75a5d3">
 
 ### Discussion Page
 
-<img width="1440" alt="Screenshot 2023-09-09 at 11 48 18 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/f4857fd3-9b32-473d-901a-0ee8c352684e">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 04 08 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/dae9b3fe-4e21-4aa5-af44-8a91f753af25">
 
 ### Message Page
 
-<img width="1440" alt="Screenshot 2023-07-18 at 4 24 31 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/d55d9dfd-ff1e-4441-ae6c-bf5fd9061f45">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 02 55 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a7ecce6d-4871-45a8-966a-ff83d6f7f253">
 
 ### 404 Page
 
-<img width="1440" alt="Screenshot 2023-07-18 at 4 23 17 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a1f34be6-863d-4cd3-b9ee-6f55f8a298e2">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 03 21 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c088a3ac-1a7c-48de-a87b-89eb5caa0ae4">
 
 ## ChatBot
 
-<img width="1438" alt="Screenshot 2023-07-18 at 4 19 33 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/824f2b33-6d13-489f-a57d-e07d6f2c7939">
-
-### Search and voice-to-text
-
-<img width="1440" alt="Screenshot 2023-09-09 at 11 51 25 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c4276b38-2806-4c0a-90fd-d2c33127600d">
+<img width="1440" alt="Screenshot 2024-02-09 at 9 04 28 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c28b6bb4-d213-42df-90d2-79ec0fad86b9">
 
 ## Star History
 
