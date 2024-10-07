@@ -129,7 +129,8 @@ const Navbar = () => {
                                         <>
                                             <NavItem href="/project" label="Add project" />
                                             <NavItem href="/" label="View Projects" />
-                                            <NavItem href="/contact" label="Contact Admin" />
+                                            <NavItem href="/contact" label="Contact" />
+                                            <NavItem href="/dashboard" label="Dashboard" />
                                         </>
                                     )}
                                 </>
