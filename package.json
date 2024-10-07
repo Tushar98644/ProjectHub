@@ -38,7 +38,7 @@
         "lottie-react": "^2.4.0",
         "mongodb": "^5.8.0",
         "mongoose": "^7.6.3",
-        "next": "14.1.1",
+        "next": "14.2.10",
         "next-auth": "^4.24.5",
         "openai-edge": "^1.2.2",
         "prom-client": "^15.1.0",
