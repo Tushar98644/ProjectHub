@@ -8,7 +8,7 @@ const Profile = () => {
     const image = session?.user?.image || 'https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/avatars/avatar1.jpg';
     return (
         <DashLayout>
-            <div className="ml-20 mt-60 relative flex flex-col w-full min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30 draggable">
+            <div className="ml-20 mt-40 relative flex flex-col w-full min-w-0 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30 draggable">
                 <div className="px-9 pt-9 flex-auto min-h-[70px] pb-0 bg-transparent">
                     <div className="flex flex-wrap mb-6 xl:flex-nowrap">
                         <div className="mb-5 mr-5">

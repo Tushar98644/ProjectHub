@@ -5,9 +5,10 @@ import { FaHome, FaChartBar } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
 import { FaFolderOpen } from "react-icons/fa6";
+import { signOut } from "next-auth/react";
 
 const navItems = [
-    { href: "/dashboard", label: "Home", icon: <FaHome className="h-6 w-6" /> },
+    { href: "/", label: "Home", icon: <FaHome className="h-6 w-6" /> },
     { href: "/dashboard/analytics", label: "Analytics", icon: <FaChartBar className="h-6 w-6" /> },
     { href: "/dashboard/profile", label: "Profile", icon: <FaCircleUser className="h-6 w-6" /> },
     { href: "/dashboard/projects", label: "My Projects", icon: <FaFolderOpen className="h-6 w-6" /> },
@@ -34,13 +35,13 @@ const SideNav = () => {
             </nav>
 
             {/* Logout button */}
-            <div className="border-t border-gray-700 pt-4 mt-auto">
-                <Link href="/logout">
-                    <span className="flex items-center space-x-4 p-3 rounded-lg hover:bg-red-600 transition-all cursor-pointer">
+            <div className="border-t  border-gray-700 pt-4 mt-auto">
+                <button onClick={()=>signOut()} className="w-full">
+                    <span className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-700 transition-all cursor-pointer">
                         <MdLogout className="h-6 w-6" />
                         <span>Logout</span>
                     </span>
-                </Link>
+                </button>
             </div>
         </div>
     );

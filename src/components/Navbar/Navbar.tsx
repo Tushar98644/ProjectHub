@@ -106,7 +106,7 @@ const Navbar = () => {
                                 <NavItem href="/" label="Home" />
                                 <NavItem href="/project" label="Add project" />
                                 <NavItem href="/contact" label="Contact" />
-                                <NavItem href='' label="Logout" onClick={() => signOut()} />
+                                <NavButton label="Logout" onClick={() => signOut()} />
                             </ul>
                         </div>
                     )}
@@ -130,7 +130,7 @@ const Navbar = () => {
                                             <NavItem href="/project" label="Add project" />
                                             <NavItem href="/" label="View Projects" />
                                             <NavItem href="/contact" label="Contact" />
-                                            <NavItem href="/dashboard" label="Dashboard" />
+                                            <NavItem href="/dashboard/profile" label="Dashboard" />
                                         </>
                                     )}
                                 </>

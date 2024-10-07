@@ -16,7 +16,6 @@ ChartJS.register(
 );
 
 const Analytics = () => {
-    // Data for bar chart
     const barData = {
         labels: ["January", "February", "March", "April", "May", "June"],
         datasets: [
@@ -30,7 +29,6 @@ const Analytics = () => {
         ],
     };
 
-    // Data for line chart
     const lineData = {
         labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
         datasets: [
@@ -46,18 +44,18 @@ const Analytics = () => {
 
     return (
         <DashLayout>
-            <div className="p-4 space-y-6">
+            <div className="p-4 space-y-6 md:w-[65vw]">
                 <h2 className="text-2xl font-bold text-center">Analytics Overview</h2>
 
                 <div className="flex flex-col gap-6">
                     {/* Bar Chart */}
-                    <div className="bg-white shadow-lg p-4 rounded-lg">
+                    <div className="bg-transparent shadow-lg p-4 rounded-lg">
                         <h3 className="text-lg font-semibold">Monthly Sales</h3>
                         <Bar data={barData} />
                     </div>
 
                     {/* Line Chart */}
-                    <div className="bg-white shadow-lg p-4 rounded-lg">
+                    <div className="bg-transparent shadow-lg p-4 rounded-lg">
                         <h3 className="text-lg font-semibold">Weekly Active Users</h3>
                         <Line data={lineData} />
                     </div>

@@ -34,10 +34,19 @@ export const getProjects = async (
     res: NextApiResponse
 ) => {
     try {
-        const approved_projects = res.json(
-            await Project.find({ approved: true }).sort({ createdAt: -1 })
-        );
-        console.log(`The approved projects are ${approved_projects}`);
+        const { name } = req.query;
+        console.log(`The email recieved is ${name}`);
+        let projects;
+        if (name) {
+            projects = res.json(
+                await Project.find({name}).sort({ createdAt: -1 })
+            );
+        } else {
+            projects = res.json(
+                await Project.find({ approved: true }).sort({ createdAt: -1 })
+            );
+        }
+        console.log(`The approved projects are ${ projects}`);
     } catch (err) {
         console.log(err);
         return res.status(400).json({ err: "Error in fetching projects" });
