@@ -37,12 +37,9 @@ export const DashLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex h-screen">
             <SideNav />
-
-            <main className="flex-1 ml-[25vw] p-6 overflow-y-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {children}
-                </div>
-            </main>
+            <div className="ml-[25vw] flex items-start justify-center">
+                {children}
+            </div>
         </div>
     );
 };

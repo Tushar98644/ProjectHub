@@ -4,13 +4,13 @@ import Link from "next/link";
 import { FaHome, FaChartBar } from "react-icons/fa";
 import { FaCircleUser } from "react-icons/fa6";
 import { MdLogout } from "react-icons/md";
-import { IoSettingsSharp } from "react-icons/io5";
+import { FaFolderOpen } from "react-icons/fa6";
 
 const navItems = [
     { href: "/dashboard", label: "Home", icon: <FaHome className="h-6 w-6" /> },
     { href: "/dashboard/analytics", label: "Analytics", icon: <FaChartBar className="h-6 w-6" /> },
     { href: "/dashboard/profile", label: "Profile", icon: <FaCircleUser className="h-6 w-6" /> },
-    { href: "/dashboard/settings", label: "Settings", icon: <IoSettingsSharp className="h-6 w-6" /> },
+    { href: "/dashboard/projects", label: "My Projects", icon: <FaFolderOpen className="h-6 w-6" /> },
 ];
 
 const SideNav = () => {
