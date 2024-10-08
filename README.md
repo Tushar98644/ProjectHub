@@ -23,6 +23,7 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 -   Homepage
 -   Add project page
 -   Contact page
+-   Dashboard(profile,Analytics and user projects)
 -   Admin page (accessible only to admin)
 -   Discussion page(for each project)
 -   Message page (admin only)
