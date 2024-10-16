@@ -184,6 +184,14 @@ docker-compose up
 
 <img width="1440" alt="Screenshot 2024-02-09 at 9 02 55 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a7ecce6d-4871-45a8-966a-ff83d6f7f253">
 
+### Dashboard Profile
+
+<img width="1440" alt="Screenshot 2024-10-16 at 1 28 27 PM" src="https://github.com/user-attachments/assets/48fa1ed8-27dd-4b65-a51a-8115c4c95c6e">
+
+### My projects page  
+
+<img width="1440" alt="Screenshot 2024-10-16 at 1 28 45 PM" src="https://github.com/user-attachments/assets/cad44136-43aa-4f1b-98d7-2fd6a0e306ca">
+
 ### 404 Page
 
 <img width="1440" alt="Screenshot 2024-02-09 at 9 03 21 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c088a3ac-1a7c-48de-a87b-89eb5caa0ae4">
