@@ -39,7 +39,7 @@
         "husky": "^8.0.3",
         "lottie-react": "^2.4.0",
         "mongodb": "^5.8.0",
-        "mongoose": "^7.6.3",
+        "mongoose": "^8.8.3",
         "next": "14.2.10",
         "next-auth": "^4.24.5",
         "openai-edge": "^1.2.2",
