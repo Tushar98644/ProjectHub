@@ -54,17 +54,15 @@ const Main = () => {
                 "Content-Type": "application/json",
             },
         };
-        await axios
-            .get("/api/project", config)
-            .then(res => {
-                console.log(
-                    `The final projects to be displayed are ${res.data}`
-                );
-                setProjects(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        try {
+            const res = await axios.get("/api/project", config)
+            console.log(`The final projects to be displayed are ${res.data}`);
+            setProjects(res.data);
+        }
+        catch (error) {
+            console.error("Error fetching projects:", error);
+        }
+
     }, []);
 
     useEffect(() => {

@@ -57,19 +57,15 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                 "Content-Type": "application/json",
             },
         };
-        const apiUrl = `/api/discussion/${id}`;
-        await axios
-            .get(
-                apiUrl,
-                config
-            )
-            .then(res => {
-                setDiscussionData(res.data);
-                console.log(`Data fetched successfully : ${res.data}`);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        try {
+            const apiUrl = `/api/discussion/${id}`;
+            const res = await axios.get(apiUrl, config)
+            setDiscussionData(res.data);
+            console.log(`Data fetched successfully : ${res.data}`);
+        }
+        catch (error) {
+            console.error("Error fetching messages:", error);
+        }
     }, [id]);
 
     useEffect(() => {
@@ -120,7 +116,6 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                                     Discussions
                                 </h2>
                             </div>
-                            {/* <button className="z-[2]">hello</button> */}
                             <form className="mb-6">
                                 <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                                     <label

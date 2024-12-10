@@ -48,23 +48,23 @@ const Admin = () => {
                 "Content-Type": "application/json",
             },
         };
-        await axios
-            .post("/api/admin", { projectId, approved: true }, config)
-            .then(res => {
-                console.log(`project approved details:${res.data}`);
-                setApprovalStatus(prevState => ({
-                    ...prevState,
-                    [projectId]: "Approved",
-                }));
-                toast.success("Project Approved", {
-                    theme: "dark",
-                    autoClose: 3000,
-                    closeButton: true,
-                });
-            })
-            .catch(err => {
-                console.log(err);
+        try {
+            const res = await axios.post("/api/admin", { projectId, approved: true }, config)
+            console.log(`project approved details:${res.data}`);
+            setApprovalStatus(prevState => ({
+                ...prevState,
+                [projectId]: "Approved",
+            }));
+            toast.success("Project Approved", {
+                theme: "dark",
+                autoClose: 3000,
+                closeButton: true,
             });
+        }
+        catch (err) {
+            console.log(`There was an error approving the project: ${err}`);
+        }
+
     };
 
     const Reject_project = async (projectId: string) => {
@@ -102,30 +102,30 @@ const Admin = () => {
                     "Content-Type": "application/json",
                 },
             };
-            await axios
-                .get("/api/admin", config)
-                .then(res => {
-                    console.log(`The project data returned is ${res.data}`);
-                    setProject(res.data);
-                    // Set initial approval status
-                    const initialApprovalStatus = res.data.reduce(
-                        (accumulator: any, project: Project) => {
-                            if (project.approved === undefined) {
-                                accumulator[project._id] = undefined;
-                            } else {
-                                accumulator[project._id] = project.approved
-                                    ? "Approved"
-                                    : "Rejected";
-                            }
-                            return accumulator;
-                        },
-                        {}
-                    );
-                    setApprovalStatus(initialApprovalStatus);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            try {
+                const res = await axios.get("/api/admin", config)
+                console.log(`The project data returned is ${res.data}`);
+                setProject(res.data);
+                // Set initial approval status
+                const initialApprovalStatus = res.data.reduce(
+                    (accumulator: any, project: Project) => {
+                        if (project.approved === undefined) {
+                            accumulator[project._id] = undefined;
+                        } else {
+                            accumulator[project._id] = project.approved
+                                ? "Approved"
+                                : "Rejected";
+                        }
+                        return accumulator;
+                    },
+                    {}
+                );
+                setApprovalStatus(initialApprovalStatus);
+            }
+            catch (err) {
+                console.log(`There was an error fetching the projects: ${err}`);
+            }
+
         };
         fetchProjects();
     }, []);
@@ -162,6 +162,7 @@ const Admin = () => {
                     Pending approval!
                 </p>
             </div>
+            
             {/* For medium and larger screens */}
             <div
                 className="md:pt-28 md:px-20 px-8 pb-4 text-nav-text font-bold

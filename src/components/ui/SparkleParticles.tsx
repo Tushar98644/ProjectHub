@@ -31,13 +31,22 @@ const Sparkles = (props: ParticlesProps) => {
     particleDensity,
   } = props;
   const [init, setInit] = useState(false);
+  
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
+    const initializeParticles = async () => {
+      try {
+        await initParticlesEngine(async (engine) => {
+          await loadSlim(engine);
+        });
+        setInit(true); 
+      } catch (error) {
+        console.error("Error initializing particles engine:", error);
+      }
+    };
+
+    initializeParticles();
+  }, []); 
+
   const controls = useAnimation();
 
   const particlesLoaded = async (container?: Container) => {

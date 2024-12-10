@@ -15,17 +15,12 @@ const Message_page = () => {
                     "Content-Type": "application/json",
                 },
             };
+
             try {
-                await axios
-                    .get("/api/message", config)
-                    .then(res => {
-                        setMessages(res.data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
-            catch (err) {
+                const response = await axios.get("/api/message", config);
+                setMessages(response.data);
+            } catch (error) {
+                console.error("Error fetching messages:", error);
                 toast("An error occurred while fetching the messages", {
                     closeButton: true,
                     position: "top-right",
@@ -34,6 +29,7 @@ const Message_page = () => {
                 });
             }
         };
+
         getMessages();
     }, []);
 
