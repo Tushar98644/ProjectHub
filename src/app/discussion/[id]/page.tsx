@@ -174,7 +174,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                                 disabled={isPosting || !session}
                             />
                         </div>
-                        <div className="flex justify-end">
+                        <div className="flex justify-end opacity-95">
                             <motion.button
                                 type="submit"
                                 disabled={isPosting || !session || !message.trim()}
