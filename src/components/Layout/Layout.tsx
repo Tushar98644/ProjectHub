@@ -37,7 +37,7 @@ export const DashLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex min-h-screen w-screen">
             <SideNav />
-            <div className="ml-[28vw] mt-[3vw]">
+            <div className="w-full ml-[26vw] mt-[2vw]">
                 {children}
             </div>
         </div>
