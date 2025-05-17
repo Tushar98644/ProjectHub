@@ -9,7 +9,7 @@ const Add_Project = () => {
     const userName = session?.user?.name || "Innovator";
 
     return (
-        <div className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen relative flex flex-col items-center justify-center pt-32 pb-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl w-full space-y-12">
                 {/* Header Section */}
                 <header className="text-center">
