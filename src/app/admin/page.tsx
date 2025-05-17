@@ -5,10 +5,14 @@
 import { HI } from "@/shared";
 import { Project } from "@/types/project";
 import axios from "axios";
-import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState, useRef, use } from "react";
 import { toast } from "react-toastify";
+import dynamic from "next/dynamic";
+
+const Lottie = dynamic(() => import('lottie-react'), {
+    ssr: false,
+});
 
 const Admin = () => {
     const { data: session } = useSession();
