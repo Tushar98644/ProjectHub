@@ -7,7 +7,7 @@ import { Project } from "@/types/project";
 import axios from "axios";
 import Lottie from "lottie-react";
 import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef, use } from "react";
 import { toast } from "react-toastify";
 
 const Admin = () => {
@@ -29,7 +29,19 @@ const Admin = () => {
     }, [projects, searchQuery]);
 
     const tableRef = useRef<HTMLElement | null>(null);
+    
+    useEffect(() => {
+        const handleResize = () => {
+            adjustSearchActionWidth();
+        };
 
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    
     const adjustSearchActionWidth = () => {
         if (tableRef.current) {
             const tableWidth = tableRef.current.clientWidth;
