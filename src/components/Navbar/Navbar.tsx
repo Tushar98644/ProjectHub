@@ -48,10 +48,8 @@ const Navbar = () => {
             }
         };
     
-        // Set initial value
         handleResize();
     
-        // Add event listener for window resize
         window.addEventListener("resize", handleResize);
     
         // Clean up the event listener on component unmount
@@ -61,8 +59,8 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div className="nav font-bold grid md:grid-cols-7 grid-cols-2 md:py-7 py-1 px-6 z-10 gap-2 shadow-xl  items-center fixed w-full">
-            <span className="bg-gradient-to-r from-[#4ca5ff] to-[#b673f8] md:col-span-2 md:block hidden text-center px-2 lg:text-4xl md:text-2xl font-black animate-pulse bg-clip-text text-transparent">
+        <div className="nav font-bold grid md:grid-cols-7 grid-cols-2 md:py-7 py-1 px-0 z-10 gap-2 shadow-xl  items-center fixed w-full">
+            <span className="bg-gradient-to-r from-[#4ca5ff] to-[#b673f8] md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl font-black animate-pulse bg-clip-text text-transparent">
                 PROJECT HUB
             </span>
             {state.isMobile ? (
@@ -104,7 +102,7 @@ const Navbar = () => {
                         <div className="">
                             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                                 <NavItem href="/" label="Home" />
-                                <NavItem href="/project" label="Add project" />
+                                <NavItem href="/project/new" label="Add project" />
                                 <NavItem href="/contact" label="Contact" />
                                 <NavButton label="Logout" onClick={() => signOut()} />
                             </ul>
@@ -120,14 +118,14 @@ const Navbar = () => {
                                     {session?.user?.email ===
                                         process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
                                         <>
-                                            <NavItem href="/project" label="Add project" />
+                                            <NavItem href="/project/new" label="Add project" />
                                             <NavItem href="/" label="View Projects" />
                                             <NavItem href="/admin" label="Admin Panel" />
                                             <NavItem href="/message" label="Messages" />
                                         </>
                                     ) : (
                                         <>
-                                            <NavItem href="/project" label="Add project" />
+                                            <NavItem href="/project/new" label="Add project" />
                                             <NavItem href="/" label="View Projects" />
                                             <NavItem href="/contact" label="Contact" />
                                             <NavItem href="/dashboard/profile" label="Dashboard" />

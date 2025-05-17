@@ -48,13 +48,11 @@ const Analytics = () => {
                 <h2 className="text-2xl font-bold text-center">Analytics Overview</h2>
 
                 <div className="flex flex-col gap-6">
-                    {/* Bar Chart */}
                     <div className="bg-transparent shadow-lg p-4 rounded-lg">
                         <h3 className="text-lg font-semibold">Monthly Sales</h3>
                         <Bar data={barData} />
                     </div>
 
-                    {/* Line Chart */}
                     <div className="bg-transparent shadow-lg p-4 rounded-lg">
                         <h3 className="text-lg font-semibold">Weekly Active Users</h3>
                         <Line data={lineData} />
