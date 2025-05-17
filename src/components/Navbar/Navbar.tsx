@@ -109,7 +109,7 @@ const Navbar = () => {
                         className="flex-shrink-0"
                     >
                         <Link href="/" className="flex items-center space-x-2 group">
-                            <img src="/logo-1.png" alt="Project Hub Logo" className="h-10 w-auto transition-transform duration-300 group-hover:rotate-[15deg]" />
+                            <img src="/logo-1.png" alt="Project Hub Logo" className="h-10 w-auto transition-transform duration-300 group-hover:rotate-[15deg] md:hidden" />
                             <span className="text-2xl font-bold bg-gradient-to-r from-sky-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent hidden sm:inline group-hover:brightness-125 transition-all">
                                 PROJECT HUB
                             </span>
