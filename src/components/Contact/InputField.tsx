@@ -8,6 +8,7 @@ interface InputFieldProps {
     onChange: (value: string) => void;
     required?: boolean;
     textarea?: boolean;
+    placeholder?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
