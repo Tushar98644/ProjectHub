@@ -6,9 +6,12 @@ import { HI } from "@/shared";
 import { Project } from "@/types/project";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useEffect, useMemo, useState, useRef, use } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import dynamic from "next/dynamic";
+import { FaSearch, FaCheckCircle, FaTimesCircle, FaSpinner, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Lottie = dynamic(() => import('lottie-react'), {
     ssr: false,
@@ -16,389 +19,216 @@ const Lottie = dynamic(() => import('lottie-react'), {
 
 const AdminClient = () => {
     const { data: session } = useSession();
-    const [projects, setProject] = useState<Project[]>([]);
+    const [projects, setProjects] = useState<Project[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [approvalStatus, setApprovalStatus] = useState<{
-        [key: string]: string;
-    }>({});
+    const [approvalStatus, setApprovalStatus] = useState<{ [key: string]: string | undefined; }>({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState<string | null>(null); // For individual card actions
 
-    const handleSearchInputChange = (event: any) => {
+    const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
     };
 
     const filteredProjects = useMemo(() => {
         return projects.filter(project =>
-            project.title.toLowerCase().includes(searchQuery.toLowerCase())
+            project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (project.name && project.name.toLowerCase().includes(searchQuery.toLowerCase()))
         );
     }, [projects, searchQuery]);
 
-    const tableRef = useRef<HTMLElement | null>(null);
-
-    const adjustSearchActionWidth = () => {
-        if (tableRef.current) {
-            const tableWidth = tableRef.current.clientWidth;
-            const searchActionSection = document.getElementById(
-                "search-action-section"
-            );
-            if (searchActionSection) {
-                searchActionSection.style.width = `${tableWidth}px`;
-            }
-        }
-    };
-
-    const Approve_project = async (projectId: string) => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
+    const handleApprovalAction = async (projectId: string, newApprovedStatus: boolean) => {
+        setActionLoading(projectId);
+        const config = { headers: { "Content-Type": "application/json" } };
         try {
-            const res = await axios.post("/api/admin", { projectId, approved: true }, config)
-            console.log(`project approved details:${res.data}`);
+            await axios.post("/api/admin", { projectId, approved: newApprovedStatus }, config);
             setApprovalStatus(prevState => ({
                 ...prevState,
-                [projectId]: "Approved",
+                [projectId]: newApprovedStatus ? "Approved" : "Rejected",
             }));
-            toast.success("Project Approved", {
-                theme: "dark",
-                autoClose: 3000,
-                closeButton: true,
-            });
-        }
-        catch (err) {
-            console.log(`There was an error approving the project: ${err}`);
-        }
-
-    };
-
-    const Reject_project = async (projectId: string) => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
-        try {
-            await axios.post(
-                "/api/admin",
-                { projectId, approved: false },
-                config
-            );
-            setApprovalStatus(prevState => ({
-                ...prevState,
-                [projectId]: "Rejected",
-            }));
-            console.log(`project reject details:${approvalStatus[projectId]}`);
-            toast.error("Project Rejected", {
-                theme: "dark",
-                autoClose: 3000,
-                closeButton: true,
-            });
+            toast.success(`Project ${newApprovedStatus ? "Approved" : "Rejected"}!`, { theme: "dark" });
         } catch (err) {
-            console.log(err);
+            console.error(`Error ${newApprovedStatus ? "approving" : "rejecting"} project:`, err);
+            toast.error("Action failed. Please try again.", { theme: "dark" });
+        } finally {
+            setActionLoading(null);
         }
-        console.log("project rejected");
     };
 
     useEffect(() => {
         const fetchProjects = async () => {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            };
+            setIsLoading(true);
+            const config = { headers: { "Content-Type": "application/json" } };
             try {
-                const res = await axios.get("/api/admin", config)
-                console.log(`The project data returned is ${res.data}`);
-                setProject(res.data);
-                // Set initial approval status
-                const initialApprovalStatus = res.data.reduce(
-                    (accumulator: any, project: Project) => {
-                        if (project.approved === undefined) {
-                            accumulator[project._id] = undefined;
-                        } else {
-                            accumulator[project._id] = project.approved
-                                ? "Approved"
-                                : "Rejected";
-                        }
-                        return accumulator;
-                    },
-                    {}
-                );
-                setApprovalStatus(initialApprovalStatus);
+                const res = await axios.get("/api/admin", config);
+                setProjects(res.data);
+                const initialStatus = res.data.reduce((acc: any, project: Project) => {
+                    acc[project._id] = project.approved === undefined ? undefined : (project.approved ? "Approved" : "Rejected");
+                    return acc;
+                }, {});
+                setApprovalStatus(initialStatus);
+            } catch (err) {
+                console.error("Error fetching projects:", err);
+                toast.error("Failed to fetch projects.", { theme: "dark" });
+            } finally {
+                setIsLoading(false);
             }
-            catch (err) {
-                console.log(`There was an error fetching the projects: ${err}`);
-            }
-
         };
         fetchProjects();
     }, []);
 
-    useEffect(() => {
-        adjustSearchActionWidth();
-        window.addEventListener("resize", adjustSearchActionWidth);
-        return () => {
-            window.removeEventListener("resize", adjustSearchActionWidth);
-        };
-    }, []);
-
-    useEffect(() => {
-        adjustSearchActionWidth();
-    }, [filteredProjects]);
-
+    const cardVariants = {
+        hidden: { opacity: 0, y: 20, scale: 0.98 },
+        visible: (i: number) => ({
+            opacity: 1, y: 0, scale: 1,
+            transition: { delay: i * 0.05, duration: 0.4, ease: "easeOut" }
+        }),
+        exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } }
+    };
     return (
-        <div className="flex flex-col">
-            {/* For smaller screens (centered) */}
-            <div
-                className="sm:hidden md:pt-28  md:px-20 px-8 text-nav-text font-bold flex flex-col items-center justify-center"
-                style={{ paddingTop: "4rem" }}
-            >
-                <div style={{ width: "10rem" }}>
-                    <Lottie animationData={HI} height={50} width={50} />
-                </div>
-                <p
-                    className="text-lg"
-                    style={{ marginTop: "-0.5rem", marginBottom: "0.5rem" }}
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 pt-24 sm:pt-32 pb-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Header Section */}
+                <motion.header
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="mb-10 md:mb-12 text-center sm:text-left sm:flex sm:items-center sm:justify-between"
                 >
-                    Welcome {session?.user?.name}
-                </p>
-                <p className="text-lg text-[#ff2bc1]  animate-pulse">
-                    Pending approval!
-                </p>
-            </div>
-            
-            {/* For medium and larger screens */}
-            <div
-                className="md:pt-28 md:px-20 px-8 pb-4 text-nav-text font-bold
-             items-center"
-                style={{ paddingTop: "1rem" }}
-            >
-                {/* For medium and larger screens */}
-                <div
-                    className="hidden sm:flex items-center justify-center"
-                    style={{ paddingTop: "6rem" }}
-                >
-                    <div className="text-[#ff2bc1] lg:text-4xl md:text-3xl sm:text-2xl text-xs text-center justify-self-start">
-                        <p className="animate-pulse">Pending approval!</p>
-                    </div>
-                    <div className="flex flex-row items-center gap-0 justify-self-end">
-                        <div className="w-[15vw]">
-                            <Lottie animationData={HI} height={50} width={50} />
-                        </div>
-                        <p className="lg:text-4xl md:text-3xl sm:text-2xl text-xs">
-                            Welcome {session?.user?.name}
+                    <div>
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+                            Admin <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-purple-500">Dashboard</span>
+                        </h1>
+                        <p className="mt-2 text-lg text-slate-400">
+                            Welcome, <span className="font-semibold text-sky-300">{session?.user?.name || "Admin"}</span>! Manage pending project approvals.
                         </p>
                     </div>
-                </div>
-            </div>
-
-            <div className="md:px-20 px-4">
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <div
-                        id="search-action-section"
-                        className="flex flex-wrap items-center justify-between pb-4 bg-white dark:bg-gray-900 py-4 px-12"
-                    >
-                        <div className="flex items-center mr-4">
-                            <button
-                                id="dropdownActionButton"
-                                data-dropdown-toggle="dropdownAction"
-                                className="md:pl-4 inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                                type="button"
-                            >
-                                <span className="sr-only">Action button</span>
-                                Action
-                                <svg
-                                    className="w-3 h-3 ml-2"
-                                    aria-hidden="true"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M19 9l-7 7-7-7"
-                                    ></path>
-                                </svg>
-                            </button>
-
-                            <div
-                                id="dropdownAction"
-                                className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
-                            >
-                                <ul
-                                    className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownActionButton"
-                                >
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        >
-                                            Reward
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        >
-                                            Promote
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                        >
-                                            Activate account
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div className="py-1">
-                                    <a
-                                        href="#"
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                    >
-                                        Delete User
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <label htmlFor="table-search" className="sr-only">
-                            Search
-                        </label>
-                        <div className="flex-grow">
-                            <div className="relative w-full">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <svg
-                                        className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                        aria-hidden="true"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                            clipRule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
-                                <input
-                                    type="text"
-                                    id="table-search-users"
-                                    className="block p-2 pl-8 pr-3 text-sm text-gray-900 border border-gray-300 rounded-lg w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Search for projects"
-                                    value={searchQuery}
-                                    onChange={handleSearchInputChange}
-                                />
-                            </div>
-                        </div>
+                    <div className="mt-6 sm:mt-0 w-24 h-24 sm:w-32 sm:h-32 mx-auto sm:mx-0">
+                        <Lottie animationData={HI} loop={true} />
                     </div>
-                    <table
-                        ref={tableRef as React.RefObject<HTMLTableElement>}
-                        className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                </motion.header>
+
+                {/* Search and Filter Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="mb-8 md:mb-10"
+                >
+                    <div className="relative max-w-xl mx-auto">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+                            <FaSearch className="w-5 h-5" />
+                        </div>
+                        <input
+                            type="text"
+                            id="admin-project-search"
+                            className="block w-full pl-12 pr-4 py-3 text-sm text-slate-100 bg-slate-700/70 backdrop-blur-sm border border-slate-600 rounded-xl placeholder-slate-400 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                            placeholder="Search projects by title or contributor..."
+                            value={searchQuery}
+                            onChange={handleSearchInputChange}
+                        />
+                    </div>
+                </motion.div>
+
+                {/* Projects Grid / List */}
+                {isLoading ? (
+                    <div className="flex flex-col items-center justify-center text-center py-20">
+                        <FaSpinner className="animate-spin text-sky-400 text-6xl mb-4" />
+                        <p className="text-xl text-slate-300">Loading Projects...</p>
+                    </div>
+                ) : filteredProjects.length === 0 && !searchQuery ? (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                        className="text-center py-20 bg-slate-800/50 rounded-xl shadow-lg"
                     >
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="p-4">
-                                    <div className="flex items-center"></div>
-                                </th>
-                                <th scope="col" className="px-4 py-3">
-                                    Project Title
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Project Description
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Github link
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        {filteredProjects.map(project => (
-                            <tbody key={project._id}>
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td></td>
-                                    <td
-                                        scope="row"
-                                        className="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                    >
+                        <FaCheckCircle className="mx-auto text-6xl text-green-500 mb-6" />
+                        <h2 className="text-2xl font-semibold text-slate-100 mb-3">All Clear!</h2>
+                        <p className="text-slate-400">There are no projects pending approval right now.</p>
+                    </motion.div>
+                ) : filteredProjects.length === 0 && searchQuery ? (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                        className="text-center py-20 bg-slate-800/50 rounded-xl shadow-lg"
+                    >
+                        <FaSearch className="mx-auto text-6xl text-slate-500 mb-6" />
+                        <h2 className="text-2xl font-semibold text-slate-100 mb-3">No Matches Found</h2>
+                        <p className="text-slate-400">Try adjusting your search query.</p>
+                    </motion.div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                        <AnimatePresence>
+                            {filteredProjects.map((project, index) => (
+                                <motion.div
+                                    key={project._id}
+                                    custom={index}
+                                    variants={cardVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                    layout
+                                    className="bg-slate-800/70 backdrop-blur-md shadow-xl rounded-xl border border-slate-700/60 overflow-hidden flex flex-col h-full hover:border-sky-500/70 transition-all duration-300"
+                                >
+                                    <div className="relative w-full h-40 sm:h-48">
                                         <img
-                                            className="w-10 h-10 rounded-full"
-                                            src={project.image}
-                                            alt="Jese image"
+                                            className="w-full h-full object-cover"
+                                            src={project.image || '/alternate.jpeg'}
+                                            alt={`${project.title} preview`}
+                                            onError={(e: any) => { e.target.onerror = null; e.target.src = '/alternate.jpeg'; }}
                                         />
-                                        <div className="pl-3">
-                                            <div className="text-base font-semibold">
-                                                {project.title}
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-4 overflow-auto whitespace-normal max-w-xs">
-                                        {project.description}
-                                    </td>
-                                    <td className="px-4 py-4 cursor-pointer hover:underline overflow-auto whitespace-normal max-w-xs">
-                                        <div className="flex items-center">
-                                            <a href={project.github}>
-                                                {project.github}
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-4 whitespace-nowrap">
-                                        {approvalStatus[project._id] ? (
-                                            <span
-                                                className={
-                                                    approvalStatus[
-                                                        project._id
-                                                    ] === "Approved"
-                                                        ? "text-green-500"
-                                                        : "text-red-500"
-                                                }
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                    </div>
+
+                                    <div className="p-5 flex flex-col flex-grow">
+                                        <h3 className="text-lg font-semibold text-sky-300 mb-1 line-clamp-2">{project.title}</h3>
+                                        <p className="text-xs text-slate-400 mb-3">
+                                            By: <span className="font-medium text-slate-300">{project.name}</span>
+                                        </p>
+                                        <p className="text-sm text-slate-300 mb-4 line-clamp-3 flex-grow">{project.description}</p>
+
+                                        {project.github && (
+                                            <a
+                                                href={project.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center text-xs text-sky-400 hover:text-sky-300 mb-4 group"
                                             >
-                                                {approvalStatus[project._id]}!
-                                            </span>
-                                        ) : (
-                                            <div className="text-sm text-gray-700 border-gray-200 gap-x-16 dark:border-gray-700 flex flex-row gap-0">
-                                                <div>
-                                                    <a
-                                                        href="#"
-                                                        onClick={() =>
-                                                            Approve_project(
-                                                                project._id
-                                                            )
-                                                        }
-                                                        className="text-white block w-full bg-gradient-to-r from-green-400 to-blue-500 hover:from-blue-500 hover:to-green-400 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:focus:ring-blue-900"
-                                                    >
-                                                        Approve
-                                                    </a>
-                                                </div>
-                                                <div>
-                                                    <a
-                                                        href="#"
-                                                        onClick={() =>
-                                                            Reject_project(
-                                                                project._id
-                                                            )
-                                                        }
-                                                        className="text-white block w-full bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 hover:from-fuchsia-400 hover:to-indigo-800 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-6 py-2.5 text-center dark:focus:ring-blue-900"
-                                                    >
-                                                        Reject
-                                                    </a>
-                                                </div>
-                                            </div>
+                                                <FaGithub className="mr-1.5 group-hover:text-sky-300" /> View on GitHub <FaExternalLinkAlt className="ml-1.5 opacity-70 group-hover:opacity-100" />
+                                            </a>
                                         )}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        ))}
-                    </table>
-                </div>
+
+                                        <div className="mt-auto pt-4 border-t border-slate-700/50">
+                                            {approvalStatus[project._id] ? (
+                                                <div className={`flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium
+                                                    ${approvalStatus[project._id] === "Approved" ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
+                                                    {approvalStatus[project._id] === "Approved" ? <FaCheckCircle className="mr-2" /> : <FaTimesCircle className="mr-2" />}
+                                                    {approvalStatus[project._id]}
+                                                </div>
+                                            ) : (
+                                                <div className="flex gap-3">
+                                                    <button
+                                                        onClick={() => handleApprovalAction(project._id, true)}
+                                                        disabled={actionLoading === project._id}
+                                                        className="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors disabled:opacity-50"
+                                                    >
+                                                        {actionLoading === project._id ? <FaSpinner className="animate-spin mr-2" /> : <FaCheckCircle className="mr-2" />}
+                                                        Approve
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleApprovalAction(project._id, false)}
+                                                        disabled={actionLoading === project._id}
+                                                        className="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors disabled:opacity-50"
+                                                    >
+                                                        {actionLoading === project._id ? <FaSpinner className="animate-spin mr-2" /> : <FaTimesCircle className="mr-2" />}
+                                                        Reject
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                )}
             </div>
         </div>
     );
