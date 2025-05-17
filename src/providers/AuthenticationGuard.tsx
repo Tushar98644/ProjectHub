@@ -13,13 +13,12 @@ export default function AuthenticationGuard({
     const { status, data: session } = useSession();
     console.log(status);
     const pathname = usePathname();
-    // return a string of the current path
     const router = useRouter();
 
     useEffect(() => {
         if (status === "authenticated") {
             if (pathname === "/login") {
-                router.push("/");
+                router.push("/dashboard/projects");
             }
         } else if (status === "unauthenticated") {
             if (pathname !== "/login") {
@@ -29,7 +28,7 @@ export default function AuthenticationGuard({
 
         if (session?.user?.email != process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
             if (pathname === "/admin") {
-                router.push("/");
+                router.push("/dashboard/projects");
             }
         }
     }, [status, pathname, session?.user?.email, router]);
