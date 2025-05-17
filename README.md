@@ -160,9 +160,9 @@ docker-compose up
 
 <img width="1440" alt="Screenshot 2025-05-17 at 11 53 10 PM" src="https://github.com/user-attachments/assets/48344c61-f5d7-4e90-b518-a61165304553" />
 
-### Home Page
+### View Projects Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 04 28 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/48cdd422-f1f9-4089-92af-1229b11f2136">
+<img width="1440" alt="Screenshot 2025-05-17 at 11 54 55 PM" src="https://github.com/user-attachments/assets/56e16692-f848-408c-abac-8d96db4cbc4c" />
 
 ### Add Project Page
 
@@ -174,15 +174,17 @@ docker-compose up
 
 ### Admin Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 02 42 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/7bb52975-20f5-4b23-a5c5-af7d6c75a5d3">
+<img width="1440" alt="Screenshot 2025-05-18 at 12 00 36 AM" src="https://github.com/user-attachments/assets/339c1696-b732-4f9f-926d-b7cbd7aa947d" />
 
 ### Discussion Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 04 08 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/dae9b3fe-4e21-4aa5-af44-8a91f753af25">
+<img width="1440" alt="Screenshot 2025-05-18 at 12 02 29 AM" src="https://github.com/user-attachments/assets/c8e175d5-8578-4012-b372-0f60934ba352" />
+
+<img width="1440" alt="Screenshot 2025-05-18 at 12 08 18 AM" src="https://github.com/user-attachments/assets/a151ad94-752d-496a-afb9-db6342236b55" />
 
 ### Message Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 02 55 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a7ecce6d-4871-45a8-966a-ff83d6f7f253">
+<img width="1436" alt="Screenshot 2025-05-18 at 12 03 30 AM" src="https://github.com/user-attachments/assets/4877ba6c-4b01-42d9-90a5-48f303b19968" />
 
 ### Dashboard Profile
 
@@ -194,7 +196,7 @@ docker-compose up
 
 ### 404 Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 03 21 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c088a3ac-1a7c-48de-a87b-89eb5caa0ae4">
+<img width="1440" alt="Screenshot 2025-05-18 at 12 11 20 AM" src="https://github.com/user-attachments/assets/96052da3-d80a-46f4-84cd-6970e13f4360" />
 
 ## Star History
 
