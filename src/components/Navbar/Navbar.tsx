@@ -3,6 +3,7 @@
 import { useReducer, useEffect, Fragment } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { NavItem, NavButton } from "./Items";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 interface State {
     isMobile: boolean | undefined;
@@ -16,17 +17,16 @@ interface Action {
 
 const Navbar = () => {
     const initialState: State = {
-        isMobile: false,
+        isMobile: undefined,
         isMenuOpen: false,
     };
 
     const reducer = (state: State, action: Action): State => {
         switch (action.type) {
             case "SET_MOBILE_VIEW":
-                return { ...state, isMobile: action.payload };
+                return { ...state, isMobile: action.payload, isMenuOpen: action.payload === false ? false : state.isMenuOpen };
             case "TOGGLE_MENU":
                 return { ...state, isMenuOpen: !state.isMenuOpen };
-
             default:
                 return state;
         }
@@ -41,111 +41,116 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth <= 768) {
-                dispatch({ type: "SET_MOBILE_VIEW", payload: true });
-            } else {
-                dispatch({ type: "SET_MOBILE_VIEW", payload: false });
+            const mobileView = window.innerWidth <= 768;
+            if (state.isMobile !== mobileView) {
+                dispatch({ type: "SET_MOBILE_VIEW", payload: mobileView });
             }
         };
-    
+
         handleResize();
-    
         window.addEventListener("resize", handleResize);
-    
-        // Clean up the event listener on component unmount
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [state.isMobile]);
+
+    const commonNavItems = [
+        { href: "/project/new", label: "Add Project" },
+        { href: "/", label: "View Projects" },
+    ];
+
+    const userNavItems = [
+        ...commonNavItems,
+        { href: "/contact", label: "Contact" },
+        { href: "/dashboard/profile", label: "Dashboard" },
+    ];
+
+    const adminNavItems = [
+        ...commonNavItems,
+        { href: "/admin", label: "Admin Panel" },
+        { href: "/message", label: "Messages" },
+    ];
+
+    const mobileNavItems = session
+        ? (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? adminNavItems : userNavItems)
+        : [
+            { href: "/", label: "Home" },
+            { href: "/#about", label: "About" },
+        ];
+
+    if (state.isMobile === undefined) {
+        return <div className="fixed top-0 left-0 w-full h-16 bg-slate-900 z-50"></div>;
+    }
 
     return (
-        <div className="nav font-bold grid md:grid-cols-7 grid-cols-2 md:py-7 py-1 px-0 z-10 gap-2 shadow-xl  items-center fixed w-full">
-            <span className="bg-gradient-to-r from-[#4ca5ff] to-[#b673f8] md:col-span-2 md:block hidden text-center px-2 lg:text-3xl md:text-2xl font-black animate-pulse bg-clip-text text-transparent">
-                PROJECT HUB
-            </span>
-            {state.isMobile ? (
-                <Fragment>
-                    <div>
-                        <button
-                            type="button"
-                            className=" justify-self-start items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            aria-controls="navbar-cta"
-                            aria-expanded={state.isMenuOpen}
-                            onClick={toggleMenu}
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 17 14"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M1 1h15M1 7h15M1 13h15"
-                                />
-                            </svg>
-                        </button>
+        <nav className="fixed top-0 left-0 w-full bg-slate-900/80 backdrop-blur-md text-slate-100 shadow-lg z-50 opacity-70">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-20">
+                    <div className="flex-shrink-0">
+                        <a href="/" className="flex items-center space-x-2">
+                            <img src="/logo-1.png" alt="Project Hub Logo" className="h-10 w-auto" />
+                            <span className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-purple-500 bg-clip-text text-transparent hidden sm:inline">
+                                PROJECT HUB
+                            </span>
+                        </a>
                     </div>
-                    <div className="justify-self-end">
-                        <img
-                            src="/logo-1.png"
-                            alt=""
-                            width={100}
-                            height={100}
-                        />
-                    </div>
-                    {state.isMenuOpen && (
-                        <div className="">
-                            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                                <NavItem href="/" label="Home" />
-                                <NavItem href="/project/new" label="Add project" />
-                                <NavItem href="/contact" label="Contact" />
-                                <NavButton label="Logout" onClick={() => signOut()} />
-                            </ul>
-                        </div>
-                    )}
-                </Fragment>
-            ) : (
-                <Fragment>
-                    <nav className={session ? "col-span-4" : "col-span-3"}>
-                        <ul className="grid grid-cols-4 xl:text-xl lg:text-lg text-nav-text cursor-pointer hover:transition items-center gap-">
-                            {session && (
+
+                    {!state.isMobile && (
+                        <div className="hidden md:flex items-center space-x-4">
+                            {session ? (
                                 <>
-                                    {session?.user?.email ===
-                                        process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
-                                        <>
-                                            <NavItem href="/project/new" label="Add project" />
-                                            <NavItem href="/" label="View Projects" />
-                                            <NavItem href="/admin" label="Admin Panel" />
-                                            <NavItem href="/message" label="Messages" />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <NavItem href="/project/new" label="Add project" />
-                                            <NavItem href="/" label="View Projects" />
-                                            <NavItem href="/contact" label="Contact" />
-                                            <NavItem href="/dashboard/profile" label="Dashboard" />
-                                        </>
-                                    )}
+                                    {(session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? adminNavItems : userNavItems).map(item => (
+                                        <NavItem key={item.label} href={item.href} label={item.label} />
+                                    ))}
+                                    <NavButton onClick={() => signOut()} label="Logout" isPrimary={false} />
+                                </>
+                            ) : (
+                                <>
+                                    <NavButton onClick={() => signIn("google")} label="Log In" isPrimary={true} />
+                                    <NavButton onClick={() => signIn("github")} label="Sign Up" isPrimary={false} />
                                 </>
                             )}
-                        </ul>
-                    </nav>
-                    {session ? (
-                        <NavButton onClick={() => signOut()} label="Log out" />
-                    ) : (
-                        <div className="md:grid grid-cols-2 md:col-span-2 hidden md:gap-8 sm:gap-28">
-                            <NavButton onClick={() => signIn("google")} label="Log in" />
-                            <NavButton onClick={() => signIn("github")} label="Sign up" />
                         </div>
                     )}
-                </Fragment>
+
+                    <div className="md:hidden flex items-center">
+                        <button
+                            onClick={toggleMenu}
+                            type="button"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-slate-300 hover:text-sky-400 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500"
+                            aria-controls="mobile-menu"
+                            aria-expanded={state.isMenuOpen}
+                        >
+                            <span className="sr-only">Open main menu</span>
+                            {state.isMenuOpen ? (
+                                <FaTimes className="block h-6 w-6" aria-hidden="true" />
+                            ) : (
+                                <FaBars className="block h-6 w-6" aria-hidden="true" />
+                            )}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {state.isMobile && state.isMenuOpen && (
+                <div className="md:hidden absolute top-20 left-0 w-full bg-slate-800 shadow-xl pb-4" id="mobile-menu">
+                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                        {mobileNavItems.map(item => (
+                            <NavItem key={item.label} href={item.href} label={item.label} isMobile={true} onClick={toggleMenu} />
+                        ))}
+                        {session ? (
+                            <NavButton onClick={() => { signOut(); toggleMenu(); }} label="Logout" isMobile={true} isPrimary={false} />
+                        ) : (
+                            <>
+                                <NavButton onClick={() => { signIn("google"); toggleMenu(); }} label="Log In" isMobile={true} isPrimary={true} />
+                                <NavButton onClick={() => { signIn("github"); toggleMenu(); }} label="Sign Up" isMobile={true} isPrimary={false} />
+                            </>
+                        )}
+                    </div>
+                </div>
             )}
-        </div>
+        </nav>
     );
 };
 
