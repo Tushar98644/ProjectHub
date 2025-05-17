@@ -2,18 +2,19 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-
 import { Card } from "@/components";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Project } from "@/types/project";
 import { useRouter } from "next/navigation";
+import { FaSearch, FaMicrophone, FaSpinner, FaExclamationTriangle, FaFolderOpen } from "react-icons/fa"; // Added FaSpinner
 
 const Main = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [recognizedSpeech, setRecognizedSpeech] = useState<string>("");
     const [isListening, setIsListening] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const redirectToDiscussion = (id: string) => {
@@ -27,135 +28,156 @@ const Main = () => {
     };
 
     const filteredProjects = useMemo(() => {
+        if (!searchQuery) return projects;
         return projects.filter(project =>
-            project.title.toLowerCase().includes(searchQuery.toLowerCase())
+            project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (project.tags && project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))) ||
+            (project.description && project.description.toLowerCase().includes(searchQuery.toLowerCase()))
         );
     }, [projects, searchQuery]);
 
     const startListening = () => {
+        if (!('webkitSpeechRecognition' in window)) {
+            alert("Speech recognition not supported in this browser. Try Chrome.");
+            return;
+        }
         setIsListening(true);
-
         const recognition = new window.webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
 
-        recognition.onresult = (event: {
-            results: { transcript: any }[][];
-        }) => {
+        recognition.onresult = (event: { results: { transcript: any; }[][] }) => { 
             const transcript = event.results[0][0].transcript;
             setSearchQuery(transcript);
-            setRecognizedSpeech(transcript);
             setIsListening(false);
+        };
+        recognition.onerror = (event: { error: any }) => {
+            console.error("Speech recognition error:", event.error);
+            alert(`Speech recognition error: ${event.error}`);
+            setIsListening(false);
+        };
+        recognition.onend = () => {
+            setIsListening(false); // Ensure listening stops
         };
         recognition.start();
     };
 
-    const fetchprojects = useCallback(async () => {
+    const fetchProjects = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
         const config = {
             headers: {
                 "Content-Type": "application/json",
             },
         };
         try {
-            const res = await axios.get("/api/project", config)
-            console.log(`The final projects to be displayed are ${res.data}`);
+            const res = await axios.get("/api/project", config);
+            // console.log(`The final projects to be displayed are ${res.data}`);
             setProjects(res.data);
+        } catch (err) {
+            console.error("Error fetching projects:", err);
+            setError("Failed to load projects. Please try again later.");
+        } finally {
+            setIsLoading(false);
         }
-        catch (error) {
-            console.error("Error fetching projects:", error);
-        }
-
     }, []);
 
     useEffect(() => {
-        fetchprojects();
-    }, [fetchprojects]);
+        fetchProjects();
+    }, [fetchProjects]);
+
+    const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // The filtering is already happening via useMemo, so direct submission might not be needed
+        // unless you want to trigger a new API call with the search query.
+        console.log("Searching for:", searchQuery);
+    };
 
     return (
-        <div className="py-28 md:py-36 flex flex-col gap-8">
-            <div className="mt-0 w-full sm:px-16 px-8">
-                <form className="flex items-center">
-                    <label htmlFor="voice-search" className="sr-only">
-                        Search
-                    </label>
-                    <div className="relative w-full">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg
-                                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 21 21"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M11.15 5.6h.01m3.337 1.913h.01m-6.979 0h.01M5.541 11h.01M15 15h2.706a1.957 1.957 0 0 0 1.883-1.325A9 9 0 1 0 2.043 11.89 9.1 9.1 0 0 0 7.2 19.1a8.62 8.62 0 0 0 3.769.9A2.013 2.013 0 0 0 13 18v-.857A2.034 2.034 0 0 1 15 15Z"
-                                />
-                            </svg>
+        <div className="min-h-screen pt-28 md:pt-36 pb-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Header/Hero Section (Optional) */}
+                <header className="text-center mb-12 md:mb-16">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
+                        Discover Amazing <span className="text-sky-400">Projects</span>
+                    </h1>
+                    <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+                        Explore a diverse collection of projects, share your own, and connect with a vibrant community of innovators.
+                    </p>
+                </header>
+
+                {/* Search Bar Section */}
+                <div className="mb-10 md:mb-12 max-w-2xl mx-auto">
+                    <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 p-1.5 bg-slate-700/50 rounded-xl shadow-lg focus-within:ring-2 focus-within:ring-sky-500 transition-all">
+                        <div className="pl-3 text-slate-400">
+                            <FaSearch className="w-5 h-5" />
                         </div>
                         <input
                             type="text"
-                            id="voice-search"
+                            id="project-search"
                             value={searchQuery}
                             onChange={handleSearchInputChange}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search for projects"
-                            required
+                            className="flex-grow bg-transparent text-slate-100 text-sm placeholder-slate-400 focus:outline-none py-2.5 px-2"
+                            placeholder="Search projects by title, tag, or keyword..."
+                            required={false} // Typically search isn't strictly required
                         />
                         <button
                             type="button"
-                            className="absolute inset-y-0 right-0 flex items-center pr-3"
                             onClick={startListening}
+                            disabled={isListening}
+                            className={`p-2.5 rounded-lg transition-colors ${isListening
+                                    ? "bg-red-500 text-white animate-pulse"
+                                    : "text-slate-400 hover:text-sky-400 hover:bg-slate-600"
+                                }`}
+                            aria-label="Search by voice"
                         >
-                            <svg
-                                className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 16 20"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 7v3a5.006 5.006 0 0 1-5 5H6a5.006 5.006 0 0 1-5-5V7m7 9v3m-3 0h6M7 1h2a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3Z"
-                                />
-                            </svg>
+                            {isListening ? <FaSpinner className="w-5 h-5 animate-spin" /> : <FaMicrophone className="w-5 h-5" />}
+                        </button>
+                        <button
+                            type="submit" // Can be kept if you want explicit search submission
+                            className="px-4 py-2.5 text-sm font-semibold text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors"
+                        >
+                            Search
+                        </button>
+                    </form>
+                    {/* {recognizedSpeech && <p className="text-xs text-slate-400 mt-1 text-center">Recognized: "{recognizedSpeech}"</p>} */}
+                </div>
+
+                {/* Project Grid Section */}
+                {isLoading ? (
+                    <div className="flex flex-col items-center justify-center text-center py-10">
+                        <FaSpinner className="animate-spin text-sky-400 text-5xl mb-4" />
+                        <p className="text-xl text-slate-300">Loading Projects...</p>
+                    </div>
+                ) : error ? (
+                    <div className="flex flex-col items-center justify-center text-center py-10 bg-red-900/20 border border-red-700 rounded-lg p-6">
+                        <FaExclamationTriangle className="text-red-400 text-5xl mb-4" />
+                        <p className="text-xl text-red-300 mb-2">Oops! Something went wrong.</p>
+                        <p className="text-slate-400">{error}</p>
+                        <button onClick={fetchProjects} className="mt-6 px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-md text-sm font-medium">
+                            Try Again
                         </button>
                     </div>
-                    <button
-                        type="submit"
-                        className="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        <svg
-                            className="w-4 h-4 mr-2"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                ) : filteredProjects.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredProjects.map(project => (
+                            <Card
+                                key={project._id}
+                                {...project}
+                                discussion={() => redirectToDiscussion(project._id)}
                             />
-                        </svg>
-                        Search
-                    </button>
-                </form>
-            </div>
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 justify-items-center items-center grid-cols-1 gap-12 auto-rows-max sm:mx-16 mx-6">
-                {filteredProjects.map(project => (
-                    <Card
-                        key={project._id}
-                        {...project}
-                        discussion={() => redirectToDiscussion(project._id)}
-                    />
-                ))}
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-10 bg-slate-800/70 rounded-lg shadow-xl">
+                        <FaFolderOpen className="mx-auto text-5xl text-slate-500 mb-4" />
+                        <h2 className="text-2xl font-semibold text-slate-300 mb-2">No Projects Found</h2>
+                        <p className="text-slate-400">
+                            {searchQuery ? "Try adjusting your search or voice command." : "There are no projects to display at the moment."}
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );

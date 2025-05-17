@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     const isDashboard = pathname?.includes("/dashboard");
 
     return (
-        <div className="relative w-full bg-black">
+        <div className="relative w-full bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100">
             <div className="w-full absolute inset-0 z-0">
                 <Sparkles
                     id="tsparticlesfullpage"

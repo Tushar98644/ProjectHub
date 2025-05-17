@@ -9,7 +9,7 @@ const Add_Project = () => {
     const userName = session?.user?.name || "Innovator";
 
     return (
-        <div className="min-h-screen relative bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100 flex flex-col items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8 opacity-80">
+        <div className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl w-full space-y-12">
                 {/* Header Section */}
                 <header className="text-center">
@@ -22,7 +22,7 @@ const Add_Project = () => {
                     </p>
                 </header>
                 {/* Form Section */}
-                <div className="bg-slate-800 shadow-2xl rounded-xl p-6 sm:p-10">
+                <div className="bg-slate-800 shadow-2xl rounded-xl p-6 sm:p-10 opacity-70">
                     <Form />
                 </div>
 
