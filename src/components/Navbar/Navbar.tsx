@@ -84,12 +84,12 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="fixed top-0 left-0 w-full bg-slate-900/80 backdrop-blur-md text-slate-100 shadow-lg z-50 opacity-70">
+        <nav className="fixed top-0 left-0 w-full bg-slate-900/80 backdrop-blur-md text-slate-100 shadow-lg z-50">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     <div className="flex-shrink-0">
                         <a href="/" className="flex items-center space-x-2">
-                            <img src="/logo-1.png" alt="Project Hub Logo" className="h-10 w-auto" />
+                            <img src="/logo-1.png" alt="Project Hub Logo" className="h-10 w-auto md:hidden" />
                             <span className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-purple-500 bg-clip-text text-transparent hidden sm:inline">
                                 PROJECT HUB
                             </span>

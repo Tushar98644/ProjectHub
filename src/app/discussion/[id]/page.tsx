@@ -4,256 +4,263 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Discussion } from "@/types/discussion";
-import { useRouter } from "next/navigation";
+import { FaComments, FaPaperPlane, FaSpinner, FaExclamationTriangle, FaUserCircle, FaEllipsisH, FaPlus } from "react-icons/fa";
+import { formatDistanceToNow } from 'date-fns';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { motion, AnimatePresence } from "framer-motion";
 
 /* eslint-disable @next/next/no-img-element */
 const Discussion_page = ({ params }: { params: { id: string } }) => {
-    const [showdiscussion, setShowdiscussion] = useState(false);
+    const [showDiscussion, setShowDiscussion] = useState(false);
     const [message, setMessage] = useState("");
     const { data: session } = useSession();
     const [discussionData, setDiscussionData] = useState<Discussion[]>([]);
-    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
+    const [isPosting, setIsPosting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const { id } = params;
-    console.log(id);
-    const startDiscussion = () => {
-        setShowdiscussion(prev => !prev);
+
+    const startDiscussionFlow = () => {
+        setShowDiscussion(true);
         localStorage.setItem(`started_discussion_${id}`, "true");
     };
 
     useEffect(() => {
-        const started_discussion = localStorage.getItem(
-            `started_discussion_${id}`
-        );
-        if (started_discussion) {
-            setShowdiscussion(true);
+        const started_discussion = localStorage.getItem(`started_discussion_${id}`);
+        if (started_discussion === "true") {
+            setShowDiscussion(true);
+        } else {
+            setIsLoading(false);
         }
     }, [id]);
 
-    const handleComment = (e: { preventDefault: () => void }) => {
-        e.preventDefault();
-        const name = session?.user?.name;
-        const profile = session?.user?.image;
-        const data = {
-            name,
-            profile,
-            message,
-            page_id: id,
-        };
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
-        console.log(data);
-        const apiUrl = `/api/discussion/${id}`;
-        axios.post(apiUrl, data, config);
-        console.log(`The data sent to discussion api is ${data}`);
-        router.push(`/`);
-    };
-
     const fetchDiscussion = useCallback(async () => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
+        setIsLoading(true);
+        setError(null);
+        const config = { headers: { "Content-Type": "application/json" } };
         try {
             const apiUrl = `/api/discussion/${id}`;
-            const res = await axios.get(apiUrl, config)
+            const res = await axios.get(apiUrl, config);
             setDiscussionData(res.data);
-            console.log(`Data fetched successfully : ${res.data}`);
-        }
-        catch (error) {
-            console.error("Error fetching messages:", error);
+        } catch (err) {
+            console.error("Error fetching discussions:", err);
+            setError("Could not load discussions. Please try again.");
+            toast.error("Could not load discussions.");
+        } finally {
+            setIsLoading(false);
         }
     }, [id]);
 
     useEffect(() => {
-        fetchDiscussion();
-    }, [fetchDiscussion]);
+        if (showDiscussion) {
+            fetchDiscussion();
+        }
+    }, [fetchDiscussion, showDiscussion]);
+
+    const handleComment = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!message.trim() || !session?.user) {
+            toast.warn("Please write a message and ensure you are logged in.");
+            return;
+        }
+        setIsPosting(true);
+        const name = session.user.name;
+        const profile = session.user.image;
+        const commentData = { name, profile, message, page_id: id };
+        const config = { headers: { "Content-Type": "application/json" } };
+
+        try {
+            const apiUrl = `/api/discussion/${id}`;
+            const response = await axios.post(apiUrl, commentData, config);
+            setDiscussionData(prev => [response.data.data, ...prev]);
+            setMessage("");
+            toast.success("Comment posted!");
+        } catch (err) {
+            console.error("Error posting comment:", err);
+            toast.error("Failed to post comment.");
+        } finally {
+            setIsPosting(false);
+        }
+    };
+
+    const UserAvatar = ({ src, alt, size = "md" }: { src?: string | null; alt?: string; size?: "sm" | "md" | "lg" }) => {
+        const sizeClasses = size === "sm" ? "w-8 h-8" : size === "md" ? "w-10 h-10" : "w-12 h-12";
+        return (
+            <img
+                className={`flex-shrink-0 ${sizeClasses} rounded-full object-cover border-2 border-slate-600 shadow-md`}
+                src={src || `https://ui-avatars.com/api/?name=${alt?.replace(' ', '+') || 'U'}&background=2563eb&color=fff&size=128&font-size=0.5&bold=true`}
+                alt={alt || "User avatar"}
+                onError={(e: any) => { e.target.onerror = null; e.target.src = '/alternate.jpeg'; }}
+            />
+        );
+    }
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30, scale: 0.98 },
+        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] } }, // Smoother ease
+        exit: { opacity: 0, y: -20, scale: 0.98, transition: { duration: 0.3, ease: "easeIn" } }
+    };
+
+    if (!showDiscussion && !isLoading) {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7 }}
+                className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 flex flex-col items-center justify-center p-4 sm:p-8"
+            >
+                <div className="text-center bg-slate-800/60 backdrop-blur-lg p-8 sm:p-12 md:p-16 rounded-3xl shadow-2xl max-w-xl w-full border border-slate-700/70 transform hover:scale-[1.02] transition-transform duration-300">
+                    <motion.div initial={{ scale: 0.3, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2, type: "spring", stiffness: 150, damping: 15 }}>
+                        <FaComments className="mx-auto text-7xl text-sky-400 mb-10" />
+                    </motion.div>
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-purple-400 mb-6 pb-1">
+                        Spark the Conversation!
+                    </h1>
+                    <p className="text-slate-300 mb-12 text-base sm:text-lg leading-relaxed">
+                        Your insights matter. Share your thoughts, ask questions, or provide feedback on this project. Let's build a dynamic discussion together!
+                    </p>
+                    <motion.button
+                        whileHover={{ scale: 1.05, y: -2, boxShadow: "0px 12px 25px rgba(56, 189, 248, 0.35)" }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full sm:w-auto inline-flex items-center justify-center px-12 py-4 text-lg font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl hover:from-sky-600 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-sky-500/50 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-200 shadow-xl"
+                        onClick={startDiscussionFlow}
+                    >
+                        <FaPlus className="mr-2.5" /> Start Discussion
+                    </motion.button>
+                </div>
+            </motion.div>
+        );
+    }
 
     return (
-        <div>
-            {!showdiscussion ? (
-                <div className="flex items-center justify-center h-screen px-8">
-                    <div className="flex justify-center p-8 items-center flex-col rounded-xl bg-green-50 text-slate-800 shadow-sm dark:bg-slate-900 dark:text-slate-400 z-[2]">
-                        <div className="inline-flex items-center">
-                            <svg
-                                className="mr-2  h-6 w-6 fill-current text-teal-900 dark:text-teal-400"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 512 512"
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100 pt-24 sm:pt-32 pb-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl xl:max-w-3xl">
+                <motion.header
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                    className="mb-10 sm:mb-12 text-center"
+                >
+                    <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-purple-400 pb-2">
+                        Project Discussions
+                    </h1>
+                    {/* TODO: Fetch and display the actual project title for context */}
+                    {/* <p className="text-slate-400 text-sm mt-1">Topic: {projectTitle || "Loading project details..."}</p> */}
+                </motion.header>
+
+                {/* Comment Section */}
+                <motion.section
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="mb-10 sm:mb-12 shadow-xl rounded-xl p-6 sm:p-8 border border-slate-700 opacity-80"
+                >
+                    <div className="flex items-start space-x-3 mb-4">
+                        {session?.user ? <UserAvatar src={session.user.image} alt={session.user.name ?? undefined} size="sm"/> : <FaUserCircle className="w-8 h-8 text-slate-500 mr-3"/>}
+                        <h2 className="text-xl sm:text-2xl font-semibold text-slate-100 pt-0.5">Leave a Comment</h2>
+                    </div>
+                    <form onSubmit={handleComment} className="space-y-4">
+                        <div>
+                            <label htmlFor="comment" className="sr-only">Your comment</label>
+                            <textarea
+                                id="comment"
+                                rows={3}
+                                value={message}
+                                onChange={e => setMessage(e.target.value)}
+                                className="w-full text-sm text-slate-100 bg-slate-700/80 border border-slate-600 rounded-lg p-3.5 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 placeholder-slate-400 transition-colors opacity-80"
+                                placeholder={session ? "Share your thoughts..." : "Please log in to comment."}
+                                required
+                                disabled={isPosting || !session}
+                            />
+                        </div>
+                        <div className="flex justify-end">
+                            <motion.button
+                                type="submit"
+                                disabled={isPosting || !session || !message.trim()}
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.97 }}
+                                className="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-sky-600 rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                             >
-                                <path d="M447.1 0h-384c-35.25 0-64 28.75-64 63.1v287.1c0 35.25 28.75 63.1 64 63.1h96v83.1c0 9.838 11.03 15.55 19.12 9.7l124.9-93.7h144c35.25 0 64-28.75 64-63.1V63.1C511.1 28.75 483.2 0 447.1 0zM480 352c0 17.6-14.4 32-32 32h-144.1c-6.928 0-13.67 2.248-19.21 6.406L192 460v-60c0-8.838-7.164-16-16-16H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h384c17.6 0 32 14.4 32 32V352zM432 224h-160C263.2 224 256 231.2 256 240S263.2 256 272 256h160C440.8 256 448 248.8 448 240S440.8 224 432 224zM224 240C224 231.2 216.8 224 208 224h-128C71.16 224 64 231.2 64 240S71.16 256 80 256h128C216.8 256 224 248.8 224 240zM144 288h-32C103.2 288 96 295.2 96 304S103.2 320 112 320h32C152.8 320 160 312.8 160 304S152.8 288 144 288zM400 288h-32C359.2 288 352 295.2 352 304s7.156 16 16 16h32c8.844 0 16-7.156 16-16S408.8 288 400 288zM304 288h-96C199.2 288 192 295.2 192 304S199.2 320 208 320h96c8.844 0 16-7.156 16-16S312.8 288 304 288z" />
-                            </svg>
-                            <h2 className="text-teal-900 dark:text-teal-400 text-xl font-semibold">
-                                Community Discussion
-                            </h2>
+                                {isPosting ? <FaSpinner className="animate-spin mr-2 h-4 w-4" /> : <FaPaperPlane className="mr-2 h-4 w-4" />}
+                                {isPosting ? "Posting..." : (session ? "Post Comment" : "Login to Comment")}
+                            </motion.button>
                         </div>
-                        <p className="mt-6 mb-6 max-w-2xl text-center text-slate-800 dark:text-teal-400">
-                            Start a new discussion htmlFor this topic with all
-                            the community members. Please be fair to others,
-                            htmlFor the full rules do refer to the{" "}
-                            <a className="text-primary" href="#">
-                                {" "}
-                                Discussion Rules{" "}
-                            </a>{" "}
-                            page.
-                        </p>
-                        <button
-                            className="rounded-2xl bg-teal-400 px-4 py-3 font-bold text-gray-800"
-                            onClick={startDiscussion}
-                        >
-                            Start Discussion
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                <div className="pt-32 flex flex-col px-60 h-screen opacity-80 dark:bg-gray-900 z-[2]">
-                    <div className="bg-white dark:bg-gray-900 antialiased py-8 z-[2]">
-                        <div className="max-w-2xl mx-auto px-4 ">
-                            <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-                                    Discussions
-                                </h2>
-                            </div>
-                            <form className="mb-6">
-                                <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                    <label
-                                        htmlFor="comment"
-                                        className="sr-only"
+                    </form>
+                </motion.section>
+
+                {/* Discussion List */}
+                <section>
+                    <h2 className="text-2xl sm:text-3xl font-semibold text-slate-100 mb-6 sm:mb-8">
+                        {discussionData.length > 0 ? `Comments (${discussionData.length})` : "No Comments Yet"}
+                    </h2>
+                    {isLoading && !error && (
+                        <div className="flex flex-col items-center justify-center text-center py-12">
+                            <FaSpinner className="animate-spin text-sky-400 text-5xl mb-4" />
+                            <p className="text-slate-300 text-lg">Loading comments...</p>
+                        </div>
+                    )}
+                    {error && !isLoading && (
+                        <div className="flex flex-col items-center justify-center text-center py-12 bg-red-900/20 border border-red-700/50 rounded-xl p-8">
+                            <FaExclamationTriangle className="text-red-400 text-5xl mb-4" />
+                            <p className="text-xl text-red-300 mb-2">{error}</p>
+                            <button onClick={fetchDiscussion} className="mt-6 px-5 py-2.5 bg-sky-600 hover:bg-sky-700 rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition-all">
+                                Try Again
+                            </button>
+                        </div>
+                    )}
+                    {!isLoading && !error && discussionData.length > 0 && (
+                        <div className="space-y-5 sm:space-y-6 opacity-80">
+                            <AnimatePresence initial={false}> {/* initial={false} to prevent initial animation for existing items */}
+                                {discussionData.map((comment, index) => (
+                                    <motion.article
+                                        key={comment._id}
+                                        custom={index}
+                                        variants={itemVariants}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        layout
+                                        className="p-5 sm:p-6 bg-slate-800/60 backdrop-blur-sm shadow-lg rounded-xl border border-slate-700/60 hover:border-sky-500/50 transition-colors duration-200"
                                     >
-                                        Your comment
-                                    </label>
-                                    <textarea
-                                        id="comment"
-                                        rows={6}
-                                        value={message}
-                                        onChange={e =>
-                                            setMessage(e.target.value)
-                                        }
-                                        className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                                        placeholder="Write a comment..."
-                                        required
-                                    ></textarea>
-                                </div>
-                                <button
-                                    type="submit"
-                                    onClick={handleComment}
-                                    className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
-                                >
-                                    Post comment
-                                </button>
-                            </form>
-                            {discussionData?.map(discussion => (
-                                <article
-                                    key={discussion._id}
-                                    className="p-6 mb-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900"
-                                >
-                                    <footer className="flex justify-between items-center mb-2">
-                                        <div className="flex items-center">
-                                            <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                                                <img
-                                                    className="mr-2 w-6 h-6 rounded-full"
-                                                    src={discussion?.profile}
-                                                    alt="Michael Gough"
-                                                />
-                                                {discussion?.name}
-                                            </p>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                <time
-                                                    dateTime={discussion?.createdAt.toString()}
-                                                    title={discussion?.createdAt.toString()}
-                                                >
-                                                    {" "}
-                                                </time>
-                                            </p>
-                                        </div>
-                                        <button
-                                            id="dropdownComment1Button"
-                                            data-dropdown-toggle="dropdownComment1"
-                                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                                            type="button"
-                                        >
-                                            <svg
-                                                className="w-4 h-4"
-                                                aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="currentColor"
-                                                viewBox="0 0 16 3"
-                                            >
-                                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                                            </svg>
-                                            <span className="sr-only">
-                                                Comment settings
-                                            </span>
-                                        </button>
-                                        <div
-                                            id="dropdownComment1"
-                                            className="hidden w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                                        >
-                                            <ul
-                                                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                                            >
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    >
-                                                        Edit
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    >
-                                                        Remove
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        href="#"
-                                                        className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    >
-                                                        Report
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </footer>
-                                    <p className="text-gray-500 dark:text-gray-400">
-                                        {discussion?.message}
-                                    </p>
-                                    <div className="flex items-center mt-4 space-x-4">
-                                        <button
-                                            type="button"
-                                            className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                                        >
-                                            <svg
-                                                className="mr-1.5 w-3.5 h-3.5"
-                                                aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 20 18"
-                                            >
-                                                <path
-                                                    stroke="currentColor"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                                                />
-                                            </svg>
-                                            Reply
-                                        </button>
-                                    </div>
-                                </article>
-                            ))}
+                                        <footer className="flex justify-between items-start mb-3">
+                                            <div className="flex items-center space-x-3">
+                                                <UserAvatar src={comment.profile} alt={comment.name} />
+                                                <div>
+                                                    <p className="text-sm sm:text-base text-slate-50 font-semibold hover:text-sky-300 transition-colors cursor-pointer">
+                                                        {comment.name}
+                                                    </p>
+                                                    <p className="text-xs text-slate-400">
+                                                        <time dateTime={new Date(comment.createdAt).toISOString()}>
+                                                            {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                                                        </time>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            {session?.user?.name === comment.name && (
+                                                <button className="p-1.5 text-slate-500 hover:text-slate-300 rounded-md hover:bg-slate-700 transition-colors">
+                                                    <FaEllipsisH className="w-4 h-4" /> {/* Changed to horizontal ellipsis */}
+                                                </button>
+                                            )}
+                                        </footer>
+                                        <p className="text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+                                            {comment.message}
+                                        </p>
+                                    </motion.article>
+                                ))}
+                            </AnimatePresence>
                         </div>
-                    </div>
-                </div>
-            )}
+                    )}
+                    {!isLoading && !error && discussionData.length === 0 && (
+                        <motion.p
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+                            className="text-center text-slate-400 py-12 text-lg"
+                        >
+                            Be the first to spark the conversation!
+                        </motion.p>
+                    )}
+                </section>
+            </div>
         </div>
     );
 };
