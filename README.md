@@ -158,7 +158,7 @@ docker-compose up
 
 ### Login Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 05 05 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/a151c612-bff5-4d49-b69f-fc8b00f6ea80">
+<img width="1440" alt="Screenshot 2025-05-17 at 11 53 10 PM" src="https://github.com/user-attachments/assets/48344c61-f5d7-4e90-b518-a61165304553" />
 
 ### Home Page
 
@@ -166,11 +166,11 @@ docker-compose up
 
 ### Add Project Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 02 29 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/46025133-c50d-4ddc-b59b-44baf7a032df">
+<img width="1439" alt="Screenshot 2025-05-17 at 11 55 36 PM" src="https://github.com/user-attachments/assets/7fda3997-dc4c-402a-a8a7-6df8b322fc45" />
 
 ### Contact Page
 
-<img width="1440" alt="Screenshot 2024-02-09 at 9 03 45 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/5d73b9b0-be12-453c-9a7e-a643c76baab2">
+<img width="1440" alt="Screenshot 2025-05-17 at 11 56 22 PM" src="https://github.com/user-attachments/assets/4a1cc59d-ceb0-4723-ab3f-5e4a5b76da71" />
 
 ### Admin Page
 
@@ -186,19 +186,15 @@ docker-compose up
 
 ### Dashboard Profile
 
-<img width="1440" alt="Screenshot 2024-10-16 at 1 28 27 PM" src="https://github.com/user-attachments/assets/48fa1ed8-27dd-4b65-a51a-8115c4c95c6e">
+<img width="1436" alt="Screenshot 2025-05-17 at 11 56 58 PM" src="https://github.com/user-attachments/assets/79f5c0cf-62cc-41af-bae0-cd31be8e566d" />
 
 ### My projects page  
 
-<img width="1440" alt="Screenshot 2024-10-16 at 1 28 45 PM" src="https://github.com/user-attachments/assets/cad44136-43aa-4f1b-98d7-2fd6a0e306ca">
+<img width="1440" alt="Screenshot 2025-05-17 at 11 57 32 PM" src="https://github.com/user-attachments/assets/28dd624b-a980-4cad-95d7-04b96ef101dc" />
 
 ### 404 Page
 
 <img width="1440" alt="Screenshot 2024-02-09 at 9 03 21 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c088a3ac-1a7c-48de-a87b-89eb5caa0ae4">
-
-## ChatBot
-
-<img width="1440" alt="Screenshot 2024-02-09 at 9 04 28 PM" src="https://github.com/Tushar98644/ProjectHub/assets/107763774/c28b6bb4-d213-42df-90d2-79ec0fad86b9">
 
 ## Star History
 
