@@ -50,7 +50,7 @@ const FindUsersPage: React.FC = () => {
 
     return (
         <DashLayout>
-            <div className="min-h-screen p-4 sm:p-6 lg:p-8 opacity-70">
+            <div className="min-h-screen p-4 sm:p-6 lg:p-8 opacity-80">
                 <div className="max-w-5xl mx-auto">
                     <header className="mb-8 text-center">
                         <h1 className="text-4xl font-bold tracking-tight text-sky-400">Find Users</h1>

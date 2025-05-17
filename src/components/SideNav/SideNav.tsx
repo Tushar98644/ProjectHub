@@ -29,7 +29,7 @@ const SideNav = () => {
     const pathname = usePathname() ?? ""; 
 
     return (
-        <div className="fixed top-6 left-6 bottom-6 rounded-2xl bg-slate-900 text-slate-200 w-72 shadow-xl flex flex-col transition-all duration-300 ease-in-out opacity-70">
+        <div className="fixed top-6 left-6 bottom-6 rounded-2xl bg-slate-900 text-slate-200 w-72 shadow-xl flex flex-col transition-all duration-300 ease-in-out opacity-80">
             {/* Header */}
             <div className="flex items-center justify-center h-20 border-b border-slate-700/50 px-6">
                 <Link href="/dashboard" className="flex items-center space-x-3">

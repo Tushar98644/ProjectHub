@@ -89,7 +89,7 @@ const Profile = () => {
 
     return (
         <DashLayout>
-            <div className="container mx-auto px-4 py-8 text-slate-200 max-w-4xl opacity-70">
+            <div className="container mx-auto px-4 py-8 text-slate-200 max-w-4xl opacity-80">
                 {/* Profile Header */}
                 <div className="bg-slate-800 shadow-xl rounded-lg p-6 md:p-8 mb-8">
                     <div className="flex flex-col md:flex-row items-center md:items-start">

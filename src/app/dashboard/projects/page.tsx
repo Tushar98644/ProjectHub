@@ -75,7 +75,7 @@ const MyProjects = () => {
     return (
         <DashLayout>
             <ToastContainer theme="dark" position="bottom-right" />
-            <div className="container mx-auto px-4 py-2 md:px-6 md:py-4 text-slate-200 opacity-70">
+            <div className="container mx-auto px-4 py-2 md:px-6 md:py-4 text-slate-200 opacity-80">
                 <header className="mb-8">
                     <h1 className="text-3xl md:text-4xl font-bold text-sky-400">
                         My Projects
