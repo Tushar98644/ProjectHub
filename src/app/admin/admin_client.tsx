@@ -112,7 +112,7 @@ const AdminClient = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="mb-8 md:mb-10"
+                    className="mb-8 md:mb-10 opacity-70"
                 >
                     <div className="relative max-w-xl mx-auto">
                         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">

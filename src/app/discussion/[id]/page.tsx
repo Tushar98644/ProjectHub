@@ -118,7 +118,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                         Spark the Conversation!
                     </h1>
                     <p className="text-slate-300 mb-12 text-base sm:text-lg leading-relaxed">
-                        Your insights matter. Share your thoughts, ask questions, or provide feedback on this project. Let's build a dynamic discussion together!
+                        Your insights matter. Share your thoughts, ask questions, or provide feedback on this project. Let&apos;s build a dynamic discussion together!
                     </p>
                     <motion.button
                         whileHover={{ scale: 1.05, y: -2, boxShadow: "0px 12px 25px rgba(56, 189, 248, 0.35)" }}
