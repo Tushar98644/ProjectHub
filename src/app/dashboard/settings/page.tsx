@@ -28,7 +28,7 @@ const SettingsPage: React.FC = () => {
 
     return (
         <DashLayout>
-            <div className="min-h-max mt-[-2vw] min-w-full relative rounded-md p-4 sm:p-6 lg:p-10 draggable opacity-60">
+            <div className="min-h-max mt-[-2vw] min-w-full relative rounded-md p-4 sm:p-6 lg:p-10 draggable opacity-70">
                 <div className="mx-auto">
                     <header className="mb-8">
                         <h1 className="text-4xl font-bold tracking-tight text-sky-400">Settings</h1>
