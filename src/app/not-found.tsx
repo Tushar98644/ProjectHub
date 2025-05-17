@@ -1,7 +1,11 @@
 'use client'
 import { Back, Error } from "@/shared";
-import Lottie from "lottie-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const Lottie = dynamic(() => import('lottie-react'), {
+  ssr: false,
+});
 
 const Page_Error = () => {
     return (

@@ -29,19 +29,7 @@ const Admin = () => {
     }, [projects, searchQuery]);
 
     const tableRef = useRef<HTMLElement | null>(null);
-    
-    useEffect(() => {
-        const handleResize = () => {
-            adjustSearchActionWidth();
-        };
 
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-    
     const adjustSearchActionWidth = () => {
         if (tableRef.current) {
             const tableWidth = tableRef.current.clientWidth;

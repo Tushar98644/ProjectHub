@@ -1,7 +1,11 @@
 'use client'
 import { AI } from "@/shared";
-import Lottie from "lottie-react";
 import { signIn } from "next-auth/react";
+import dynamic from "next/dynamic";
+
+const Lottie = dynamic(() => import('lottie-react'), {
+  ssr: false,
+});
 
 const Login = () => {
     return (
