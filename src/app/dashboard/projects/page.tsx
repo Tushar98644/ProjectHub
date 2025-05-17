@@ -2,122 +2,176 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import { DashLayout } from "@/components/Layout/Layout";
-import project from "@/models/project";
-import { Project } from "@/types/project";
+import { Project } from "@/types/project"; // Ensure Project type includes isPublic
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { FaGlobe, FaLock, FaCheckCircle, FaTimesCircle, FaExternalLinkAlt, FaTag, FaSpinner, FaFolderOpen } from "react-icons/fa";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MyProjects = () => {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [updatingProjectId, setUpdatingProjectId] = useState<string | null>(null);
     const { data: session } = useSession();
 
-    useEffect(() => {
-        if (session?.user?.email) {
-            fetchProjects();
+    const fetchProjects = useCallback(async () => {
+        if (!session?.user?.name) {
+            setIsLoading(false);
+            return;
         }
-    }, []);
-
-    const fetchProjects = async () => {
+        setIsLoading(true);
         try {
             const response = await axios.get("/api/project", {
                 params: {
-                    name: session?.user?.name,
+                    name: session.user.name,
                 },
             });
-            setProjects(response.data);
+            setProjects(response.data.map((p: Project) => ({ ...p, isPublic: p.isPublic === undefined ? true : p.isPublic })));
         } catch (error) {
             console.error("Error fetching projects:", error);
+            toast.error("Failed to fetch projects.");
+        } finally {
+            setIsLoading(false);
+        }
+    }, [session?.user?.name]);
+
+    useEffect(() => {
+        fetchProjects();
+    }, [fetchProjects]);
+
+    const handleToggleVisibility = async (projectId: string, currentIsPublic: boolean | undefined) => {
+        setUpdatingProjectId(projectId);
+        const newIsPublic = !(currentIsPublic === undefined ? true : currentIsPublic); // Handle undefined case
+        try {
+            // Replace with your actual API endpoint for updating visibility
+            await axios.patch(`/api/project/${projectId}/visibility`, { isPublic: newIsPublic });
+            setProjects(prevProjects =>
+                prevProjects.map(p =>
+                    p._id === projectId ? { ...p, isPublic: newIsPublic } : p
+                )
+            );
+            toast.success(`Project visibility updated to ${newIsPublic ? 'Public' : 'Private'}.`);
+        } catch (error) {
+            console.error("Error updating project visibility:", error);
+            toast.error("Failed to update project visibility.");
+        } finally {
+            setUpdatingProjectId(null);
         }
     };
 
+    if (isLoading) {
+        return (
+            <DashLayout>
+                <div className="flex justify-center items-center h-full">
+                    <FaSpinner className="animate-spin text-sky-400 text-4xl" />
+                    <p className="ml-3 text-slate-300">Loading your projects...</p>
+                </div>
+            </DashLayout>
+        );
+    }
+
     return (
         <DashLayout>
-            <div className="space-y-6">
-                <h1 className="text-3xl font-semibold text-gray-800 dark:text-white">
-                    My Projects
-                </h1>
-                {projects.map((project: Project, index: number) => (
-                    <div key={index} className="grid md:grid-cols-2 grid-cols-1 focus:outline-none card rounded-2xl p-6 shadow">
-                        <div className="flex flex-col">
-                            <div className="flex items-center dark:border-gray-700  pb-6">
-                                <img
-                                    src={project?.image}
-                                    alt="coin avatar"
-                                    className="w-12 h-12 rounded-full"
-                                />
-                                <div className="flex items-start justify-between w-full">
-                                    <div className="pl-3 w-full">
-                                        <p
-                                            tabIndex={0}
-                                            className="focus:outline-none text-2xl font-medium leading-5 text-gray-800 dark:text-white "
-                                        >
-                                            {project?.title}
-                                        </p>
-                                        <p
-                                            tabIndex={0}
-                                            className="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-500 "
-                                        >
-                                            {project?.name}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="px-2">
-                                <p className="focus:outline-none text-sm leading-5 py-4 text-gray-500 dark:text-gray-400 ">
-                                    {project?.description}
-                                </p>
-                            </div>
-                            <div className="mt-4 flex items-center gap-5">
-                                <div className="flex items-center gap-1">
-                                    <span className="h-3 w-3 rounded-full bg-blue-400"></span>
-                                    <p className="block font-sans text-xs font-normal text-gray-700 antialiased">
-                                        {project?.tags?.join(", ")}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                        className="-mt-0.5 h-4 w-4 text-yellow-400"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <p className="block font-sans text-xs font-normal text-gray-700 antialiased">
-                                        {project?.approved ? "Approved" : "Rejected"}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                        className="-mt-px h-4 w-4 text-green-300"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                    <p className="block font-sans text-xs font-normal text-gray-700 antialiased">
-                                        Veritied
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))
-                }
-            </div>
+            <ToastContainer theme="dark" position="bottom-right" />
+            <div className="container mx-auto px-4 py-2 md:px-6 md:py-4 text-slate-200 opacity-70">
+                <header className="mb-8">
+                    <h1 className="text-3xl md:text-4xl font-bold text-sky-400">
+                        My Projects
+                    </h1>
+                    <p className="text-slate-400 mt-1">Manage and view the projects you have contributed.</p>
+                </header>
 
+                {projects.length === 0 ? (
+                    <div className="text-center py-10 bg-slate-800 rounded-lg shadow-xl">
+                        <FaFolderOpen className="mx-auto text-5xl text-slate-500 mb-4" />
+                        <h2 className="text-2xl font-semibold text-slate-300 mb-2">No Projects Yet</h2>
+                        <p className="text-slate-400">Looks like you have not added any projects. Start by creating a new one!</p>
+                        {/* Optional: Add a Link to /project/new here */}
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {projects.map((project) => (
+                            <div key={project._id} className="bg-slate-800 shadow-xl rounded-lg overflow-hidden flex flex-col">
+                                <div className="p-6 flex-grow">
+                                    <div className="flex items-start mb-4">
+                                        <img
+                                            src={project.image || `https://ui-avatars.com/api/?name=${project.title.replace(' ', '+')}&background=1E293B&color=94A3B8&size=128`}
+                                            alt={`${project.title} avatar`}
+                                            className="w-16 h-16 rounded-md object-cover mr-4 border-2 border-slate-700"
+                                            onError={(e: any) => { e.target.onerror = null; e.target.src = '/alternate.jpeg'; }}
+                                        />
+                                        <div className="flex-1">
+                                            <h2 className="text-xl font-semibold text-sky-400 hover:text-sky-300 transition-colors">
+                                                <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                                    {project.title}
+                                                    <FaExternalLinkAlt className="ml-2 text-xs text-slate-500" />
+                                                </a>
+                                            </h2>
+                                            <p className="text-xs text-slate-500">
+                                                By: {project.name}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <p className="text-sm text-slate-300 mb-4 leading-relaxed line-clamp-3">
+                                        {project.description}
+                                    </p>
+
+                                    {project.tags && project.tags.length > 0 && (
+                                        <div className="mb-4">
+                                            <h4 className="text-xs font-semibold text-slate-500 uppercase mb-1.5 flex items-center">
+                                                <FaTag className="mr-1.5" /> Tags
+                                            </h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {project.tags.map(tag => (
+                                                    <span key={tag} className="px-2.5 py-0.5 text-xs bg-sky-500/20 text-sky-300 rounded-full">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="bg-slate-700/50 px-6 py-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+                                    <div className="flex items-center space-x-4">
+                                        <span className={`flex items-center text-xs px-2.5 py-1 rounded-full font-medium
+                                            ${project.approved === true ? 'bg-green-500/20 text-green-400' :
+                                                project.approved === false ? 'bg-red-500/20 text-red-400' :
+                                                    'bg-yellow-500/20 text-yellow-400'}`}>
+                                            {project.approved === true ? <FaCheckCircle className="mr-1.5" /> :
+                                                project.approved === false ? <FaTimesCircle className="mr-1.5" /> :
+                                                    <FaSpinner className="mr-1.5 animate-spin" />}
+                                            {project.approved === true ? "Approved" :
+                                                project.approved === false ? "Rejected" :
+                                                    "Pending"}
+                                        </span>
+                                        {/* The "Verified" status seems redundant if you have "Approved". Removed for clarity. */}
+                                    </div>
+                                    <button
+                                        onClick={() => handleToggleVisibility(project._id, project.isPublic)}
+                                        disabled={updatingProjectId === project._id}
+                                        className={`flex items-center text-xs px-3 py-1.5 rounded-md font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800
+                                            ${project.isPublic ? 'bg-sky-600 hover:bg-sky-700 text-white focus:ring-sky-500' : 'bg-slate-600 hover:bg-slate-500 text-slate-200 focus:ring-slate-400'}
+                                            ${updatingProjectId === project._id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        {updatingProjectId === project._id ? (
+                                            <FaSpinner className="animate-spin mr-1.5" />
+                                        ) : project.isPublic ? (
+                                            <FaGlobe className="mr-1.5" />
+                                        ) : (
+                                            <FaLock className="mr-1.5" />
+                                        )}
+                                        {updatingProjectId === project._id ? 'Updating...' : (project.isPublic ? 'Public' : 'Private')}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </DashLayout>
     );
 };

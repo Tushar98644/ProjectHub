@@ -12,4 +12,5 @@ export interface Project {
     tags: string[];
     createdAt: Date;
     discussion: function;
+    isPublic?: boolean;
 }
