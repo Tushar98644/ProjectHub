@@ -108,7 +108,7 @@ const Main = () => {
                 </header>
 
                 {/* Search Bar Section */}
-                <div className="mb-10 md:mb-12 max-w-2xl mx-auto">
+                <div className="mb-10 md:mb-12 max-w-2xl mx-auto opacity-80">
                     <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 p-1.5 bg-slate-700/50 rounded-xl shadow-lg focus-within:ring-2 focus-within:ring-sky-500 transition-all">
                         <div className="pl-3 text-slate-400">
                             <FaSearch className="w-5 h-5" />
