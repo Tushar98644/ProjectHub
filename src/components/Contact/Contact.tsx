@@ -4,10 +4,15 @@ import { useReducer, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'; // Ensure ToastContainer is in a global layout
+import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import InputField from "./InputField";
-import { FaPaperPlane, FaEnvelope, FaSpinner, FaComments } from "react-icons/fa";
+import {
+    FaPaperPlane,
+    FaEnvelope,
+    FaSpinner,
+    FaComments,
+} from "react-icons/fa";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 
 interface FormState {
@@ -22,7 +27,6 @@ const initialState: FormState = {
     message: "",
 };
 
-// Define the action type more precisely
 type FormAction =
     | { type: "name"; payload: string }
     | { type: "email"; payload: string }
@@ -31,11 +35,34 @@ const reducer = (state: FormState, action: FormAction): FormState => {
     return { ...state, [action.type]: action.payload };
 };
 
-// Add placeholder to the formFields definition
-const formFields: Array<{ label: string; type: string; key: keyof FormState; required: boolean; placeholder: string }> = [
-    { label: "Full Name", type: "text", key: "name", required: true, placeholder: "e.g., Ada Lovelace" },
-    { label: "Email Address", type: "email", key: "email", required: true, placeholder: "ada@example.com" },
-    { label: "Your Message", type: "textarea", key: "message", required: true, placeholder: "Share your brilliant ideas or questions..." },
+const formFields: Array<{
+    label: string;
+    type: string;
+    key: keyof FormState;
+    required: boolean;
+    placeholder: string;
+}> = [
+    {
+        label: "Full Name",
+        type: "text",
+        key: "name",
+        required: true,
+        placeholder: "e.g., Ada Lovelace",
+    },
+    {
+        label: "Email Address",
+        type: "email",
+        key: "email",
+        required: true,
+        placeholder: "ada@example.com",
+    },
+    {
+        label: "Your Message",
+        type: "textarea",
+        key: "message",
+        required: true,
+        placeholder: "Share your brilliant ideas or questions...",
+    },
 ];
 
 const Contact = () => {
@@ -43,14 +70,14 @@ const Contact = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // For 3D-like hover effect on the image container
     const x = useMotionValue(0);
     const y = useMotionValue(0);
-    const rotateX = useTransform(y, [-100, 100], [10, -10]); // Max rotation 10 degrees
-    const rotateY = useTransform(x, [-100, 100], [-10, 10]); // Max rotation 10 degrees
-    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rotateX = useTransform(y, [-100, 100], [10, -10]);
+    const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+    const handleMouseMove = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
         const rect = event.currentTarget.getBoundingClientRect();
-        // Calculate mouse position relative to the center of the element
         x.set(event.clientX - rect.left - rect.width / 2);
         y.set(event.clientY - rect.top - rect.height / 2);
     };
@@ -78,7 +105,10 @@ const Contact = () => {
             dispatch({ type: "message", payload: "" });
         } catch (error) {
             console.error("Error sending message:", error);
-            toast.error("Oops! Something went wrong. Please try again.", { theme: "dark", position: "top-center" });
+            toast.error("Oops! Something went wrong. Please try again.", {
+                theme: "dark",
+                position: "top-center",
+            });
         } finally {
             setIsSubmitting(false);
         }
@@ -87,14 +117,25 @@ const Contact = () => {
     const containerVariants = {
         hidden: { opacity: 0, scale: 0.95 },
         visible: {
-            opacity: 1, scale: 1,
-            transition: { staggerChildren: 0.15, delayChildren: 0.2, duration: 0.6, ease: "easeOut" },
+            opacity: 1,
+            scale: 1,
+            transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.2,
+                duration: 0.6,
+                ease: "easeOut",
+            },
         },
     };
 
     const itemVariants = {
         hidden: { opacity: 0, y: 30, filter: "blur(5px)" },
-        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", stiffness: 80, damping: 15 } },
+        visible: {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            transition: { type: "spring", stiffness: 80, damping: 15 },
+        },
     };
 
     return (
@@ -133,7 +174,8 @@ const Contact = () => {
                                 transition={{ delay: 0.5, duration: 0.5 }}
                                 className="text-slate-300 text-base lg:text-lg leading-relaxed mb-8"
                             >
-                                Have a question, a project idea, or just want to say hello? We&apos;d love to hear from you.
+                                Have a question, a project idea, or just want to
+                                say hello? We&apos;d love to hear from you.
                             </motion.p>
                             <motion.div
                                 initial={{ opacity: 0 }}
@@ -143,7 +185,10 @@ const Contact = () => {
                             >
                                 <FaEnvelope className="w-4 h-4 mr-2 text-sky-500 group-hover:text-sky-300 transition-colors" />
                                 <span className="mr-1">Prefer email?</span>
-                                <Link href="mailto:evilden982@gmail.com" legacyBehavior>
+                                <Link
+                                    href="mailto:evilden982@gmail.com"
+                                    legacyBehavior
+                                >
                                     <a className="font-semibold text-sky-500 underline hover:text-sky-300 transition-colors">
                                         Send directly
                                     </a>
@@ -154,10 +199,18 @@ const Contact = () => {
                         <motion.div
                             variants={itemVariants}
                             className="mt-10 text-center hidden md:block perspective"
-                            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                            style={{
+                                rotateX,
+                                rotateY,
+                                transformStyle: "preserve-3d",
+                            }}
                             onMouseMove={handleMouseMove}
                             onMouseLeave={handleMouseLeave}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 300,
+                                damping: 20,
+                            }}
                         >
                             <Image
                                 src="/contact-bg.png"
@@ -170,24 +223,44 @@ const Contact = () => {
                         </motion.div>
                     </motion.div>
 
-                    <motion.div variants={itemVariants} className="md:col-span-3 p-8 sm:p-10 md:p-12 bg-slate-800/30">
+                    <motion.div
+                        variants={itemVariants}
+                        className="md:col-span-3 p-8 sm:p-10 md:p-12 bg-slate-800/30"
+                    >
                         <div className="flex items-center mb-6">
                             <FaComments className="text-2xl text-sky-400 mr-3" />
-                            <h3 className="text-2xl font-semibold text-slate-100">Send us a Message</h3>
+                            <h3 className="text-2xl font-semibold text-slate-100">
+                                Send us a Message
+                            </h3>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-5">
-                            {formFields.map(({ label, type, key, required, placeholder }) => (
-                                <InputField
-                                    key={key}
-                                    label={label}
-                                    type={type === "textarea" ? "text" : type}
-                                    value={state[key]}
-                                    onChange={(value) => dispatch({ type: key, payload: value })}
-                                    required={required}
-                                    textarea={type === "textarea"}
-                                    placeholder={placeholder}
-                                />
-                            ))}
+                            {formFields.map(
+                                ({
+                                    label,
+                                    type,
+                                    key,
+                                    required,
+                                    placeholder,
+                                }) => (
+                                    <InputField
+                                        key={key}
+                                        label={label}
+                                        type={
+                                            type === "textarea" ? "text" : type
+                                        }
+                                        value={state[key]}
+                                        onChange={value =>
+                                            dispatch({
+                                                type: key,
+                                                payload: value,
+                                            })
+                                        }
+                                        required={required}
+                                        textarea={type === "textarea"}
+                                        placeholder={placeholder}
+                                    />
+                                )
+                            )}
                             <div>
                                 <motion.button
                                     type="submit"
@@ -195,8 +268,13 @@ const Contact = () => {
                                     whileHover={{
                                         scale: 1.03,
                                         y: -3,
-                                        boxShadow: "0px 10px 20px rgba(20, 184, 166, 0.4)",
-                                        transition: { type: "spring", stiffness: 300, damping: 15 }
+                                        boxShadow:
+                                            "0px 10px 20px rgba(20, 184, 166, 0.4)",
+                                        transition: {
+                                            type: "spring",
+                                            stiffness: 300,
+                                            damping: 15,
+                                        },
                                     }}
                                     whileTap={{ scale: 0.97 }}
                                     className="w-full mt-2 inline-flex items-center justify-center text-sm font-bold tracking-wider bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 text-white p-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-teal-500/50 focus:ring-offset-2 focus:ring-offset-slate-900 transition-all duration-150 ease-in-out shadow-xl disabled:opacity-50"
@@ -206,7 +284,9 @@ const Contact = () => {
                                     ) : (
                                         <FaPaperPlane className="mr-2.5" />
                                     )}
-                                    {isSubmitting ? "Sending..." : "Send Your Message"}
+                                    {isSubmitting
+                                        ? "Sending..."
+                                        : "Send Your Message"}
                                 </motion.button>
                             </div>
                         </form>

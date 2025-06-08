@@ -17,4 +17,5 @@ const Admin = async (req: NextApiRequest, res: NextApiResponse) => {
                 .json({ success: false, message: "Method Not Allowed" });
     }
 };
+
 export default Admin;
