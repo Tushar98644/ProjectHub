@@ -16,7 +16,7 @@ const Message_page = () => {
         data: messages,
         isLoading,
         error,
-    } = useFetch<Message[]>("/api/message");
+    } = useFetch<Message[]>("/api/v1/messages");
 
     const containerVariants = {
         hidden: { opacity: 0 },

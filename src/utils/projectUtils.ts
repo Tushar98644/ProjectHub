@@ -1,54 +1,61 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { Project } from "@/models";
 
-export const createProject = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
-    const { title, description, image, github, name, tags } = req.body;
+export const createProject = async (req: Request) => {
+    const body = await req.json();
+    const { email, title, description, image, github, tags } = body;
 
-    if (!title || !description || !image || !github || !name)
-        res.status(400).json({ message: "Missing required fields" });
+    if (!title || !description || !image || !github || !email)
+        return Response.json(
+            { message: "Missing required fields" },
+            { status: 400 }
+        );
 
+    const approved = false;
     try {
         const NewProject = await Project.create({
             title,
             description,
             image,
             github,
-            name,
+            email,
             tags,
+            approved,
         });
         console.log(`The project recieved is ${NewProject}`);
-        return res
-            .status(200)
-            .json({ message: "Project created successfully" });
+        return Response.json(
+            { message: "Project created successfully" },
+            { status: 200 }
+        );
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ err: "Unable to create project" });
+        return Response.json(
+            { err: "Unable to create project" },
+            { status: 500 }
+        );
     }
 };
 
-export const getProjects = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
+export const getProjects = async (req: Request) => {
     try {
-        const { name } = req.query;
-        console.log(`The email recieved is ${name}`);
+        const { searchParams } = new URL(req.url);
+        const email = searchParams.get("email");
+        console.log(`The email recieved is ${email}`);
+
         let projects;
-        if (name) {
-            projects = res.json(
-                await Project.find({name}).sort({ createdAt: -1 })
-            );
+        if (email) {
+            projects = await Project.find({ email }).sort({ createdAt: -1 });
         } else {
-            projects = res.json(
-                await Project.find({ approved: true }).sort({ createdAt: -1 })
-            );
+            projects = await Project.find({ approved: true }).sort({
+                createdAt: -1,
+            });
         }
-        console.log(`The approved projects are ${ projects}`);
+
+        return projects;
     } catch (err) {
         console.log(err);
-        return res.status(400).json({ err: "Error in fetching projects" });
+        return Response.json(
+            { err: "Error in fetching projects" },
+            { status: 400 }
+        );
     }
 };

@@ -29,7 +29,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
         data: discussionData,
         isLoading,
         error,
-    } = useFetch<Discussion[]>(`api/discussion/${id}`);
+    } = useFetch<Discussion[]>(`/api/v1/discussions?id=${id}`);
 
     const startDiscussionFlow = () => {
         setShowDiscussion(true);
@@ -54,13 +54,13 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
             return;
         }
         setIsPosting(true);
-        const name = session.user.name;
-        const profile = session.user.image;
+        const name = session?.user?.name;
+        const profile = session?.user?.image;
         const commentData = { name, profile, message, page_id: id };
         const config = { headers: { "Content-Type": "application/json" } };
 
         try {
-            const apiUrl = `/api/discussion/${id}`;
+            const apiUrl = `/api/v1/discussions`;
             await axios.post(apiUrl, commentData, config);
             setMessage("");
             toast.success("Comment posted!");

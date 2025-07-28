@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -58,9 +58,9 @@ const Form = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const name = session?.user?.name || "Anonymous";
-        console.log(`the contributor is ${name}`);
-        const data = { ...state, name };
+        const email = session?.user?.email || "Anonymous";
+        console.log(`the contributor is ${email}`);
+        const data = { ...state, email };
         console.log(`the tags are ${state.tags}`);
         const config = {
             headers: {
@@ -69,7 +69,7 @@ const Form = () => {
         };
 
         try {
-            await axios.post("/api/project", data, config);
+            await axios.post("/api/v1/projects", data, config);
             router.push("/");
             notify();
         } catch (error) {

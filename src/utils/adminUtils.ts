@@ -1,25 +1,20 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { Project } from "@/models";
 
-export const fetchProjects = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
+export const fetchProjects = async (req: Request) => {
     try {
-        const projects = await Project.find().sort({ createdAt: -1 }).limit(10);
-        console.log(projects);
-        return res.status(200).json(projects);
+        const projects = await Project.find().sort({ createdAt: -1 }).limit(50);
+        return projects;
     } catch (err) {
         console.log(err);
-        return res.status(400).json({ message: "Error fetching projects" });
+        return Response.json(
+            { message: "Error fetching projects" },
+            { status: 400 }
+        );
     }
 };
 
-export const updateProject = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
-    const { projectId, approved } = req.body;
+export const updateProject = async (req: Request) => {
+    const { projectId, approved } = await req.json();
 
     try {
         const updatedProject = await Project.findByIdAndUpdate(
@@ -30,15 +25,22 @@ export const updateProject = async (
 
         if (!updatedProject) {
             console.log("Project not found");
-            return res
-                .status(404)
-                .json({ success: false, message: "Project not found" });
+            return Response.json(
+                { success: false, message: "Project not found" },
+                { status: 404 }
+            );
         }
 
         console.log("aprroval granted", updatedProject);
-        return res.status(201).json({ success: true, data: updatedProject });
+        return Response.json(
+            { success: true, data: updatedProject },
+            { status: 201 }
+        );
     } catch (err) {
         console.log(err);
-        return res.status(400).json({ message: "Error updating project" });
+        return Response.json(
+            { message: "Error updating project" },
+            { status: 400 }
+        );
     }
 };

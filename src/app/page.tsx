@@ -7,6 +7,7 @@ import { FaSpinner, FaExclamationTriangle, FaFolderOpen } from "react-icons/fa";
 import { useFetch } from "@/hooks/useFetch";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { useVoiceRecognition } from "@/hooks/useVoiceRecognition";
+import { useSession } from "next-auth/react";
 
 const Main = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -16,7 +17,7 @@ const Main = () => {
         data: projects,
         isLoading,
         error,
-    } = useFetch<Project[]>("/api/project");
+    } = useFetch<Project[]>("/api/v1/projects");
 
     const redirectToDiscussion = (id: string) => {
         router.push(`/discussion/${id}`);

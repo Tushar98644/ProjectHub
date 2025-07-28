@@ -94,7 +94,7 @@ const Contact = () => {
             headers: { "Content-Type": "application/json" },
         };
         try {
-            await axios.post("/api/message", state, config);
+            await axios.post("/api/v1/messages", state, config);
             toast.success("Message sent! We'll be in touch soon.", {
                 theme: "dark",
                 position: "top-right",

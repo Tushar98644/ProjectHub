@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+
 import { HI } from "@/shared";
 import { Project } from "@/types/project";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import dynamic from "next/dynamic";
@@ -25,12 +26,29 @@ const Lottie = dynamic(() => import("lottie-react"), {
 
 const AdminClient = () => {
     const { data: session } = useSession();
-    const { data: projects, isLoading } = useFetch<Project[]>("/api/project");
+    const { data: projects, isLoading } =
+        useFetch<Project[]>("/api/v1/projects");
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [approvalStatus, setApprovalStatus] = useState<{
         [key: string]: string | undefined;
     }>({});
-    const [actionLoading, setActionLoading] = useState<string | null>(null); // For individual card actions
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!projects || projects.length === 0) return;
+
+        const initialStatus = projects.reduce((acc: any, project: Project) => {
+            acc[project._id] =
+                project.approved === undefined
+                    ? undefined
+                    : project.approved
+                    ? "Approved"
+                    : "Rejected";
+            return acc;
+        }, {});
+
+        setApprovalStatus(initialStatus);
+    }, [projects]);
 
     const handleSearchInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -83,17 +101,6 @@ const AdminClient = () => {
             setActionLoading(null);
         }
     };
-
-    const initialStatus = projects.reduce((acc: any, project: Project) => {
-        acc[project._id] =
-            project.approved === undefined
-                ? undefined
-                : project.approved
-                ? "Approved"
-                : "Rejected";
-        return acc;
-    }, {});
-    setApprovalStatus(initialStatus);
 
     const cardVariants = {
         hidden: { opacity: 0, y: 20, scale: 0.98 },

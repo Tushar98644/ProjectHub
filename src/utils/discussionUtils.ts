@@ -1,14 +1,14 @@
 import { Discussion } from "@/models";
-import { NextApiRequest, NextApiResponse } from "next";
 
-export const createDiscussion = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
-    const { name, profile, message, page_id } = req.body;
+export const createDiscussion = async (req: Request) => {
+    const body = await req.json();
+    const { name, profile, message, page_id } = body;
 
     if (!name || !profile || !message)
-        return res.status(400).json({ message: "Please fill all fields" });
+        return Response.json(
+            { message: "Please fill all fields" },
+            { status: 400 }
+        );
 
     try {
         const NewDiscussion = await Discussion.create({
@@ -17,29 +17,28 @@ export const createDiscussion = async (
             message,
             page_id,
         });
-        console.log(`The discussion recieved is ${NewDiscussion}`);
-        return res.status(201).json({ success: true, data: NewDiscussion });
+        return Response.json(
+            { success: true, data: NewDiscussion },
+            { status: 201 }
+        );
     } catch (err) {
-        console.log(err);
-        return res.status(400).json({ messge: "Error creating discussion" });
+        return Response.json(
+            { message: "Error creating discussion" },
+            { status: 400 }
+        );
     }
 };
 
-export const getDiscussions = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
-    const { id: page_id } = req.query;
-    console.log(`The page id is ${page_id}`);
+export const getDiscussions = async (req: Request) => {
+    const { searchParams } = new URL(req.url);
+    const page_id = searchParams.get("id");
 
     try {
         const discussions = await Discussion.find({ page_id }).sort({
             createdAt: -1,
         });
-        console.log(`The discussion data the api sending is ${discussions}`);
-        return res.status(200).json(discussions);
+        return discussions;
     } catch (err) {
-        console.log(err);
-        return res.status(400).json({ message: "Error fetching discussion" });
+        return Response.json({ message: "Error fetching discussion" });
     }
 };

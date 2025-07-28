@@ -1,14 +1,14 @@
 import { Message } from "@/models";
-import { NextApiRequest, NextApiResponse } from "next";
 
-export const createMessage = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
-    const { name, email, message } = req.body;
+export const createMessage = async (req: Request) => {
+    const body = await req.json();
+    const { name, email, message } = body;
 
     if (!name || !email || !message)
-        return res.status(400).json({ message: "Please fill all fields" });
+        return Response.json(
+            { message: "Please fill all fields" },
+            { status: 400 }
+        );
 
     try {
         const NewMessage = await Message.create({
@@ -16,24 +16,26 @@ export const createMessage = async (
             email,
             message,
         });
-        console.log(`The message recieved is ${NewMessage}`);
-        return res.status(201).json({ success: true, data: NewMessage });
+        return Response.json(
+            { success: true, data: NewMessage },
+            { status: 201 }
+        );
     } catch (err) {
-        console.log(err);
-        return res.status(400).json({ messge: "Error creating message" });
+        return Response.json(
+            { message: "Error creating message" },
+            { status: 400 }
+        );
     }
 };
 
-export const getMessages = async (
-    req: NextApiRequest,
-    res: NextApiResponse
-) => {
+export const getMessages = async (req: Request) => {
     try {
         const messages = await Message.find().sort({ createdAt: -1 });
-        console.log(`The message data the api sending is ${messages}`);
-        return res.status(200).json(messages);
+        return messages;
     } catch (err) {
-        console.log(err);
-        return res.status(400).json({ message: "Error fetching message" });
+        return Response.json(
+            { message: "Error fetching message" },
+            { status: 400 }
+        );
     }
 };

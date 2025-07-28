@@ -26,10 +26,20 @@ export default function AuthenticationGuard({
             }
         }
 
-        if (session?.user?.email != process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
-            if (pathname === "/admin") {
-                router.push("/dashboard/projects");
-            }
+        console.log("Session email:", session?.user?.email);
+        console.log("Admin email:", process.env.NEXT_PUBLIC_ADMIN_EMAIL);
+
+        const sessionEmail = session?.user?.email?.trim().toLowerCase();
+        const adminEmail =
+            process.env.NEXT_PUBLIC_ADMIN_EMAIL?.trim().toLowerCase();
+
+        if (
+            sessionEmail &&
+            adminEmail &&
+            sessionEmail !== adminEmail &&
+            pathname === "/admin"
+        ) {
+            router.push("/dashboard/projects");
         }
     }, [status, pathname, session?.user?.email, router]);
 
