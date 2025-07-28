@@ -17,8 +17,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from "@/hooks/useFetch";
+import Image from "next/image";
 
-/* eslint-disable @next/next/no-img-element */
 const Discussion_page = ({ params }: { params: { id: string } }) => {
     const [showDiscussion, setShowDiscussion] = useState(false);
     const [message, setMessage] = useState("");
@@ -43,7 +43,6 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
         if (started_discussion === "true") {
             setShowDiscussion(true);
         } else {
-            // setIsLoading(false);
         }
     }, [id]);
 
@@ -88,7 +87,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                 ? "w-10 h-10"
                 : "w-12 h-12";
         return (
-            <img
+            <Image
                 className={`flex-shrink-0 ${sizeClasses} rounded-full object-cover border-2 border-slate-600 shadow-md`}
                 src={
                     src ||
@@ -112,7 +111,7 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
             y: 0,
             scale: 1,
             transition: { duration: 0.5, ease: [0.25, 1, 0.5, 1] },
-        }, // Smoother ease
+        },
         exit: {
             opacity: 0,
             y: -20,
@@ -179,8 +178,6 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                     <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-purple-400 pb-2">
                         Project Discussions
                     </h1>
-                    {/* TODO: Fetch and display the actual project title for context */}
-                    {/* <p className="text-slate-400 text-sm mt-1">Topic: {projectTitle || "Loading project details..."}</p> */}
                 </motion.header>
 
                 {/* Comment Section */}
@@ -277,7 +274,6 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                         <div className="space-y-5 sm:space-y-6 opacity-80">
                             <AnimatePresence initial={false}>
                                 {" "}
-                                {/* initial={false} to prevent initial animation for existing items */}
                                 {discussionData.map((comment, index) => (
                                     <motion.article
                                         key={comment._id}
@@ -322,7 +318,6 @@ const Discussion_page = ({ params }: { params: { id: string } }) => {
                                                 comment.name && (
                                                 <button className="p-1.5 text-slate-500 hover:text-slate-300 rounded-md hover:bg-slate-700 transition-colors">
                                                     <FaEllipsisH className="w-4 h-4" />{" "}
-                                                    {/* Changed to horizontal ellipsis */}
                                                 </button>
                                             )}
                                         </footer>
