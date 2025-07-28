@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
 
 const AccountSettings: React.FC = () => {
     return (
         <div>
-            <h2 className="text-2xl font-semibold text-sky-400 mb-6">Account Settings</h2>
+            <h2 className="text-2xl font-semibold text-sky-400 mb-6">
+                Account Settings
+            </h2>
             <form className="space-y-6">
                 <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-slate-300 mb-1">
+                    <label
+                        htmlFor="username"
+                        className="block text-sm font-medium text-slate-300 mb-1"
+                    >
                         Username
                     </label>
                     <input
@@ -18,7 +23,10 @@ const AccountSettings: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="currentPassword" className="block text-sm font-medium text-slate-300 mb-1">
+                    <label
+                        htmlFor="currentPassword"
+                        className="block text-sm font-medium text-slate-300 mb-1"
+                    >
                         Current Password
                     </label>
                     <input
@@ -29,7 +37,10 @@ const AccountSettings: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-slate-300 mb-1">
+                    <label
+                        htmlFor="newPassword"
+                        className="block text-sm font-medium text-slate-300 mb-1"
+                    >
                         New Password
                     </label>
                     <input
@@ -40,9 +51,12 @@ const AccountSettings: React.FC = () => {
                     />
                 </div>
                 <div className="pt-4 border-t border-slate-700">
-                    <h3 className="text-lg font-medium text-slate-200 mb-2">Delete Account</h3>
+                    <h3 className="text-lg font-medium text-slate-200 mb-2">
+                        Delete Account
+                    </h3>
                     <p className="text-sm text-slate-400 mb-4">
-                        Once you delete your account, there is no going back. Please be certain.
+                        Once you delete your account, there is no going back.
+                        Please be certain.
                     </p>
                     <button
                         type="button"
