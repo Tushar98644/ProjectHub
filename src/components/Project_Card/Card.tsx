@@ -17,7 +17,12 @@ const Card = ({
 }: Project) => {
     const cardVariants = {
         hidden: { opacity: 0, scale: 0.95, y: 20 },
-        visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: "easeOut" },
+        },
     };
 
     const projectImage = image || "/alternate.jpeg";
@@ -27,7 +32,10 @@ const Card = ({
             variants={cardVariants}
             initial="hidden"
             animate="visible"
-            whileHover={{ y: -8, boxShadow: "0px 20px 30px -10px rgba(0, 191, 255, 0.3)" }}
+            whileHover={{
+                y: -8,
+                boxShadow: "0px 20px 30px -10px rgba(0, 191, 255, 0.3)",
+            }}
             className="h-full group"
         >
             <BackgroundGradient
@@ -48,7 +56,7 @@ const Card = ({
                 </div>
 
                 <div className="p-5 sm:p-6 flex flex-col flex-grow">
-                    <Link href={`/project/${_id}`} passHref legacyBehavior>
+                    <Link href={`/project/${_id}`} passHref>
                         <a className="block mb-2 group/title">
                             <h5 className="text-lg sm:text-xl font-bold tracking-tight text-slate-50 group-hover/title:text-sky-400 transition-colors duration-200 line-clamp-2">
                                 {title}
@@ -61,14 +69,17 @@ const Card = ({
                     </p>
 
                     <p className="mb-5 text-xs font-medium text-slate-500">
-                        By: <span className="font-semibold text-sky-400 hover:underline cursor-pointer">{name}</span>
+                        By:{" "}
+                        <span className="font-semibold text-sky-400 hover:underline cursor-pointer">
+                            {name}
+                        </span>
                     </p>
 
                     {tags && tags.length > 0 && (
                         <div className="mb-5">
                             <div className="flex flex-wrap gap-2 items-center">
                                 <FaTag className="text-slate-500 text-xs mr-1" />
-                                {tags.slice(0, 2).map((tag) => (
+                                {tags.slice(0, 2).map(tag => (
                                     <span
                                         key={tag}
                                         className="px-2.5 py-1 text-[0.7rem] font-medium text-purple-300 bg-purple-500/20 rounded-full"

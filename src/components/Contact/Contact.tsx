@@ -185,13 +185,10 @@ const Contact = () => {
                             >
                                 <FaEnvelope className="w-4 h-4 mr-2 text-sky-500 group-hover:text-sky-300 transition-colors" />
                                 <span className="mr-1">Prefer email?</span>
-                                <Link
-                                    href="mailto:evilden982@gmail.com"
-                                    legacyBehavior
-                                >
-                                    <a className="font-semibold text-sky-500 underline hover:text-sky-300 transition-colors">
+                                <Link href="mailto:evilden982@gmail.com">
+                                    <p className="font-semibold text-sky-500 underline hover:text-sky-300 transition-colors">
                                         Send directly
-                                    </a>
+                                    </p>
                                 </Link>
                             </motion.div>
                         </div>

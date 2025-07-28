@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:400");
+@import url("https://fonts.googleapis.com/css?family=Overpass");
 
 @tailwind base;
 @tailwind components;
@@ -132,8 +133,6 @@ body {
 	to   { transform: rotate3d(1, 1, 1, 360deg); }
   }
   
-  @import url("https://fonts.googleapis.com/css?family=Overpass");
-
   * {
 	box-sizing: border-box;
 	font-family: "Overpass", sans-serif;

@@ -1,7 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 
-const Orb = ({ delay = 0, size = 8, color = "rgba(56, 189, 248, 0.8)" }) => ( // sky-500
+const Orb = (
+    { delay = 0, size = 8, color = "rgba(56, 189, 248, 0.8)" } // sky-500
+) => (
     <motion.div
         style={{
             width: size,
@@ -9,7 +11,10 @@ const Orb = ({ delay = 0, size = 8, color = "rgba(56, 189, 248, 0.8)" }) => ( //
             backgroundColor: color,
             borderRadius: "50%",
             position: "absolute",
-            boxShadow: `0 0 ${size * 1.5}px ${size * 0.5}px ${color.replace('0.8', '0.4')}`,
+            boxShadow: `0 0 ${size * 1.5}px ${size * 0.5}px ${color.replace(
+                "0.8",
+                "0.4"
+            )}`,
         }}
         initial={{ scale: 0, opacity: 0 }}
         animate={{
@@ -33,7 +38,12 @@ type OrbitPathProps = {
     reverse?: boolean;
 };
 
-const OrbitPath = ({ radius, duration, children, reverse = false }: OrbitPathProps) => (
+const OrbitPath = ({
+    radius,
+    duration,
+    children,
+    reverse = false,
+}: OrbitPathProps) => (
     <motion.div
         style={{
             width: radius * 2,
@@ -55,7 +65,9 @@ const OrbitPath = ({ radius, duration, children, reverse = false }: OrbitPathPro
 
 const Loader = () => {
     return (
-        <div className="flex min-h-screen w-screen items-center justify-center bg-slate-900"> {/* Changed background for better contrast */}
+        <div className="flex min-h-screen w-screen items-center justify-center bg-slate-900">
+            {" "}
+            {/* Changed background for better contrast */}
             <div className="relative flex items-center justify-center w-40 h-40 sm:w-48 sm:h-48">
                 {/* Central Pulsing Orb */}
                 <motion.div
@@ -63,7 +75,8 @@ const Loader = () => {
                         width: 40,
                         height: 40,
                         borderRadius: "50%",
-                        background: "radial-gradient(circle, rgba(56, 189, 248, 1) 0%, rgba(56, 189, 248, 0) 70%)", // sky-500
+                        background:
+                            "radial-gradient(circle, rgba(56, 189, 248, 1) 0%, rgba(56, 189, 248, 0) 70%)", // sky-500
                         boxShadow: "0 0 30px 10px rgba(56, 189, 248, 0.3)",
                     }}
                     animate={{
@@ -79,20 +92,44 @@ const Loader = () => {
 
                 {/* Orbiting Particles */}
                 <OrbitPath radius={60} duration={8}>
-                    <div style={{ position: "absolute", top: -4, left: "50%", marginLeft: -4 }}>
-                        <Orb size={8} color="rgba(16, 185, 129, 0.8)" /> {/* emerald-500 */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: -4,
+                            left: "50%",
+                            marginLeft: -4,
+                        }}
+                    >
+                        <Orb size={8} color="rgba(16, 185, 129, 0.8)" />{" "}
+                        {/* emerald-500 */}
                     </div>
                 </OrbitPath>
 
                 <OrbitPath radius={75} duration={10} reverse={true}>
-                    <div style={{ position: "absolute", top: -5, left: "50%", marginLeft: -5 }}>
-                        <Orb size={10} color="rgba(168, 85, 247, 0.8)" /> {/* purple-500 */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: -5,
+                            left: "50%",
+                            marginLeft: -5,
+                        }}
+                    >
+                        <Orb size={10} color="rgba(168, 85, 247, 0.8)" />{" "}
+                        {/* purple-500 */}
                     </div>
                 </OrbitPath>
 
                 <OrbitPath radius={90} duration={12}>
-                    <div style={{ position: "absolute", top: -3, left: "50%", marginLeft: -3 }}>
-                        <Orb size={6} color="rgba(236, 72, 153, 0.8)" /> {/* pink-500 */}
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: -3,
+                            left: "50%",
+                            marginLeft: -3,
+                        }}
+                    >
+                        <Orb size={6} color="rgba(236, 72, 153, 0.8)" />{" "}
+                        {/* pink-500 */}
                     </div>
                 </OrbitPath>
 
