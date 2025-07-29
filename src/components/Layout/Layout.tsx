@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Sparkles, Chatbot } from "@/components";
 import Navbar from "../Navbar/Navbar";
 import { Provider } from "@/providers";
@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div className="relative w-full bg-gradient-to-br from-slate-900 to-slate-800 text-slate-100">
-            <div className="w-full absolute inset-0 z-0">
+            {/* <div className="w-full absolute inset-0 z-0">
                 <Sparkles
                     id="tsparticlesfullpage"
                     background="transparent"
@@ -21,7 +21,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     className="w-full h-full"
                     particleColor="#FFFFFF"
                 />
-            </div>
+            </div> */}
             <>
                 <Provider>
                     {!isDashboard && <Navbar />}
@@ -31,7 +31,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </>
         </div>
     );
-}
+};
 
 export const DashLayout = ({ children }: { children: React.ReactNode }) => {
     return (

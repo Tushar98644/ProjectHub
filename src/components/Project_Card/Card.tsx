@@ -57,11 +57,11 @@ const Card = ({
 
                 <div className="p-5 sm:p-6 flex flex-col flex-grow">
                     <Link href={`/project/${_id}`} passHref>
-                        <a className="block mb-2 group/title">
+                        <p className="block mb-2 group/title">
                             <h5 className="text-lg sm:text-xl font-bold tracking-tight text-slate-50 group-hover/title:text-sky-400 transition-colors duration-200 line-clamp-2">
                                 {title}
                             </h5>
-                        </a>
+                        </p>
                     </Link>
 
                     <p className="mb-4 font-normal text-xs sm:text-sm text-slate-400 line-clamp-3 flex-grow">
