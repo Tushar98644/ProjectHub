@@ -78,7 +78,7 @@
         "@types/react-tag-input": "^6.6.6",
         "autoprefixer": "10.4.16",
         "eslint": "8.50.0",
-        "eslint-config-next": "13.5.4",
+        "eslint-config-next": "15.4.5",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-storybook": "^0.6.15",
         "husky": "^8.0.0",
