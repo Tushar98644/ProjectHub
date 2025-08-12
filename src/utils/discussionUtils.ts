@@ -1,4 +1,4 @@
-import { Discussion } from "@/models";
+import { Discussion } from "@/db/models";
 
 export const createDiscussion = async (req: Request) => {
     const body = await req.json();

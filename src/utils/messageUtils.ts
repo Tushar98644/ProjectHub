@@ -1,4 +1,4 @@
-import { Message } from "@/models";
+import { Message } from "@/db/models";
 
 export const createMessage = async (req: Request) => {
     const body = await req.json();

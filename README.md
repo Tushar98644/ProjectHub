@@ -8,36 +8,36 @@ The site is deployed through Vercel, which you can view from [here](https://proj
 
 ## 🚀 Main Features
 
--   ChatBot
--   3D Animations
--   Approval System
--   Role-based Authentication
--   Custom Loader
--   Discussion section
--   Search and voice-to-text
--   Real-time Notifications
--   Real-time data updates
+- ChatBot
+- 3D Animations
+- Approval System
+- Role-based Authentication
+- Custom Loader
+- Discussion section
+- Search and voice-to-text
+- Real-time Notifications
+- Real-time data updates
 
 ## 📃Pages
 
--   Homepage
--   Add project page
--   Contact page
--   Dashboard(profile,Analytics and user projects)
--   Admin page (accessible only to admin)
--   Discussion page(for each project)
--   Message page (admin only)
--   404 Error page
+- Homepage
+- Add project page
+- Contact page
+- Dashboard(profile,Analytics and user projects)
+- Admin page (accessible only to admin)
+- Discussion page(for each project)
+- Message page (admin only)
+- 404 Error page
 
 ## 💻 Tech Stack
 
--   Nextjs
--   Typescript
--   NextAuth
--   Tailwindcss
--   MongoDB
--   Docker
--   Jest
+- Nextjs
+- Typescript
+- NextAuth
+- Tailwindcss
+- MongoDB
+- Docker
+- Jest
 
 ## 🤝 Credits
 
@@ -48,7 +48,7 @@ ChatBot Model : [OpenAI Api](https://platform.openai.com/account/usage)
 
 Required to install and run the software:
 
--   pnpm
+- pnpm
 
 If you don't have pnpm installed, you can install it by following the below steps :
 
@@ -188,7 +188,7 @@ docker-compose up
 
 <img width="1440" alt="Screenshot 2024-10-16 at 1 28 27 PM" src="https://github.com/user-attachments/assets/48fa1ed8-27dd-4b65-a51a-8115c4c95c6e">
 
-### My projects page  
+### My projects page
 
 <img width="1440" alt="Screenshot 2024-10-16 at 1 28 45 PM" src="https://github.com/user-attachments/assets/cad44136-43aa-4f1b-98d7-2fd6a0e306ca">
 
@@ -211,6 +211,7 @@ docker-compose up
 </a>
 
 ## Activity
+
 ![Alt](https://repobeats.axiom.co/api/embed/c79d4b8da007a35d2bc3ab8239132c50e6f4fdfb.svg "Repobeats analytics image")
 
 ## Author

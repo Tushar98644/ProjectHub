@@ -1,4 +1,4 @@
-import { Project } from "@/models";
+import { Project } from "@/db/models";
 
 export const fetchProjects = async (req: Request) => {
     try {

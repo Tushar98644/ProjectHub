@@ -1,4 +1,4 @@
-import { Project } from "@/models";
+import { Project } from "@/db/models";
 
 export const createProject = async (req: Request) => {
     const body = await req.json();

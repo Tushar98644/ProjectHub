@@ -1,30 +1,43 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import '@/styles/globals.css';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import Layout from "@/components/Layout/Layout";
+import { type Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/providers/theme-provider";
+import AppLayout from "@/components/layout/layout";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = Geist({
+    variable: "--font-geist-sans",
+    subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "ProjectHub",
-  description: "A comprehensive platform that integrates various ai-powered tools and useful websites",
+    title: "ProjectHub",
+    description: "",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-
-    <html lang="en">
-      <body className={inter.className}>
-        <Layout>
-            {children}
-            <SpeedInsights />
-        </Layout>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            >
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <AppLayout>{children}</AppLayout>
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }
