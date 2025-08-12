@@ -24,11 +24,29 @@ const projectSchema = new monogoose.Schema({
     approved: {
         type: Boolean,
     },
-    name: {
+    author: {
         type: String,
     },
     tags: {
         type: Array,
+    },
+    authorAvatar: {
+        type: String,
+    },
+    lastUpdated: {
+        type: String,
+    },
+    likes: {
+        type: Number,
+    },
+    comments: {
+        type: Number,
+    },
+    views: {
+        type: Number,
+    },
+    stars: {
+        type: Number,
     },
 });
 

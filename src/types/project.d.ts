@@ -5,9 +5,16 @@ export interface Project {
     image: string;
     github: string;
     approved: boolean;
-    name: string;
+    author: string;
     tags: string[];
     createdAt: Date;
     discussion: function;
     isPublic?: boolean;
+    status?: "active" | "completed" | "in-progress";
+    authorAvatar?: string;
+    lastUpdated?: string;
+    likes?: number;
+    comments?: number;
+    views?: number;
+    stars?: number;
 }

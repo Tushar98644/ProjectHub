@@ -2,7 +2,7 @@
 
 import { useSession } from "@/config/auth/client";
 import {
-    Calendar,
+    FolderCloud,
     Element3,
     Headphone,
     Profile,
@@ -34,7 +34,7 @@ const Sidebar = () => {
                             ProjectHub
                         </h1>
                         <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                            AI Analytics Platform
+                            Project Management Platform
                         </p>
                     </div>
                 </div>
@@ -80,14 +80,14 @@ const Sidebar = () => {
                             Profile
                         </Link>
 
-                        <button
-                            disabled
-                            className={`flex ${pathname === "/dashboard/calendar" ? "text-primary" : ""}
-                hover:px-8 disabled:opacity-60 duration-200 px-6 py-2 items-center gap-2`}
+                        <Link
+                            href="/dashboard/projects"
+                            className={`flex ${pathname === "/dashboard/projects" ? "text-primary" : ""}
+                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <Calendar size={16} />
-                            Calendar
-                        </button>
+                            <FolderCloud size={16} />
+                            Community Projects
+                        </Link>
                     </div>
 
                     {/* bottom nav */}
