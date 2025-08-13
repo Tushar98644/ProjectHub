@@ -11,7 +11,7 @@ import {
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Eye, Heart, Star } from "iconsax-reactjs";
-import { CalendarDays, MoreHorizontal, Rocket } from "lucide-react";
+import { CalendarDays, Rocket } from "lucide-react";
 import { ProjectActions } from "./project-row";
 
 export const ProjectCard = ({ project, index }: any) => (

@@ -3,7 +3,6 @@
 import { useSession } from "@/config/auth/client";
 import {
     Folder,
-    Element3,
     Headphone,
     Profile,
     Profile2User,
