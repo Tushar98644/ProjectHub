@@ -1,528 +1,506 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/layout/navbar/navbar";
 import PageContent from "@/components/layout/navbar/page-content";
 import {
     PageNavbarLeftContent,
     PageNavbarRightContent,
-    PageNavbarIconButton,
 } from "@/components/layout/navbar/page-navbar";
-import Navbar from "@/components/layout/navbar/navbar";
-import { PrimaryButton } from "@/components/ui/Buttons";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { useForm } from "react-hook-form";
 import {
     ArrowLeft,
-    Star1,
-    Eye,
-    Heart,
-    Share,
-    Code,
-    Link21,
-    Calendar,
-    Activity,
-} from "iconsax-reactjs";
-import { cn } from "@/lib/utils";
-import {
-    AlertCircle,
-    ExternalLink,
-    GitBranch,
-    GitPullRequest,
-    Users,
+    Plus,
+    Camera,
+    Github,
+    Link2,
+    Tags as TagsIcon,
+    Sparkles,
+    Loader2,
 } from "lucide-react";
 
-const projectData = {
-    _id: "1",
-    title: "AI-Powered Task Manager",
-    description:
-        "A modern task management application that uses AI to help prioritize tasks and optimize productivity.",
-    longDescription:
-        "This comprehensive task management solution leverages artificial intelligence to revolutionize how teams organize and execute their work. Built with a modern tech stack, it offers seamless real-time collaboration, intelligent task prioritization using machine learning algorithms, and detailed analytics to help teams optimize their productivity.\n\nThe application features a clean, intuitive interface that adapts to user preferences and work patterns. Smart notifications ensure important tasks never slip through the cracks, while the AI assistant provides contextual suggestions for task scheduling and workload balancing.",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=400&fit=crop",
-    status: "active" as const,
-    tags: ["react", "nodejs", "ai", "productivity", "collaboration"],
-    techStack: [
-        "React",
-        "TypeScript",
-        "Node.js",
-        "MongoDB",
-        "OpenAI",
-        "Socket.io",
-        "Tailwind CSS",
-    ],
-    github: "https://github.com/user/ai-task-manager",
-    liveUrl: "https://ai-task-manager.vercel.app",
-    author: "Tushar",
-    authorAvatar: "T",
-    createdAt: "2024-01-15",
-    lastUpdated: "2 days ago",
-    stars: 124,
-    views: 1847,
-    likes: 89,
-    contributors: 5,
-    commits: 156,
-    issues: 8,
-    pullRequests: 12,
+const STATUS_BADGES = {
+    active: {
+        label: "Active",
+        badgeClass:
+            "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/15 dark:text-emerald-400 dark:border-emerald-800",
+    },
+    "in-progress": {
+        label: "In Progress",
+        badgeClass:
+            "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/15 dark:text-amber-400 dark:border-amber-800",
+    },
+    completed: {
+        label: "Completed",
+        badgeClass:
+            "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/15 dark:text-sky-400 dark:border-sky-800",
+    },
 };
 
-export default function ProjectDetailPage() {
+export default function AddProjectPage() {
     const router = useRouter();
-    const [isLiked, setIsLiked] = useState(false);
-    const [isStarred, setIsStarred] = useState(false);
+    const form = useForm({
+        defaultValues: {
+            title: "",
+            description: "",
+            status: "active",
+            image: "",
+            github: "",
+            liveUrl: "",
+            tags: [],
+            techStack: [],
+        },
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [tagInput, setTagInput] = useState("");
+    const [techInput, setTechInput] = useState("");
+    const [imgOk, setImgOk] = useState(true);
+    const values = form.watch();
 
-    const getStatusVariant = (status: string) => {
-        switch (status) {
-            case "active":
-                return "default";
-            case "completed":
-                return "secondary";
-            case "in-progress":
-                return "outline";
-            default:
-                return "secondary";
+    const onSubmit = async (v: any) => {
+        setIsSubmitting(true);
+        setTimeout(() => {
+            console.log("Create Project Payload", {
+                title: v.title,
+                description: v.description,
+                tags: v.tags,
+                status: v.status,
+                image: v.image,
+                github: v.github,
+                liveUrl: v.liveUrl,
+                techStack: v.techStack,
+            });
+            setIsSubmitting(false);
+            router.push("/dashboard/projects");
+        }, 1200);
+    };
+
+    const pushUnique = (list: string[], entry: string) => {
+        const val = entry.trim();
+        return !val || list.includes(val) ? list : [...list, val];
+    };
+
+    const handleAddTag = () => {
+        //@ts-ignore
+        form.setValue("tags", pushUnique(values.tags, tagInput));
+        setTagInput("");
+    };
+    const handleAddTech = () => {
+        //@ts-ignore
+        form.setValue("techStack", pushUnique(values.techStack, techInput));
+        setTechInput("");
+    };
+
+    const handleKey = (
+        e: React.KeyboardEvent<HTMLInputElement>,
+        type: "tag" | "tech"
+    ) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            type === "tag" ? handleAddTag() : handleAddTech();
         }
     };
-
-    const handleShare = () => {
-        navigator.clipboard.writeText(window.location.href);
-        // Toast would go here in real app
-        alert("Project link copied to clipboard!");
+    const removeFrom = (key: "tags" | "techStack", val: string) => {
+        form.setValue(
+            key,
+            values[key].filter(x => x !== val)
+        );
     };
 
-    const stats = [
-        {
-            icon: GitBranch,
-            label: "Commits",
-            value: projectData.commits,
-            color: "text-blue-500",
-        },
-        {
-            icon: Users,
-            label: "Contributors",
-            value: projectData.contributors,
-            color: "text-green-500",
-        },
-        {
-            icon: AlertCircle,
-            label: "Issues",
-            value: projectData.issues,
-            color: "text-red-500",
-        },
-        {
-            icon: GitPullRequest,
-            label: "Pull Requests",
-            value: projectData.pullRequests,
-            color: "text-purple-500",
-        },
-    ];
+    useEffect(() => {
+        if (!values.image) {
+            setImgOk(true);
+            return;
+        }
+        const i = new Image();
+        i.onload = () => setImgOk(true);
+        i.onerror = () => setImgOk(false);
+        i.src = values.image;
+    }, [values.image]);
 
-    const activities = [
-        {
-            icon: Activity,
-            title: "Project updated",
-            time: "2 days ago",
-            color: "text-green-500",
-        },
-        {
-            icon: Code,
-            title: "New feature added",
-            time: "1 week ago",
-            color: "text-blue-500",
-        },
-        {
-            icon: Star1,
-            title: "Reached 100+ stars",
-            time: "2 weeks ago",
-            color: "text-yellow-500",
-        },
-    ];
+    const FormFieldWrapper = ({
+        name,
+        label,
+        children,
+        required = false,
+    }: any) => (
+        <FormField
+            control={form.control}
+            name={name}
+            render={({ field }) => (
+                <FormItem>
+                    <FormLabel>
+                        {label} {required && "*"}
+                    </FormLabel>
+                    <FormControl>{children(field)}</FormControl>
+                    <FormMessage />
+                </FormItem>
+            )}
+        />
+    );
 
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+        <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
+            <div className="pointer-events-none fixed inset-0 -z-10">
+                <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-violet-500/20 via-transparent to-transparent blur-2xl" />
+                <div className="absolute left-1/2 top-16 size-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.18),transparent_60%)] blur-2xl" />
+            </div>
+
             <Navbar>
                 <PageNavbarLeftContent>
                     <Button
-                        variant="ghost"
+                        variant="outline"
                         size="icon"
                         onClick={() => router.back()}
                         className="rounded-full"
                     >
-                        <ArrowLeft size={18} />
+                        <ArrowLeft className="h-4 w-4" />
                     </Button>
                     <div>
-                        <h1 className="text-sm font-semibold text-gray-800 dark:text-white">
-                            {projectData.title}
+                        <h1 className="text-sm font-semibold">
+                            Add New Project
                         </h1>
-                        <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                            Project Details & Information
+                        <p className="text-xs text-muted-foreground">
+                            Share your amazing project with the community
                         </p>
                     </div>
                 </PageNavbarLeftContent>
-
                 <PageNavbarRightContent>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setIsLiked(!isLiked)}
-                        className="rounded-full"
-                    >
-                        <Heart
-                            size={16}
-                            variant={isLiked ? "Bold" : "Outline"}
-                            className={cn(
-                                "transition-colors",
-                                isLiked
-                                    ? "text-red-500"
-                                    : "text-gray-700 dark:text-gray-200"
-                            )}
-                        />
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setIsStarred(!isStarred)}
-                        className="rounded-full"
-                    >
-                        <Star1
-                            size={16}
-                            variant={isStarred ? "Bold" : "Outline"}
-                            className={cn(
-                                "transition-colors",
-                                isStarred
-                                    ? "text-yellow-500"
-                                    : "text-gray-700 dark:text-gray-200"
-                            )}
-                        />
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={handleShare}
-                        className="rounded-full"
-                    >
-                        <Share size={16} />
-                    </Button>
-                    <PrimaryButton className="flex items-center gap-2">
-                        <ExternalLink size={16} />
-                        <span className="hidden md:inline">View Live</span>
-                    </PrimaryButton>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    type="button"
+                                    disabled={isSubmitting}
+                                    onClick={form.handleSubmit(onSubmit)}
+                                    className="gap-2 rounded-xl"
+                                >
+                                    {isSubmitting ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : (
+                                        <Plus className="h-4 w-4" />
+                                    )}
+                                    <span className="hidden md:inline text-xs">
+                                        {isSubmitting
+                                            ? "Creating..."
+                                            : "Create Project"}
+                                    </span>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom">
+                                Create project
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </PageNavbarRightContent>
             </Navbar>
 
             <PageContent>
-                <div className="max-w-6xl space-y-6">
-                    {/* Hero Section */}
-                    <Card className="overflow-hidden border-0 shadow-lg bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/10 dark:to-purple-900/10">
-                        <CardContent className="p-0">
-                            <div className="relative h-64 md:h-80 overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
-                                <img
-                                    src={projectData.image}
-                                    alt={projectData.title}
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute top-6 right-6 z-20">
-                                    <Badge
-                                        variant={getStatusVariant(
-                                            projectData.status
-                                        )}
-                                        className="bg-white/90 text-gray-900 shadow-lg"
-                                    >
-                                        {projectData.status}
-                                    </Badge>
-                                </div>
-                                <div className="absolute bottom-6 left-6 right-6 z-20 text-white">
-                                    <h1 className="text-2xl md:text-3xl font-bold mb-2">
-                                        {projectData.title}
-                                    </h1>
-                                    <p className="text-sm opacity-90 max-w-2xl">
-                                        {projectData.description}
-                                    </p>
-                                </div>
+                <div className="space-y-5">
+                    <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                        <div className="flex items-center gap-2">
+                            <Sparkles className="h-5 w-5" />
+                            <div>
+                                <h2 className="text-lg font-semibold">
+                                    Project Details
+                                </h2>
+                                <p className="text-sm text-muted-foreground">
+                                    Tell us about your project and share it with
+                                    everyone.
+                                </p>
                             </div>
-                        </CardContent>
+                        </div>
                     </Card>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Main Content */}
-                        <div className="lg:col-span-2">
-                            <Tabs defaultValue="overview" className="w-full">
-                                <TabsList className="grid w-full grid-cols-3 mb-6">
-                                    <TabsTrigger value="overview">
-                                        Overview
-                                    </TabsTrigger>
-                                    <TabsTrigger value="stats">
-                                        Statistics
-                                    </TabsTrigger>
-                                    <TabsTrigger value="activity">
-                                        Activity
-                                    </TabsTrigger>
-                                </TabsList>
-
-                                <TabsContent
-                                    value="overview"
-                                    className="space-y-6"
-                                >
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle className="text-lg">
-                                                About this project
-                                            </CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line mb-6">
-                                                {projectData.longDescription}
-                                            </p>
-
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <h4 className="text-sm font-medium text-gray-800 dark:text-white mb-3">
-                                                        Built with
-                                                    </h4>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {projectData.techStack.map(
-                                                            tech => (
-                                                                <Badge
-                                                                    key={tech}
-                                                                    variant="secondary"
-                                                                    className="bg-violet-50 hover:bg-violet-100 text-violet-700 dark:bg-violet-900/20 dark:text-violet-400 border-violet-200 dark:border-violet-800"
-                                                                >
-                                                                    {tech}
-                                                                </Badge>
-                                                            )
-                                                        )}
-                                                    </div>
-                                                </div>
-
-                                                <Separator />
-
-                                                <div className="flex gap-3">
-                                                    <Button
-                                                        variant="outline"
-                                                        asChild
-                                                        className="flex items-center gap-2"
-                                                    >
-                                                        <a
-                                                            href={
-                                                                projectData.github
-                                                            }
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            <Code size={16} />
-                                                            Source Code
-                                                        </a>
-                                                    </Button>
-                                                    <Button
-                                                        asChild
-                                                        className="flex items-center gap-2 bg-violet-500 hover:bg-violet-600"
-                                                    >
-                                                        <a
-                                                            href={
-                                                                projectData.liveUrl
-                                                            }
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            <Link21 size={16} />
-                                                            Live Demo
-                                                        </a>
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </TabsContent>
-
-                                <TabsContent value="stats">
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                        {stats.map(stat => (
-                                            <Card
-                                                key={stat.label}
-                                                className="text-center"
-                                            >
-                                                <CardContent className="p-6">
-                                                    <div className="flex items-center justify-center mb-2">
-                                                        <stat.icon
-                                                            size={20}
-                                                            className={
-                                                                stat.color
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                                                        {stat.value}
-                                                    </div>
-                                                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                                                        {stat.label}
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
-                                        ))}
-                                    </div>
-                                </TabsContent>
-
-                                <TabsContent value="activity">
-                                    <Card>
-                                        <CardContent className="p-6">
-                                            <div className="space-y-4">
-                                                {activities.map(
-                                                    (activity, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className="flex items-center gap-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50"
-                                                        >
-                                                            <div
-                                                                className={cn(
-                                                                    "p-2 rounded-full bg-white dark:bg-gray-800 shadow-sm",
-                                                                    activity.color
-                                                                )}
-                                                            >
-                                                                <activity.icon
-                                                                    size={16}
-                                                                    className="current-color"
-                                                                />
-                                                            </div>
-                                                            <div className="flex-1">
-                                                                <p className="text-sm font-medium text-gray-900 dark:text-white">
-                                                                    {
-                                                                        activity.title
-                                                                    }
-                                                                </p>
-                                                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                                    {
-                                                                        activity.time
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                )}
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </TabsContent>
-                            </Tabs>
-                        </div>
-
-                        {/* Sidebar */}
-                        <div className="space-y-6">
-                            {/* Author Card */}
-                            <Card className="bg-gradient-to-br from-violet-50 to-purple-50 dark:from-violet-900/10 dark:to-purple-900/10 border-violet-100 dark:border-violet-800/50">
-                                <CardHeader>
-                                    <CardTitle className="text-sm">
-                                        Created by
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="flex items-center gap-3">
-                                        <Avatar className="h-12 w-12 bg-violet-500">
-                                            <AvatarFallback className="text-white font-medium">
-                                                {projectData.authorAvatar}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-900 dark:text-white">
-                                                {projectData.author}
-                                            </p>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                Project Owner
-                                            </p>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            {/* Stats Card */}
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-sm">
-                                        Project Stats
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="grid gap-5 lg:grid-cols-[1fr_380px]"
+                        >
+                            <div className="space-y-5">
+                                <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                                     <div className="space-y-4">
-                                        <div className="flex justify-between items-center">
-                                            <span className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                                                <Star1
-                                                    size={12}
-                                                    className="text-yellow-500"
+                                        <FormFieldWrapper
+                                            name="title"
+                                            label="Project Title"
+                                            required
+                                        >
+                                            {(field: any) => (
+                                                <Input
+                                                    placeholder="Enter your project title…"
+                                                    className="rounded-xl"
+                                                    {...field}
                                                 />
-                                                Stars
-                                            </span>
-                                            <Badge variant="secondary">
-                                                {projectData.stars}
-                                            </Badge>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                                                <Eye
-                                                    size={12}
-                                                    className="text-blue-500"
+                                            )}
+                                        </FormFieldWrapper>
+                                        <FormFieldWrapper
+                                            name="description"
+                                            label="Description"
+                                            required
+                                        >
+                                            {(field: any) => (
+                                                <Textarea
+                                                    rows={5}
+                                                    placeholder="Describe your project…"
+                                                    className="rounded-xl"
+                                                    {...field}
                                                 />
-                                                Views
-                                            </span>
-                                            <Badge variant="secondary">
-                                                {projectData.views}
-                                            </Badge>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                                                <Heart
-                                                    size={12}
-                                                    className="text-red-500"
-                                                />
-                                                Likes
-                                            </span>
-                                            <Badge variant="secondary">
-                                                {projectData.likes}
-                                            </Badge>
-                                        </div>
+                                            )}
+                                        </FormFieldWrapper>
                                         <Separator />
-                                        <div className="flex justify-between items-center">
-                                            <span className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                                                <Calendar
-                                                    size={12}
-                                                    className="text-gray-500"
+                                        <FormFieldWrapper
+                                            name="status"
+                                            label="Project Status"
+                                        >
+                                            {(field: any) => (
+                                                <Select
+                                                    onValueChange={
+                                                        field.onChange
+                                                    }
+                                                    defaultValue={field.value}
+                                                >
+                                                    <SelectTrigger className="rounded-xl">
+                                                        <SelectValue placeholder="Select status" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {(
+                                                            [
+                                                                "active",
+                                                                "in-progress",
+                                                                "completed",
+                                                            ] as const
+                                                        ).map(s => (
+                                                            <SelectItem
+                                                                key={s}
+                                                                value={s}
+                                                            >
+                                                                <span className="inline-flex items-center gap-2">
+                                                                    <Badge
+                                                                        variant="outline"
+                                                                        className={`border ${STATUS_BADGES[s].badgeClass}`}
+                                                                    >
+                                                                        {
+                                                                            STATUS_BADGES[
+                                                                                s
+                                                                            ]
+                                                                                .label
+                                                                        }
+                                                                    </Badge>
+                                                                </span>
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            )}
+                                        </FormFieldWrapper>
+                                    </div>
+                                </Card>
+
+                                <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                                    <div className="space-y-3">
+                                        <div className="flex items-center justify-between">
+                                            <FormLabel className="flex items-center gap-2">
+                                                <TagsIcon className="h-4 w-4" />
+                                                Tags
+                                            </FormLabel>
+                                            <div className="text-xs text-muted-foreground">
+                                                Press{" "}
+                                                <kbd className="rounded border px-1">
+                                                    Enter
+                                                </kbd>{" "}
+                                                to add
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <Input
+                                                value={tagInput}
+                                                onChange={e =>
+                                                    setTagInput(e.target.value)
+                                                }
+                                                onKeyDown={e =>
+                                                    handleKey(e, "tag")
+                                                }
+                                                placeholder="Add a tag (e.g. react)"
+                                                className="rounded-xl"
+                                            />
+                                            <Button
+                                                type="button"
+                                                variant="secondary"
+                                                onClick={handleAddTag}
+                                                className="rounded-xl"
+                                            >
+                                                Add
+                                            </Button>
+                                        </div>
+                                        {!!values.tags?.length && (
+                                            <div className="flex flex-wrap gap-2 pt-1">
+                                                {values.tags.map(t => (
+                                                    <Badge
+                                                        key={t}
+                                                        variant="secondary"
+                                                        className="cursor-pointer rounded-xl"
+                                                        onClick={() =>
+                                                            removeFrom(
+                                                                "tags",
+                                                                t
+                                                            )
+                                                        }
+                                                    >
+                                                        {t}{" "}
+                                                        <span className="ml-1 opacity-70">
+                                                            ×
+                                                        </span>
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </Card>
+                            </div>
+
+                            <div className="space-y-5">
+                                <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                                    <div className="space-y-3">
+                                        <FormLabel>Project Image</FormLabel>
+                                        <FormFieldWrapper name="image" label="">
+                                            {(field: any) => (
+                                                <div className="flex gap-2">
+                                                    <Input
+                                                        placeholder="https://example.com/image.jpg"
+                                                        className="rounded-xl"
+                                                        {...field}
+                                                    />
+                                                    <Button
+                                                        type="button"
+                                                        variant="outline"
+                                                        className="rounded-xl"
+                                                        onClick={() =>
+                                                            form.setValue(
+                                                                "image",
+                                                                "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&q=80&auto=format&fit=crop"
+                                                            )
+                                                        }
+                                                        title="Use sample image"
+                                                    >
+                                                        <Camera className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+                                            )}
+                                        </FormFieldWrapper>
+                                        <div className="overflow-hidden rounded-xl border">
+                                            {values.image && imgOk ? (
+                                                <img
+                                                    src={values.image}
+                                                    alt="Preview"
+                                                    className="h-48 w-full object-cover"
                                                 />
-                                                Updated
-                                            </span>
-                                            <span className="text-sm text-gray-900 dark:text-white">
-                                                {projectData.lastUpdated}
-                                            </span>
+                                            ) : (
+                                                <div className="flex h-48 w-full items-center justify-center text-sm text-muted-foreground">
+                                                    {values.image
+                                                        ? "Could not load image preview"
+                                                        : "Image preview will appear here"}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
-                                </CardContent>
-                            </Card>
+                                </Card>
 
-                            {/* Tags Card */}
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-sm">
-                                        Tags
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="flex flex-wrap gap-2">
-                                        {projectData.tags.map(tag => (
-                                            <Badge
-                                                key={tag}
-                                                variant="outline"
-                                                className="text-xs"
-                                            >
-                                                {tag}
-                                            </Badge>
-                                        ))}
+                                <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                                    <div className="space-y-4">
+                                        <FormLabel>Links</FormLabel>
+                                        <FormFieldWrapper
+                                            name="github"
+                                            label="GitHub URL"
+                                        >
+                                            {(field: any) => (
+                                                <div className="relative">
+                                                    <Github className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                                    <Input
+                                                        placeholder="https://github.com/username/repo"
+                                                        className="pl-9 rounded-xl"
+                                                        {...field}
+                                                    />
+                                                </div>
+                                            )}
+                                        </FormFieldWrapper>
+                                        <FormFieldWrapper
+                                            name="liveUrl"
+                                            label="Live URL"
+                                        >
+                                            {(field: any) => (
+                                                <div className="relative">
+                                                    <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                                    <Input
+                                                        placeholder="https://your-project.com"
+                                                        className="pl-9 rounded-xl"
+                                                        {...field}
+                                                    />
+                                                </div>
+                                            )}
+                                        </FormFieldWrapper>
                                     </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    </div>
+                                </Card>
+
+                                <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <div className="text-sm text-muted-foreground">
+                                            Review details before submitting
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                className="rounded-xl"
+                                                onClick={() => router.back()}
+                                            >
+                                                Cancel
+                                            </Button>
+                                            <Button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="gap-2 rounded-xl"
+                                            >
+                                                {isSubmitting && (
+                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                )}
+                                                {isSubmitting
+                                                    ? "Creating…"
+                                                    : "Create Project"}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </Card>
+                            </div>
+                        </form>
+                    </Form>
                 </div>
             </PageContent>
         </div>
