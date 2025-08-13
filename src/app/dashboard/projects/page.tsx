@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
 import PageContent from "@/components/layout/navbar/page-content";
 import { PageNavbarLeftContent } from "@/components/layout/navbar/page-navbar";
 import Navbar from "@/components/layout/navbar/navbar";
@@ -20,22 +19,13 @@ import {
     PopoverTrigger,
     PopoverContent,
 } from "@/components/ui/popover";
-import axios from "axios";
-import { Project } from "@/types/project";
-
-const fetchProjects = async (): Promise<Project[]> => {
-    const res = await axios.get("/api/v1/projects");
-    return res.data;
-};
+import { useProjectFetchQuery } from "@/hooks/queries/useProjectQuery";
 
 export default function ProjectsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedTag, setSelectedTag] = useState("all");
 
-    const { data: projects = [] } = useQuery({
-        queryKey: ["projects"],
-        queryFn: fetchProjects,
-    });
+    const { data: projects = [] } = useProjectFetchQuery();
 
     const allTags = useMemo(
         () => ["all", ...new Set(projects.flatMap(p => p.tags))],
@@ -67,6 +57,9 @@ export default function ProjectsPage() {
                 return "bg-yellow-100 text-yellow-800 dark:bg-yellow-800/20 dark:text-yellow-400";
         }
     };
+
+    const author = "Tushar";
+    const authorAvatar = "T";
 
     return (
         <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
@@ -168,7 +161,7 @@ export default function ProjectsPage() {
 
                                 <div className="p-4">
                                     <div className="flex justify-between items-start mb-3">
-                                        <h3 className="font-semibold truncate">
+                                        <h3 className="text-sm font-semibold truncate">
                                             {p.title}
                                         </h3>
                                         {/* More Actions Popover */}
@@ -199,22 +192,25 @@ export default function ProjectsPage() {
                                         {p.description}
                                     </p>
 
-                                    <div className="flex flex-wrap gap-1 mb-4">
-                                        {p.tags.slice(0, 2).map(tag => (
-                                            <span
-                                                key={tag}
-                                                className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 
+                                    {/* Tags */}
+                                    {p.tags.length > 0 && (
+                                        <div className="flex flex-wrap gap-1 mb-4">
+                                            {p.tags.slice(0, 2).map(tag => (
+                                                <span
+                                                    key={tag}
+                                                    className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 
                                                      text-xs rounded-md"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                        {p.tags.length > 2 && (
-                                            <span className="px-2 py-1 text-gray-500 dark:text-gray-500 text-xs">
-                                                +{p.tags.length - 2}
-                                            </span>
-                                        )}
-                                    </div>
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                            {p.tags.length > 2 && (
+                                                <span className="px-2 py-1 text-gray-500 dark:text-gray-500 text-xs">
+                                                    +{p.tags.length - 2}
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
 
                                     {/* Stats */}
                                     <div className="flex justify-between text-xs text-gray-500">
@@ -233,6 +229,17 @@ export default function ProjectsPage() {
                                             <Calendar size={12} />{" "}
                                             {p.lastUpdated}
                                         </span>
+                                    </div>
+
+                                    <div className="flex my-2 items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+                                        <div className="w-8 h-8 bg-violet-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                            {authorAvatar}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-xs font-medium text-gray-800 dark:text-white truncate">
+                                                {author}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -17,10 +17,6 @@ const projectSchema = new monogoose.Schema({
         type: String,
         required: true,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
     approved: {
         type: Boolean,
     },
@@ -31,9 +27,6 @@ const projectSchema = new monogoose.Schema({
         type: Array,
     },
     authorAvatar: {
-        type: String,
-    },
-    lastUpdated: {
         type: String,
     },
     likes: {
@@ -47,6 +40,16 @@ const projectSchema = new monogoose.Schema({
     },
     stars: {
         type: Number,
+    },
+    status: {
+        type: String,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    lastUpdated: {
+        type: String,
     },
 });
 
