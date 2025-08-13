@@ -1,7 +1,7 @@
 import React from "react";
 import { SidebarLeft } from "iconsax-reactjs";
 import { useCentralStore } from "@/config/Store";
-import { ThemeToggle } from "../theme-toggle";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 const Navbar = ({ children }: { children: React.ReactNode }) => {
     const { setIsSidebarOpen } = useCentralStore();
@@ -19,9 +19,8 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
                     </button>
                 </div>
 
-                <div className="flex flex-row gap-4 ml-auto">
-                    {/* <UserButton></UserButton> */}
-                    <ThemeToggle />
+                <div className="flex flex-row gap-0 ml-auto">
+                    <AnimatedThemeToggler />
                 </div>
             </div>
             <hr className="bg-gray-400 dark:bg-gray-700 mx-2" />

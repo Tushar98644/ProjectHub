@@ -22,7 +22,6 @@
   --chart-5: oklch(0.645 0.246 16.439);
 }
 
-
 .all-center {
   @apply flex items-center justify-center;
 }
@@ -45,7 +44,6 @@
 ::-webkit-scrollbar-thumb {
   @apply bg-gray-300 hover:bg-gray-400;
 }
-
 
 ::-webkit-scrollbar {
   @apply h-1 w-1;
@@ -120,10 +118,6 @@
   }
 }
 
-
-
-
-
 @layer base {
   * {
     @apply border-border;
@@ -132,4 +126,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

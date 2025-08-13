@@ -19,7 +19,6 @@ const Integrations = () => {
                 <PageNavbarLeftContent>
                     <div className="border border-gray-300 dark:border-gray-600 rounded-full w-10 h-10 flex items-center justify-center bg-white dark:bg-gray-800 transition-colors">
                         {" "}
-                        {/* ✅ Added proper centering */}
                         <Setting4
                             size={18}
                             className="text-gray-700 dark:text-gray-200"

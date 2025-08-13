@@ -2,7 +2,7 @@
 
 import { useSession } from "@/config/auth/client";
 import {
-    FolderCloud,
+    Folder,
     Element3,
     Headphone,
     Profile,
@@ -63,15 +63,6 @@ const Sidebar = () => {
                         </Link>
 
                         <Link
-                            href="/dashboard/integrations"
-                            className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
-                        >
-                            <Setting4 size={16} />
-                            Integrations
-                        </Link>
-
-                        <Link
                             href="/dashboard/profile"
                             className={`flex ${pathname === "/dashboard/profile" ? "text-primary" : ""}
                 hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
@@ -85,8 +76,17 @@ const Sidebar = () => {
                             className={`flex ${pathname === "/dashboard/projects" ? "text-primary" : ""}
                 hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <FolderCloud size={16} />
+                            <Folder size={16} />
                             Community Projects
+                        </Link>
+
+                        <Link
+                            href="/dashboard/integrations"
+                            className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""}
+                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                        >
+                            <Setting4 size={16} />
+                            Integrations
                         </Link>
                     </div>
 
