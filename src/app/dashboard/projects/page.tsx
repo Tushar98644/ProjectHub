@@ -5,7 +5,6 @@ import PageContent from "@/components/layout/navbar/page-content";
 import { PageNavbarLeftContent } from "@/components/layout/navbar/page-navbar";
 import Navbar from "@/components/layout/navbar/navbar";
 import { useProjectFetchQuery } from "@/hooks/queries/useProjectQuery";
-
 import {
     Search,
     Plus,
@@ -33,6 +32,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { ProjectCard } from "@/features/projects/components/project-card";
 import { ProjectRow } from "@/features/projects/components/project-row";
+import Link from "next/link";
 
 export default function ProjectsPage() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -116,9 +116,12 @@ export default function ProjectsPage() {
                             <ViewToggle view={view} setView={setView} />
                             <Button className="gap-2">
                                 <Plus className="h-3 w-3" />
-                                <span className="hidden sm:inline text-xs">
+                                <Link
+                                    href="/dashboard/projects/add"
+                                    className="hidden sm:inline text-xs"
+                                >
                                     Add Project
-                                </span>
+                                </Link>
                             </Button>
                         </div>
                     </div>

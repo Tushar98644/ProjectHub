@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import Navbar from "@/components/layout/navbar/navbar";
 import PageContent from "@/components/layout/navbar/page-content";
 import {
     PageNavbarLeftContent,
     PageNavbarRightContent,
 } from "@/components/layout/navbar/page-navbar";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -36,6 +38,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
+
 import {
     ArrowLeft,
     Plus,
@@ -44,6 +47,7 @@ import {
     Link2,
     Tags as TagsIcon,
     Sparkles,
+    Check,
     Loader2,
 } from "lucide-react";
 
@@ -67,6 +71,7 @@ const STATUS_BADGES = {
 
 export default function AddProjectPage() {
     const router = useRouter();
+
     const form = useForm({
         defaultValues: {
             title: "",
@@ -79,25 +84,29 @@ export default function AddProjectPage() {
             techStack: [],
         },
     });
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [tagInput, setTagInput] = useState("");
     const [techInput, setTechInput] = useState("");
     const [imgOk, setImgOk] = useState(true);
+
     const values = form.watch();
+
+    const toCreatePayload = (v: any): any => ({
+        title: v.title,
+        description: v.description,
+        tags: v.tags,
+        status: v.status,
+        image: v.image,
+        github: v.github,
+        liveUrl: v.liveUrl,
+        techStack: v.techStack,
+    });
 
     const onSubmit = async (v: any) => {
         setIsSubmitting(true);
         setTimeout(() => {
-            console.log("Create Project Payload", {
-                title: v.title,
-                description: v.description,
-                tags: v.tags,
-                status: v.status,
-                image: v.image,
-                github: v.github,
-                liveUrl: v.liveUrl,
-                techStack: v.techStack,
-            });
+            console.log("Create Project Payload", toCreatePayload(v));
             setIsSubmitting(false);
             router.push("/dashboard/projects");
         }, 1200);
@@ -105,7 +114,9 @@ export default function AddProjectPage() {
 
     const pushUnique = (list: string[], entry: string) => {
         const val = entry.trim();
-        return !val || list.includes(val) ? list : [...list, val];
+        if (!val) return list;
+        if (list.includes(val)) return list;
+        return [...list, val];
     };
 
     const handleAddTag = () => {
@@ -128,13 +139,13 @@ export default function AddProjectPage() {
             type === "tag" ? handleAddTag() : handleAddTech();
         }
     };
+
     const removeFrom = (key: "tags" | "techStack", val: string) => {
-        form.setValue(
-            key,
-            values[key].filter(x => x !== val)
-        );
+        const next = values[key].filter(x => x !== val);
+        form.setValue(key, next);
     };
 
+    // Image preview check
     useEffect(() => {
         if (!values.image) {
             setImgOk(true);
@@ -146,29 +157,9 @@ export default function AddProjectPage() {
         i.src = values.image;
     }, [values.image]);
 
-    const FormFieldWrapper = ({
-        name,
-        label,
-        children,
-        required = false,
-    }: any) => (
-        <FormField
-            control={form.control}
-            name={name}
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel>
-                        {label} {required && "*"}
-                    </FormLabel>
-                    <FormControl>{children(field)}</FormControl>
-                    <FormMessage />
-                </FormItem>
-            )}
-        />
-    );
-
     return (
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
+            {/* Magic-UI style spotlight + soft top glow */}
             <div className="pointer-events-none fixed inset-0 -z-10">
                 <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-violet-500/20 via-transparent to-transparent blur-2xl" />
                 <div className="absolute left-1/2 top-16 size-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.18),transparent_60%)] blur-2xl" />
@@ -193,6 +184,7 @@ export default function AddProjectPage() {
                         </p>
                     </div>
                 </PageNavbarLeftContent>
+
                 <PageNavbarRightContent>
                     <TooltipProvider>
                         <Tooltip>
@@ -225,6 +217,7 @@ export default function AddProjectPage() {
 
             <PageContent>
                 <div className="space-y-5">
+                    {/* Header Card */}
                     <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                         <div className="flex items-center gap-2">
                             <Sparkles className="h-5 w-5" />
@@ -240,90 +233,122 @@ export default function AddProjectPage() {
                         </div>
                     </Card>
 
+                    {/* Form */}
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
                             className="grid gap-5 lg:grid-cols-[1fr_380px]"
                         >
+                            {/* Left column */}
                             <div className="space-y-5">
                                 <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                                     <div className="space-y-4">
-                                        <FormFieldWrapper
+                                        {/* Title */}
+                                        <FormField
+                                            control={form.control}
                                             name="title"
-                                            label="Project Title"
-                                            required
-                                        >
-                                            {(field: any) => (
-                                                <Input
-                                                    placeholder="Enter your project title…"
-                                                    className="rounded-xl"
-                                                    {...field}
-                                                />
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Project Title *
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Enter your project title…"
+                                                            className="rounded-xl"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </FormFieldWrapper>
-                                        <FormFieldWrapper
+                                        />
+
+                                        {/* Description */}
+                                        <FormField
+                                            control={form.control}
                                             name="description"
-                                            label="Description"
-                                            required
-                                        >
-                                            {(field: any) => (
-                                                <Textarea
-                                                    rows={5}
-                                                    placeholder="Describe your project…"
-                                                    className="rounded-xl"
-                                                    {...field}
-                                                />
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Description *
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Textarea
+                                                            rows={5}
+                                                            placeholder="Describe your project…"
+                                                            className="rounded-xl"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </FormFieldWrapper>
+                                        />
+
                                         <Separator />
-                                        <FormFieldWrapper
+
+                                        {/* Status */}
+                                        <FormField
+                                            control={form.control}
                                             name="status"
-                                            label="Project Status"
-                                        >
-                                            {(field: any) => (
-                                                <Select
-                                                    onValueChange={
-                                                        field.onChange
-                                                    }
-                                                    defaultValue={field.value}
-                                                >
-                                                    <SelectTrigger className="rounded-xl">
-                                                        <SelectValue placeholder="Select status" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {(
-                                                            [
-                                                                "active",
-                                                                "in-progress",
-                                                                "completed",
-                                                            ] as const
-                                                        ).map(s => (
-                                                            <SelectItem
-                                                                key={s}
-                                                                value={s}
-                                                            >
-                                                                <span className="inline-flex items-center gap-2">
-                                                                    <Badge
-                                                                        variant="outline"
-                                                                        className={`border ${STATUS_BADGES[s].badgeClass}`}
-                                                                    >
-                                                                        {
-                                                                            STATUS_BADGES[
-                                                                                s
-                                                                            ]
-                                                                                .label
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Project Status
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Select
+                                                            onValueChange={
+                                                                field.onChange
+                                                            }
+                                                            defaultValue={
+                                                                field.value
+                                                            }
+                                                        >
+                                                            <SelectTrigger className="rounded-xl">
+                                                                <SelectValue placeholder="Select status" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {(
+                                                                    [
+                                                                        "active",
+                                                                        "in-progress",
+                                                                        "completed",
+                                                                    ] as const
+                                                                ).map(s => (
+                                                                    <SelectItem
+                                                                        key={s}
+                                                                        value={
+                                                                            s
                                                                         }
-                                                                    </Badge>
-                                                                </span>
-                                                            </SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
+                                                                    >
+                                                                        <span className="inline-flex items-center gap-2">
+                                                                            <Badge
+                                                                                variant="outline"
+                                                                                className={`border ${STATUS_BADGES[s].badgeClass}`}
+                                                                            >
+                                                                                {
+                                                                                    STATUS_BADGES[
+                                                                                        s
+                                                                                    ]
+                                                                                        .label
+                                                                                }
+                                                                            </Badge>
+                                                                        </span>
+                                                                    </SelectItem>
+                                                                ))}
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </FormFieldWrapper>
+                                        />
                                     </div>
                                 </Card>
 
+                                {/* Tags */}
                                 <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                                     <div className="space-y-3">
                                         <div className="flex items-center justify-between">
@@ -360,6 +385,7 @@ export default function AddProjectPage() {
                                                 Add
                                             </Button>
                                         </div>
+
                                         {!!values.tags?.length && (
                                             <div className="flex flex-wrap gap-2 pt-1">
                                                 {values.tags.map(t => (
@@ -386,35 +412,45 @@ export default function AddProjectPage() {
                                 </Card>
                             </div>
 
+                            {/* Right column (Preview & Links) */}
                             <div className="space-y-5">
+                                {/* Image */}
                                 <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                                     <div className="space-y-3">
                                         <FormLabel>Project Image</FormLabel>
-                                        <FormFieldWrapper name="image" label="">
-                                            {(field: any) => (
-                                                <div className="flex gap-2">
-                                                    <Input
-                                                        placeholder="https://example.com/image.jpg"
-                                                        className="rounded-xl"
-                                                        {...field}
-                                                    />
-                                                    <Button
-                                                        type="button"
-                                                        variant="outline"
-                                                        className="rounded-xl"
-                                                        onClick={() =>
-                                                            form.setValue(
-                                                                "image",
-                                                                "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&q=80&auto=format&fit=crop"
-                                                            )
-                                                        }
-                                                        title="Use sample image"
-                                                    >
-                                                        <Camera className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
+                                        <FormField
+                                            control={form.control}
+                                            name="image"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormControl>
+                                                        <div className="flex gap-2">
+                                                            <Input
+                                                                placeholder="https://example.com/image.jpg"
+                                                                className="rounded-xl"
+                                                                {...field}
+                                                            />
+                                                            <Button
+                                                                type="button"
+                                                                variant="outline"
+                                                                className="rounded-xl"
+                                                                onClick={() =>
+                                                                    form.setValue(
+                                                                        "image",
+                                                                        "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&q=80&auto=format&fit=crop"
+                                                                    )
+                                                                }
+                                                                title="Use sample image"
+                                                            >
+                                                                <Camera className="h-4 w-4" />
+                                                            </Button>
+                                                        </div>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </FormFieldWrapper>
+                                        />
+
                                         <div className="overflow-hidden rounded-xl border">
                                             {values.image && imgOk ? (
                                                 <img
@@ -433,42 +469,60 @@ export default function AddProjectPage() {
                                     </div>
                                 </Card>
 
+                                {/* Links */}
                                 <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                                     <div className="space-y-4">
                                         <FormLabel>Links</FormLabel>
-                                        <FormFieldWrapper
+
+                                        <FormField
+                                            control={form.control}
                                             name="github"
-                                            label="GitHub URL"
-                                        >
-                                            {(field: any) => (
-                                                <div className="relative">
-                                                    <Github className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                                    <Input
-                                                        placeholder="https://github.com/username/repo"
-                                                        className="pl-9 rounded-xl"
-                                                        {...field}
-                                                    />
-                                                </div>
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-muted-foreground">
+                                                        GitHub URL
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <div className="relative">
+                                                            <Github className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                                            <Input
+                                                                placeholder="https://github.com/username/repo"
+                                                                className="pl-9 rounded-xl"
+                                                                {...field}
+                                                            />
+                                                        </div>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </FormFieldWrapper>
-                                        <FormFieldWrapper
+                                        />
+
+                                        <FormField
+                                            control={form.control}
                                             name="liveUrl"
-                                            label="Live URL"
-                                        >
-                                            {(field: any) => (
-                                                <div className="relative">
-                                                    <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                                    <Input
-                                                        placeholder="https://your-project.com"
-                                                        className="pl-9 rounded-xl"
-                                                        {...field}
-                                                    />
-                                                </div>
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel className="text-muted-foreground">
+                                                        Live URL
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <div className="relative">
+                                                            <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                                                            <Input
+                                                                placeholder="https://your-project.com"
+                                                                className="pl-9 rounded-xl"
+                                                                {...field}
+                                                            />
+                                                        </div>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </FormFieldWrapper>
+                                        />
                                     </div>
                                 </Card>
 
+                                {/* Submit */}
                                 <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                                     <div className="flex items-center justify-between gap-3">
                                         <div className="text-sm text-muted-foreground">
@@ -493,7 +547,7 @@ export default function AddProjectPage() {
                                                 )}
                                                 {isSubmitting
                                                     ? "Creating…"
-                                                    : "Create Project"}
+                                                    : "submit project"}
                                             </Button>
                                         </div>
                                     </div>

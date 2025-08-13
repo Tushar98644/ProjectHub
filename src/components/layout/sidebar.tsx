@@ -9,26 +9,26 @@ import {
     Profile2User,
     Setting2,
     Setting4,
-    Wing,
 } from "iconsax-reactjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Sidebar = () => {
     const pathname = usePathname();
     const { data: session } = useSession();
 
     return (
-        <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden">
-            <div className="w-full h-full bg-white dark:bg-gray-900 border-r dark:border-gray-800">
+        <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden bg-gradient-to-b from-background via-background to-background">
+            <div className="w-full h-full border-r dark:border-gray-800">
                 {/* logo */}
-                <div className="h-[var(--h-nav)] p-4 md:p-6 flex cursor-pointer group items-center gap-2">
-                    <div className="h-10 outline outline-violet-300 w-10 flex items-center bg-gradient-to-br justify-center rounded-full from-violet-500 to-violet-400 text-white">
-                        <Wing
-                            size={24}
-                            className="relative group-hover:scale-75 duration-200"
-                        />
-                    </div>
+                <div className="h-[var(--h-nav)] p-4 md:p-4 flex cursor-pointer group items-center gap-2">
+                    <Avatar className="h-8 w-8 flex items-center justify-center border dark:border-white/50">
+                        <AvatarImage src="/assets/logos/logo.png" alt="logo" />
+                        <AvatarFallback className="dark:text-white text-black text-xs">
+                            T
+                        </AvatarFallback>
+                    </Avatar>
                     <div>
                         <h1 className="text-sm font-bold text-gray-800 dark:text-white">
                             ProjectHub
@@ -44,15 +44,6 @@ const Sidebar = () => {
                 <div className="flex flex-col h-full justify-between">
                     {/* top nav */}
                     <div className="pt-6 text-gray-500 dark:text-gray-400 font-medium space-y-2 md:px-2 text-xs">
-                        <Link
-                            href="/dashboard/analytics"
-                            className={`flex ${pathname === "/dashboard/analytics" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
-                        >
-                            <Element3 variant="Outline" size={16} />
-                            Analytics
-                        </Link>
-
                         <Link
                             href="/dashboard/teams"
                             className={`flex ${pathname === "/dashboard/teams" ? "text-primary" : ""}
