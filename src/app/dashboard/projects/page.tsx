@@ -80,11 +80,6 @@ export default function ProjectsPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
-            {/* Gradient Background */}
-            <div className="pointer-events-none fixed inset-0 -z-10 [mask-image:radial-gradient(60%_40%_at_50%_0%,#000_40%,transparent_100%)]">
-                <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-violet-500/20 via-transparent to-transparent blur-2xl" />
-            </div>
-
             <Navbar>
                 <PageNavbarLeftContent>
                     <div>
@@ -146,8 +141,7 @@ export default function ProjectsPage() {
                                         onClick={() => setSelectedTag(tag)}
                                         className={clsx(
                                             "rounded-full border-dashed",
-                                            selectedTag === tag &&
-                                                "shadow-[0_0_0_3px_rgba(139,92,246,0.25)]"
+                                            selectedTag === tag
                                         )}
                                     >
                                         <Filter className="mr-1 h-4 w-4" />{" "}
