@@ -31,10 +31,10 @@ export const createDiscussion = async (req: Request) => {
 
 export const getDiscussions = async (req: Request) => {
     const { searchParams } = new URL(req.url);
-    const page_id = searchParams.get("id");
+    const projectId = searchParams.get("projectId");
 
     try {
-        const discussions = await Discussion.find({ page_id }).sort({
+        const discussions = await Discussion.find({ projectId }).sort({
             createdAt: -1,
         });
         return discussions;

@@ -6,7 +6,7 @@ export const useFetchProjects = () => {
     return useQuery({
         queryKey: ["projects"],
         queryFn: projectService.getAllProjects,
-        // staleTime: 5 * 1000 * 60,
+        staleTime: 5 * 1000 * 60,
     });
 };
 
@@ -14,7 +14,7 @@ export const useFetchProjectById = (id: string) => {
     return useQuery({
         queryKey: ["project", id],
         queryFn: () => projectService.getProject(id),
-        // staleTime: 5 * 1000 * 60,
+        staleTime: 5 * 1000 * 60,
     });
 };
 
