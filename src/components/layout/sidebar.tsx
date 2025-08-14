@@ -11,7 +11,8 @@ import {
 } from "iconsax-reactjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Atom } from "lucide-react";
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -21,11 +22,10 @@ const Sidebar = () => {
         <div className="w-60 shrink-0 md:block h-screen sticky top-0 overflow-hidden bg-gradient-to-b from-background via-background to-background">
             <div className="w-full h-full border-r dark:border-gray-800">
                 {/* logo */}
-                <div className="h-[var(--h-nav)] p-4 md:p-4 flex cursor-pointer group items-center gap-2">
-                    <Avatar className="h-8 w-8 flex items-center justify-center border dark:border-white/50">
-                        <AvatarImage src="/assets/logos/logo.png" alt="logo" />
-                        <AvatarFallback className="dark:text-white text-black text-xs">
-                            T
+                <div className="h-[var(--h-nav)] p-4 md:p-4 flex cursor-pointer group items-center gap-4">
+                    <Avatar className="h-10 w-10 flex items-center justify-center bg-transparent">
+                        <AvatarFallback className="dark:text-white text-black text-xs size-6">
+                            <Atom />
                         </AvatarFallback>
                     </Avatar>
                     <div>

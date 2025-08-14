@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
     title: "ProjectHub",
-    description: "",
+    description: "AI powered project management platform",
 };
 
 export default function RootLayout({
