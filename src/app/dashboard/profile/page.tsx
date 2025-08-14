@@ -112,7 +112,7 @@ export default function UserProfilePage() {
     const [isOwnProfile] = useState(true);
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="h-full overflow-scroll pb-20">
             <div className="mx-auto max-w-6xl space-y-8 flex flex-col h-full overflow-scroll">
                 {/* Profile Header */}
                 <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-lg">

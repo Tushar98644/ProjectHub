@@ -141,8 +141,8 @@ export default function AddProjectPage() {
     }, [values.image]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
-            <div className="space-y-5">
+        <div className="h-full flex flex-col">
+            <div className="flex flex-col gap-4 pb-20 overflow-scroll">
                 {/* Header Card */}
                 <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
                     <div className="flex items-center gap-2">
@@ -370,7 +370,7 @@ export default function AddProjectPage() {
                                         )}
                                     />
 
-                                    <div className="overflow-hidden rounded-xl border">
+                                    <div className="rounded-xl border">
                                         {values.image && imgOk ? (
                                             <img
                                                 src={values.image}

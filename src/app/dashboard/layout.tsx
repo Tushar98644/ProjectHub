@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={`${isSidebarOpen ? "overflow-hidden" : ""} h-screen`}
+            className={`${isSidebarOpen ? "overflow-hidden" : ""} overflow-x-hidden`}
         >
             {/* backdrop */}
             <AnimatePresence>
@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         onClick={() => setIsSidebarOpen(false)}
-                        className="bg-black/60 absolute top-0 left-0 md:hidden w-full h-screen z-20"
+                        className="bg-black/60 absolute top-0 left-0 md:hidden w-full z-20 h-full"
                     />
                 )}
             </AnimatePresence>
@@ -47,19 +47,17 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 )}
             </AnimatePresence>
 
-            <div className="grid md:grid-cols-[240px_1fr] w-screen overflow-hidden h-screen">
+            <div className="flex flex-row w-full h-screen overflow-hidden">
                 <div className="hidden md:block">
                     <Sidebar />
                 </div>
 
-                <div className="grid">
-                    <div className="sticky top-0">
+                <div className="flex flex-col h-full min-w-0 flex-1">
+                    <div>
                         <Navbar />
                     </div>
-                    <div
-                        className="w-full overflow-x-auto max-w-[1440px] mx-auto transition-colors 
-                    h-screen p-4 md:p-6 bg-gradient-to-b from-background via-background to-background"
-                    >
+
+                    <div className="flex-1 w-full h-full min-w-0 p-4 md:p-6 bg-gradient-to-b from-background via-background to-background">
                         {children}
                     </div>
                 </div>

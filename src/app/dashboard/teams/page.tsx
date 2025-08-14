@@ -13,7 +13,6 @@ import { SearchBar } from "@/components/common/search-bar";
 export default function TeamsPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    const [view, setView] = useState<"grid" | "list">("list");
     const [selectedRole, setSelectedRole] = useState("all");
 
     const mockAction = async (msg: string) => {
@@ -43,27 +42,10 @@ export default function TeamsPage() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <div className="hidden md:flex rounded-xl border bg-background/60 backdrop-blur">
-                            {[
-                                ["grid", LayoutGrid],
-                                ["list", Rows],
-                            ].map(([v, Icon], i) => (
-                                <Button
-                                    key={i}
-                                    variant={view === v ? "default" : "ghost"}
-                                    size="sm"
-                                    onClick={() => setView(v as any)}
-                                    className="rounded-xl"
-                                >
-                                    <Icon className="h-4 w-4" />
-                                </Button>
-                            ))}
-                        </div>
-
                         <Button
                             variant="outline"
                             size="sm"
-                            className="rounded-xl"
+                            className="rounded-md"
                             onClick={() => mockAction("Export triggered")}
                         >
                             Export
@@ -71,7 +53,7 @@ export default function TeamsPage() {
 
                         <Button
                             size="sm"
-                            className="rounded-xl gap-1"
+                            className="rounded-md gap-1"
                             onClick={() => mockAction("Invite member")}
                             disabled={isLoading}
                         >

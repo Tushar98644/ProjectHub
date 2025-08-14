@@ -11,7 +11,7 @@ export const IntegrationsList = ({
     setSelected,
 }: any) => {
     return (
-        <div className="flex flex-col md:h-[670px] h-screen">
+        <div className="flex flex-col md:h-[670px] h-full">
             <Card className="border-0 bg-card/70 backdrop-blur flex flex-col h-full">
                 <CardContent className="p-4 flex flex-col h-full flex-1 min-h-0">
                     {/* Header */}

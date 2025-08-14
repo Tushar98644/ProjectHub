@@ -1,18 +1,12 @@
 "use client";
 
 import React from "react";
-import { usePathname } from "next/navigation";
-import {
-    SidebarLeft,
-    Settings,
-    SearchNormal1,
-    Notification,
-    Add,
-} from "iconsax-reactjs";
+import { usePathname, useRouter } from "next/navigation";
+import { SidebarLeft, SearchNormal1, Notification, Add } from "iconsax-reactjs";
 import { useCentralStore } from "@/config/Store";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Users } from "lucide-react";
+import { ArrowLeft, Settings, Sparkles, User, Users } from "lucide-react";
 
 const headerConfig: Record<
     string,
@@ -27,20 +21,6 @@ const headerConfig: Record<
         icon: Settings,
         title: "Integrations",
         subtitle: "Connect apps and configure webhooks",
-        right: (
-            <>
-                <Button variant="ghost" size="icon" className="rounded-lg">
-                    <SearchNormal1 size={16} />
-                </Button>
-                <Button variant="ghost" size="icon" className="rounded-lg">
-                    <Notification size={16} />
-                </Button>
-                <Button size="sm" className="gap-2 rounded-lg">
-                    <Add size={16} />{" "}
-                    <span className="hidden sm:inline">Add</span>
-                </Button>
-            </>
-        ),
     },
     "/dashboard/teams": {
         icon: Users,
@@ -52,10 +32,21 @@ const headerConfig: Record<
         title: "Community Projects",
         subtitle: "Discover and explore amazing projects",
     },
+    "/dashboard/projects/add": {
+        icon: ArrowLeft,
+        title: "Add New Project",
+        subtitle: "Share your amazing project with the community",
+    },
+    "/dashboard/profile": {
+        icon: User,
+        title: "Profile",
+        subtitle: "View and manage your profile details",
+    },
 };
 
 const Navbar = () => {
     const pathname = usePathname();
+    const router = useRouter();
     const { setIsSidebarOpen } = useCentralStore();
 
     const config = headerConfig[pathname] || {
@@ -65,13 +56,18 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="h-[var(--h-nav)] flex p-4 md:p-6 justify-between items-center gap-4 text-foreground">
+            <div className="min-h-[var(--h-nav)] flex p-4 md:p-6 justify-between items-center gap-4 text-foreground">
                 {/* LEFT SECTION */}
                 <div className="flex items-center gap-3">
                     {config.icon && (
-                        <div className="flex h-9 w-9 items-center justify-center rounded-xl border bg-card/70">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => router.back()}
+                            className="rounded-full"
+                        >
                             <config.icon size={16} className="text-primary" />
-                        </div>
+                        </Button>
                     )}
                     <div>
                         <h1 className="text-sm font-semibold">
@@ -101,7 +97,7 @@ const Navbar = () => {
                 )}
 
                 {/* THEME TOGGLER */}
-                <div className="flex flex-row gap-0 ml-2">
+                <div className="flex flex-row gap-0 mr-2">
                     <AnimatedThemeToggler />
                 </div>
             </div>

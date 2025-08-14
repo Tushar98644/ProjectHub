@@ -105,7 +105,7 @@ export default function IntegrationsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
+        <div className="h-full bg-gradient-to-b from-background via-background to-background">
             <div className="flex flex-col md:flex-row gap-6 pt-3 md:px-8 overflow-scroll">
                 {/* Left Sidebar */}
                 <IntegrationsList
