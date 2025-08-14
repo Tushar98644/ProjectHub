@@ -1,18 +1,19 @@
 export interface Project {
-    _id: string;
+    _id?: string;
     title: string;
     description: string;
     image: string;
-    github: string;
-    approved: boolean;
+    githubUrl: string;
+    liveUrl?: string;
+    approved?: boolean;
     author: string;
-    tags: string[];
-    createdAt: Date;
-    discussion: function;
+    tags?: string[];
+    techStack: string[];
+    createdAt?: Date;
     isPublic?: boolean;
-    status?: "active" | "completed" | "in-progress";
-    authorAvatar?: string;
-    lastUpdated?: string;
+    status: string;
+    authorAvatar: string;
+    lastUpdated?: Date;
     likes?: number;
     comments?: number;
     views?: number;

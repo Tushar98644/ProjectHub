@@ -1,480 +1,122 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { useForm } from "react-hook-form";
-
-import {
-    Camera,
-    Github,
-    Link2,
-    Tags as TagsIcon,
-    Sparkles,
-    Loader2,
-} from "lucide-react";
-
-const STATUS_BADGES = {
-    active: {
-        label: "Active",
-        badgeClass:
-            "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/15 dark:text-emerald-400 dark:border-emerald-800",
-    },
-    "in-progress": {
-        label: "In Progress",
-        badgeClass:
-            "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/15 dark:text-amber-400 dark:border-amber-800",
-    },
-    completed: {
-        label: "Completed",
-        badgeClass:
-            "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/15 dark:text-sky-400 dark:border-sky-800",
-    },
-};
+import { Loader2, Sparkles } from "lucide-react";
+import ProjectDetails from "@/features/projects/components/project-details";
+import TagInput from "@/features/projects/components/tag-input";
+import ProjectImagePicker from "@/features/projects/components/iamge-picker";
+import { Button } from "@/components/ui/button";
+import ProjectLinks from "@/features/projects/components/project-links";
+import { useCreateProject } from "@/hooks/queries/useProjectQuery";
+import { useSession } from "@/config/auth/client";
 
 export default function AddProjectPage() {
+    const { data: session } = useSession();
+
     const router = useRouter();
-
-    const form = useForm({
-        defaultValues: {
-            title: "",
-            description: "",
-            status: "active",
-            image: "",
-            github: "",
-            liveUrl: "",
-            tags: [],
-            techStack: [],
-        },
-    });
-
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [status, setStatus] = useState("active");
+    const [image, setImage] = useState("");
+    const [githubUrl, setGithubUrl] = useState("");
+    const [liveUrl, setLiveUrl] = useState("");
+    const [tags, setTags] = useState<string[]>([]);
+    const [techStack, setTechStack] = useState<string[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [tagInput, setTagInput] = useState("");
-    const [techInput, setTechInput] = useState("");
-    const [imgOk, setImgOk] = useState(true);
 
-    const values = form.watch();
+    const author = session?.user?.name || "User";
+    const authorAvatar = session?.user?.image || "";
+    const { mutate } = useCreateProject();
 
-    const toCreatePayload = (v: any): any => ({
-        title: v.title,
-        description: v.description,
-        tags: v.tags,
-        status: v.status,
-        image: v.image,
-        github: v.github,
-        liveUrl: v.liveUrl,
-        techStack: v.techStack,
-    });
-
-    const onSubmit = async (v: any) => {
+    const onSubmit = (e: { preventDefault: () => void }) => {
+        e.preventDefault();
         setIsSubmitting(true);
-        setTimeout(() => {
-            console.log("Create Project Payload", toCreatePayload(v));
-            setIsSubmitting(false);
-            router.push("/dashboard/projects");
-        }, 1200);
+        const payload = {
+            author,
+            authorAvatar,
+            title,
+            description,
+            status,
+            image,
+            githubUrl,
+            liveUrl,
+            tags,
+            techStack,
+        };
+        mutate(payload, {
+            onSuccess: () => {
+                setIsSubmitting(false);
+                router.push("/dashboard/projects");
+            },
+        });
     };
-
-    const pushUnique = (list: string[], entry: string) => {
-        const val = entry.trim();
-        if (!val) return list;
-        if (list.includes(val)) return list;
-        return [...list, val];
-    };
-
-    const handleAddTag = () => {
-        //@ts-ignore
-        form.setValue("tags", pushUnique(values.tags, tagInput));
-        setTagInput("");
-    };
-    const handleAddTech = () => {
-        //@ts-ignore
-        form.setValue("techStack", pushUnique(values.techStack, techInput));
-        setTechInput("");
-    };
-
-    const handleKey = (
-        e: React.KeyboardEvent<HTMLInputElement>,
-        type: "tag" | "tech"
-    ) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            type === "tag" ? handleAddTag() : handleAddTech();
-        }
-    };
-
-    const removeFrom = (key: "tags" | "techStack", val: string) => {
-        const next = values[key].filter(x => x !== val);
-        form.setValue(key, next);
-    };
-
-    // Image preview check
-    useEffect(() => {
-        if (!values.image) {
-            setImgOk(true);
-            return;
-        }
-        const i = new Image();
-        i.onload = () => setImgOk(true);
-        i.onerror = () => setImgOk(false);
-        i.src = values.image;
-    }, [values.image]);
 
     return (
-        <div className="h-full flex flex-col">
-            <div className="flex flex-col gap-4 pb-20 overflow-scroll">
-                {/* Header Card */}
-                <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                    <div className="flex items-center gap-2">
-                        <Sparkles className="h-5 w-5" />
-                        <div>
-                            <h2 className="text-lg font-semibold">
-                                Project Details
-                            </h2>
-                            <p className="text-sm text-muted-foreground">
-                                Tell us about your project and share it with
-                                everyone.
-                            </p>
+        <div className="flex flex-col gap-6 h-full pb-20 overflow-scroll">
+            <Card className="flex items-center gap-2 rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                <Sparkles className="h-5 w-5" />
+                <div>
+                    <h2 className="text-lg font-semibold">Project Details</h2>
+                    <p className="text-sm text-muted-foreground">
+                        Tell us about your project and share it with everyone.
+                    </p>
+                </div>
+            </Card>
+            <form
+                onSubmit={onSubmit}
+                className="grid gap-5 lg:grid-cols-[1fr_380px]"
+            >
+                <div className="space-y-5">
+                    <ProjectDetails
+                        {...{
+                            title,
+                            setTitle,
+                            description,
+                            setDescription,
+                            status,
+                            setStatus,
+                        }}
+                    />
+                    <TagInput
+                        label="Tech Stack"
+                        items={techStack}
+                        setItems={setTechStack}
+                    />
+                    <TagInput label="Tags" items={tags} setItems={setTags} />
+                </div>
+                <div className="space-y-5">
+                    <ProjectImagePicker {...{ image, setImage }} />
+                    <ProjectLinks
+                        {...{ githubUrl, setGithubUrl, liveUrl, setLiveUrl }}
+                    />
+                    <Card className="flex items-center justify-between rounded-2xl border bg-background/60 p-5 backdrop-blur">
+                        <div className="text-sm text-muted-foreground">
+                            Review details before submitting
                         </div>
-                    </div>
-                </Card>
-
-                {/* Form */}
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="grid gap-5 lg:grid-cols-[1fr_380px]"
-                    >
-                        {/* Left column */}
-                        <div className="space-y-5">
-                            <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                                <div className="space-y-4">
-                                    {/* Title */}
-                                    <FormField
-                                        control={form.control}
-                                        name="title"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>
-                                                    Project Title *
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="Enter your project title…"
-                                                        className="rounded-xl"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    {/* Description */}
-                                    <FormField
-                                        control={form.control}
-                                        name="description"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>
-                                                    Description *
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Textarea
-                                                        rows={5}
-                                                        placeholder="Describe your project…"
-                                                        className="rounded-xl"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    <Separator />
-
-                                    {/* Status */}
-                                    <FormField
-                                        control={form.control}
-                                        name="status"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>
-                                                    Project Status
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Select
-                                                        onValueChange={
-                                                            field.onChange
-                                                        }
-                                                        defaultValue={
-                                                            field.value
-                                                        }
-                                                    >
-                                                        <SelectTrigger className="rounded-xl">
-                                                            <SelectValue placeholder="Select status" />
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            {(
-                                                                [
-                                                                    "active",
-                                                                    "in-progress",
-                                                                    "completed",
-                                                                ] as const
-                                                            ).map(s => (
-                                                                <SelectItem
-                                                                    key={s}
-                                                                    value={s}
-                                                                >
-                                                                    <span className="inline-flex items-center gap-2">
-                                                                        <Badge
-                                                                            variant="outline"
-                                                                            className={`border ${STATUS_BADGES[s].badgeClass}`}
-                                                                        >
-                                                                            {
-                                                                                STATUS_BADGES[
-                                                                                    s
-                                                                                ]
-                                                                                    .label
-                                                                            }
-                                                                        </Badge>
-                                                                    </span>
-                                                                </SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            </Card>
-
-                            {/* Tags */}
-                            <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                                <div className="space-y-3">
-                                    <div className="flex items-center justify-between">
-                                        <FormLabel className="flex items-center gap-2">
-                                            <TagsIcon className="h-4 w-4" />
-                                            Tags
-                                        </FormLabel>
-                                        <div className="text-xs text-muted-foreground">
-                                            Press{" "}
-                                            <kbd className="rounded border px-1">
-                                                Enter
-                                            </kbd>{" "}
-                                            to add
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Input
-                                            value={tagInput}
-                                            onChange={e =>
-                                                setTagInput(e.target.value)
-                                            }
-                                            onKeyDown={e => handleKey(e, "tag")}
-                                            placeholder="Add a tag (e.g. react)"
-                                            className="rounded-xl"
-                                        />
-                                        <Button
-                                            type="button"
-                                            variant="secondary"
-                                            onClick={handleAddTag}
-                                            className="rounded-xl"
-                                        >
-                                            Add
-                                        </Button>
-                                    </div>
-
-                                    {!!values.tags?.length && (
-                                        <div className="flex flex-wrap gap-2 pt-1">
-                                            {values.tags.map(t => (
-                                                <Badge
-                                                    key={t}
-                                                    variant="secondary"
-                                                    className="cursor-pointer rounded-xl"
-                                                    onClick={() =>
-                                                        removeFrom("tags", t)
-                                                    }
-                                                >
-                                                    {t}{" "}
-                                                    <span className="ml-1 opacity-70">
-                                                        ×
-                                                    </span>
-                                                </Badge>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            </Card>
+                        <div className="flex gap-2">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => router.back()}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="gap-2"
+                            >
+                                {isSubmitting && (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                )}
+                                {isSubmitting ? "Creating…" : "Submit Project"}
+                            </Button>
                         </div>
-
-                        {/* Right column (Preview & Links) */}
-                        <div className="space-y-5">
-                            {/* Image */}
-                            <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                                <div className="space-y-3">
-                                    <FormLabel>Project Image</FormLabel>
-                                    <FormField
-                                        control={form.control}
-                                        name="image"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    <div className="flex gap-2">
-                                                        <Input
-                                                            placeholder="https://example.com/image.jpg"
-                                                            className="rounded-xl"
-                                                            {...field}
-                                                        />
-                                                        <Button
-                                                            type="button"
-                                                            variant="outline"
-                                                            className="rounded-xl"
-                                                            onClick={() =>
-                                                                form.setValue(
-                                                                    "image",
-                                                                    "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&q=80&auto=format&fit=crop"
-                                                                )
-                                                            }
-                                                            title="Use sample image"
-                                                        >
-                                                            <Camera className="h-4 w-4" />
-                                                        </Button>
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    <div className="rounded-xl border">
-                                        {values.image && imgOk ? (
-                                            <img
-                                                src={values.image}
-                                                alt="Preview"
-                                                className="h-48 w-full object-cover"
-                                            />
-                                        ) : (
-                                            <div className="flex h-48 w-full items-center justify-center text-sm text-muted-foreground">
-                                                {values.image
-                                                    ? "Could not load image preview"
-                                                    : "Image preview will appear here"}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </Card>
-
-                            {/* Links */}
-                            <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                                <div className="space-y-4">
-                                    <FormLabel>Links</FormLabel>
-
-                                    <FormField
-                                        control={form.control}
-                                        name="github"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="text-muted-foreground">
-                                                    GitHub URL
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <div className="relative">
-                                                        <Github className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                                        <Input
-                                                            placeholder="https://github.com/username/repo"
-                                                            className="pl-9 rounded-xl"
-                                                            {...field}
-                                                        />
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    <FormField
-                                        control={form.control}
-                                        name="liveUrl"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="text-muted-foreground">
-                                                    Live URL
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <div className="relative">
-                                                        <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                                                        <Input
-                                                            placeholder="https://your-project.com"
-                                                            className="pl-9 rounded-xl"
-                                                            {...field}
-                                                        />
-                                                    </div>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                </div>
-                            </Card>
-
-                            {/* Submit */}
-                            <Card className="rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                                <div className="flex items-center justify-between gap-3">
-                                    <div className="text-sm text-muted-foreground">
-                                        Review details before submitting
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            className="rounded-xl"
-                                            onClick={() => router.back()}
-                                        >
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            type="submit"
-                                            disabled={isSubmitting}
-                                            className="gap-2 rounded-xl"
-                                        >
-                                            {isSubmitting && (
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                            )}
-                                            {isSubmitting
-                                                ? "Creating…"
-                                                : "submit project"}
-                                        </Button>
-                                    </div>
-                                </div>
-                            </Card>
-                        </div>
-                    </form>
-                </Form>
-            </div>
+                    </Card>
+                </div>
+            </form>
         </div>
     );
 }

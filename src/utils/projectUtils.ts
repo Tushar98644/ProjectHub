@@ -2,32 +2,63 @@ import { Project } from "@/db/models";
 
 export const createProject = async (req: Request) => {
     const body = await req.json();
-    const { email, title, description, image, github, tags } = body;
+    const {
+        author,
+        authorAvatar,
+        title,
+        description,
+        image,
+        githubUrl,
+        liveUrl = "",
+        techStack,
+        tags = [],
+        status,
+    } = body;
 
-    if (!title || !description || !image || !github || !email)
+    if (
+        !author ||
+        !authorAvatar ||
+        !title ||
+        !description ||
+        !image ||
+        !githubUrl ||
+        !techStack ||
+        !status
+    ) {
         return Response.json(
             { message: "Missing required fields" },
             { status: 400 }
         );
+    }
 
-    const approved = false;
+    if (!Array.isArray(tags)) {
+        return Response.json(
+            { message: "Tags must be an array" },
+            { status: 400 }
+        );
+    }
+
     try {
-        const NewProject = await Project.create({
+        const newProject = await Project.create({
+            author,
+            authorAvatar,
             title,
             description,
             image,
-            github,
-            email,
+            githubUrl,
+            liveUrl,
+            techStack,
             tags,
-            approved,
+            status,
         });
-        console.log(`The project recieved is ${NewProject}`);
+
+        console.log(`The project received is ${newProject._id}`);
         return Response.json(
-            { message: "Project created successfully" },
+            { message: "Project created successfully", id: newProject._id },
             { status: 200 }
         );
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return Response.json(
             { err: "Unable to create project" },
             { status: 500 }
@@ -38,21 +69,18 @@ export const createProject = async (req: Request) => {
 export const getProjects = async (req: Request) => {
     try {
         const { searchParams } = new URL(req.url);
-        const email = searchParams.get("email");
-        console.log(`The email recieved is ${email}`);
+        const projectId = searchParams.get("projectId");
+        console.log(`The projectId received is ${projectId}`);
 
-        let projects;
-        if (email) {
-            projects = await Project.find({ email }).sort({ createdAt: -1 });
-        } else {
-            projects = await Project.find({ approved: true }).sort({
-                createdAt: -1,
-            });
+        if (projectId) {
+            const project = await Project.findOne({ _id: projectId });
+            return project;
         }
 
+        const projects = await Project.find().sort({ createdAt: -1 });
         return projects;
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return Response.json(
             { err: "Error in fetching projects" },
             { status: 400 }

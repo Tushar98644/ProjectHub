@@ -2,21 +2,30 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { SidebarLeft, SearchNormal1, Notification, Add } from "iconsax-reactjs";
+import { FolderAdd, SidebarLeft } from "iconsax-reactjs";
 import { useCentralStore } from "@/config/Store";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Settings, Sparkles, User, Users } from "lucide-react";
+import {
+    ArrowLeft,
+    Settings,
+    Sparkles,
+    User,
+    Users,
+    FolderGit2,
+} from "lucide-react";
+import { FaProjectDiagram } from "react-icons/fa";
 
-const headerConfig: Record<
-    string,
-    {
-        icon?: any;
-        title: string;
-        subtitle: string;
-        right?: React.ReactNode;
-    }
-> = {
+type HeaderConfig =
+    | {
+          icon?: any;
+          title: string;
+          subtitle?: string;
+          right?: React.ReactNode;
+      }
+    | ((pathname: string) => HeaderConfig);
+
+const headerConfig: Record<string, HeaderConfig> = {
     "/dashboard/integrations": {
         icon: Settings,
         title: "Integrations",
@@ -33,7 +42,7 @@ const headerConfig: Record<
         subtitle: "Discover and explore amazing projects",
     },
     "/dashboard/projects/add": {
-        icon: ArrowLeft,
+        icon: FolderAdd,
         title: "Add New Project",
         subtitle: "Share your amazing project with the community",
     },
@@ -42,17 +51,40 @@ const headerConfig: Record<
         title: "Profile",
         subtitle: "View and manage your profile details",
     },
+
+    "/project/:id": (pathname: string) => {
+        const parts = pathname.split("/");
+        const id = parts[2] ?? "";
+        return {
+            icon: FolderGit2,
+            title: `Project ${id}`,
+            subtitle: "Project details and activity",
+        };
+    },
 };
+
+function resolveHeaderConfig(pathname: string): {
+    icon?: any;
+    title: string;
+    subtitle?: string;
+    right?: React.ReactNode;
+} {
+    if (
+        headerConfig[pathname] &&
+        typeof headerConfig[pathname] !== "function"
+    ) {
+        return headerConfig[pathname] as Exclude<HeaderConfig, Function>;
+    }
+
+    return { title: "Dashboard", subtitle: "" };
+}
 
 const Navbar = () => {
     const pathname = usePathname();
     const router = useRouter();
     const { setIsSidebarOpen } = useCentralStore();
 
-    const config = headerConfig[pathname] || {
-        title: "Dashboard",
-        subtitle: "",
-    };
+    const config = resolveHeaderConfig(pathname);
 
     return (
         <div>
@@ -63,12 +95,12 @@ const Navbar = () => {
                         <Button
                             variant="outline"
                             size="icon"
-                            onClick={() => router.back()}
                             className="rounded-full"
                         >
                             <config.icon size={16} className="text-primary" />
                         </Button>
                     )}
+
                     <div>
                         <h1 className="text-sm font-semibold">
                             {config.title}

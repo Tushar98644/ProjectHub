@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useProjectFetchQuery } from "@/hooks/queries/useProjectQuery";
+import { useFetchProjects } from "@/hooks/queries/useProjectQuery";
 import {
     Plus,
     SlidersHorizontal,
@@ -35,12 +35,12 @@ export default function ProjectsPage() {
     const [selectedTag, setSelectedTag] = useState("all");
     const [view, setView] = useState<"grid" | "list">("grid");
     const [sort, setSort] = useState("recent");
-    const { data: projects = [], isLoading } = useProjectFetchQuery();
+    const { data: projects = [], isLoading } = useFetchProjects();
+    console.log(projects);
 
-    const allTags = useMemo(
-        () => ["all", ...new Set(projects.flatMap((p: any) => p.tags || []))],
-        [projects]
-    );
+    const allTags = useMemo(() => {
+        return ["all", ...new Set(projects.flatMap((p: any) => p.tags || []))];
+    }, [projects]);
 
     const filtered = useMemo(() => {
         const base = projects.filter((p: any) => {
@@ -89,7 +89,7 @@ export default function ProjectsPage() {
                 <div className="flex items-center gap-2">
                     <SortMenu sort={sort} setSort={setSort} />
                     <ViewToggle view={view} setView={setView} />
-                    <Button className="gap-2">
+                    <Button className="gap-2 rounded-lg">
                         <Plus className="h-3 w-3" />
                         <Link
                             href="/dashboard/projects/add"
@@ -192,7 +192,7 @@ const SortMenu = ({ sort, setSort }: any) => (
 );
 
 const ViewToggle = ({ view, setView }: any) => (
-    <div className="hidden md:flex rounded-xl border bg-background/60 backdrop-blur">
+    <div className="hidden md:flex rounded-lg border bg-background/60 backdrop-blur">
         {[
             ["grid", LayoutGrid],
             ["list", Rows],
@@ -202,7 +202,7 @@ const ViewToggle = ({ view, setView }: any) => (
                 variant={view === v ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setView(v)}
-                className="rounded-xl"
+                className="rounded-lg"
             >
                 <Icon className="h-4 w-4" />
             </Button>
