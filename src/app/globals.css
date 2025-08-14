@@ -6,22 +6,6 @@
   --h-nav: 80px;
 }
 
-:root {
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-}
-
-.dark {
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-}
-
 .all-center {
   @apply flex items-center justify-center;
 }
@@ -30,18 +14,15 @@
   @apply bg-gradient-to-br from-violet-500 to-violet-400;
 }
 
-/* width */
 ::-webkit-scrollbar {
   display: none;
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   @apply bg-gray-100;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   @apply bg-gray-300 hover:bg-gray-400;
 }
@@ -51,13 +32,10 @@
   display: none;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  /* background: #f1f1f1;  */
   @apply bg-gray-200 rounded-md;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   @apply bg-gray-300 rounded-md hover:bg-gray-400;
 }

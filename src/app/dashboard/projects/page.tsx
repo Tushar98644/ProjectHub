@@ -33,6 +33,7 @@ import { Separator } from "@/components/ui/separator";
 import { ProjectCard } from "@/features/projects/components/project-card";
 import { ProjectRow } from "@/features/projects/components/project-row";
 import Link from "next/link";
+import { SearchBar } from "@/components/common/search-bar";
 
 export default function ProjectsPage() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -124,6 +125,7 @@ export default function ProjectsPage() {
                     {/* Search + Tags */}
                     <div className="flex flex-col gap-3">
                         <SearchBar
+                            placeholder={"Search Projects..."}
                             value={searchQuery}
                             onChange={setSearchQuery}
                         />
@@ -237,28 +239,6 @@ const ViewToggle = ({ view, setView }: any) => (
             </Button>
         ))}
         <Separator orientation="vertical" className="h-6" />
-    </div>
-);
-
-const SearchBar = ({ value, onChange }: any) => (
-    <div className="relative">
-        <Input
-            value={value}
-            onChange={(e: any) => onChange(e.target.value)}
-            placeholder="Search projects..."
-            className="focus:outline-none pl-10 rounded-xl"
-        />
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        {value && (
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onChange("")}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-lg"
-            >
-                ×
-            </Button>
-        )}
     </div>
 );
 

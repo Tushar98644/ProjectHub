@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 
 function Home() {
-    redirect("app/dashboard");
+    redirect("/dashboard/profile");
 }
 
 export default Home;

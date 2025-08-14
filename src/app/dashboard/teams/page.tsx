@@ -1,94 +1,169 @@
 "use client";
 
+import { useState, useMemo } from "react";
+import PageContent from "@/components/layout/navbar/page-content";
 import {
-    PageNavbarIconButton,
     PageNavbarLeftContent,
     PageNavbarRightContent,
 } from "@/components/layout/navbar/page-navbar";
-import {
-    Add,
-    ExportCurve,
-    Notification,
-    Profile,
-    SearchNormal1,
-} from "iconsax-reactjs";
-import PageContent from "@/components/layout/navbar/page-content";
-import { PrimaryButton, OutlineButton } from "@/components/ui/Buttons";
-import MembersTable from "@/features/teams/components/members-table";
 import Navbar from "@/components/layout/navbar/navbar";
+import { Users, Search, Bell, Plus, LayoutGrid, Rows } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import MembersTable from "@/features/teams/components/members-table";
+import clsx from "clsx";
+import { SearchBar } from "@/components/common/search-bar";
 
-function Teams() {
+export default function TeamsPage() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [view, setView] = useState<"grid" | "list">("list");
+    const [selectedRole, setSelectedRole] = useState("all");
+
+    const mockAction = async (msg: string) => {
+        setIsLoading(true);
+        await new Promise(r => setTimeout(r, 500));
+        setIsLoading(false);
+        alert(msg);
+    };
+
+    const roles = useMemo(
+        () => ["all", "admins", "maintainers", "members", "guests"],
+        []
+    );
+
     return (
-        <div className="w-full text-gray-700 dark:text-gray-100 bg-white dark:bg-gray-900 min-h-screen transition-colors">
+        <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
             <Navbar>
                 <PageNavbarLeftContent>
-                    <div className="border border-gray-300 dark:border-gray-700 rounded-full w-10 h-10 all-center bg-white dark:bg-gray-800">
-                        <Profile
-                            size={18}
-                            className="text-gray-700 dark:text-gray-200"
-                        />
-                    </div>
-                    <div>
-                        <h1 className="text-sm font-semibold text-gray-800 dark:text-white">
-                            Teams
-                        </h1>
-                        <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                            Manage and collaborate within your
-                            organization&apos;s teams
-                        </p>
+                    <div className="flex items-center gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl border bg-card/70">
+                            <Users size={16} className="text-primary" />
+                        </div>
+                        <div>
+                            <h1 className="text-sm font-semibold text-foreground">
+                                Teams
+                            </h1>
+                            <p className="text-xs text-muted-foreground">
+                                Manage and collaborate within your organization
+                            </p>
+                        </div>
                     </div>
                 </PageNavbarLeftContent>
 
-                <PageNavbarRightContent>
-                    <PageNavbarIconButton className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
-                        <SearchNormal1
-                            size={16}
-                            className="text-gray-700 dark:text-gray-200"
-                        />
-                    </PageNavbarIconButton>
-                    <PageNavbarIconButton className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
-                        <Notification
-                            size={16}
-                            className="text-gray-700 dark:text-gray-200"
-                        />
-                    </PageNavbarIconButton>
+                <PageNavbarRightContent className="gap-1">
+                    <Button variant="ghost" size="icon" className="rounded-lg">
+                        <Search size={16} />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="rounded-lg">
+                        <Bell size={16} />
+                    </Button>
                 </PageNavbarRightContent>
             </Navbar>
 
             <PageContent>
-                {/* Header */}
-                <div className="text-sm md:pb-2 flex flex-col md:flex-row gap-2 md:gap-0 items-start md:items-center justify-between">
-                    <div>
-                        <h1 className="text-gray-800 dark:text-white font-medium">
-                            Team Members
-                        </h1>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                            Display all the team members and essential details
-                        </p>
+                <div className="space-y-5">
+                    {/* Header */}
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                            <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
+                                <Users className="h-5 w-5" /> Team Members
+                            </h2>
+                            <Badge variant="secondary" className="rounded-full">
+                                All
+                            </Badge>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <div className="hidden md:flex rounded-xl border bg-background/60 backdrop-blur">
+                                {[
+                                    ["grid", LayoutGrid],
+                                    ["list", Rows],
+                                ].map(([v, Icon], i) => (
+                                    <Button
+                                        key={i}
+                                        variant={
+                                            view === v ? "default" : "ghost"
+                                        }
+                                        size="sm"
+                                        onClick={() => setView(v as any)}
+                                        className="rounded-xl"
+                                    >
+                                        <Icon className="h-4 w-4" />
+                                    </Button>
+                                ))}
+                            </div>
+
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-xl"
+                                onClick={() => mockAction("Export triggered")}
+                            >
+                                Export
+                            </Button>
+
+                            <Button
+                                size="sm"
+                                className="rounded-xl gap-1"
+                                onClick={() => mockAction("Invite member")}
+                                disabled={isLoading}
+                            >
+                                <Plus size={14} />
+                                <span className="hidden sm:inline">
+                                    Invite member
+                                </span>
+                            </Button>
+                        </div>
                     </div>
 
-                    <div className="flex gap-2">
-                        <OutlineButton>
-                            <ExportCurve
-                                size={16}
-                                className="text-gray-700 dark:text-gray-200"
+                    {/* Search + Roles */}
+                    <div className="flex flex-col gap-3">
+                        <SearchBar
+                            placeholder={"Search Members..."}
+                            value={searchQuery}
+                            onChange={setSearchQuery}
+                        />
+
+                        <ScrollArea>
+                            <div className="flex items-center gap-2 pb-1">
+                                {roles.map(role => (
+                                    <Button
+                                        key={role}
+                                        variant={
+                                            selectedRole === role
+                                                ? "default"
+                                                : "outline"
+                                        }
+                                        size="sm"
+                                        onClick={() => setSelectedRole(role)}
+                                        className={clsx(
+                                            "rounded-full border-dashed",
+                                            selectedRole === role &&
+                                                "font-semibold"
+                                        )}
+                                    >
+                                        {role}
+                                    </Button>
+                                ))}
+                            </div>
+                            <ScrollBar
+                                className="hidden"
+                                orientation="horizontal"
                             />
-                            <span className="hidden md:inline">Export</span>
-                        </OutlineButton>
-                        <PrimaryButton>
-                            <Add size={16} />
-                            Invite member
-                        </PrimaryButton>
+                        </ScrollArea>
                     </div>
+
+                    {/* Members list */}
+                    <Card className="rounded-2xl border bg-background/60 p-0">
+                        <CardContent className="p-4 h-[60vh] overflow-auto min-h-0">
+                            <MembersTable />
+                        </CardContent>
+                    </Card>
                 </div>
-
-                <hr className="border-gray-200 dark:border-gray-700 -mx-4 my-4" />
-
-                {/* Members Table */}
-                <MembersTable />
             </PageContent>
         </div>
     );
 }
-
-export default Teams;
