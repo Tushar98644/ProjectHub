@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import PageContent from "@/components/layout/navbar/page-content";
-import {
-    PageNavbarLeftContent,
-    PageNavbarRightContent,
-} from "@/components/layout/navbar/page-navbar";
-import Navbar from "@/components/layout/navbar/navbar";
-import { Users, Search, Bell, Plus, LayoutGrid, Rows } from "lucide-react";
+import { Users, Plus, LayoutGrid, Rows } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,134 +30,102 @@ export default function TeamsPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
-            <Navbar>
-                <PageNavbarLeftContent>
+            <div className="space-y-5">
+                {/* Header */}
+                <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-xl border bg-card/70">
-                            <Users size={16} className="text-primary" />
-                        </div>
-                        <div>
-                            <h1 className="text-sm font-semibold text-foreground">
-                                Teams
-                            </h1>
-                            <p className="text-xs text-muted-foreground">
-                                Manage and collaborate within your organization
-                            </p>
-                        </div>
-                    </div>
-                </PageNavbarLeftContent>
-
-                <PageNavbarRightContent className="gap-1">
-                    <Button variant="ghost" size="icon" className="rounded-lg">
-                        <Search size={16} />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="rounded-lg">
-                        <Bell size={16} />
-                    </Button>
-                </PageNavbarRightContent>
-            </Navbar>
-
-            <PageContent>
-                <div className="space-y-5">
-                    {/* Header */}
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                            <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
-                                <Users className="h-5 w-5" /> Team Members
-                            </h2>
-                            <Badge variant="secondary" className="rounded-full">
-                                All
-                            </Badge>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <div className="hidden md:flex rounded-xl border bg-background/60 backdrop-blur">
-                                {[
-                                    ["grid", LayoutGrid],
-                                    ["list", Rows],
-                                ].map(([v, Icon], i) => (
-                                    <Button
-                                        key={i}
-                                        variant={
-                                            view === v ? "default" : "ghost"
-                                        }
-                                        size="sm"
-                                        onClick={() => setView(v as any)}
-                                        className="rounded-xl"
-                                    >
-                                        <Icon className="h-4 w-4" />
-                                    </Button>
-                                ))}
-                            </div>
-
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-xl"
-                                onClick={() => mockAction("Export triggered")}
-                            >
-                                Export
-                            </Button>
-
-                            <Button
-                                size="sm"
-                                className="rounded-xl gap-1"
-                                onClick={() => mockAction("Invite member")}
-                                disabled={isLoading}
-                            >
-                                <Plus size={14} />
-                                <span className="hidden sm:inline">
-                                    Invite member
-                                </span>
-                            </Button>
-                        </div>
+                        <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
+                            <Users className="h-5 w-5" /> Team Members
+                        </h2>
+                        <Badge variant="secondary" className="rounded-full">
+                            All
+                        </Badge>
                     </div>
 
-                    {/* Search + Roles */}
-                    <div className="flex flex-col gap-3">
-                        <SearchBar
-                            placeholder={"Search Members..."}
-                            value={searchQuery}
-                            onChange={setSearchQuery}
-                        />
+                    <div className="flex items-center gap-2">
+                        <div className="hidden md:flex rounded-xl border bg-background/60 backdrop-blur">
+                            {[
+                                ["grid", LayoutGrid],
+                                ["list", Rows],
+                            ].map(([v, Icon], i) => (
+                                <Button
+                                    key={i}
+                                    variant={view === v ? "default" : "ghost"}
+                                    size="sm"
+                                    onClick={() => setView(v as any)}
+                                    className="rounded-xl"
+                                >
+                                    <Icon className="h-4 w-4" />
+                                </Button>
+                            ))}
+                        </div>
 
-                        <ScrollArea>
-                            <div className="flex items-center gap-2 pb-1">
-                                {roles.map(role => (
-                                    <Button
-                                        key={role}
-                                        variant={
-                                            selectedRole === role
-                                                ? "default"
-                                                : "outline"
-                                        }
-                                        size="sm"
-                                        onClick={() => setSelectedRole(role)}
-                                        className={clsx(
-                                            "rounded-full border-dashed",
-                                            selectedRole === role &&
-                                                "font-semibold"
-                                        )}
-                                    >
-                                        {role}
-                                    </Button>
-                                ))}
-                            </div>
-                            <ScrollBar
-                                className="hidden"
-                                orientation="horizontal"
-                            />
-                        </ScrollArea>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="rounded-xl"
+                            onClick={() => mockAction("Export triggered")}
+                        >
+                            Export
+                        </Button>
+
+                        <Button
+                            size="sm"
+                            className="rounded-xl gap-1"
+                            onClick={() => mockAction("Invite member")}
+                            disabled={isLoading}
+                        >
+                            <Plus size={14} />
+                            <span className="hidden sm:inline">
+                                Invite member
+                            </span>
+                        </Button>
                     </div>
-
-                    {/* Members list */}
-                    <Card className="rounded-2xl border bg-background/60 p-0">
-                        <CardContent className="p-4 h-[60vh] overflow-auto min-h-0">
-                            <MembersTable />
-                        </CardContent>
-                    </Card>
                 </div>
-            </PageContent>
+
+                {/* Search + Roles */}
+                <div className="flex flex-col gap-3">
+                    <SearchBar
+                        placeholder={"Search Members..."}
+                        value={searchQuery}
+                        onChange={setSearchQuery}
+                    />
+
+                    <ScrollArea>
+                        <div className="flex items-center gap-2 pb-1">
+                            {roles.map(role => (
+                                <Button
+                                    key={role}
+                                    variant={
+                                        selectedRole === role
+                                            ? "default"
+                                            : "outline"
+                                    }
+                                    size="sm"
+                                    onClick={() => setSelectedRole(role)}
+                                    className={clsx(
+                                        "rounded-full border-dashed",
+                                        selectedRole === role && "font-semibold"
+                                    )}
+                                >
+                                    {role}
+                                </Button>
+                            ))}
+                        </div>
+                        <ScrollBar
+                            className="hidden"
+                            orientation="horizontal"
+                        />
+                    </ScrollArea>
+                </div>
+
+                {/* Members list */}
+                <Card className="rounded-2xl border bg-background/60 p-0">
+                    <CardContent className="p-4 h-[60vh] overflow-auto min-h-0">
+                        <MembersTable />
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }

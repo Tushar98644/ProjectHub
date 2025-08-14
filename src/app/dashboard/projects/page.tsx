@@ -1,12 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import PageContent from "@/components/layout/navbar/page-content";
-import { PageNavbarLeftContent } from "@/components/layout/navbar/page-navbar";
-import Navbar from "@/components/layout/navbar/navbar";
 import { useProjectFetchQuery } from "@/hooks/queries/useProjectQuery";
 import {
-    Search,
     Plus,
     SlidersHorizontal,
     Filter,
@@ -28,7 +24,6 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { ProjectCard } from "@/features/projects/components/project-card";
 import { ProjectRow } from "@/features/projects/components/project-row";
@@ -80,116 +75,90 @@ export default function ProjectsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
-            <Navbar>
-                <PageNavbarLeftContent>
-                    <div>
-                        <h1 className="text-sm font-semibold">
-                            Community Projects
-                        </h1>
-                        <p className="text-xs text-muted-foreground">
-                            Discover and explore amazing projects
-                        </p>
-                    </div>
-                </PageNavbarLeftContent>
-            </Navbar>
-
-            <PageContent>
-                <div className="space-y-5">
-                    {/* Header */}
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex items-center gap-2">
-                            <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
-                                <Sparkles className="h-5 w-5" /> Discover
-                                Projects
-                            </h2>
-                            <Badge variant="secondary" className="rounded-full">
-                                {filtered.length} results
-                            </Badge>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <SortMenu sort={sort} setSort={setSort} />
-                            <ViewToggle view={view} setView={setView} />
-                            <Button className="gap-2">
-                                <Plus className="h-3 w-3" />
-                                <Link
-                                    href="/dashboard/projects/add"
-                                    className="hidden sm:inline text-xs"
-                                >
-                                    Add Project
-                                </Link>
-                            </Button>
-                        </div>
-                    </div>
-
-                    {/* Search + Tags */}
-                    <div className="flex flex-col gap-3">
-                        <SearchBar
-                            placeholder={"Search Projects..."}
-                            value={searchQuery}
-                            onChange={setSearchQuery}
-                        />
-                        <ScrollArea>
-                            <div className="flex items-center gap-2 pb-1">
-                                {allTags.map(tag => (
-                                    <Button
-                                        key={tag}
-                                        variant={
-                                            selectedTag === tag
-                                                ? "default"
-                                                : "outline"
-                                        }
-                                        size="sm"
-                                        onClick={() => setSelectedTag(tag)}
-                                        className={clsx(
-                                            "rounded-full border-dashed",
-                                            selectedTag === tag
-                                        )}
-                                    >
-                                        <Filter className="mr-1 h-4 w-4" />{" "}
-                                        {tag}
-                                    </Button>
-                                ))}
-                            </div>
-                            <ScrollBar
-                                className="hidden"
-                                orientation="horizontal"
-                            />
-                        </ScrollArea>
-                    </div>
-
-                    {/* Content */}
-                    {isLoading ? (
-                        <SkeletonList view={view} />
-                    ) : filtered.length === 0 ? (
-                        <EmptyState reset={resetFilters} />
-                    ) : (
-                        <div
-                            className={
-                                view === "grid"
-                                    ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
-                                    : "space-y-3"
-                            }
-                        >
-                            {filtered.map((p: any, i) =>
-                                view === "grid" ? (
-                                    <ProjectCard
-                                        key={p._id}
-                                        project={p}
-                                        index={i}
-                                    />
-                                ) : (
-                                    <ProjectRow
-                                        key={p._id}
-                                        project={p}
-                                        index={i}
-                                    />
-                                )
-                            )}
-                        </div>
-                    )}
+        <div className="flex flex-col gap-5 h-full">
+            {/* Header */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                    <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
+                        <Sparkles className="h-5 w-5" /> Discover Projects
+                    </h2>
+                    <Badge variant="secondary" className="rounded-full">
+                        {filtered.length} results
+                    </Badge>
                 </div>
-            </PageContent>
+                <div className="flex items-center gap-2">
+                    <SortMenu sort={sort} setSort={setSort} />
+                    <ViewToggle view={view} setView={setView} />
+                    <Button className="gap-2">
+                        <Plus className="h-3 w-3" />
+                        <Link
+                            href="/dashboard/projects/add"
+                            className="hidden sm:inline text-xs"
+                        >
+                            Add Project
+                        </Link>
+                    </Button>
+                </div>
+            </div>
+
+            {/* Search + Tags */}
+            <div id="search-tags" className="flex flex-col gap-3">
+                <SearchBar
+                    placeholder={"Search Projects..."}
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                />
+                <ScrollArea>
+                    <div className="flex items-center gap-2 pb-1">
+                        {allTags.map(tag => (
+                            <Button
+                                key={tag}
+                                variant={
+                                    selectedTag === tag ? "default" : "outline"
+                                }
+                                size="sm"
+                                onClick={() => setSelectedTag(tag)}
+                                className={clsx(
+                                    "rounded-full border-dashed",
+                                    selectedTag === tag
+                                )}
+                            >
+                                <Filter className="mr-1 h-4 w-4" /> {tag}
+                            </Button>
+                        ))}
+                    </div>
+                    <ScrollBar className="hidden" orientation="horizontal" />
+                </ScrollArea>
+            </div>
+
+            {/* Content */}
+            <div id="project-content" className="overflow-y-auto pb-24">
+                {isLoading ? (
+                    <SkeletonList view={view} />
+                ) : filtered.length === 0 ? (
+                    <EmptyState reset={resetFilters} />
+                ) : (
+                    <div
+                        className={
+                            view === "grid"
+                                ? "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+                                : "space-y-3"
+                        }
+                    >
+                        {filtered.map((p: any, i) =>
+                            view === "grid" ? (
+                                <ProjectCard
+                                    key={p._id}
+                                    project={p}
+                                    index={i}
+                                />
+                            ) : (
+                                <ProjectRow key={p._id} project={p} index={i} />
+                            )
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

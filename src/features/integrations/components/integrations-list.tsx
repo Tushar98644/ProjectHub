@@ -1,75 +1,80 @@
-import React from "react";
-import Image from "next/image";
-import ToggleSwitch from "./toggle-switch";
-import { Setting2 } from "iconsax-reactjs";
+import { SearchBar } from "@/components/common/search-bar";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import clsx from "clsx";
 
-function IntegrationsList() {
-    const integrations = [
-        {
-            logo: "/assets/logos/msoffice.svg",
-            name: "Microsoft Office 365",
-            desc: "Seamless document management",
-            isActive: true,
-        },
-        {
-            logo: "/assets/logos/zoom.svg",
-            name: "Zoom",
-            desc: "For conducting virtual meetings and interviews",
-            isActive: false,
-        },
-        {
-            logo: "/assets/logos/slack.svg",
-            name: "Slack",
-            desc: "For team communication and real-time collaboration",
-            isActive: false,
-        },
-        {
-            logo: "/assets/logos/github.svg",
-            name: "Github",
-            desc: "For hosting and managing code",
-            isActive: false,
-        },
-    ];
-
+export const IntegrationsList = ({
+    query,
+    setQuery,
+    integrations,
+    selected,
+    setSelected,
+}: any) => {
     return (
-        <div className="text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {integrations.map(({ logo, name, desc, isActive }, i) => (
-                <div
-                    key={name}
-                    className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-xl flex flex-col justify-between p-3 space-y-2 transition-colors"
-                >
-                    <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                            <div className="p-2 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white rounded-md w-9 h-9 flex items-center justify-center">
-                                <Image
-                                    src={logo}
-                                    alt={name}
-                                    width={18}
-                                    height={18}
-                                />
-                            </div>
-                            <ToggleSwitch isActive={isActive} />
-                        </div>
-                        <div>
-                            <h1 className="text-gray-900 dark:text-white font-semibold">
-                                {name}
-                            </h1>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                                {desc}
-                            </p>
-                        </div>
+        <div className="flex flex-col md:h-[670px] h-screen">
+            <Card className="border-0 bg-card/70 backdrop-blur flex flex-col h-full">
+                <CardContent className="p-4 flex flex-col h-full flex-1 min-h-0">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-4 flex-shrink-0">
+                        <h2 className="text-sm font-semibold">
+                            Available Integrations
+                        </h2>
+                        <Badge variant="secondary">{integrations.length}</Badge>
                     </div>
-                    <button className="flex text-xs group text-gray-700 dark:text-gray-200 font-medium rounded-lg w-full items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-2 py-1 transition-colors hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <Setting2
-                            size={16}
-                            className="group-hover:rotate-90 duration-300 text-violet-500 dark:text-violet-400"
-                        />
-                        <span>Manage</span>
-                    </button>
-                </div>
-            ))}
+
+                    {/* Search */}
+                    <SearchBar
+                        placeholder="Search Integrations..."
+                        value={query}
+                        onChange={setQuery}
+                    />
+
+                    {/* Scrollable list */}
+                    <div className="overflow-y-auto py-4">
+                        {integrations.map((it: any) => (
+                            <button
+                                key={it.id}
+                                onClick={() => setSelected(it.id)}
+                                className={clsx(
+                                    "w-full rounded-lg p-3 text-left flex items-start gap-3 transition-colors",
+                                    selected === it.id
+                                        ? "bg-primary/10 border border-primary/20"
+                                        : "hover:bg-background/50 border border-transparent"
+                                )}
+                            >
+                                <div className="flex h-8 w-8 min-w-[32px] items-center justify-center rounded-lg bg-muted/20">
+                                    <it.logo className="h-4 w-4" />
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center justify-between gap-2 mb-1">
+                                        <h3 className="text-sm font-medium truncate">
+                                            {it.name}
+                                        </h3>
+                                        <div
+                                            className={clsx(
+                                                "h-2 w-2 rounded-full flex-shrink-0",
+                                                it.connected
+                                                    ? "bg-green-500"
+                                                    : "bg-muted-foreground/30"
+                                            )}
+                                        />
+                                    </div>
+                                    <p className="text-xs text-muted-foreground line-clamp-2">
+                                        {it.description}
+                                    </p>
+                                    <Badge
+                                        variant="outline"
+                                        className="mt-1 text-xs h-5"
+                                    >
+                                        {it.category}
+                                    </Badge>
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
-}
-
-export default IntegrationsList;
+};

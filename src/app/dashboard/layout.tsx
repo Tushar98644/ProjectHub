@@ -1,5 +1,6 @@
 "use client";
 
+import Navbar from "@/components/layout/navbar/navbar";
 import Sidebar from "@/components/layout/sidebar";
 import { useCentralStore } from "@/config/Store";
 import { motion } from "framer-motion";
@@ -46,13 +47,21 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 )}
             </AnimatePresence>
 
-            <div className="grid md:grid-cols-[240px_1fr] w-screen overflow-x-hidden">
+            <div className="grid md:grid-cols-[240px_1fr] w-screen overflow-hidden h-screen">
                 <div className="hidden md:block">
                     <Sidebar />
                 </div>
 
-                <div className="w-full overflow-x-auto max-w-[1440px] mx-auto scroll-m-0 min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors">
-                    {children}
+                <div className="grid">
+                    <div className="sticky top-0">
+                        <Navbar />
+                    </div>
+                    <div
+                        className="w-full overflow-x-auto max-w-[1440px] mx-auto transition-colors 
+                    h-screen p-4 md:p-6 bg-gradient-to-b from-background via-background to-background"
+                    >
+                        {children}
+                    </div>
                 </div>
             </div>
         </motion.div>
