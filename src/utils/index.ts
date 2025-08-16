@@ -1,4 +1,4 @@
 export * from "./projectUtils";
-export * from "./discussionUtils";
-export * from "./messageUtils";
+export * from "./threadUtils";
+export * from "./commetUtils";
 export * from "./adminUtils";

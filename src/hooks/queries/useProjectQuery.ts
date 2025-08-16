@@ -1,6 +1,6 @@
 import { projectService } from "@/services/projectService";
 import { Project } from "@/types/project";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFetchProjects = () => {
     return useQuery({
@@ -10,7 +10,7 @@ export const useFetchProjects = () => {
     });
 };
 
-export const useFetchProjectById = (id: string) => {
+export const useFetchProject = (id: string) => {
     return useQuery({
         queryKey: ["project", id],
         queryFn: () => projectService.getProject(id),
@@ -19,8 +19,12 @@ export const useFetchProjectById = (id: string) => {
 };
 
 export const useCreateProject = () => {
+    const queryClient = useQueryClient();
+
     return useMutation({
-        mutationKey: ["newProject"],
         mutationFn: (project: Project) => projectService.createProject(project),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["projects"] });
+        },
     });
 };

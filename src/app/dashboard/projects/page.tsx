@@ -92,7 +92,7 @@ export default function ProjectsPage() {
                     <Button className="gap-2 rounded-lg">
                         <Plus className="h-3 w-3" />
                         <Link
-                            href="/dashboard/projects/add"
+                            href="/dashboard/projects/create"
                             className="hidden sm:inline text-xs"
                         >
                             Add Project

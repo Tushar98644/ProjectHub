@@ -69,13 +69,7 @@ function timeAgo(iso: string) {
     return `${d}d`;
 }
 
-export default function DiscussionPage({
-    projectTitle = "Awesome Project",
-    projectId,
-}: {
-    projectTitle?: string;
-    projectId?: string;
-}) {
+const ThreadPage = () => {
     const [comments, setComments] = useState<Comment[]>(MOCK_COMMENTS);
     const [isLoading] = useState(false);
     const [sort, setSort] = useState<"recent" | "likes">("recent");
@@ -106,6 +100,8 @@ export default function DiscussionPage({
         setComments(prev => [c, ...prev]);
         setNewComment("");
     };
+
+    const projectTitle = "Project 1";
 
     const toggleLike = (id: string) => {
         setComments(prev =>
@@ -273,7 +269,9 @@ export default function DiscussionPage({
             </div>
         </div>
     );
-}
+};
+
+export default ThreadPage;
 
 const SkeletonList = () => (
     <div className="space-y-3">

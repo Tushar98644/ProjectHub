@@ -1,9 +1,9 @@
-import { createDiscussion, getDiscussions } from "@/utils";
+import { createThread, getThreads } from "@/utils";
 
 export async function GET(req: Request) {
     try {
-        const messages = await getDiscussions(req);
-        return Response.json(messages, { status: 200 });
+        const threads = await getThreads(req);
+        return Response.json(threads, { status: 200 });
     } catch (error) {
         return Response.json(
             { message: "Error fetching messages" },
@@ -13,5 +13,5 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-    return createDiscussion(req);
+    return createThread(req);
 }

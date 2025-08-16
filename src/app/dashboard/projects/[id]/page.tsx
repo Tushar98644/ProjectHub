@@ -27,7 +27,7 @@ import {
     BarChart3,
     Clock,
 } from "lucide-react";
-import { useFetchProjectById } from "@/hooks/queries/useProjectQuery";
+import { useFetchProject } from "@/hooks/queries/useProjectQuery";
 import { useParams } from "next/navigation";
 
 type TabKey = "overview" | "metrics" | "activity";
@@ -38,7 +38,7 @@ export default function ProjectDetailPage() {
     const [liked, setLiked] = useState(false);
 
     const { id } = useParams<{ id: string }>();
-    const { data: project } = useFetchProjectById(id);
+    const { data: project } = useFetchProject(id);
     console.log(project);
 
     const metricRows = [

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const mongooseconnect = async () => {
+const connectToDB = async () => {
     if (mongoose.connections[0].readyState === 1)
         return mongoose.connections[0].asPromise();
 
@@ -8,4 +8,4 @@ const mongooseconnect = async () => {
     return mongoose.connect(uri);
 };
 
-export default mongooseconnect;
+export default connectToDB;

@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Atom } from "lucide-react";
+import { Atom, MessageCircleCodeIcon } from "lucide-react";
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -77,6 +77,14 @@ const Sidebar = () => {
                         >
                             <Setting4 size={16} />
                             Integrations
+                        </Link>
+                        <Link
+                            href="/dashboard/threads"
+                            className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""}
+                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                        >
+                            <MessageCircleCodeIcon size={16} />
+                            Threads
                         </Link>
                     </div>
 

@@ -8,17 +8,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Sparkles, Eye, Tag as TagIcon } from "lucide-react";
 
-// small helper types
 type Project = { id: string; title: string };
 
-// Mock projects (pick one when creating thread)
 const MOCK_PROJECTS: Project[] = [
     { id: "p1", title: "ReZero" },
     { id: "p2", title: "Pixel Quest" },
     { id: "p3", title: "Ribo-Replicator" },
 ];
 
-// Utility: read/write mock threads to localStorage (so new thread persists across pages)
 const LS_KEY = "mock_threads_v1";
 const DRAFT_KEY = "new_discussion_draft_v1";
 function readMockThreads() {
@@ -33,9 +30,7 @@ function readMockThreads() {
 function writeMockThreads(arr: any[]) {
     try {
         localStorage.setItem(LS_KEY, JSON.stringify(arr));
-    } catch (e) {
-        // ignore
-    }
+    } catch (e) {}
 }
 
 const NewDiscussionPage = () => {
@@ -50,7 +45,6 @@ const NewDiscussionPage = () => {
     const [error, setError] = useState("");
     const [showPreview, setShowPreview] = useState(true);
 
-    // load draft if available
     useEffect(() => {
         try {
             const raw = localStorage.getItem(DRAFT_KEY);
@@ -63,12 +57,9 @@ const NewDiscussionPage = () => {
                 setTags(d.tags || []);
                 setPinned(Boolean(d.pinned));
             }
-        } catch (e) {
-            // noop
-        }
+        } catch (e) {}
     }, []);
 
-    // autosave draft small debounce
     useEffect(() => {
         const id = setTimeout(() => {
             try {
@@ -76,9 +67,7 @@ const NewDiscussionPage = () => {
                     DRAFT_KEY,
                     JSON.stringify({ project, title, content, tags, pinned })
                 );
-            } catch (e) {
-                // ignore
-            }
+            } catch (e) {}
         }, 500);
         return () => clearTimeout(id);
     }, [project, title, content, tags, pinned]);
@@ -126,7 +115,6 @@ const NewDiscussionPage = () => {
 
         setLoading(true);
 
-        // create thread object
         const threadId = `t_${Date.now()}`;
         const thread = {
             id: threadId,
@@ -143,7 +131,6 @@ const NewDiscussionPage = () => {
             lastUpdated: new Date().toISOString(),
         };
 
-        // persist into localStorage mock store (prepend)
         try {
             const existing = readMockThreads();
             writeMockThreads([thread, ...existing]);
@@ -151,7 +138,6 @@ const NewDiscussionPage = () => {
             /* ignore */
         }
 
-        // small delay to show loading state
         setTimeout(() => {
             setLoading(false);
             reset();
@@ -162,7 +148,7 @@ const NewDiscussionPage = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto py-8 px-4">
+        <div className="max-w-6xl mx-auto py-8 px-4 h-full">
             <div className="flex items-start gap-6">
                 <div className="flex-1">
                     <div className="flex items-center gap-4 mb-6">
@@ -225,7 +211,7 @@ const NewDiscussionPage = () => {
                                     />
 
                                     <label className="text-sm font-medium">
-                                        First message
+                                        Short Description
                                     </label>
                                     <Textarea
                                         value={content}
