@@ -21,8 +21,8 @@ export const useCreateThread = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationKey: ["newThread"],
-        mutationFn: thread => threadService.createThread(thread),
+        mutationFn: ({ projectId, title, description, tags }: any) =>
+            threadService.createThread(projectId, title, description, tags),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["threads"] });
         },

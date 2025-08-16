@@ -1,8 +1,8 @@
-import mongooseconnect from "@/lib/mongoose";
+import connectToDB from "@/lib/mongoose";
 import { createProject, getProjects } from "@/utils";
 
 export async function GET(request: Request) {
-    await mongooseconnect();
+    await connectToDB();
 
     try {
         const projects = await getProjects(request);

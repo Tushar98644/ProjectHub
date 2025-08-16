@@ -7,14 +7,24 @@ class ThreadService {
     };
 
     public getThread = async (id: string) => {
-        const res = await axios.get("/api/v1/discussions", {
+        const res = await axios.get("/api/v1/threads", {
             params: { id },
         });
         return res.data;
     };
 
-    public createThread = async (thread: any) => {
-        const res = await axios.post("/api/v1/discussions", thread);
+    public createThread = async (
+        projectId: string,
+        title: string,
+        description: string,
+        tags: string[]
+    ) => {
+        const res = await axios.post("/api/v1/threads", {
+            projectId,
+            title,
+            description,
+            tags,
+        });
         return res.data;
     };
 }

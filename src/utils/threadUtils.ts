@@ -20,7 +20,7 @@ export const createThread = async (req: Request) => {
         const body = await req.json();
         const { title, description, projectId, tags } = body;
 
-        if (!author || !title || !description || !projectId || !tags)
+        if (!author || !title || !description || !projectId)
             return Response.json(
                 { message: "Please fill all fields" },
                 { status: 400 }

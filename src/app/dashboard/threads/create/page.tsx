@@ -1,76 +1,28 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Sparkles, Eye, Tag as TagIcon } from "lucide-react";
+import { useFetchProjects } from "@/hooks/queries/useProjectQuery";
+import { useCreateThread } from "@/hooks/queries/useThreadQuery";
 
-type Project = { id: string; title: string };
-
-const MOCK_PROJECTS: Project[] = [
-    { id: "p1", title: "ReZero" },
-    { id: "p2", title: "Pixel Quest" },
-    { id: "p3", title: "Ribo-Replicator" },
-];
-
-const LS_KEY = "mock_threads_v1";
-const DRAFT_KEY = "new_discussion_draft_v1";
-function readMockThreads() {
-    try {
-        const raw = localStorage.getItem(LS_KEY);
-        if (!raw) return [];
-        return JSON.parse(raw);
-    } catch (e) {
-        return [];
-    }
-}
-function writeMockThreads(arr: any[]) {
-    try {
-        localStorage.setItem(LS_KEY, JSON.stringify(arr));
-    } catch (e) {}
-}
-
-const NewDiscussionPage = () => {
+const CreateThreadPage = () => {
     const router = useRouter();
-    const [project, setProject] = useState<string>(MOCK_PROJECTS[0].id);
+
+    const { data: projects } = useFetchProjects();
+    const { mutate: createThread, isPending } = useCreateThread();
+
+    const [projectId, setProjectID] = useState<string>("");
     const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [description, setDescription] = useState("");
     const [tagInput, setTagInput] = useState("");
     const [tags, setTags] = useState<string[]>([]);
-    const [pinned, setPinned] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [showPreview, setShowPreview] = useState(true);
-
-    useEffect(() => {
-        try {
-            const raw = localStorage.getItem(DRAFT_KEY);
-            if (!raw) return;
-            const d = JSON.parse(raw);
-            if (d) {
-                setProject(d.project || MOCK_PROJECTS[0].id);
-                setTitle(d.title || "");
-                setContent(d.content || "");
-                setTags(d.tags || []);
-                setPinned(Boolean(d.pinned));
-            }
-        } catch (e) {}
-    }, []);
-
-    useEffect(() => {
-        const id = setTimeout(() => {
-            try {
-                localStorage.setItem(
-                    DRAFT_KEY,
-                    JSON.stringify({ project, title, content, tags, pinned })
-                );
-            } catch (e) {}
-        }, 500);
-        return () => clearTimeout(id);
-    }, [project, title, content, tags, pinned]);
 
     const addTag = (raw: string) => {
         const t = raw
@@ -96,55 +48,27 @@ const NewDiscussionPage = () => {
 
     const reset = () => {
         setTitle("");
-        setContent("");
+        setDescription("");
         setTags([]);
         setTagInput("");
-        setPinned(false);
         setError("");
-        try {
-            localStorage.removeItem(DRAFT_KEY);
-        } catch (e) {}
     };
 
     const handleSubmit = (e?: React.FormEvent) => {
         e?.preventDefault();
         setError("");
+
         if (!title.trim()) return setError("Title is required");
-        if (!content.trim())
+        if (!description.trim())
             return setError("Please add the first message for this discussion");
 
-        setLoading(true);
-
-        const threadId = `t_${Date.now()}`;
-        const thread = {
-            id: threadId,
-            project: project,
-            projectTitle:
-                MOCK_PROJECTS.find(p => p.id === project)?.title || "Unknown",
-            title: title.trim(),
-            excerpt: content.trim().slice(0, 300),
-            author: "You",
-            commentsCount: 1,
-            likes: 0,
-            pinned: pinned,
-            tags,
-            lastUpdated: new Date().toISOString(),
-        };
-
-        try {
-            const existing = readMockThreads();
-            writeMockThreads([thread, ...existing]);
-        } catch (e) {
-            /* ignore */
-        }
-
-        setTimeout(() => {
-            setLoading(false);
-            reset();
-            router.push(
-                `/dashboard/projects/${project}/discussion/${threadId}`
-            );
-        }, 500);
+        const data = { projectId, title, description, tags };
+        createThread(data, {
+            onSuccess: () => {
+                reset();
+                router.push("/dashboard/threads");
+            },
+        });
     };
 
     return (
@@ -173,33 +97,29 @@ const NewDiscussionPage = () => {
                                     <label className="text-sm font-medium">
                                         Project
                                     </label>
-                                    <div className="flex items-center gap-3">
-                                        <select
-                                            value={project}
-                                            onChange={e =>
-                                                setProject(e.target.value)
-                                            }
-                                            className="rounded-md border px-3 py-2 bg-background"
-                                        >
-                                            {MOCK_PROJECTS.map(p => (
-                                                <option key={p.id} value={p.id}>
-                                                    {p.title}
-                                                </option>
-                                            ))}
-                                        </select>
-
-                                        <label className="ml-3 inline-flex items-center gap-2 text-sm">
-                                            <input
-                                                type="checkbox"
-                                                checked={pinned}
-                                                onChange={e =>
-                                                    setPinned(e.target.checked)
-                                                }
-                                                className="h-4 w-4"
-                                            />
-                                            <span className="text-sm">Pin</span>
-                                        </label>
-                                    </div>
+                                    {projects?.length &&
+                                        projects?.length > 0 && (
+                                            <div className="flex items-center gap-3">
+                                                <select
+                                                    value={projectId}
+                                                    onChange={e =>
+                                                        setProjectID(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    className="rounded-md border px-3 py-2 bg-background"
+                                                >
+                                                    {projects?.map(p => (
+                                                        <option
+                                                            key={p._id}
+                                                            value={p._id}
+                                                        >
+                                                            {p.title}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        )}
 
                                     <label className="text-sm font-medium">
                                         Title
@@ -214,9 +134,9 @@ const NewDiscussionPage = () => {
                                         Short Description
                                     </label>
                                     <Textarea
-                                        value={content}
+                                        value={description}
                                         onChange={e =>
-                                            setContent(e.target.value)
+                                            setDescription(e.target.value)
                                         }
                                         className="min-h-[180px]"
                                         placeholder="Write the first message of the discussion. Markdown supported."
@@ -259,7 +179,7 @@ const NewDiscussionPage = () => {
                                         <div className="text-sm text-muted-foreground text-right">
                                             <div>{title.length} / 120</div>
                                             <div className="mt-1">
-                                                {content.length} chars
+                                                {description.length} chars
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +213,7 @@ const NewDiscussionPage = () => {
                                                         </div>
                                                     </div>
                                                     <p className="mt-2 text-sm text-muted-foreground line-clamp-4">
-                                                        {content ||
+                                                        {description ||
                                                             "Preview of your first message will appear here..."}
                                                     </p>
                                                 </div>
@@ -330,12 +250,7 @@ const NewDiscussionPage = () => {
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={() => {
-                                                        try {
-                                                            localStorage.removeItem(
-                                                                DRAFT_KEY
-                                                            );
-                                                            reset();
-                                                        } catch (e) {}
+                                                        reset();
                                                     }}
                                                 >
                                                     Clear draft
@@ -382,10 +297,10 @@ const NewDiscussionPage = () => {
                                 <Button
                                     type="submit"
                                     onClick={handleSubmit}
-                                    disabled={loading}
+                                    disabled={isPending}
                                     className="gap-2"
                                 >
-                                    {loading
+                                    {isPending
                                         ? "Creating..."
                                         : "Create discussion"}
                                 </Button>
@@ -398,4 +313,4 @@ const NewDiscussionPage = () => {
     );
 };
 
-export default NewDiscussionPage;
+export default CreateThreadPage;

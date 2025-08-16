@@ -6,11 +6,12 @@ const ThreadSchema = new Schema(
         projectId: String,
         title: String,
         author: String,
+        description: String,
         comments: [CommentSchema],
-        pinned: { type: Boolean, default: false },
+        popular: { type: Boolean, default: false },
         tags: [String],
     },
     { timestamps: true }
 );
 
-export default models.ThreadModel || mongoose.model("Thread", ThreadSchema);
+export default models.Thread || mongoose.model("Thread", ThreadSchema);

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SearchBar } from "@/components/common/search-bar";
-import { Sparkles, ArrowRight, Clock } from "lucide-react";
+import { Sparkles, ArrowRight, Clock, Plus } from "lucide-react";
 
 // ------------------ Mock Threads ------------------
 const MOCK_THREADS = [
@@ -143,7 +143,8 @@ const ThreadsPage = () => {
 
                     <Link href="/dashboard/discussions/new">
                         <Button size="sm" className="flex items-center gap-2">
-                            New Discussion
+                            <Plus className="h-4 w-4" />
+                            Create Thread
                         </Button>
                     </Link>
                 </div>
