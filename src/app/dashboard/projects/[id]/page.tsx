@@ -10,23 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sparkles, Link2 } from "lucide-react";
-import {
-    Star1,
-    Eye,
-    Heart,
-    Code,
-    Calendar,
-    Activity,
-    Message,
-} from "iconsax-reactjs";
-import {
-    GitBranch,
-    Users,
-    GitPullRequest,
-    FileText,
-    BarChart3,
-    Clock,
-} from "lucide-react";
+import { Star1, Eye, Heart, Code, Calendar, Activity, Message } from "iconsax-reactjs";
+import { GitBranch, Users, GitPullRequest, FileText, BarChart3, Clock } from "lucide-react";
 import { useFetchProject } from "@/hooks/queries/useProjectQuery";
 import { useParams } from "next/navigation";
 
@@ -66,15 +51,7 @@ export default function ProjectDetailPage() {
         },
     ];
 
-    const StatRow = ({
-        Icon,
-        label,
-        value,
-    }: {
-        Icon: any;
-        label: string;
-        value: number | string;
-    }) => (
+    const StatRow = ({ Icon, label, value }: { Icon: any; label: string; value: number | string }) => (
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Icon className="h-4 w-4 opacity-90" />
@@ -118,38 +95,23 @@ export default function ProjectDetailPage() {
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
-                                                onClick={() =>
-                                                    setStarred(s => !s)
-                                                }
+                                                onClick={() => setStarred(s => !s)}
                                                 className={cn("rounded-xl")}
                                                 aria-pressed={starred}
-                                                aria-label={
-                                                    starred
-                                                        ? "Unstar project"
-                                                        : "Star project"
-                                                }
+                                                aria-label={starred ? "Unstar project" : "Star project"}
                                             >
                                                 <Star1
                                                     size={14}
                                                     className={cn(
-                                                        starred
-                                                            ? "text-muted-foreground"
-                                                            : "text-muted-foreground/80"
+                                                        starred ? "text-muted-foreground" : "text-muted-foreground/80"
                                                     )}
                                                 />
                                                 <span className="hidden sm:inline text-xs ml-1">
-                                                    {starred
-                                                        ? "Starred"
-                                                        : "Star"}
+                                                    {starred ? "Starred" : "Star"}
                                                 </span>
                                             </Button>
 
-                                            <Button
-                                                variant="secondary"
-                                                size="sm"
-                                                asChild
-                                                className="rounded-xl"
-                                            >
+                                            <Button variant="secondary" size="sm" asChild className="rounded-xl">
                                                 <a
                                                     href={project?.githubUrl}
                                                     target="_blank"
@@ -157,9 +119,7 @@ export default function ProjectDetailPage() {
                                                     className="flex items-center gap-2"
                                                 >
                                                     <Link2 size={14} />
-                                                    <span className="text-xs">
-                                                        Live demo
-                                                    </span>
+                                                    <span className="text-xs">Live demo</span>
                                                 </a>
                                             </Button>
                                         </div>
@@ -184,15 +144,10 @@ export default function ProjectDetailPage() {
                     <aside className="lg:sticky lg:top-20 lg:self-start">
                         <Card className="rounded-2xl border bg-card/60 backdrop-blur">
                             <CardHeader className="pb-2">
-                                <CardTitle className="text-sm">
-                                    Sections
-                                </CardTitle>
+                                <CardTitle className="text-sm">Sections</CardTitle>
                             </CardHeader>
                             <CardContent className="p-2">
-                                <nav
-                                    className="flex gap-2 p-2 lg:flex-col"
-                                    aria-label="Sections"
-                                >
+                                <nav className="flex gap-2 p-2 lg:flex-col" aria-label="Sections">
                                     {[
                                         {
                                             key: "overview",
@@ -217,30 +172,19 @@ export default function ProjectDetailPage() {
                                         return (
                                             <Button
                                                 key={key}
-                                                variant={
-                                                    active ? "default" : "ghost"
-                                                }
+                                                variant={active ? "default" : "ghost"}
                                                 size="sm"
-                                                onClick={() =>
-                                                    setTab(key as TabKey)
-                                                }
+                                                onClick={() => setTab(key as TabKey)}
                                                 className={cn(
                                                     "justify-start rounded-md py-6 my-1 w-full gap-2",
-                                                    active &&
-                                                        "shadow-[0_0_0_3px_var(--shadow-ring,rgba(0,0,0,0.06))]"
+                                                    active && "shadow-[0_0_0_3px_var(--shadow-ring,rgba(0,0,0,0.06))]"
                                                 )}
-                                                aria-current={
-                                                    active ? "page" : undefined
-                                                }
+                                                aria-current={active ? "page" : undefined}
                                             >
                                                 <Icon className="h-4 w-4" />
                                                 <div className="text-left">
-                                                    <div className="text-xs font-medium">
-                                                        {label}
-                                                    </div>
-                                                    <div className="text-[10px] text-muted-foreground">
-                                                        {desc}
-                                                    </div>
+                                                    <div className="text-xs font-medium">{label}</div>
+                                                    <div className="text-[10px] text-muted-foreground">{desc}</div>
                                                 </div>
                                             </Button>
                                         );
@@ -263,9 +207,7 @@ export default function ProjectDetailPage() {
                                 >
                                     <Card className="rounded-2xl border bg-background/60 backdrop-blur">
                                         <CardHeader>
-                                            <CardTitle className="text-lg">
-                                                About
-                                            </CardTitle>
+                                            <CardTitle className="text-lg">About</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line mb-6">
@@ -274,67 +216,45 @@ export default function ProjectDetailPage() {
 
                                             <div className="space-y-4">
                                                 <div>
-                                                    <h4 className="text-sm font-medium mb-2">
-                                                        Built with
-                                                    </h4>
+                                                    <h4 className="text-sm font-medium mb-2">Built with</h4>
                                                     <div className="flex flex-wrap gap-2">
                                                         {project?.tags &&
-                                                            project?.tags?.map(
-                                                                tech => (
-                                                                    <Badge
-                                                                        key={
-                                                                            tech
-                                                                        }
-                                                                        variant="secondary"
-                                                                        className="rounded-md text-xs"
-                                                                    >
-                                                                        {tech}
-                                                                    </Badge>
-                                                                )
-                                                            )}
+                                                            project?.tags?.map(tech => (
+                                                                <Badge
+                                                                    key={tech}
+                                                                    variant="secondary"
+                                                                    className="rounded-md text-xs"
+                                                                >
+                                                                    {tech}
+                                                                </Badge>
+                                                            ))}
                                                     </div>
                                                 </div>
 
                                                 <Separator />
 
                                                 <div className="flex flex-wrap gap-3 items-center">
-                                                    <Button
-                                                        variant="outline"
-                                                        asChild
-                                                        className="rounded-xl gap-2"
-                                                    >
+                                                    <Button variant="outline" asChild className="rounded-xl gap-2">
                                                         <a
-                                                            href={
-                                                                project?.githubUrl
-                                                            }
+                                                            href={project?.githubUrl}
                                                             target="_blank"
                                                             rel="noreferrer"
                                                             className="flex items-center gap-2"
                                                         >
                                                             <Code size={14} />
-                                                            <span className="text-xs">
-                                                                Source Code
-                                                            </span>
+                                                            <span className="text-xs">Source Code</span>
                                                         </a>
                                                     </Button>
 
-                                                    <Button
-                                                        asChild
-                                                        className="rounded-xl gap-2"
-                                                    >
+                                                    <Button asChild className="rounded-xl gap-2">
                                                         <a
-                                                            href={
-                                                                project?.liveUrl ||
-                                                                project?.githubUrl
-                                                            }
+                                                            href={project?.liveUrl || project?.githubUrl}
                                                             target="_blank"
                                                             rel="noreferrer"
                                                             className="flex items-center gap-2"
                                                         >
                                                             <Link2 size={14} />
-                                                            <span className="text-xs">
-                                                                Live Demo
-                                                            </span>
+                                                            <span className="text-xs">Live Demo</span>
                                                         </a>
                                                     </Button>
                                                 </div>
@@ -354,9 +274,7 @@ export default function ProjectDetailPage() {
                                 >
                                     <Card className="rounded-2xl border bg-background/60 backdrop-blur">
                                         <CardHeader>
-                                            <CardTitle className="text-lg">
-                                                Repository Metrics
-                                            </CardTitle>
+                                            <CardTitle className="text-lg">Repository Metrics</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -406,9 +324,7 @@ export default function ProjectDetailPage() {
                                 >
                                     <Card className="rounded-2xl border bg-background/60 backdrop-blur">
                                         <CardHeader>
-                                            <CardTitle className="text-lg">
-                                                Recent Activity
-                                            </CardTitle>
+                                            <CardTitle className="text-lg">Recent Activity</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="space-y-3">
@@ -443,9 +359,7 @@ export default function ProjectDetailPage() {
                     <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
                         <Card className="rounded-2xl border bg-card/60 backdrop-blur">
                             <CardHeader>
-                                <CardTitle className="text-sm">
-                                    Created by
-                                </CardTitle>
+                                <CardTitle className="text-sm">Created by</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="flex items-center gap-3">
@@ -455,9 +369,7 @@ export default function ProjectDetailPage() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div>
-                                        <p className="text-sm font-medium text-foreground">
-                                            {project?.author}
-                                        </p>
+                                        <p className="text-sm font-medium text-foreground">{project?.author}</p>
                                         <p className="text-xs text-muted-foreground">
                                             {project?.author || "Tushar Banik"}
                                         </p>
@@ -468,32 +380,14 @@ export default function ProjectDetailPage() {
 
                         <Card className="rounded-2xl border bg-background/60 backdrop-blur">
                             <CardHeader>
-                                <CardTitle className="text-sm">
-                                    Project Stats
-                                </CardTitle>
+                                <CardTitle className="text-sm">Project Stats</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="space-y-4">
-                                    <StatRow
-                                        Icon={Star1}
-                                        label="Stars"
-                                        value={project?.stars || 0}
-                                    />
-                                    <StatRow
-                                        Icon={Eye}
-                                        label="Views"
-                                        value={project?.views || 0}
-                                    />
-                                    <StatRow
-                                        Icon={Heart}
-                                        label="Likes"
-                                        value={project?.likes || 0}
-                                    />
-                                    <StatRow
-                                        Icon={Message}
-                                        label="Comments"
-                                        value={project?.comments || 0}
-                                    />
+                                    <StatRow Icon={Star1} label="Stars" value={project?.stars || 0} />
+                                    <StatRow Icon={Eye} label="Views" value={project?.views || 0} />
+                                    <StatRow Icon={Heart} label="Likes" value={project?.likes || 0} />
+                                    <StatRow Icon={Message} label="Comments" value={project?.comments || 0} />
                                     <Separator />
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -517,11 +411,7 @@ export default function ProjectDetailPage() {
                                 <div className="flex flex-wrap gap-2">
                                     {project?.tags &&
                                         project?.tags?.map(t => (
-                                            <Badge
-                                                key={t}
-                                                variant="outline"
-                                                className="text-xs"
-                                            >
+                                            <Badge key={t} variant="outline" className="text-xs">
                                                 {t}
                                             </Badge>
                                         ))}
@@ -531,16 +421,10 @@ export default function ProjectDetailPage() {
 
                         <Card className="rounded-2xl border bg-background/60 backdrop-blur">
                             <CardHeader>
-                                <CardTitle className="text-sm">
-                                    Quick Links
-                                </CardTitle>
+                                <CardTitle className="text-sm">Quick Links</CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col gap-2">
-                                <Button
-                                    asChild
-                                    variant="secondary"
-                                    className="rounded-xl"
-                                >
+                                <Button asChild variant="secondary" className="rounded-xl">
                                     <a
                                         href={project?.githubUrl}
                                         target="_blank"
@@ -548,26 +432,19 @@ export default function ProjectDetailPage() {
                                         className="flex items-center gap-2"
                                     >
                                         <Code size={14} />
-                                        <span className="text-xs">
-                                            Source Code
-                                        </span>
+                                        <span className="text-xs">Source Code</span>
                                     </a>
                                 </Button>
 
                                 <Button asChild className="rounded-xl">
                                     <a
-                                        href={
-                                            project?.liveUrl ||
-                                            project?.githubUrl
-                                        }
+                                        href={project?.liveUrl || project?.githubUrl}
                                         target="_blank"
                                         rel="noreferrer"
                                         className="flex items-center gap-2"
                                     >
                                         <Link2 size={14} />
-                                        <span className="text-xs">
-                                            Live Demo
-                                        </span>
+                                        <span className="text-xs">Live Demo</span>
                                     </a>
                                 </Button>
                             </CardContent>

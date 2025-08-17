@@ -15,27 +15,12 @@ export const createProject = async (req: Request) => {
         status,
     } = body;
 
-    if (
-        !author ||
-        !authorAvatar ||
-        !title ||
-        !description ||
-        !image ||
-        !githubUrl ||
-        !techStack ||
-        !status
-    ) {
-        return Response.json(
-            { message: "Missing required fields" },
-            { status: 400 }
-        );
+    if (!author || !authorAvatar || !title || !description || !image || !githubUrl || !techStack || !status) {
+        return Response.json({ message: "Missing required fields" }, { status: 400 });
     }
 
     if (!Array.isArray(tags)) {
-        return Response.json(
-            { message: "Tags must be an array" },
-            { status: 400 }
-        );
+        return Response.json({ message: "Tags must be an array" }, { status: 400 });
     }
 
     try {
@@ -53,16 +38,10 @@ export const createProject = async (req: Request) => {
         });
 
         console.log(`The project received is ${newProject._id}`);
-        return Response.json(
-            { message: "Project created successfully", id: newProject._id },
-            { status: 200 }
-        );
+        return Response.json({ message: "Project created successfully", id: newProject._id }, { status: 200 });
     } catch (err) {
         console.error(err);
-        return Response.json(
-            { err: "Unable to create project" },
-            { status: 500 }
-        );
+        return Response.json({ err: "Unable to create project" }, { status: 500 });
     }
 };
 
@@ -81,9 +60,6 @@ export const getProjects = async (req: Request) => {
         return projects;
     } catch (err) {
         console.error(err);
-        return Response.json(
-            { err: "Error in fetching projects" },
-            { status: 400 }
-        );
+        return Response.json({ err: "Error in fetching projects" }, { status: 400 });
     }
 };

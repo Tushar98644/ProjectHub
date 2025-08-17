@@ -1,14 +1,7 @@
 "use client";
 
 import { useSession } from "@/config/auth/client";
-import {
-    Folder,
-    Headphone,
-    Profile,
-    Profile2User,
-    Setting2,
-    Setting4,
-} from "iconsax-reactjs";
+import { Folder, Headphone, Profile, Profile2User, Setting2, Setting4 } from "iconsax-reactjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -29,9 +22,7 @@ const Sidebar = () => {
                         </AvatarFallback>
                     </Avatar>
                     <div>
-                        <h1 className="text-sm font-bold text-gray-800 dark:text-white">
-                            ProjectHub
-                        </h1>
+                        <h1 className="text-sm font-bold text-gray-800 dark:text-white">ProjectHub</h1>
                         <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
                             Project Management Platform
                         </p>

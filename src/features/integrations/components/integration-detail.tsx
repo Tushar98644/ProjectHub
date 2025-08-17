@@ -17,9 +17,7 @@ export const IntegrationDetail = ({
 }: any) => {
     const toggleEvent = (eventName: string) => {
         setEnabledEvents((prev: string[]) =>
-            prev.includes(eventName)
-                ? prev.filter(e => e !== eventName)
-                : [...prev, eventName]
+            prev.includes(eventName) ? prev.filter(e => e !== eventName) : [...prev, eventName]
         );
     };
 
@@ -34,23 +32,15 @@ export const IntegrationDetail = ({
                                     <integration.logo className="h-6 w-6 text-primary" />
                                 </div>
                                 <div>
-                                    <h2 className="text-lg font-semibold">
-                                        {integration.name}
-                                    </h2>
-                                    <p className="text-sm text-muted-foreground mt-1">
-                                        {integration.description}
-                                    </p>
+                                    <h2 className="text-lg font-semibold">{integration.name}</h2>
+                                    <p className="text-sm text-muted-foreground mt-1">{integration.description}</p>
                                 </div>
                             </div>
 
                             {integration.connected ? (
                                 <Button
                                     size="sm"
-                                    onClick={() =>
-                                        onAction(
-                                            `Disconnected ${integration.name}`
-                                        )
-                                    }
+                                    onClick={() => onAction(`Disconnected ${integration.name}`)}
                                     disabled={isLoading}
                                     className="rounded-lg bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
                                 >
@@ -59,11 +49,7 @@ export const IntegrationDetail = ({
                             ) : (
                                 <Button
                                     size="sm"
-                                    onClick={() =>
-                                        onAction(
-                                            `Connected ${integration.name}`
-                                        )
-                                    }
+                                    onClick={() => onAction(`Connected ${integration.name}`)}
                                     disabled={isLoading}
                                     className="rounded-lg gap-2"
                                 >
@@ -75,14 +61,10 @@ export const IntegrationDetail = ({
                         <div className="grid gap-4 md:grid-cols-2">
                             <div className="space-y-4">
                                 <div>
-                                    <label className="text-xs font-medium">
-                                        Webhook URL
-                                    </label>
+                                    <label className="text-xs font-medium">Webhook URL</label>
                                     <Input
                                         value={webhookUrl}
-                                        onChange={e =>
-                                            setWebhookUrl(e.target.value)
-                                        }
+                                        onChange={e => setWebhookUrl(e.target.value)}
                                         placeholder="https://your-endpoint.example/webhook"
                                         className="mt-2"
                                     />
@@ -91,9 +73,7 @@ export const IntegrationDetail = ({
                                 <div className="flex gap-2">
                                     <Button
                                         size="sm"
-                                        onClick={() =>
-                                            onAction("Webhook settings saved")
-                                        }
+                                        onClick={() => onAction("Webhook settings saved")}
                                         className="rounded-lg"
                                     >
                                         Save
@@ -101,9 +81,7 @@ export const IntegrationDetail = ({
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        onClick={() =>
-                                            onAction("Test event sent")
-                                        }
+                                        onClick={() => onAction("Test event sent")}
                                         className="rounded-lg"
                                     >
                                         Test
@@ -111,30 +89,22 @@ export const IntegrationDetail = ({
                                 </div>
 
                                 <div>
-                                    <label className="text-xs font-medium">
-                                        Events
-                                    </label>
+                                    <label className="text-xs font-medium">Events</label>
                                     <div className="mt-2 space-y-2">
-                                        {integration.events.map(
-                                            (ev: string) => (
-                                                <button
-                                                    key={ev}
-                                                    onClick={() =>
-                                                        toggleEvent(ev)
-                                                    }
-                                                    className={clsx(
-                                                        "w-full text-sm rounded-lg px-3 py-2 text-left border transition-colors",
-                                                        enabledEvents.includes(
-                                                            ev
-                                                        )
-                                                            ? "bg-primary/10 border-primary/30"
-                                                            : "bg-background/50 border-border hover:bg-background/80"
-                                                    )}
-                                                >
-                                                    {ev}
-                                                </button>
-                                            )
-                                        )}
+                                        {integration.events.map((ev: string) => (
+                                            <button
+                                                key={ev}
+                                                onClick={() => toggleEvent(ev)}
+                                                className={clsx(
+                                                    "w-full text-sm rounded-lg px-3 py-2 text-left border transition-colors",
+                                                    enabledEvents.includes(ev)
+                                                        ? "bg-primary/10 border-primary/30"
+                                                        : "bg-background/50 border-border hover:bg-background/80"
+                                                )}
+                                            >
+                                                {ev}
+                                            </button>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -146,18 +116,11 @@ export const IntegrationDetail = ({
 
                 <Card className="border-0 bg-card/70 backdrop-blur">
                     <CardContent className="p-4">
-                        <h4 className="text-sm font-semibold mb-2">
-                            Quick Tips
-                        </h4>
+                        <h4 className="text-sm font-semibold mb-2">Quick Tips</h4>
                         <ul className="space-y-1 text-sm text-muted-foreground">
-                            <li>
-                                • Use a stable HTTPS endpoint to receive webhook
-                                events
-                            </li>
+                            <li>• Use a stable HTTPS endpoint to receive webhook events</li>
                             <li>• Verify payload signatures for security</li>
-                            <li>
-                                • Start by enabling only the events you need
-                            </li>
+                            <li>• Start by enabling only the events you need</li>
                         </ul>
                     </CardContent>
                 </Card>

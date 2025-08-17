@@ -64,10 +64,7 @@ export default function AddProjectPage() {
                     </p>
                 </div>
             </Card>
-            <form
-                onSubmit={onSubmit}
-                className="grid gap-5 lg:grid-cols-[1fr_380px]"
-            >
+            <form onSubmit={onSubmit} className="grid gap-5 lg:grid-cols-[1fr_380px]">
                 <div className="space-y-5">
                     <ProjectDetails
                         {...{
@@ -79,38 +76,20 @@ export default function AddProjectPage() {
                             setStatus,
                         }}
                     />
-                    <TagInput
-                        label="Tech Stack"
-                        items={techStack}
-                        setItems={setTechStack}
-                    />
+                    <TagInput label="Tech Stack" items={techStack} setItems={setTechStack} />
                     <TagInput label="Tags" items={tags} setItems={setTags} />
                 </div>
                 <div className="space-y-5">
                     <ProjectImagePicker {...{ image, setImage }} />
-                    <ProjectLinks
-                        {...{ githubUrl, setGithubUrl, liveUrl, setLiveUrl }}
-                    />
+                    <ProjectLinks {...{ githubUrl, setGithubUrl, liveUrl, setLiveUrl }} />
                     <Card className="flex items-center justify-between rounded-2xl border bg-background/60 p-5 backdrop-blur">
-                        <div className="text-sm text-muted-foreground">
-                            Review details before submitting
-                        </div>
+                        <div className="text-sm text-muted-foreground">Review details before submitting</div>
                         <div className="flex gap-2">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => router.back()}
-                            >
+                            <Button type="button" variant="outline" onClick={() => router.back()}>
                                 Cancel
                             </Button>
-                            <Button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="gap-2"
-                            >
-                                {isSubmitting && (
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                )}
+                            <Button type="submit" disabled={isSubmitting} className="gap-2">
+                                {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
                                 {isSubmitting ? "Creating…" : "Submit Project"}
                             </Button>
                         </div>

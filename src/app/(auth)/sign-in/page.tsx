@@ -1,14 +1,7 @@
 "use client";
 import { AI } from "@/shared";
 import dynamic from "next/dynamic";
-import {
-    FaGoogle,
-    FaGithub,
-    FaRocket,
-    FaBrain,
-    FaUsers,
-    FaArrowRight,
-} from "react-icons/fa";
+import { FaGoogle, FaGithub, FaRocket, FaBrain, FaUsers, FaArrowRight } from "react-icons/fa";
 import { motion } from "motion/react";
 import { signIn } from "@/config/auth/client";
 
@@ -108,11 +101,7 @@ const Login = () => {
             />
 
             {/* Header */}
-            <motion.div
-                animate={textItemVariants}
-                custom={0}
-                className="text-center mb-8"
-            >
+            <motion.div animate={textItemVariants} custom={0} className="text-center mb-8">
                 <motion.h1
                     className="text-4xl sm:text-5xl font-bold text-gray-900 mb-3"
                     whileHover={{ scale: 1.02 }}
@@ -120,10 +109,7 @@ const Login = () => {
                 >
                     Project<span className="text-blue-600">Hub</span>
                 </motion.h1>
-                <motion.p
-                    className="text-gray-600 text-base font-medium"
-                    animate={floatingVariants}
-                >
+                <motion.p className="text-gray-600 text-base font-medium" animate={floatingVariants}>
                     Developer tools for modern teams
                 </motion.p>
             </motion.div>
@@ -137,11 +123,7 @@ const Login = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-purple-50/50 rounded-2xl blur-xl -z-10"></div>
 
                 {/* Lottie Animation */}
-                <motion.div
-                    animate={textItemVariants}
-                    custom={1}
-                    className="flex justify-center mb-6"
-                >
+                <motion.div animate={textItemVariants} custom={1} className="flex justify-center mb-6">
                     <motion.div
                         className="w-24 h-24"
                         whileHover={{ scale: 1.1, rotate: 5 }}
@@ -151,41 +133,26 @@ const Login = () => {
                             damping: 20,
                         }}
                     >
-                        <Lottie
-                            animationData={AI}
-                            loop={true}
-                            style={{ width: "100%", height: "100%" }}
-                        />
+                        <Lottie animationData={AI} loop={true} style={{ width: "100%", height: "100%" }} />
                     </motion.div>
                 </motion.div>
 
                 {/* Welcome Text */}
-                <motion.div
-                    animate={textItemVariants}
-                    custom={2}
-                    className="text-center mb-8"
-                >
-                    <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                        Welcome back
-                    </h2>
+                <motion.div animate={textItemVariants} custom={2} className="text-center mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-3">Welcome back</h2>
                     <p className="text-gray-600 text-sm leading-relaxed">
-                        Sign in to access your workspace and continue building
-                        amazing projects
+                        Sign in to access your workspace and continue building amazing projects
                     </p>
                 </motion.div>
 
                 {/* Sign In Buttons */}
-                <motion.div
-                    animate={buttonGroupVariants}
-                    className="space-y-4 mb-8"
-                >
+                <motion.div animate={buttonGroupVariants} className="space-y-4 mb-8">
                     <motion.button
                         animate={buttonItemVariants}
                         whileHover={{
                             y: -2,
                             scale: 1.02,
-                            boxShadow:
-                                "0 10px 25px -5px rgba(59, 130, 246, 0.25)",
+                            boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.25)",
                         }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleSocialSignIn("google")}
@@ -201,8 +168,7 @@ const Login = () => {
                         whileHover={{
                             y: -2,
                             scale: 1.02,
-                            boxShadow:
-                                "0 10px 25px -5px rgba(75, 85, 99, 0.25)",
+                            boxShadow: "0 10px 25px -5px rgba(75, 85, 99, 0.25)",
                         }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleSocialSignIn("github")}
@@ -215,11 +181,7 @@ const Login = () => {
                 </motion.div>
 
                 {/* Feature Icons */}
-                <motion.div
-                    animate={textItemVariants}
-                    custom={3}
-                    className="flex justify-center space-x-10 mb-8"
-                >
+                <motion.div animate={textItemVariants} custom={3} className="flex justify-center space-x-10 mb-8">
                     {[
                         {
                             icon: FaRocket,
@@ -258,11 +220,7 @@ const Login = () => {
                 </motion.div>
 
                 {/* Footer */}
-                <motion.div
-                    animate={textItemVariants}
-                    custom={4}
-                    className="text-center border-t border-gray-100 pt-6"
-                >
+                <motion.div animate={textItemVariants} custom={4} className="text-center border-t border-gray-100 pt-6">
                     <p className="text-xs text-gray-500 leading-relaxed">
                         By signing in, you agree to our{" "}
                         <motion.a

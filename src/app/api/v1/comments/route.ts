@@ -14,10 +14,7 @@ export async function GET(req: Request) {
         const comments = await Comment.find({ threadId });
         return Response.json(comments, { status: 200 });
     } catch (err) {
-        return Response.json(
-            { message: "Failed to fetch comments" },
-            { status: 400 }
-        );
+        return Response.json({ message: "Failed to fetch comments" }, { status: 400 });
     }
 }
 
@@ -40,10 +37,7 @@ export async function POST(req: Request) {
         console.log(threadId, author, authorAvatar, content);
 
         if (!author || !content || !threadId || !authorAvatar)
-            return Response.json(
-                { message: "Please fill all fields" },
-                { status: 400 }
-            );
+            return Response.json({ message: "Please fill all fields" }, { status: 400 });
 
         const comment = await Comment.create({
             threadId,
@@ -53,9 +47,6 @@ export async function POST(req: Request) {
         });
         return Response.json(comment, { status: 200 });
     } catch (err) {
-        return Response.json(
-            { message: "Error creating message" },
-            { status: 400 }
-        );
+        return Response.json({ message: "Error creating message" }, { status: 400 });
     }
 }

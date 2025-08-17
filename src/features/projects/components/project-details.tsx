@@ -4,13 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
 interface ProjectDeatilsProps {
@@ -35,8 +29,7 @@ export const STATUS_BADGES = {
     },
     completed: {
         label: "Completed",
-        badgeClass:
-            "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/15 dark:text-sky-400 dark:border-sky-800",
+        badgeClass: "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/15 dark:text-sky-400 dark:border-sky-800",
     },
 };
 
@@ -51,14 +44,8 @@ export default function ProjectDetails({
     return (
         <Card className="flex flex-col space-y-5 rounded-2xl border bg-background/60 p-5 backdrop-blur">
             <div>
-                <label className="block mb-2 font-medium">
-                    Project Title *
-                </label>
-                <Input
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    className="rounded-lg"
-                />
+                <label className="block mb-2 font-medium">Project Title *</label>
+                <Input value={title} onChange={e => setTitle(e.target.value)} className="rounded-lg" />
             </div>
 
             <div>
@@ -82,10 +69,7 @@ export default function ProjectDetails({
                     <SelectContent>
                         {Object.entries(STATUS_BADGES).map(([key, val]) => (
                             <SelectItem key={key} value={key}>
-                                <Badge
-                                    variant="outline"
-                                    className={`border ${val.badgeClass}`}
-                                >
+                                <Badge variant="outline" className={`border ${val.badgeClass}`}>
                                     {val.label}
                                 </Badge>
                             </SelectItem>

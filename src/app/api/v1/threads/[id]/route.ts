@@ -13,10 +13,7 @@ export async function GET(req: Request, { params }: RouteParams) {
         const thread = await Thread.findById(id);
         return Response.json(thread, { status: 200 });
     } catch (err) {
-        return Response.json(
-            { message: "Failed to fetch thread" },
-            { status: 400 }
-        );
+        return Response.json({ message: "Failed to fetch thread" }, { status: 400 });
     }
 }
 
@@ -29,21 +26,13 @@ export async function DELETE(req: Request, { params }: RouteParams) {
         const { id } = await params;
         const thread = await Thread.findById(id);
 
-        if (!thread)
-            return Response.json(
-                { message: "Thread not found" },
-                { status: 404 }
-            );
+        if (!thread) return Response.json({ message: "Thread not found" }, { status: 404 });
 
-        if (thread.author !== user)
-            return Response.json({ message: "Unauthorized" }, { status: 401 });
+        if (thread.author !== user) return Response.json({ message: "Unauthorized" }, { status: 401 });
 
         await Thread.findByIdAndDelete(id);
         return Response.json({ message: "Thread deleted" }, { status: 200 });
     } catch (err) {
-        return Response.json(
-            { message: "Failed to delete thread" },
-            { status: 400 }
-        );
+        return Response.json({ message: "Failed to delete thread" }, { status: 400 });
     }
 }

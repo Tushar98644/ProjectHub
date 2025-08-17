@@ -3,13 +3,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-    CardHeader,
-    CardTitle,
-    CardContent,
-    CardFooter,
-    Card,
-} from "@/components/ui/card";
+import { CardHeader, CardTitle, CardContent, CardFooter, Card } from "@/components/ui/card";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Eye, Heart, Star } from "iconsax-reactjs";
@@ -35,12 +29,7 @@ export const ProjectCard = ({ project, index }: any) => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
                     <div className="absolute left-3 top-3">
-                        <Badge
-                            className={clsx(
-                                "rounded-full",
-                                statusBadge(project.status)
-                            )}
-                        >
+                        <Badge className={clsx("rounded-full", statusBadge(project.status))}>
                             {project.status || "unknown"}
                         </Badge>
                     </div>
@@ -49,21 +38,13 @@ export const ProjectCard = ({ project, index }: any) => {
                     </div>
                 </div>
                 <CardHeader className="space-y-1">
-                    <CardTitle className="line-clamp-1 text-base font-semibold">
-                        {project.title}
-                    </CardTitle>
-                    <p className="line-clamp-2 text-sm text-muted-foreground">
-                        {project.description}
-                    </p>
+                    <CardTitle className="line-clamp-1 text-base font-semibold">{project.title}</CardTitle>
+                    <p className="line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
                 </CardHeader>
                 <CardContent>
                     <div className="mb-2 flex flex-wrap gap-1">
                         {(project.tags || []).slice(0, 3).map((t: string) => (
-                            <Badge
-                                key={t}
-                                variant="secondary"
-                                className="rounded-md"
-                            >
+                            <Badge key={t} variant="secondary" className="rounded-md">
                                 {t}
                             </Badge>
                         ))}
@@ -78,27 +59,17 @@ export const ProjectCard = ({ project, index }: any) => {
                 <CardFooter className="flex border-t p-4">
                     <div className="flex justify-center w-full items-center gap-3">
                         <Avatar className="h-8 w-8 flex items-center justify-center border dark:border-white/50">
-                            <AvatarFallback className="dark:text-white text-black text-xs">
-                                T
-                            </AvatarFallback>
+                            <AvatarFallback className="dark:text-white text-black text-xs">T</AvatarFallback>
                         </Avatar>
                         <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-medium">
-                                Tushar
-                            </p>
-                            <p className="truncate text-xs text-muted-foreground">
-                                Maintainer
-                            </p>
+                            <p className="truncate text-sm font-medium">Tushar</p>
+                            <p className="truncate text-xs text-muted-foreground">Maintainer</p>
                         </div>
                         <Button
                             size="sm"
                             variant="secondary"
                             className="rounded-xl gap-1"
-                            onClick={() =>
-                                router.push(
-                                    `/dashboard/projects/${project._id}`
-                                )
-                            }
+                            onClick={() => router.push(`/dashboard/projects/${project._id}`)}
                         >
                             <Rocket className="h-4 w-4" /> View
                         </Button>
@@ -110,12 +81,7 @@ export const ProjectCard = ({ project, index }: any) => {
 };
 
 export const ProjectStats = ({ project, showDate = false }: any) => (
-    <div
-        className={clsx(
-            "flex items-center text-xs text-muted-foreground",
-            showDate ? "justify-between" : "gap-3"
-        )}
-    >
+    <div className={clsx("flex items-center text-xs text-muted-foreground", showDate ? "justify-between" : "gap-3")}>
         <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1">
                 <Star className="h-3.5 w-3.5" /> {project?.stars || 0}
@@ -127,14 +93,12 @@ export const ProjectStats = ({ project, showDate = false }: any) => (
                 <Heart className="h-3.5 w-3.5" /> {project?.likes || 0}
             </span>
             <span className="inline-flex items-center gap-1">
-                <MessageCircle className="h-3.5 w-3.5" />{" "}
-                {project?.comments || 0}
+                <MessageCircle className="h-3.5 w-3.5" /> {project?.comments || 0}
             </span>
         </div>
         {showDate && (
             <span className="inline-flex items-center gap-1">
-                <CalendarDays className="h-3.5 w-3.5" />{" "}
-                {project?.lastUpdated || "yesterday"}
+                <CalendarDays className="h-3.5 w-3.5" /> {project?.lastUpdated || "yesterday"}
             </span>
         )}
     </div>
@@ -144,6 +108,5 @@ export const statusBadge = (s?: string) =>
     ({
         active: "bg-emerald-500/10 text-emerald-500 ring-1 ring-emerald-500/20",
         completed: "bg-blue-500/10 text-blue-500 ring-1 ring-blue-500/20",
-        "in-progress":
-            "bg-amber-500/10 text-amber-500 ring-1 ring-amber-500/20",
+        "in-progress": "bg-amber-500/10 text-amber-500 ring-1 ring-amber-500/20",
     })[s || ""] || "bg-muted text-muted-foreground";

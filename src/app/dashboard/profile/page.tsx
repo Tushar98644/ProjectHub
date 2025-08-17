@@ -119,11 +119,7 @@ export default function UserProfilePage() {
                     {/* Cover Image */}
                     <div className="relative h-48 sm:h-56 bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10">
                         <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-blue-500/5 to-emerald-500/10" />
-                        <img
-                            src={userData.cover}
-                            alt="Cover"
-                            className="h-full w-full object-cover opacity-20"
-                        />
+                        <img src={userData.cover} alt="Cover" className="h-full w-full object-cover opacity-20" />
                         {isOwnProfile && (
                             <Button
                                 variant="outline"
@@ -141,10 +137,7 @@ export default function UserProfilePage() {
                         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
                             <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
                                 <Avatar className="-mt-16 h-32 w-32 border-4 border-background shadow-xl">
-                                    <AvatarImage
-                                        src={userData.avatar}
-                                        className="object-cover"
-                                    />
+                                    <AvatarImage src={userData.avatar} className="object-cover" />
                                     <AvatarFallback className="text-xl font-semibold">
                                         {userData.name
                                             .split(" ")
@@ -156,27 +149,18 @@ export default function UserProfilePage() {
                                 <div className="flex-1 space-y-4">
                                     <div className="space-y-2">
                                         <div className="flex flex-wrap items-center gap-3">
-                                            <h1 className="text-3xl font-bold tracking-tight">
-                                                {userData.name}
-                                            </h1>
+                                            <h1 className="text-3xl font-bold tracking-tight">{userData.name}</h1>
                                             {userData.isVerified && (
-                                                <Badge
-                                                    variant="secondary"
-                                                    className="gap-1"
-                                                >
+                                                <Badge variant="secondary" className="gap-1">
                                                     <Star className="h-3 w-3" />
                                                     Verified
                                                 </Badge>
                                             )}
                                         </div>
-                                        <p className="text-lg text-muted-foreground">
-                                            @{userData.username}
-                                        </p>
+                                        <p className="text-lg text-muted-foreground">@{userData.username}</p>
                                     </div>
 
-                                    <p className="max-w-2xl text-foreground leading-relaxed">
-                                        {userData.bio}
-                                    </p>
+                                    <p className="max-w-2xl text-foreground leading-relaxed">{userData.bio}</p>
 
                                     <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
                                         <div className="flex items-center gap-2">
@@ -187,9 +171,7 @@ export default function UserProfilePage() {
                                             <Calendar className="h-4 w-4" />
                                             <span>
                                                 Joined{" "}
-                                                {new Date(
-                                                    userData.joinDate
-                                                ).toLocaleDateString("en-US", {
+                                                {new Date(userData.joinDate).toLocaleDateString("en-US", {
                                                     month: "long",
                                                     year: "numeric",
                                                 })}
@@ -203,10 +185,7 @@ export default function UserProfilePage() {
                                                 rel="noopener noreferrer"
                                                 className="flex items-center gap-1 text-primary hover:underline"
                                             >
-                                                {userData.website.replace(
-                                                    "https://",
-                                                    ""
-                                                )}
+                                                {userData.website.replace("https://", "")}
                                                 <ExternalLink className="h-3 w-3" />
                                             </a>
                                         </div>
@@ -287,18 +266,9 @@ export default function UserProfilePage() {
                             className="border-0 bg-card/50 backdrop-blur-sm transition-all hover:bg-card/80"
                         >
                             <CardContent className="p-6 text-center">
-                                <stat.icon
-                                    className={cn(
-                                        "mx-auto mb-3 h-5 w-5",
-                                        stat.color
-                                    )}
-                                />
-                                <div className="text-base font-bold">
-                                    {stat.value.toLocaleString()}
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                    {stat.label}
-                                </div>
+                                <stat.icon className={cn("mx-auto mb-3 h-5 w-5", stat.color)} />
+                                <div className="text-base font-bold">{stat.value.toLocaleString()}</div>
+                                <div className="text-sm text-muted-foreground">{stat.label}</div>
                             </CardContent>
                         </Card>
                     ))}
@@ -306,11 +276,7 @@ export default function UserProfilePage() {
 
                 {/* Main Content Tabs */}
                 <Card className="border-0 bg-card/50 backdrop-blur-sm">
-                    <Tabs
-                        value={activeTab}
-                        onValueChange={setActiveTab}
-                        className="w-full"
-                    >
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                         <div className="border-b">
                             <TabsList className="h-auto w-full justify-start rounded-none border-0 bg-transparent p-0">
                                 {[
@@ -343,10 +309,7 @@ export default function UserProfilePage() {
                         </div>
 
                         <div className="p-6 sm:p-8">
-                            <TabsContent
-                                value="overview"
-                                className="mt-0 space-y-8"
-                            >
+                            <TabsContent value="overview" className="mt-0 space-y-8">
                                 {/* Skills Section */}
                                 <div className="space-y-4">
                                     <h3 className="flex items-center gap-2 text-md font-semibold">
@@ -372,17 +335,12 @@ export default function UserProfilePage() {
                                     <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
                                         <Code className="h-8 w-8 text-primary" />
                                     </div>
-                                    <h3 className="mb-2 text-xl font-semibold">
-                                        Your Projects
-                                    </h3>
+                                    <h3 className="mb-2 text-xl font-semibold">Your Projects</h3>
                                     <p className="mb-6 max-w-sm text-muted-foreground">
-                                        View and manage all your created
-                                        projects
+                                        View and manage all your created projects
                                     </p>
                                     <Button asChild>
-                                        <Link href="/dashboard/projects">
-                                            View All Projects
-                                        </Link>
+                                        <Link href="/dashboard/projects">View All Projects</Link>
                                     </Button>
                                 </div>
                             </TabsContent>
@@ -394,41 +352,31 @@ export default function UserProfilePage() {
                                         Recent Activity
                                     </h3>
                                     <div className="space-y-3">
-                                        {userData.recentActivity.map(
-                                            activity => (
-                                                <div
-                                                    key={activity.id}
-                                                    className="flex items-start gap-4 rounded-lg border bg-card/30 p-4 transition-colors hover:bg-card/50"
-                                                >
-                                                    <div className="mt-0.5">
-                                                        {activity.type ===
-                                                            "project" && (
-                                                            <Code className="h-4 w-4 text-blue-500" />
-                                                        )}
-                                                        {activity.type ===
-                                                            "star" && (
-                                                            <Star className="h-4 w-4 text-yellow-500" />
-                                                        )}
-                                                        {activity.type ===
-                                                            "follow" && (
-                                                            <Users className="h-4 w-4 text-green-500" />
-                                                        )}
-                                                        {activity.type ===
-                                                            "comment" && (
-                                                            <MessageSquare className="h-4 w-4 text-purple-500" />
-                                                        )}
-                                                    </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <p className="font-medium text-sm">
-                                                            {activity.title}
-                                                        </p>
-                                                        <p className="text-sm text-muted-foreground">
-                                                            {activity.time}
-                                                        </p>
-                                                    </div>
+                                        {userData.recentActivity.map(activity => (
+                                            <div
+                                                key={activity.id}
+                                                className="flex items-start gap-4 rounded-lg border bg-card/30 p-4 transition-colors hover:bg-card/50"
+                                            >
+                                                <div className="mt-0.5">
+                                                    {activity.type === "project" && (
+                                                        <Code className="h-4 w-4 text-blue-500" />
+                                                    )}
+                                                    {activity.type === "star" && (
+                                                        <Star className="h-4 w-4 text-yellow-500" />
+                                                    )}
+                                                    {activity.type === "follow" && (
+                                                        <Users className="h-4 w-4 text-green-500" />
+                                                    )}
+                                                    {activity.type === "comment" && (
+                                                        <MessageSquare className="h-4 w-4 text-purple-500" />
+                                                    )}
                                                 </div>
-                                            )
-                                        )}
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="font-medium text-sm">{activity.title}</p>
+                                                    <p className="text-sm text-muted-foreground">{activity.time}</p>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </TabsContent>
@@ -440,28 +388,22 @@ export default function UserProfilePage() {
                                         Achievements
                                     </h3>
                                     <div className="grid gap-6 sm:grid-cols-2 text-sm">
-                                        {userData.achievements.map(
-                                            achievement => (
-                                                <div
-                                                    key={achievement.id}
-                                                    className="flex items-start gap-4 rounded-lg border bg-card/30 p-6 transition-colors hover:bg-card/50"
-                                                >
-                                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
-                                                        <achievement.icon className="h-5 w-5 text-primary" />
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <h4 className="font-semibold">
-                                                            {achievement.title}
-                                                        </h4>
-                                                        <p className="mt-1 text-sm text-muted-foreground">
-                                                            {
-                                                                achievement.description
-                                                            }
-                                                        </p>
-                                                    </div>
+                                        {userData.achievements.map(achievement => (
+                                            <div
+                                                key={achievement.id}
+                                                className="flex items-start gap-4 rounded-lg border bg-card/30 p-6 transition-colors hover:bg-card/50"
+                                            >
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                                                    <achievement.icon className="h-5 w-5 text-primary" />
                                                 </div>
-                                            )
-                                        )}
+                                                <div className="flex-1">
+                                                    <h4 className="font-semibold">{achievement.title}</h4>
+                                                    <p className="mt-1 text-sm text-muted-foreground">
+                                                        {achievement.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </TabsContent>

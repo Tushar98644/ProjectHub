@@ -8,10 +8,7 @@ export async function GET(request: Request) {
         const projects = await getProjects(request);
         return Response.json(projects);
     } catch (err) {
-        return Response.json(
-            { err: "Failed to fetch projects" },
-            { status: 400 }
-        );
+        return Response.json({ err: "Failed to fetch projects" }, { status: 400 });
     }
 }
 

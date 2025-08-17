@@ -11,18 +11,11 @@ interface ProjectLinksProps {
     setLiveUrl: (liveUrl: string) => void;
 }
 
-export default function ProjectLinks({
-    githubUrl,
-    setGithubUrl,
-    liveUrl,
-    setLiveUrl,
-}: ProjectLinksProps) {
+export default function ProjectLinks({ githubUrl, setGithubUrl, liveUrl, setLiveUrl }: ProjectLinksProps) {
     return (
         <Card className="space-y-4 rounded-2xl border bg-background/60 p-5 backdrop-blur">
             <div>
-                <label className="block mb-2 text-muted-foreground">
-                    GitHub URL
-                </label>
+                <label className="block mb-2 text-muted-foreground">GitHub URL</label>
                 <div className="relative">
                     <Github className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
@@ -35,9 +28,7 @@ export default function ProjectLinks({
             </div>
 
             <div>
-                <label className="block mb-2 text-muted-foreground">
-                    Live URL
-                </label>
+                <label className="block mb-2 text-muted-foreground">Live URL</label>
                 <div className="relative">
                     <Link2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input

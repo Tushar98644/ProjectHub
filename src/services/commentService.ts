@@ -9,11 +9,7 @@ class CommentService {
     }
 
     async createComment(content: string, threadId: string) {
-        const res = await axios.post(
-            "/api/v1/comments",
-            { content },
-            { params: { threadId } }
-        );
+        const res = await axios.post("/api/v1/comments", { content }, { params: { threadId } });
         return res.data;
     }
 }

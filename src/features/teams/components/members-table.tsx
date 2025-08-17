@@ -1,13 +1,6 @@
 "use client";
 
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/Table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table";
 import { ArrowSwapVertical, Slash, TickCircle } from "iconsax-reactjs";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
@@ -65,25 +58,11 @@ function MembersTable() {
                         {/* Header */}
                         <TableHeader>
                             <TableRow>
-                                {[
-                                    "Member name",
-                                    "Title",
-                                    "Project",
-                                    "Member Document",
-                                    "Status",
-                                ].map((label, i) => (
-                                    <TableHead
-                                        key={label}
-                                        className={i === 4 ? "w-[180px]" : ""}
-                                    >
+                                {["Member name", "Title", "Project", "Member Document", "Status"].map((label, i) => (
+                                    <TableHead key={label} className={i === 4 ? "w-[180px]" : ""}>
                                         <div className="inline-flex items-center gap-2">
-                                            <span className="text-xs font-medium text-muted-foreground">
-                                                {label}
-                                            </span>
-                                            <ArrowSwapVertical
-                                                size={12}
-                                                className="text-muted-foreground/70"
-                                            />
+                                            <span className="text-xs font-medium text-muted-foreground">{label}</span>
+                                            <ArrowSwapVertical size={12} className="text-muted-foreground/70" />
                                         </div>
                                     </TableHead>
                                 ))}
@@ -104,36 +83,23 @@ function MembersTable() {
                                                 className="w-10 h-10 rounded-full"
                                             />
                                             <div className="min-w-0">
-                                                <p className="text-sm font-medium text-foreground truncate">
-                                                    {m.name}
-                                                </p>
-                                                <p className="text-xs text-muted-foreground truncate">
-                                                    {m.email}
-                                                </p>
+                                                <p className="text-sm font-medium text-foreground truncate">{m.name}</p>
+                                                <p className="text-xs text-muted-foreground truncate">{m.email}</p>
                                             </div>
                                         </div>
                                     </TableCell>
 
                                     {/* Title */}
                                     <TableCell>
-                                        <p className="text-sm font-medium text-foreground">
-                                            {m.title}
-                                        </p>
-                                        <p className="text-xs text-muted-foreground">
-                                            {m.since}
-                                        </p>
+                                        <p className="text-sm font-medium text-foreground">{m.title}</p>
+                                        <p className="text-xs text-muted-foreground">{m.since}</p>
                                     </TableCell>
 
                                     {/* Project */}
                                     <TableCell>
                                         <div className="flex items-center gap-3">
                                             <div className="rounded-full p-1.5 border border-muted-foreground/20 bg-background/50 shrink-0">
-                                                <Image
-                                                    src={m.projectLogo}
-                                                    alt={m.projectName}
-                                                    width={28}
-                                                    height={28}
-                                                />
+                                                <Image src={m.projectLogo} alt={m.projectName} width={28} height={28} />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="text-sm font-medium text-foreground truncate">
@@ -149,19 +115,10 @@ function MembersTable() {
                                     {/* Document */}
                                     <TableCell>
                                         <div className="flex items-center gap-3">
-                                            <Image
-                                                src="/assets/icons/pdfIcon.svg"
-                                                alt="pdf"
-                                                width={28}
-                                                height={28}
-                                            />
+                                            <Image src="/assets/icons/pdfIcon.svg" alt="pdf" width={28} height={28} />
                                             <div className="min-w-0">
-                                                <p className="text-sm font-medium text-foreground truncate">
-                                                    {m.doc}
-                                                </p>
-                                                <p className="text-xs text-muted-foreground">
-                                                    {m.size}
-                                                </p>
+                                                <p className="text-sm font-medium text-foreground truncate">{m.doc}</p>
+                                                <p className="text-xs text-muted-foreground">{m.size}</p>
                                             </div>
                                         </div>
                                     </TableCell>
@@ -180,9 +137,7 @@ function MembersTable() {
                                                             variant="Bold"
                                                             className="text-emerald-500"
                                                         />
-                                                        <span className="text-xs font-medium">
-                                                            Active
-                                                        </span>
+                                                        <span className="text-xs font-medium">Active</span>
                                                     </div>
                                                 </Badge>
                                             ) : (
@@ -196,9 +151,7 @@ function MembersTable() {
                                                             variant="Bold"
                                                             className="text-muted-foreground"
                                                         />
-                                                        <span className="text-xs font-medium">
-                                                            Absent
-                                                        </span>
+                                                        <span className="text-xs font-medium">Absent</span>
                                                     </div>
                                                 </Badge>
                                             )}

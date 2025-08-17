@@ -22,10 +22,7 @@ export default function TeamsPage() {
         alert(msg);
     };
 
-    const roles = useMemo(
-        () => ["all", "admins", "maintainers", "members", "guests"],
-        []
-    );
+    const roles = useMemo(() => ["all", "admins", "maintainers", "members", "guests"], []);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-background">
@@ -58,31 +55,21 @@ export default function TeamsPage() {
                             disabled={isLoading}
                         >
                             <Plus size={14} />
-                            <span className="hidden sm:inline">
-                                Invite member
-                            </span>
+                            <span className="hidden sm:inline">Invite member</span>
                         </Button>
                     </div>
                 </div>
 
                 {/* Search + Roles */}
                 <div className="flex flex-col gap-3">
-                    <SearchBar
-                        placeholder={"Search Members..."}
-                        value={searchQuery}
-                        onChange={setSearchQuery}
-                    />
+                    <SearchBar placeholder={"Search Members..."} value={searchQuery} onChange={setSearchQuery} />
 
                     <ScrollArea>
                         <div className="flex items-center gap-2 pb-1">
                             {roles.map(role => (
                                 <Button
                                     key={role}
-                                    variant={
-                                        selectedRole === role
-                                            ? "default"
-                                            : "outline"
-                                    }
+                                    variant={selectedRole === role ? "default" : "outline"}
                                     size="sm"
                                     onClick={() => setSelectedRole(role)}
                                     className={clsx(
@@ -94,10 +81,7 @@ export default function TeamsPage() {
                                 </Button>
                             ))}
                         </div>
-                        <ScrollBar
-                            className="hidden"
-                            orientation="horizontal"
-                        />
+                        <ScrollBar className="hidden" orientation="horizontal" />
                     </ScrollArea>
                 </div>
 

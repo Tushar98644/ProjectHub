@@ -9,10 +9,7 @@ export async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const sessionCookie = getSessionCookie(request);
 
-    if (
-        sessionCookie &&
-        publicRoutes.some(route => pathname.startsWith(route))
-    ) {
+    if (sessionCookie && publicRoutes.some(route => pathname.startsWith(route))) {
         return NextResponse.redirect(new URL("/", request.url));
     }
 

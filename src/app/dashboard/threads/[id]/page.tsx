@@ -7,13 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import {
-    MessageSquare,
-    Send,
-    Sparkles,
-    SlidersHorizontal,
-    Heart,
-} from "lucide-react";
+import { MessageSquare, Send, Sparkles, SlidersHorizontal, Heart } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -25,10 +19,7 @@ import {
 import { timeAgo } from "@/utils/timeAgo";
 import { useFetchThread } from "@/hooks/queries/useThreadQuery";
 import { useParams } from "next/navigation";
-import {
-    useCommentsQuery,
-    useCommentsMuation,
-} from "@/hooks/queries/useCommentQuery";
+import { useCommentsQuery, useCommentsMuation } from "@/hooks/queries/useCommentQuery";
 import { Comment } from "@/types/comment";
 import { useSession } from "@/config/auth/client";
 
@@ -47,10 +38,7 @@ const ThreadPage = () => {
     const sortedComments: Comment[] = useMemo(() => {
         return [...comments].sort((a, b) => {
             if (sort === "likes") return (b.likes || 0) - (a.likes || 0);
-            return (
-                new Date(b.createdAt).getTime() -
-                new Date(a.createdAt).getTime()
-            );
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
         });
     }, [comments, sort]);
 
@@ -93,50 +81,31 @@ const ThreadPage = () => {
                 <div className="flex items-center gap-2">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="gap-2"
-                            >
+                            <Button variant="outline" size="sm" className="gap-2">
                                 <SlidersHorizontal className="h-4 w-4" /> Sort
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-40">
                             <DropdownMenuLabel>Sort by</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => setSort("recent")}>
-                                Most recent
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setSort("likes")}>
-                                Most liked
-                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSort("recent")}>Most recent</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setSort("likes")}>Most liked</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={reset}
-                        className="hidden md:inline"
-                    >
+                    <Button size="sm" variant="ghost" onClick={reset} className="hidden md:inline">
                         Reset
                     </Button>
                 </div>
             </div>
             <div>
-                <h2 className="text-md tracking-tight flex items-center gap-2">
-                    {thread.description}
-                </h2>
+                <h2 className="text-md tracking-tight flex items-center gap-2">{thread.description}</h2>
             </div>
 
             {/* New Comment Box */}
             <Card className="rounded-xl p-4 flex flex-col gap-3">
                 <div className="flex gap-3">
-                    <img
-                        src={session?.user?.image || ""}
-                        alt="you"
-                        className="h-10 w-10 rounded-full object-cover"
-                    />
+                    <img src={session?.user?.image || ""} alt="you" className="h-10 w-10 rounded-full object-cover" />
                     <Textarea
                         placeholder="Share your thoughts — be respectful and constructive"
                         value={newComment}
@@ -146,21 +115,12 @@ const ThreadPage = () => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <div className="text-xs text-muted-foreground">
-                        Markdown supported • Keep replies on-topic
-                    </div>
+                    <div className="text-xs text-muted-foreground">Markdown supported • Keep replies on-topic</div>
                     <div className="flex items-center gap-2">
-                        <Button
-                            onClick={() => setNewComment("")}
-                            variant="ghost"
-                            size="sm"
-                        >
+                        <Button onClick={() => setNewComment("")} variant="ghost" size="sm">
                             Cancel
                         </Button>
-                        <Button
-                            onClick={handlePost}
-                            className="gap-2 rounded-lg"
-                        >
+                        <Button onClick={handlePost} className="gap-2 rounded-lg">
                             <Send className="h-4 w-4" /> Post Comment
                         </Button>
                     </div>
@@ -187,14 +147,9 @@ const ThreadPage = () => {
                                     <div className="flex-1">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <span className="font-semibold">
-                                                    {c.author}
-                                                </span>
+                                                <span className="font-semibold">{c.author}</span>
                                                 <span className="text-xs text-muted-foreground">
-                                                    •{" "}
-                                                    {timeAgo(
-                                                        c.createdAt.toString()
-                                                    )}
+                                                    • {timeAgo(c.createdAt.toString())}
                                                 </span>
                                             </div>
 
@@ -209,16 +164,12 @@ const ThreadPage = () => {
                                                     <Heart
                                                     // className={`h-4 w-4 ${c.likedByMe ? "text-red-500" : ""}`}
                                                     />
-                                                    <span className="text-xs">
-                                                        {c.likes}
-                                                    </span>
+                                                    <span className="text-xs">{c.likes}</span>
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <p className="mt-2 text-sm whitespace-pre-wrap">
-                                            {c.content}
-                                        </p>
+                                        <p className="mt-2 text-sm whitespace-pre-wrap">{c.content}</p>
                                     </div>
                                 </div>
                             </Card>
@@ -252,8 +203,6 @@ const EmptyState = ({ onReset }: { onReset: () => void }) => (
             <Sparkles className="h-6 w-6" />
         </div>
         <h3 className="text-lg font-semibold">No comments yet</h3>
-        <p className="mt-1 text-sm text-muted-foreground">
-            Be the first to start the conversation.
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">Be the first to start the conversation.</p>
     </Card>
 );

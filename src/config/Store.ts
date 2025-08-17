@@ -1,12 +1,6 @@
 import { create } from "zustand";
 
-type pageOptions =
-    | "DASHBOARD"
-    | "INTEGRATIONS"
-    | "SETTINGS"
-    | "CALENDAR"
-    | "TEAMS"
-    | "SUPPORT";
+type pageOptions = "DASHBOARD" | "INTEGRATIONS" | "SETTINGS" | "CALENDAR" | "TEAMS" | "SUPPORT";
 
 interface centralStore {
     activePage: pageOptions;

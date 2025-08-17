@@ -42,8 +42,7 @@ export default function TagInput({ label, items, setItems }: TagInputProps) {
                     <TagsIcon className="h-4 w-4" /> {label}
                 </label>
                 <div className="text-xs text-muted-foreground">
-                    Press <kbd className="rounded border px-1">Enter</kbd> to
-                    add
+                    Press <kbd className="rounded border px-1">Enter</kbd> to add
                 </div>
             </div>
 
@@ -62,12 +61,7 @@ export default function TagInput({ label, items, setItems }: TagInputProps) {
             {!!items.length && (
                 <div className="flex flex-wrap gap-2">
                     {items.map(item => (
-                        <Badge
-                            key={item}
-                            variant="secondary"
-                            className="cursor-pointer"
-                            onClick={() => remove(item)}
-                        >
+                        <Badge key={item} variant="secondary" className="cursor-pointer" onClick={() => remove(item)}>
                             {item} ×
                         </Badge>
                     ))}

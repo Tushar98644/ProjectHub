@@ -10,10 +10,7 @@ interface ImagePickerProps {
     setImage: (image: string) => void;
 }
 
-export default function ProjectImagePicker({
-    image,
-    setImage,
-}: ImagePickerProps) {
+export default function ProjectImagePicker({ image, setImage }: ImagePickerProps) {
     const [imgOk, setImgOk] = useState(true);
 
     useEffect(() => {
@@ -28,19 +25,11 @@ export default function ProjectImagePicker({
         <Card className="space-y-3 rounded-2xl border bg-background/60 p-5 backdrop-blur">
             <label className="block font-medium mb-2">Project Image</label>
             <div className="flex gap-2">
-                <Input
-                    value={image}
-                    onChange={e => setImage(e.target.value)}
-                    placeholder="Image URL"
-                />
+                <Input value={image} onChange={e => setImage(e.target.value)} placeholder="Image URL" />
                 <Button
                     type="button"
                     variant="outline"
-                    onClick={() =>
-                        setImage(
-                            "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&q=80"
-                        )
-                    }
+                    onClick={() => setImage("https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&q=80")}
                 >
                     <Camera className="h-4 w-4" />
                 </Button>
@@ -48,16 +37,10 @@ export default function ProjectImagePicker({
 
             <div className="rounded-xl border">
                 {image && imgOk ? (
-                    <img
-                        src={image}
-                        alt="Preview"
-                        className="h-48 w-full object-cover"
-                    />
+                    <img src={image} alt="Preview" className="h-48 w-full object-cover" />
                 ) : (
                     <div className="flex h-48 items-center justify-center text-sm text-muted-foreground">
-                        {image
-                            ? "Could not load image preview"
-                            : "Image preview will appear here"}
+                        {image ? "Could not load image preview" : "Image preview will appear here"}
                     </div>
                 )}
             </div>

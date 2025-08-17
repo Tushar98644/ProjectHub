@@ -1,10 +1,4 @@
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
 const STATUS_BADGES = {
@@ -20,32 +14,20 @@ const STATUS_BADGES = {
     },
     completed: {
         label: "Completed",
-        badgeClass:
-            "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/15 dark:text-sky-400 dark:border-sky-800",
+        badgeClass: "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/15 dark:text-sky-400 dark:border-sky-800",
     },
 };
 
-export function StatusSelect({
-    value,
-    onChange,
-}: {
-    value: string;
-    onChange: (v: string) => void;
-}) {
+export function StatusSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
     return (
         <Select onValueChange={onChange} defaultValue={value}>
             <SelectTrigger className="rounded-xl">
                 <SelectValue placeholder="Select status" />
             </SelectTrigger>
             <SelectContent>
-                {(
-                    Object.keys(STATUS_BADGES) as (keyof typeof STATUS_BADGES)[]
-                ).map(s => (
+                {(Object.keys(STATUS_BADGES) as (keyof typeof STATUS_BADGES)[]).map(s => (
                     <SelectItem key={s} value={s}>
-                        <Badge
-                            variant="outline"
-                            className={`border ${STATUS_BADGES[s].badgeClass}`}
-                        >
+                        <Badge variant="outline" className={`border ${STATUS_BADGES[s].badgeClass}`}>
                             {STATUS_BADGES[s].label}
                         </Badge>
                     </SelectItem>

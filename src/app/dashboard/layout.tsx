@@ -3,8 +3,7 @@
 import Navbar from "@/components/layout/navbar/navbar";
 import Sidebar from "@/components/layout/sidebar";
 import { useCentralStore } from "@/config/Store";
-import { motion } from "framer-motion";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     const { isSidebarOpen, setIsSidebarOpen } = useCentralStore();
@@ -14,21 +13,22 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={`${isSidebarOpen ? "overflow-hidden" : ""} overflow-x-hidden`}
+            className="h-screen w-full overflow-hidden"
         >
-            {/* backdrop */}
+            {/* Mobile backdrop */}
             <AnimatePresence>
                 {isSidebarOpen && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         onClick={() => setIsSidebarOpen(false)}
-                        className="bg-black/60 absolute top-0 left-0 md:hidden w-full z-20 h-full"
+                        className="fixed inset-0 bg-black/60 z-40 md:hidden"
                     />
                 )}
             </AnimatePresence>
 
-            {/* mobile sidebar */}
+            {/* Mobile sidebar */}
             <AnimatePresence>
                 {isSidebarOpen && (
                     <motion.div
@@ -40,25 +40,28 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                             type: "spring",
                             bounce: 0.25,
                         }}
-                        className="absolute md:hidden z-30 top-0 left-0"
+                        className="fixed top-0 left-0 z-50 h-full md:hidden"
                     >
                         <Sidebar />
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            <div className="flex flex-row w-full h-screen overflow-hidden">
-                <div className="hidden md:block">
+            <div className="flex h-full">
+                {/* Desktop sidebar */}
+                <div className="hidden md:block flex-shrink-0">
                     <Sidebar />
                 </div>
 
-                <div className="flex flex-col h-full min-w-0 flex-1">
-                    <div>
+                {/* Main content area */}
+                <div className="flex-1 flex flex-col min-w-0 h-full ml-2">
+                    {/* Navbar */}
+                    <div className="flex-shrink-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
                         <Navbar />
                     </div>
 
-                    <div className="flex-1 w-full h-full min-w-0 p-4 md:p-6 bg-gradient-to-b from-background via-background to-background">
-                        {children}
+                    <div className="flex-1 min-h-0 overflow-auto">
+                        <div className="h-full p-4 sm:p-6 lg:p-8">{children}</div>
                     </div>
                 </div>
             </div>

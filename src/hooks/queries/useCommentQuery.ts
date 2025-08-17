@@ -17,13 +17,8 @@ export const useCommentsMuation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({
-            content,
-            threadId,
-        }: {
-            content: string;
-            threadId: string;
-        }) => commentService.createComment(content, threadId),
+        mutationFn: ({ content, threadId }: { content: string; threadId: string }) =>
+            commentService.createComment(content, threadId),
         onSuccess: (_, { threadId }) => {
             queryClient.invalidateQueries({
                 queryKey: commentKeys.list(threadId),

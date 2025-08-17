@@ -10,10 +10,7 @@ export async function GET(req: Request) {
         const threads = await Thread.find().sort({ createdAt: -1 });
         return Response.json(threads, { status: 200 });
     } catch (err) {
-        return Response.json(
-            { message: "Failed to fetch threads" },
-            { status: 401 }
-        );
+        return Response.json({ message: "Failed to fetch threads" }, { status: 401 });
     }
 }
 
@@ -28,19 +25,13 @@ export async function POST(req: Request) {
         const { title, description, projectId, tags } = body;
 
         if (!author || !title || !description || !projectId)
-            return Response.json(
-                { message: "Please fill all fields" },
-                { status: 400 }
-            );
+            return Response.json({ message: "Please fill all fields" }, { status: 400 });
 
         const data = { author, title, description, projectId, tags };
         const thread = await Thread.create(data);
 
         return Response.json(thread, { status: 200 });
     } catch (err) {
-        return Response.json(
-            { message: "Error creating discussion" },
-            { status: 400 }
-        );
+        return Response.json({ message: "Error creating discussion" }, { status: 400 });
     }
 }

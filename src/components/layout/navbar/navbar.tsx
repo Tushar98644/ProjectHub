@@ -6,14 +6,7 @@ import { FolderAdd, SidebarLeft } from "iconsax-reactjs";
 import { useCentralStore } from "@/config/Store";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Button } from "@/components/ui/button";
-import {
-    ArrowLeft,
-    Settings,
-    Sparkles,
-    User,
-    Users,
-    FolderGit2,
-} from "lucide-react";
+import { ArrowLeft, Settings, Sparkles, User, Users, FolderGit2 } from "lucide-react";
 import { FaProjectDiagram } from "react-icons/fa";
 
 type HeaderConfig =
@@ -69,10 +62,7 @@ function resolveHeaderConfig(pathname: string): {
     subtitle?: string;
     right?: React.ReactNode;
 } {
-    if (
-        headerConfig[pathname] &&
-        typeof headerConfig[pathname] !== "function"
-    ) {
+    if (headerConfig[pathname] && typeof headerConfig[pathname] !== "function") {
         return headerConfig[pathname] as Exclude<HeaderConfig, Function>;
     }
 
@@ -88,28 +78,18 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="min-h-[var(--h-nav)] flex p-4 md:p-6 justify-between items-center gap-4 text-foreground">
+            <div className="h-[var(--h-nav)] flex p-4 md:p-6 justify-between items-center gap-4 text-foreground">
                 {/* LEFT SECTION */}
                 <div className="flex items-center gap-3">
                     {config.icon && (
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full"
-                        >
+                        <Button variant="outline" size="icon" className="rounded-full">
                             <config.icon size={16} className="text-primary" />
                         </Button>
                     )}
 
                     <div>
-                        <h1 className="text-sm font-semibold">
-                            {config.title}
-                        </h1>
-                        {config.subtitle && (
-                            <p className="text-xs text-muted-foreground">
-                                {config.subtitle}
-                            </p>
-                        )}
+                        <h1 className="text-sm font-semibold">{config.title}</h1>
+                        {config.subtitle && <p className="text-xs text-muted-foreground">{config.subtitle}</p>}
                     </div>
                 </div>
 
@@ -122,11 +102,7 @@ const Navbar = () => {
                 </button>
 
                 {/* RIGHT SECTION */}
-                {config.right && (
-                    <div className="hidden md:flex ml-auto items-center gap-1">
-                        {config.right}
-                    </div>
-                )}
+                {config.right && <div className="hidden md:flex ml-auto items-center gap-1">{config.right}</div>}
 
                 {/* THEME TOGGLER */}
                 <div className="flex flex-row gap-0 mr-2">

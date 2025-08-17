@@ -73,14 +73,9 @@ export default function IntegrationsPage() {
     const [selected, setSelected] = useState<string>("github");
     const [isLoading, setIsLoading] = useState(false);
 
-    const selectedIntegration =
-        integrations.find(i => i.id === selected) || integrations[0];
-    const [localWebhook, setLocalWebhook] = useState(
-        selectedIntegration.webhookUrl
-    );
-    const [enabledEvents, setEnabledEvents] = useState<string[]>(
-        selectedIntegration.events
-    );
+    const selectedIntegration = integrations.find(i => i.id === selected) || integrations[0];
+    const [localWebhook, setLocalWebhook] = useState(selectedIntegration.webhookUrl);
+    const [enabledEvents, setEnabledEvents] = useState<string[]>(selectedIntegration.events);
 
     useEffect(() => {
         setLocalWebhook(selectedIntegration.webhookUrl);
@@ -90,9 +85,7 @@ export default function IntegrationsPage() {
     const filteredIntegrations = useMemo(
         () =>
             integrations.filter(it =>
-                (it.name + it.description + it.category)
-                    .toLowerCase()
-                    .includes(query.toLowerCase())
+                (it.name + it.description + it.category).toLowerCase().includes(query.toLowerCase())
             ),
         [query]
     );

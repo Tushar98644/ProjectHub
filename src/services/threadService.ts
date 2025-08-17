@@ -11,12 +11,7 @@ class ThreadService {
         return res.data;
     };
 
-    public createThread = async (
-        projectId: string,
-        title: string,
-        description: string,
-        tags: string[]
-    ) => {
+    public createThread = async (projectId: string, title: string, description: string, tags: string[]) => {
         const res = await axios.post("/api/v1/threads", {
             projectId,
             title,
