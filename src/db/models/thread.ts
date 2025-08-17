@@ -8,6 +8,7 @@ const ThreadSchema = new Schema(
         author: String,
         description: String,
         comments: [CommentSchema],
+        likes: { type: Number, default: 0 },
         popular: { type: Boolean, default: false },
         tags: [String],
     },

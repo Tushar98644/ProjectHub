@@ -7,6 +7,8 @@ export interface Thread {
     title: string;
     description: string;
     comments: Comment[];
+    tags: string[];
+    likes: number;
     popular: boolean;
     createdAt: Date;
     updatedAt: Date;

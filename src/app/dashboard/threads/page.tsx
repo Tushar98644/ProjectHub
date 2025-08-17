@@ -8,58 +8,21 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SearchBar } from "@/components/common/search-bar";
 import { Sparkles, ArrowRight, Clock, Plus } from "lucide-react";
+import { useFetchThreads } from "@/hooks/queries/useThreadQuery";
+import { Thread } from "@/types/thread";
 
-// ------------------ Mock Threads ------------------
-const MOCK_THREADS = [
-    {
-        id: "t1",
-        project: "p1",
-        projectTitle: "ReZero",
-        title: "Performance hiccups on level 3",
-        excerpt:
-            "Frame drops around heavy particle spawns — profiling results inside.",
-        author: "Jane Doe",
-        commentsCount: 34,
-        likes: 18,
-        lastUpdated: new Date(
-            Date.now() - 1000 * 60 * 60 * 24 * 1
-        ).toISOString(),
-    },
-    {
-        id: "t2",
-        project: "p2",
-        projectTitle: "Pixel Quest",
-        title: "Control remapping + accessibility options",
-        excerpt:
-            "Would be great to have controller support and remapping of keys.",
-        author: "Alex Park",
-        commentsCount: 72,
-        likes: 54,
-        lastUpdated: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
-    },
-    {
-        id: "t3",
-        project: "p1",
-        projectTitle: "ReZero",
-        title: "Multiplayer roadmap?",
-        excerpt: "Any plans for coop or PvP? Here's a proposed roadmap.",
-        author: "Samira",
-        commentsCount: 12,
-        likes: 8,
-        lastUpdated: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-    },
-];
+type ThreadWithScore = Thread & { score: number };
 
 function timeAgo(iso: string) {
     const d = Date.now() - new Date(iso).getTime();
     const s = Math.floor(d / 1000);
-    if (s < 60) return `${s}s`;
+    if (s < 60) return `${s}s ago`;
     const m = Math.floor(s / 60);
-    if (m < 60) return `${m}m`;
+    if (m < 60) return `${m}m ago`;
     const h = Math.floor(m / 60);
-    if (h < 24) return `${h}h`;
+    if (h < 24) return `${h}h ago`;
     const day = Math.floor(h / 24);
-    return `${day}d`;
+    return `${day}d ago`;
 }
 
 const ThreadsPage = () => {
@@ -67,34 +30,35 @@ const ThreadsPage = () => {
     const [sort, setSort] = useState<"popular" | "recent" | "comments">(
         "popular"
     );
-    const [isLoading] = useState(false);
+    const { data: threads = [], isLoading } = useFetchThreads();
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();
-        const base = MOCK_THREADS.filter(t => {
+        const base = threads?.filter((t: Thread) => {
             if (!q) return true;
             return (
                 t.title.toLowerCase().includes(q) ||
-                t.excerpt.toLowerCase().includes(q) ||
-                t.projectTitle.toLowerCase().includes(q)
+                t.description.toLowerCase().includes(q)
             );
         });
 
-        const scored = base.map(t => ({
+        const commentsCount = threads?.comnnets?.length || 0;
+        const scored: ThreadWithScore[] = base.map((t: Thread) => ({
             ...t,
-            score: t.likes * 2 + t.commentsCount * 3,
+            score: t.likes * 2 + commentsCount * 3,
         }));
 
         return scored.sort((a, b) => {
             if (sort === "recent")
                 return (
-                    new Date(b.lastUpdated).getTime() -
-                    new Date(a.lastUpdated).getTime()
+                    new Date(b.updatedAt).getTime() -
+                    new Date(a.updatedAt).getTime()
                 );
-            if (sort === "comments") return b.commentsCount - a.commentsCount;
-            return b.score - a.score; // popular
+            if (sort === "comments")
+                return b?.comments?.length - a?.comments?.length;
+            return b.score - a.score;
         });
-    }, [query, sort]);
+    }, [query, sort, threads]);
 
     return (
         <div className="flex flex-col gap-6 h-full">
@@ -141,7 +105,7 @@ const ThreadsPage = () => {
                         </div>
                     </div>
 
-                    <Link href="/dashboard/discussions/new">
+                    <Link href="/dashboard/threads/new">
                         <Button size="sm" className="flex items-center gap-2">
                             <Plus className="h-4 w-4" />
                             Create Thread
@@ -150,7 +114,7 @@ const ThreadsPage = () => {
                 </div>
             </div>
 
-            {/* Main layout: left sidebar (filters/search) + main list */}
+            {/* Main layout: left sidebar */}
             <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-6">
                 {/* Sidebar */}
                 <aside className="hidden md:block">
@@ -185,17 +149,13 @@ const ThreadsPage = () => {
                             <div className="flex flex-col gap-2 text-sm text-muted-foreground">
                                 <div className="flex items-center justify-between">
                                     <span>Active threads</span>
-                                    <span>{MOCK_THREADS.length}</span>
+                                    <span>{threads?.length}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <span>Top comments</span>
-                                    <span>
-                                        {Math.max(
-                                            ...MOCK_THREADS.map(
-                                                t => t.commentsCount
-                                            )
-                                        )}
-                                    </span>
+                                    {/* <span>
+                                        {threads?.map((t: Thread) => t?.comments?.length)}
+                                    </span> */}
                                 </div>
                             </div>
                         </Card>
@@ -221,9 +181,9 @@ const ThreadsPage = () => {
                             </div>
                         ) : (
                             <div className="flex flex-col gap-3">
-                                {filtered.map(t => (
+                                {filtered.map((t: Thread) => (
                                     <Card
-                                        key={t.id}
+                                        key={t._id}
                                         className="p-4 rounded-2xl hover:shadow-lg transition"
                                     >
                                         <div className="md:flex md:items-start md:justify-between gap-3">
@@ -233,12 +193,12 @@ const ThreadsPage = () => {
                                                         {t.title}
                                                     </h3>
                                                     <Badge variant="outline">
-                                                        {t.projectTitle}
+                                                        {t?.title}
                                                     </Badge>
                                                 </div>
 
                                                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-                                                    {t.excerpt}
+                                                    {t?.description}
                                                 </p>
 
                                                 <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
@@ -246,14 +206,15 @@ const ThreadsPage = () => {
                                                         <Clock className="h-3 w-3" />{" "}
                                                         <span>
                                                             {timeAgo(
-                                                                t.lastUpdated
+                                                                t?.updatedAt.toString()
                                                             )}{" "}
                                                             ago
                                                         </span>
                                                     </div>
                                                     <div>•</div>
                                                     <div>
-                                                        {t.commentsCount}{" "}
+                                                        {t?.comments?.length ||
+                                                            0}{" "}
                                                         comments
                                                     </div>
                                                     <div>•</div>
@@ -263,7 +224,7 @@ const ThreadsPage = () => {
 
                                             <div className="mt-4 md:mt-0 md:ml-4 flex items-center">
                                                 <Link
-                                                    href={`/dashboard/projects/${t.project}/discussion/${t.id}`}
+                                                    href={`/dashboard/threads/${t._id}`}
                                                     className="inline-flex"
                                                 >
                                                     <Button
