@@ -7,9 +7,7 @@ class ThreadService {
     };
 
     public getThread = async (id: string) => {
-        const res = await axios.get("/api/v1/threads", {
-            params: { id },
-        });
+        const res = await axios.get(`/api/v1/threads/${id}`);
         return res.data;
     };
 

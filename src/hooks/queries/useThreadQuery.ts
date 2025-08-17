@@ -14,6 +14,7 @@ export const useFetchThread = (id: string) => {
         queryKey: ["thread", id],
         queryFn: () => threadService.getThread(id),
         staleTime: 5 * 1000 * 60,
+        enabled: !!id,
     });
 };
 

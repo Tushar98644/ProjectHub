@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import { useCreateThread } from "@/hooks/queries/useThreadQuery";
 const CreateThreadPage = () => {
     const router = useRouter();
 
-    const { data: projects } = useFetchProjects();
+    const { data: projects = [] } = useFetchProjects();
     const { mutate: createThread, isPending } = useCreateThread();
 
     const [projectId, setProjectID] = useState<string>("");

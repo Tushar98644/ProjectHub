@@ -10,27 +10,16 @@ import { SearchBar } from "@/components/common/search-bar";
 import { Sparkles, ArrowRight, Clock, Plus } from "lucide-react";
 import { useFetchThreads } from "@/hooks/queries/useThreadQuery";
 import { Thread } from "@/types/thread";
+import { timeAgo } from "@/utils/timeAgo";
 
 type ThreadWithScore = Thread & { score: number };
-
-function timeAgo(iso: string) {
-    const d = Date.now() - new Date(iso).getTime();
-    const s = Math.floor(d / 1000);
-    if (s < 60) return `${s}s ago`;
-    const m = Math.floor(s / 60);
-    if (m < 60) return `${m}m ago`;
-    const h = Math.floor(m / 60);
-    if (h < 24) return `${h}h ago`;
-    const day = Math.floor(h / 24);
-    return `${day}d ago`;
-}
 
 const ThreadsPage = () => {
     const [query, setQuery] = useState("");
     const [sort, setSort] = useState<"popular" | "recent" | "comments">(
         "popular"
     );
-    const { data: threads = [], isLoading } = useFetchThreads();
+    const { data: threads = [], isPending } = useFetchThreads();
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();
@@ -105,7 +94,7 @@ const ThreadsPage = () => {
                         </div>
                     </div>
 
-                    <Link href="/dashboard/threads/new">
+                    <Link href="/dashboard/threads/create">
                         <Button size="sm" className="flex items-center gap-2">
                             <Plus className="h-4 w-4" />
                             Create Thread
@@ -136,9 +125,6 @@ const ThreadsPage = () => {
                                 <button className="text-left px-3 py-2 rounded-md hover:bg-muted/30">
                                     ReZero
                                 </button>
-                                <button className="text-left px-3 py-2 rounded-md hover:bg-muted/30">
-                                    Pixel Quest
-                                </button>
                             </div>
                         </Card>
 
@@ -165,7 +151,7 @@ const ThreadsPage = () => {
                 {/* Threads list */}
                 <main>
                     <div className="flex flex-col gap-4">
-                        {isLoading ? (
+                        {isPending ? (
                             <div className="space-y-3">
                                 {Array.from({ length: 4 }).map((_, i) => (
                                     <Card key={i} className="rounded-xl p-4">

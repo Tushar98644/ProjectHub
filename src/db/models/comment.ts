@@ -2,6 +2,7 @@ import mongoose, { models, Schema } from "mongoose";
 
 export const CommentSchema = new Schema(
     {
+        threadId: { type: String, required: true },
         author: { type: String, required: true },
         authorAvatar: { type: String, required: true },
         content: { type: String, required: true },
