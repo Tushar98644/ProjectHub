@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
 import { RecentActivity } from "./recent-activity";
@@ -30,7 +29,7 @@ export const IntegrationDetail = ({
     };
 
     return (
-        <ScrollArea className="h-full md:w-4/5">
+        <div className="h-full md:w-4/5">
             <div className="space-y-4 pr-2">
                 <Card className="border-0 bg-card/70 backdrop-blur">
                     <CardContent className="p-6">
@@ -135,6 +134,6 @@ export const IntegrationDetail = ({
                     </CardContent>
                 </Card>
             </div>
-        </ScrollArea>
+        </div>
     );
 };

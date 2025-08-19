@@ -6,7 +6,6 @@ import { Plus, SlidersHorizontal, Filter, LayoutGrid, Rows, Sparkles } from "luc
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     DropdownMenu,
@@ -135,7 +134,7 @@ export default function ProjectsPage() {
             <div className="space-y-3">
                 <SearchBar placeholder="Search projects..." value={searchQuery} onChange={setSearchQuery} />
 
-                <ScrollArea className="w-full">
+                <div className="w-full">
                     <div className="flex gap-2 pb-2">
                         {allTags.map(tag => (
                             <Button
@@ -150,7 +149,7 @@ export default function ProjectsPage() {
                             </Button>
                         ))}
                     </div>
-                </ScrollArea>
+                </div>
             </div>
 
             {/* Content */}

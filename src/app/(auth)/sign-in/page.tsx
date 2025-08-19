@@ -2,7 +2,7 @@
 
 import { signIn } from "@/config/auth/client";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-import { motion } from "framer-motion"; // use framer instead of motion/react
+import { motion } from "framer-motion";
 
 export default function Login() {
     const handleSocialSignIn = async (provider: "google" | "github") => {
