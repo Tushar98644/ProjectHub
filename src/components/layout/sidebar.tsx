@@ -5,7 +5,7 @@ import { Folder, Headphone, Profile, Profile2User, Setting2, Setting4 } from "ic
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Atom, MessageCircleCodeIcon } from "lucide-react";
+import { Atom, MessageCircleCodeIcon, User } from "lucide-react";
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -53,15 +53,6 @@ const Sidebar = () => {
                         </Link>
 
                         <Link
-                            href="/dashboard/projects"
-                            className={`flex ${pathname === "/dashboard/projects" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
-                        >
-                            <Folder size={16} />
-                            Community Projects
-                        </Link>
-
-                        <Link
                             href="/dashboard/integrations"
                             className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""}
                 hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
@@ -76,6 +67,15 @@ const Sidebar = () => {
                         >
                             <MessageCircleCodeIcon size={16} />
                             Threads
+                        </Link>
+
+                        <Link
+                            href="/dashboard/projects"
+                            className={`flex ${pathname === "/dashboard/projects" ? "text-primary" : ""}
+                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                        >
+                            <Folder size={16} />
+                            Community Projects
                         </Link>
                     </div>
 
