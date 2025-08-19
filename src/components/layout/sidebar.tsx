@@ -5,7 +5,7 @@ import { Folder, Headphone, Profile, Profile2User, Setting2, Setting4 } from "ic
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Atom, MessageCircleCodeIcon, User } from "lucide-react";
+import { Atom, MessageCircleCodeIcon, Search, Send, User } from "lucide-react";
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -36,46 +36,51 @@ const Sidebar = () => {
                     <div className="pt-6 text-gray-500 dark:text-gray-400 font-medium space-y-2 md:px-2 text-xs">
                         <Link
                             href="/dashboard/teams"
-                            className={`flex ${pathname === "/dashboard/teams" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                            className={`flex ${pathname === "/dashboard/teams" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <Profile2User size={16} />
-                            Teams
+                            <Profile2User size={16} /> Teams
                         </Link>
 
                         <Link
                             href="/dashboard/profile"
-                            className={`flex ${pathname === "/dashboard/profile" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                            className={`flex ${pathname === "/dashboard/profile" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <Profile size={16} />
-                            Profile
+                            <Profile size={16} /> Profile
                         </Link>
 
                         <Link
                             href="/dashboard/integrations"
-                            className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                            className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <Setting4 size={16} />
-                            Integrations
+                            <Setting4 size={16} /> Integrations
                         </Link>
+
+                        <Link
+                            href="/dashboard/invitations"
+                            className={`flex ${pathname === "/dashboard/invitations" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                        >
+                            <Send size={16} /> Invitations
+                        </Link>
+
+                        <Link
+                            href="/dashboard/users"
+                            className={`flex ${pathname === "/dashboard/users" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                        >
+                            <Search size={16} /> Search Users
+                        </Link>
+
                         <Link
                             href="/dashboard/threads"
-                            className={`flex ${pathname === "/dashboard/integrations" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                            className={`flex ${pathname === "/dashboard/threads" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <MessageCircleCodeIcon size={16} />
-                            Threads
+                            <MessageCircleCodeIcon size={16} /> Threads
                         </Link>
 
                         <Link
                             href="/dashboard/projects"
-                            className={`flex ${pathname === "/dashboard/projects" ? "text-primary" : ""}
-                hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
+                            className={`flex ${pathname === "/dashboard/projects" ? "text-primary" : ""} hover:px-8 duration-200 px-6 py-2 items-center gap-2`}
                         >
-                            <Folder size={16} />
-                            Community Projects
+                            <Folder size={16} /> Community Projects
                         </Link>
                     </div>
 
