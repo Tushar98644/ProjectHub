@@ -67,7 +67,7 @@ const CreateThreadPage = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto py-2 px-0 md:px-4 h-full overflow-y-auto">
+        <div className="max-w-6xl mx-auto py-2 pb-8 px-0 md:px-4 h-full overflow-y-auto">
             <div className="flex flex-col md:flex-row items-start gap-6">
                 <div className="flex-1">
                     <div className="flex items-center gap-4 mb-6">

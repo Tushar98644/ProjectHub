@@ -14,7 +14,7 @@ const GithubImportPage = () => {
     const [selected, setSelected] = useState<Record<string, boolean>>({});
     const [importing, setImporting] = useState(false);
 
-    const { data: repos, isPending, refetch, isRefetching } = useFetchRepos();
+    const { data: repos = [], isPending, refetch, isRefetching } = useFetchRepos();
 
     const filtered: Repo[] = repos.filter((r: Repo) =>
         `${r.full_name} ${r.description || ""}`.toLowerCase().includes(query.toLowerCase())

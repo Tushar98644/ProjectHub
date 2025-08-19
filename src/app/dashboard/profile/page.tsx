@@ -25,7 +25,7 @@ type ImportedResource = {
     importedAt?: string;
 };
 
-const minimalUser = {
+const user = {
     name: "Tushar Banik",
     username: "tushar",
     avatar: "/avatar-placeholder.png",
@@ -34,93 +34,66 @@ const minimalUser = {
     stats: { projects: 3 },
 };
 
+const integrations = [
+    {
+        id: "github",
+        name: "GitHub",
+        description: "Repository events, PRs, issues and CI status",
+        connected: false,
+        account: { accountName: "tusharbanik", avatarUrl: "/avatar-placeholder.png" },
+    },
+    {
+        id: "slack",
+        name: "Slack",
+        description: "Messages, channel events and app interactions",
+        connected: false,
+        account: { accountName: "tusharbanik", avatarUrl: "/avatar-placeholder.png" },
+    },
+];
+
 const ProfilePage = () => {
     const [tab, setTab] = useState("overview");
-    const [integrations, setIntegrations] = useState<Integration[]>([]);
     const [imports, setImports] = useState<ImportedResource[]>([]);
-    const [loadingInt, setLoadingInt] = useState(true);
-    const [loadingImp, setLoadingImp] = useState(true);
 
-    useEffect(() => {
-        fetchIntegrations();
-        fetchImports();
-    }, []);
-
-    async function fetchIntegrations() {
-        setLoadingInt(true);
-        try {
-            const res = await fetch("/api/integrations");
-            if (!res.ok) {
-                setIntegrations([]);
-                return;
-            }
-            const json = await res.json();
-            setIntegrations(json);
-        } catch (e) {
-            console.error(e);
-            setIntegrations([]);
-        } finally {
-            setLoadingInt(false);
-        }
-    }
-
-    async function fetchImports() {
-        setLoadingImp(true);
-        try {
-            const res = await fetch("/api/imports");
-            if (!res.ok) {
-                setImports([]);
-                return;
-            }
-            const json = await res.json();
-            setImports(json);
-        } catch (e) {
-            console.error(e);
-            setImports([]);
-        } finally {
-            setLoadingImp(false);
-        }
-    }
-
-    const importedFor = (providerId: string) => imports.filter(i => i.providerId === providerId).slice(0, 3); // show up to 3
+    const importedFor = (providerId: string) => imports.filter(i => i.providerId === providerId).slice(0, 3);
 
     return (
-        <div className="p-6 max-w-4xl mx-auto">
-            <div className="mb-6 flex items-center gap-4">
-                <Avatar className="h-20 w-20 shadow">
-                    <AvatarImage src={minimalUser.avatar} />
+        <div className="p-4 sm:p-6 max-w-4xl mx-auto">
+            {/* Profile Header */}
+            <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <Avatar className="h-16 w-16 sm:h-20 sm:w-20 shadow">
+                    <AvatarImage src={user.avatar} />
                     <AvatarFallback>
-                        {minimalUser.name
+                        {user.name
                             .split(" ")
                             .map(n => n[0])
                             .join("")}
                     </AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
-                    <h1 className="text-2xl font-semibold">{minimalUser.name}</h1>
+                    <h1 className="text-xl sm:text-2xl font-semibold">{user.name}</h1>
                     <p className="text-sm text-muted-foreground">
-                        @{minimalUser.username} · Joined {new Date(minimalUser.joinDate).getFullYear()}
+                        @{user.username} · Joined {new Date(user.joinDate).getFullYear()}
                     </p>
-                    <p className="mt-2 text-sm text-foreground max-w-xl">{minimalUser.bio}</p>
+                    <p className="mt-2 text-sm text-foreground max-w-xl">{user.bio}</p>
                 </div>
-                <div>
-                    <Button size="sm" asChild>
-                        <Link href="/settings">Settings</Link>
-                    </Button>
-                </div>
+                <Button size="sm" asChild className="self-start sm:self-auto">
+                    <Link href="/settings">Settings</Link>
+                </Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mb-6">
-                <Card className="col-span-1">
+            {/* Stats & Quick Actions */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <Card>
                     <CardContent className="p-4 text-center">
                         <div className="text-xs text-muted-foreground">Projects</div>
-                        <div className="text-xl font-semibold mt-1">{minimalUser.stats.projects}</div>
+                        <div className="text-xl font-semibold mt-1">{user.stats.projects}</div>
                     </CardContent>
                 </Card>
-                <Card className="col-span-2">
+                <Card className="sm:col-span-2">
                     <CardContent className="p-4">
                         <div className="text-xs text-muted-foreground">Quick</div>
-                        <div className="flex gap-3 mt-2">
+                        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-2">
                             <Button size="sm" asChild>
                                 <Link href="/dashboard/projects">My Projects</Link>
                             </Button>
@@ -132,6 +105,7 @@ const ProfilePage = () => {
                 </Card>
             </div>
 
+            {/* Tabs */}
             <Card>
                 <Tabs value={tab} onValueChange={setTab}>
                     <div className="border-b px-4">
@@ -154,14 +128,15 @@ const ProfilePage = () => {
 
                         <TabsContent value="integrations">
                             <div className="space-y-4">
-                                {loadingInt ? (
+                                {/* {loading.int ? (
                                     <div className="text-sm text-muted-foreground p-4">Loading integrations…</div>
                                 ) : integrations.length === 0 ? (
                                     <div className="text-sm text-muted-foreground p-4">No integrations connected.</div>
-                                ) : (
-                                    integrations.map(it => (
-                                        <Card key={it.id} className="p-3">
-                                            <CardContent className="p-3 flex items-start justify-between">
+                                ) : ( */}
+                                {integrations.map(it => (
+                                    <Card key={it.id} className="p-3">
+                                        <CardContent className="p-3">
+                                            <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
                                                 <div className="flex items-start gap-3">
                                                     <div className="h-10 w-10 grid place-items-center rounded-md bg-primary/10">
                                                         {it.id === "github" ? (
@@ -171,7 +146,7 @@ const ProfilePage = () => {
                                                         )}
                                                     </div>
                                                     <div>
-                                                        <div className="flex items-center gap-2">
+                                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                                                             <div className="font-medium">{it.name}</div>
                                                             <div className="text-xs text-muted-foreground">
                                                                 {it.connected ? "Connected" : "Not connected"}
@@ -188,57 +163,50 @@ const ProfilePage = () => {
                                                     </div>
                                                 </div>
 
-                                                <div className="text-right">
+                                                <div className="text-left sm:text-right w-full sm:w-auto">
                                                     <div className="text-xs text-muted-foreground mb-2">
                                                         {importedFor(it.id).length} imported
                                                     </div>
                                                     <div className="flex gap-2">
                                                         <Button size="sm" asChild>
-                                                            <Link href={`/integrations/${it.id}`}>Manage</Link>
+                                                            <Link href={`/dashboard/integrations`}>Manage</Link>
                                                         </Button>
                                                         <Button size="sm" variant="ghost" asChild>
-                                                            <Link href={`/integrations/${it.id}/import`}>Import</Link>
+                                                            <Link href={`/dashboard/integrations/${it.id}`}>
+                                                                Import
+                                                            </Link>
                                                         </Button>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                {/* imported items dropdown-like (minimal) */}
-                                                <div className="w-full mt-3 col-span-3">
-                                                    {loadingImp ? null : (
-                                                        <div className="mt-3 space-y-2">
-                                                            {importedFor(it.id).length === 0 ? (
-                                                                <div className="text-xs text-muted-foreground">
-                                                                    No imported items
+                                            {/* {!loading.imp && (
+                                                    <div className="mt-3 space-y-2">
+                                                        {importedFor(it.id).length === 0 ? (
+                                                            <div className="text-xs text-muted-foreground">No imported items</div>
+                                                        ) : (
+                                                            importedFor(it.id).map(item => (
+                                                                <div key={item.resourceId} className="flex items-center justify-between text-sm">
+                                                                    <div className="truncate">{item.displayName ?? item.resourceId}</div>
+                                                                    {item.url && (
+                                                                        <a
+                                                                            className="text-xs text-primary hover:underline ml-4 shrink-0"
+                                                                            href={item.url}
+                                                                            target="_blank"
+                                                                            rel="noreferrer"
+                                                                        >
+                                                                            View
+                                                                        </a>
+                                                                    )}
                                                                 </div>
-                                                            ) : (
-                                                                importedFor(it.id).map(item => (
-                                                                    <div
-                                                                        key={item.resourceId}
-                                                                        className="flex items-center justify-between text-sm"
-                                                                    >
-                                                                        <div className="truncate">
-                                                                            {item.displayName ?? item.resourceId}
-                                                                        </div>
-                                                                        {item.url ? (
-                                                                            <a
-                                                                                className="text-xs text-primary hover:underline ml-4"
-                                                                                href={item.url}
-                                                                                target="_blank"
-                                                                                rel="noreferrer"
-                                                                            >
-                                                                                View
-                                                                            </a>
-                                                                        ) : null}
-                                                                    </div>
-                                                                ))
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    ))
-                                )}
+                                                            ))
+                                                        )}
+                                                    </div>
+                                                )} */}
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                                {/* )} */}
                             </div>
                         </TabsContent>
                     </div>

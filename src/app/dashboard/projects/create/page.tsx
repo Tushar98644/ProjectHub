@@ -54,7 +54,7 @@ export default function AddProjectPage() {
     };
 
     return (
-        <div className="flex flex-col gap-6 h-full pb-20 overflow-scroll">
+        <div className="flex flex-col gap-6 h-full pb-8 overflow-scroll">
             <Card className="flex items-center gap-2 rounded-2xl border bg-background/60 p-5 backdrop-blur">
                 <Sparkles className="h-5 w-5" />
                 <div>
