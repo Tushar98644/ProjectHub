@@ -1,416 +1,251 @@
 "use client";
 
-import { useState } from "react";
-import {
-    MapPin,
-    Calendar,
-    Link as LinkIcon,
-    Edit,
-    Settings,
-    Star,
-    Eye,
-    Heart,
-    Code,
-    Users,
-    Clock,
-    Trophy,
-    Zap,
-    MessageSquare,
-    ExternalLink,
-} from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Github, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
-const userData = {
-    id: "user123",
-    name: "Alex Chen",
-    username: "alexchen",
-    email: "alex@example.com",
-    avatar: "https://img.freepik.com/premium-vector/flat-design-user-profile-icon-vector-illustration_1120563-26279.jpg?semt=ais_hybrid&w=740&q=80",
-    cover: "https://img.freepik.com/premium-vector/flat-design-user-profile-icon-vector-illustration_1120563-26279.jpg?semt=ais_hybrid&w=740&q=80",
-    bio: "Full-stack developer passionate about creating beautiful, functional web experiences. Building the future, one commit at a time.",
-    location: "San Francisco, CA",
-    website: "https://alexchen.dev",
-    joinDate: "2022-03-15",
-    isVerified: true,
-    stats: {
-        projects: 24,
-        followers: 1249,
-        following: 892,
-        stars: 3847,
-        views: 12543,
-        likes: 2891,
-    },
-    skills: [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Node.js",
-        "MongoDB",
-        "Tailwind CSS",
-        "GraphQL",
-        "Docker",
-        "AWS",
-        "Firebase",
-    ],
-    achievements: [
-        {
-            id: 1,
-            title: "Early Adopter",
-            description: "Joined in first 1000 users",
-            icon: Trophy,
-        },
-        {
-            id: 2,
-            title: "Popular Creator",
-            description: "10+ projects with 100+ stars",
-            icon: Star,
-        },
-        {
-            id: 3,
-            title: "Community Helper",
-            description: "50+ helpful comments",
-            icon: Users,
-        },
-        {
-            id: 4,
-            title: "Consistency King",
-            description: "30 day commit streak",
-            icon: Zap,
-        },
-    ],
-    recentActivity: [
-        {
-            id: 1,
-            type: "project",
-            title: "Created 'Modern Dashboard'",
-            time: "2h ago",
-        },
-        {
-            id: 2,
-            type: "star",
-            title: "Starred 'ui-components'",
-            time: "5h ago",
-        },
-        { id: 3, type: "follow", title: "Followed @sarah_dev", time: "1d ago" },
-        {
-            id: 4,
-            type: "comment",
-            title: "Commented on 'API Best Practices'",
-            time: "2d ago",
-        },
-    ],
+type Integration = {
+    id: string;
+    name: string;
+    description?: string;
+    connected?: boolean;
+    account?: { accountName?: string; avatarUrl?: string } | null;
 };
 
-export default function UserProfilePage() {
-    const [activeTab, setActiveTab] = useState("overview");
-    const [isOwnProfile] = useState(true);
+type ImportedResource = {
+    providerId: string;
+    resourceType: string;
+    resourceId: string;
+    displayName?: string;
+    url?: string;
+    importedAt?: string;
+};
+
+const minimalUser = {
+    name: "Tushar Banik",
+    username: "tushar",
+    avatar: "/avatar-placeholder.png",
+    bio: "Building things. Loves clean UX and good defaults.",
+    joinDate: "2025-08-19",
+    stats: { projects: 3 },
+};
+
+const ProfilePage = () => {
+    const [tab, setTab] = useState("overview");
+    const [integrations, setIntegrations] = useState<Integration[]>([]);
+    const [imports, setImports] = useState<ImportedResource[]>([]);
+    const [loadingInt, setLoadingInt] = useState(true);
+    const [loadingImp, setLoadingImp] = useState(true);
+
+    useEffect(() => {
+        fetchIntegrations();
+        fetchImports();
+    }, []);
+
+    async function fetchIntegrations() {
+        setLoadingInt(true);
+        try {
+            const res = await fetch("/api/integrations");
+            if (!res.ok) {
+                setIntegrations([]);
+                return;
+            }
+            const json = await res.json();
+            setIntegrations(json);
+        } catch (e) {
+            console.error(e);
+            setIntegrations([]);
+        } finally {
+            setLoadingInt(false);
+        }
+    }
+
+    async function fetchImports() {
+        setLoadingImp(true);
+        try {
+            const res = await fetch("/api/imports");
+            if (!res.ok) {
+                setImports([]);
+                return;
+            }
+            const json = await res.json();
+            setImports(json);
+        } catch (e) {
+            console.error(e);
+            setImports([]);
+        } finally {
+            setLoadingImp(false);
+        }
+    }
+
+    const importedFor = (providerId: string) => imports.filter(i => i.providerId === providerId).slice(0, 3); // show up to 3
 
     return (
-        <div className="h-full overflow-scroll pb-20">
-            <div className="mx-auto max-w-6xl space-y-8 flex flex-col h-full overflow-scroll">
-                {/* Profile Header */}
-                <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-lg">
-                    {/* Cover Image */}
-                    <div className="relative h-48 sm:h-56 bg-gradient-to-br from-primary/10 via-primary/5 to-secondary/10">
-                        <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-blue-500/5 to-emerald-500/10" />
-                        <img src={userData.cover} alt="Cover" className="h-full w-full object-cover opacity-20" />
-                        {isOwnProfile && (
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-xs absolute right-4 top-4 border-white/20 bg-white/10 text-foreground backdrop-blur-sm hover:bg-white/20"
-                            >
-                                <Edit className="mr-2 h-4 w-4" />
-                                Edit Cover
+        <div className="p-6 max-w-4xl mx-auto">
+            <div className="mb-6 flex items-center gap-4">
+                <Avatar className="h-20 w-20 shadow">
+                    <AvatarImage src={minimalUser.avatar} />
+                    <AvatarFallback>
+                        {minimalUser.name
+                            .split(" ")
+                            .map(n => n[0])
+                            .join("")}
+                    </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                    <h1 className="text-2xl font-semibold">{minimalUser.name}</h1>
+                    <p className="text-sm text-muted-foreground">
+                        @{minimalUser.username} · Joined {new Date(minimalUser.joinDate).getFullYear()}
+                    </p>
+                    <p className="mt-2 text-sm text-foreground max-w-xl">{minimalUser.bio}</p>
+                </div>
+                <div>
+                    <Button size="sm" asChild>
+                        <Link href="/settings">Settings</Link>
+                    </Button>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 mb-6">
+                <Card className="col-span-1">
+                    <CardContent className="p-4 text-center">
+                        <div className="text-xs text-muted-foreground">Projects</div>
+                        <div className="text-xl font-semibold mt-1">{minimalUser.stats.projects}</div>
+                    </CardContent>
+                </Card>
+                <Card className="col-span-2">
+                    <CardContent className="p-4">
+                        <div className="text-xs text-muted-foreground">Quick</div>
+                        <div className="flex gap-3 mt-2">
+                            <Button size="sm" asChild>
+                                <Link href="/dashboard/projects">My Projects</Link>
                             </Button>
-                        )}
-                    </div>
-
-                    <CardContent className="relative p-6 sm:p-8">
-                        {/* Avatar & Info */}
-                        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-                            <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-                                <Avatar className="-mt-16 h-32 w-32 border-4 border-background shadow-xl">
-                                    <AvatarImage src={userData.avatar} className="object-cover" />
-                                    <AvatarFallback className="text-xl font-semibold">
-                                        {userData.name
-                                            .split(" ")
-                                            .map(n => n[0])
-                                            .join("")}
-                                    </AvatarFallback>
-                                </Avatar>
-
-                                <div className="flex-1 space-y-4">
-                                    <div className="space-y-2">
-                                        <div className="flex flex-wrap items-center gap-3">
-                                            <h1 className="text-3xl font-bold tracking-tight">{userData.name}</h1>
-                                            {userData.isVerified && (
-                                                <Badge variant="secondary" className="gap-1">
-                                                    <Star className="h-3 w-3" />
-                                                    Verified
-                                                </Badge>
-                                            )}
-                                        </div>
-                                        <p className="text-lg text-muted-foreground">@{userData.username}</p>
-                                    </div>
-
-                                    <p className="max-w-2xl text-foreground leading-relaxed">{userData.bio}</p>
-
-                                    <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-                                        <div className="flex items-center gap-2">
-                                            <MapPin className="h-4 w-4" />
-                                            <span>{userData.location}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <Calendar className="h-4 w-4" />
-                                            <span>
-                                                Joined{" "}
-                                                {new Date(userData.joinDate).toLocaleDateString("en-US", {
-                                                    month: "long",
-                                                    year: "numeric",
-                                                })}
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <LinkIcon className="h-4 w-4" />
-                                            <a
-                                                href={userData.website}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-1 text-primary hover:underline"
-                                            >
-                                                {userData.website.replace("https://", "")}
-                                                <ExternalLink className="h-3 w-3" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex items-center gap-3">
-                                {isOwnProfile ? (
-                                    <>
-                                        <Button className="gap-2 text-xs">
-                                            <Edit className="h-4 w-4" />
-                                            Edit Profile
-                                        </Button>
-                                        <Button variant="outline" size="icon">
-                                            <Settings className="h-4 w-4" />
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Button className="gap-2">
-                                            <Users className="h-4 w-4" />
-                                            Follow
-                                        </Button>
-                                        <Button variant="outline" size="icon">
-                                            <MessageSquare className="h-4 w-4" />
-                                        </Button>
-                                    </>
-                                )}
-                            </div>
+                            <Button size="sm" variant="outline" asChild>
+                                <Link href="/integrations">Manage Integrations</Link>
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>
-
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-                    {[
-                        {
-                            label: "Projects",
-                            value: userData.stats.projects,
-                            icon: Code,
-                            color: "text-blue-500",
-                        },
-                        {
-                            label: "Followers",
-                            value: userData.stats.followers,
-                            icon: Users,
-                            color: "text-green-500",
-                        },
-                        {
-                            label: "Following",
-                            value: userData.stats.following,
-                            icon: Users,
-                            color: "text-orange-500",
-                        },
-                        {
-                            label: "Stars",
-                            value: userData.stats.stars,
-                            icon: Star,
-                            color: "text-yellow-500",
-                        },
-                        {
-                            label: "Views",
-                            value: userData.stats.views,
-                            icon: Eye,
-                            color: "text-purple-500",
-                        },
-                        {
-                            label: "Likes",
-                            value: userData.stats.likes,
-                            icon: Heart,
-                            color: "text-red-500",
-                        },
-                    ].map((stat, idx) => (
-                        <Card
-                            key={idx}
-                            className="border-0 bg-card/50 backdrop-blur-sm transition-all hover:bg-card/80"
-                        >
-                            <CardContent className="p-6 text-center">
-                                <stat.icon className={cn("mx-auto mb-3 h-5 w-5", stat.color)} />
-                                <div className="text-base font-bold">{stat.value.toLocaleString()}</div>
-                                <div className="text-sm text-muted-foreground">{stat.label}</div>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-
-                {/* Main Content Tabs */}
-                <Card className="border-0 bg-card/50 backdrop-blur-sm">
-                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                        <div className="border-b">
-                            <TabsList className="h-auto w-full justify-start rounded-none border-0 bg-transparent p-0">
-                                {[
-                                    {
-                                        value: "overview",
-                                        label: "Overview",
-                                    },
-                                    {
-                                        value: "projects",
-                                        label: "Projects",
-                                    },
-                                    {
-                                        value: "activity",
-                                        label: "Activity",
-                                    },
-                                    {
-                                        value: "achievements",
-                                        label: "Achievements",
-                                    },
-                                ].map(tab => (
-                                    <TabsTrigger
-                                        key={tab.value}
-                                        value={tab.value}
-                                        className="rounded-none border-b-2 border-transparent bg-transparent px-6 py-4 data-[state=active]:border-primary data-[state=active]:bg-transparent"
-                                    >
-                                        {tab.label}
-                                    </TabsTrigger>
-                                ))}
-                            </TabsList>
-                        </div>
-
-                        <div className="p-6 sm:p-8">
-                            <TabsContent value="overview" className="mt-0 space-y-8">
-                                {/* Skills Section */}
-                                <div className="space-y-4">
-                                    <h3 className="flex items-center gap-2 text-md font-semibold">
-                                        <Code className="h-5 w-5 text-primary" />
-                                        Skills & Technologies
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {userData.skills.map((skill, i) => (
-                                            <Badge
-                                                key={i}
-                                                variant="secondary"
-                                                className="px-3 py-1 text-xs font-medium"
-                                            >
-                                                {skill}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </div>
-                            </TabsContent>
-
-                            <TabsContent value="projects" className="mt-0">
-                                <div className="flex flex-col items-center justify-center py-12 text-center">
-                                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
-                                        <Code className="h-8 w-8 text-primary" />
-                                    </div>
-                                    <h3 className="mb-2 text-xl font-semibold">Your Projects</h3>
-                                    <p className="mb-6 max-w-sm text-muted-foreground">
-                                        View and manage all your created projects
-                                    </p>
-                                    <Button asChild>
-                                        <Link href="/dashboard/projects">View All Projects</Link>
-                                    </Button>
-                                </div>
-                            </TabsContent>
-
-                            <TabsContent value="activity" className="mt-0">
-                                <div className="space-y-4">
-                                    <h3 className="flex items-center gap-2 text-xl font-semibold">
-                                        <Clock className="h-5 w-5 text-primary" />
-                                        Recent Activity
-                                    </h3>
-                                    <div className="space-y-3">
-                                        {userData.recentActivity.map(activity => (
-                                            <div
-                                                key={activity.id}
-                                                className="flex items-start gap-4 rounded-lg border bg-card/30 p-4 transition-colors hover:bg-card/50"
-                                            >
-                                                <div className="mt-0.5">
-                                                    {activity.type === "project" && (
-                                                        <Code className="h-4 w-4 text-blue-500" />
-                                                    )}
-                                                    {activity.type === "star" && (
-                                                        <Star className="h-4 w-4 text-yellow-500" />
-                                                    )}
-                                                    {activity.type === "follow" && (
-                                                        <Users className="h-4 w-4 text-green-500" />
-                                                    )}
-                                                    {activity.type === "comment" && (
-                                                        <MessageSquare className="h-4 w-4 text-purple-500" />
-                                                    )}
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <p className="font-medium text-sm">{activity.title}</p>
-                                                    <p className="text-sm text-muted-foreground">{activity.time}</p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </TabsContent>
-
-                            <TabsContent value="achievements" className="mt-0">
-                                <div className="space-y-6">
-                                    <h3 className="flex items-center gap-2 text-xl font-semibold">
-                                        <Trophy className="h-5 w-5 text-primary" />
-                                        Achievements
-                                    </h3>
-                                    <div className="grid gap-6 sm:grid-cols-2 text-sm">
-                                        {userData.achievements.map(achievement => (
-                                            <div
-                                                key={achievement.id}
-                                                className="flex items-start gap-4 rounded-lg border bg-card/30 p-6 transition-colors hover:bg-card/50"
-                                            >
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
-                                                    <achievement.icon className="h-5 w-5 text-primary" />
-                                                </div>
-                                                <div className="flex-1">
-                                                    <h4 className="font-semibold">{achievement.title}</h4>
-                                                    <p className="mt-1 text-sm text-muted-foreground">
-                                                        {achievement.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </TabsContent>
-                        </div>
-                    </Tabs>
-                </Card>
             </div>
+
+            <Card>
+                <Tabs value={tab} onValueChange={setTab}>
+                    <div className="border-b px-4">
+                        <TabsList className="p-0">
+                            <TabsTrigger value="overview" className="px-4 py-3">
+                                Overview
+                            </TabsTrigger>
+                            <TabsTrigger value="integrations" className="px-4 py-3">
+                                Integrations
+                            </TabsTrigger>
+                        </TabsList>
+                    </div>
+
+                    <div className="p-4">
+                        <TabsContent value="overview">
+                            <div className="text-sm text-muted-foreground">
+                                Overview — minimal view focused on your projects and activity.
+                            </div>
+                        </TabsContent>
+
+                        <TabsContent value="integrations">
+                            <div className="space-y-4">
+                                {loadingInt ? (
+                                    <div className="text-sm text-muted-foreground p-4">Loading integrations…</div>
+                                ) : integrations.length === 0 ? (
+                                    <div className="text-sm text-muted-foreground p-4">No integrations connected.</div>
+                                ) : (
+                                    integrations.map(it => (
+                                        <Card key={it.id} className="p-3">
+                                            <CardContent className="p-3 flex items-start justify-between">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="h-10 w-10 grid place-items-center rounded-md bg-primary/10">
+                                                        {it.id === "github" ? (
+                                                            <Github className="h-5 w-5 text-primary" />
+                                                        ) : (
+                                                            <LinkIcon className="h-5 w-5 text-primary" />
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="font-medium">{it.name}</div>
+                                                            <div className="text-xs text-muted-foreground">
+                                                                {it.connected ? "Connected" : "Not connected"}
+                                                            </div>
+                                                        </div>
+                                                        {it.connected && it.account?.accountName && (
+                                                            <div className="text-xs text-muted-foreground mt-1">
+                                                                as{" "}
+                                                                <span className="font-medium">
+                                                                    {it.account.accountName}
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                <div className="text-right">
+                                                    <div className="text-xs text-muted-foreground mb-2">
+                                                        {importedFor(it.id).length} imported
+                                                    </div>
+                                                    <div className="flex gap-2">
+                                                        <Button size="sm" asChild>
+                                                            <Link href={`/integrations/${it.id}`}>Manage</Link>
+                                                        </Button>
+                                                        <Button size="sm" variant="ghost" asChild>
+                                                            <Link href={`/integrations/${it.id}/import`}>Import</Link>
+                                                        </Button>
+                                                    </div>
+                                                </div>
+
+                                                {/* imported items dropdown-like (minimal) */}
+                                                <div className="w-full mt-3 col-span-3">
+                                                    {loadingImp ? null : (
+                                                        <div className="mt-3 space-y-2">
+                                                            {importedFor(it.id).length === 0 ? (
+                                                                <div className="text-xs text-muted-foreground">
+                                                                    No imported items
+                                                                </div>
+                                                            ) : (
+                                                                importedFor(it.id).map(item => (
+                                                                    <div
+                                                                        key={item.resourceId}
+                                                                        className="flex items-center justify-between text-sm"
+                                                                    >
+                                                                        <div className="truncate">
+                                                                            {item.displayName ?? item.resourceId}
+                                                                        </div>
+                                                                        {item.url ? (
+                                                                            <a
+                                                                                className="text-xs text-primary hover:underline ml-4"
+                                                                                href={item.url}
+                                                                                target="_blank"
+                                                                                rel="noreferrer"
+                                                                            >
+                                                                                View
+                                                                            </a>
+                                                                        ) : null}
+                                                                    </div>
+                                                                ))
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    ))
+                                )}
+                            </div>
+                        </TabsContent>
+                    </div>
+                </Tabs>
+            </Card>
         </div>
     );
-}
+};
+
+export default ProfilePage;

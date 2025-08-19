@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { Github, Cloud, Link } from "lucide-react";
+import { Github, Link } from "lucide-react";
 import { IntegrationsList } from "@/features/integrations/components/integrations-list";
 import { IntegrationDetail } from "@/features/integrations/components/integration-detail";
 import { linkSocial } from "@/config/auth/client";
