@@ -5,6 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
 import { RecentActivity } from "./recent-activity";
+import { linkSocial } from "@/config/auth/client";
 
 export const IntegrationDetail = ({
     integration,
@@ -19,6 +20,13 @@ export const IntegrationDetail = ({
         setEnabledEvents((prev: string[]) =>
             prev.includes(eventName) ? prev.filter(e => e !== eventName) : [...prev, eventName]
         );
+    };
+
+    const connectIntegration = async () => {
+        console.log("connectIntegration");
+        await linkSocial({
+            provider: "github",
+        });
     };
 
     return (
@@ -37,7 +45,7 @@ export const IntegrationDetail = ({
                                 </div>
                             </div>
 
-                            {integration.connected ? (
+                            {/* {integration.connected ? (
                                 <Button
                                     size="sm"
                                     onClick={() => onAction(`Disconnected ${integration.name}`)}
@@ -46,17 +54,19 @@ export const IntegrationDetail = ({
                                 >
                                     Disconnect
                                 </Button>
-                            ) : (
-                                <Button
-                                    size="sm"
-                                    onClick={() => onAction(`Connected ${integration.name}`)}
-                                    disabled={isLoading}
-                                    className="rounded-lg gap-2"
-                                >
-                                    <Plus className="h-3 w-3" /> Connect
-                                </Button>
-                            )}
+                            ) : ( */}
+                            <Button
+                                size="sm"
+                                onClick={() => connectIntegration}
+                                // disabled={isLoading}
+                                className="rounded-lg gap-2"
+                            >
+                                <Plus className="h-3 w-3" /> Connect
+                            </Button>
+                            {/* )} */}
                         </div>
+
+                        <button onClick={connectIntegration}> connect </button>
 
                         <div className="grid gap-4 md:grid-cols-2">
                             <div className="space-y-4">

@@ -4,63 +4,24 @@ import { useMemo, useState, useEffect } from "react";
 import { Github, Cloud, Link } from "lucide-react";
 import { IntegrationsList } from "@/features/integrations/components/integrations-list";
 import { IntegrationDetail } from "@/features/integrations/components/integration-detail";
+import { linkSocial } from "@/config/auth/client";
 
 const integrations = [
     {
         id: "github",
         name: "GitHub",
         description: "Repository events, PRs, issues and CI status",
-        connected: true,
+        connected: false,
         webhookUrl: "https://hooks.example.com/github/abcd",
         logo: Github,
         category: "Development",
         events: ["push", "pull_request", "issues"],
     },
     {
-        id: "gdrive",
-        name: "Google Drive",
-        description: "File changes, new uploads and shared file events",
-        connected: false,
-        webhookUrl: "",
-        logo: Cloud,
-        category: "Storage",
-        events: ["file_created", "file_deleted", "file_shared"],
-    },
-    {
-        id: "stripe",
-        name: "Stripe",
-        description: "Payments, subscriptions and invoice events",
-        connected: false,
-        webhookUrl: "",
-        logo: Link,
-        category: "Finance",
-        events: ["invoice.paid", "payment_intent.succeeded"],
-    },
-    {
         id: "slack",
         name: "Slack",
         description: "Messages, channel events and app interactions",
-        connected: true,
-        webhookUrl: "https://hooks.example.com/slack/xyz",
-        logo: Link,
-        category: "Communication",
-        events: ["message_posted", "channel_created"],
-    },
-    {
-        id: "slac",
-        name: "Slack",
-        description: "Messages, channel events and app interactions",
-        connected: true,
-        webhookUrl: "https://hooks.example.com/slack/xyz",
-        logo: Link,
-        category: "Communication",
-        events: ["message_posted", "channel_created"],
-    },
-    {
-        id: "sla",
-        name: "Slack",
-        description: "Messages, channel events and app interactions",
-        connected: true,
+        connected: false,
         webhookUrl: "https://hooks.example.com/slack/xyz",
         logo: Link,
         category: "Communication",
@@ -96,6 +57,11 @@ export default function IntegrationsPage() {
         setIsLoading(false);
         alert(message);
     };
+
+    const connectIntegration = async () =>
+        await linkSocial({
+            provider: "github",
+        });
 
     return (
         <div className="h-full bg-gradient-to-b from-background via-background to-background">

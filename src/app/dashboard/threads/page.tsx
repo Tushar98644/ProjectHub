@@ -128,7 +128,7 @@ const ThreadsPage = () => {
 
             <div className="flex flex-col md:flex-row gap-6 h-full">
                 {/* Search & Filters */}
-                <aside className="md:block w-[320px] shrink-0 hidden md:flex flex-col gap-4 sticky top-6">
+                <aside className="w-[320px] shrink-0 hidden md:flex flex-col gap-4 sticky top-6">
                     <SearchBar placeholder="Search threads..." value={query} onChange={setQuery} />
                     <Card className="p-4">
                         <h4 className="text-sm font-semibold mb-2">Quick filters</h4>
