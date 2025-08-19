@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "ProjectHub",
+    title: "Insentra",
     description: "AI powered project management platform",
 };
 
