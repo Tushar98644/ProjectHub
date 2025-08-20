@@ -1,86 +1,54 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Mail, Users as UsersIcon } from "lucide-react";
+import { useGetUsers } from "@/hooks/queries/useUserquery";
+import { User } from "@/types/user";
+import { UserItem } from "@/features/users/components/user-item";
+import { useDebounced } from "@/hooks/useDebounced";
 
-export default function SearchUsersPage() {
+const SearchUsersPage = () => {
     const [q, setQ] = useState("");
-    const [loading, setLoading] = useState(false);
+    const debouncedQ = useDebounced(q, 350);
 
-    const results = [
-        {
-            _id: "68a48d0b22b1f4a0556c3ec0",
-            name: "Tushar Banik",
-            username: "tushar",
-            email: "evilden982@gmail.com",
-            image: "https://i.pravatar.cc/150?u=tushar",
-        },
-        {
-            _id: "68a48d0b22b1f4a0556c3ec1",
-            name: "Alex Chen",
-            username: "alexchen",
-            email: "alex@example.com",
-            image: "https://i.pravatar.cc/150?u=alex",
-        },
-    ];
+    const { data: users = [], isPending } = useGetUsers(debouncedQ);
+
+    const hasQuery = debouncedQ.trim().length > 0;
+
+    const list = useMemo(() => users.map((u: User) => <UserItem key={u._id} u={u} />), [users]);
+
+    const onSubmit: React.FormEventHandler<HTMLFormElement> = e => {
+        e.preventDefault();
+    };
 
     return (
-        <div className="p-6 max-w-4xl mx-auto">
+        <div className="p-4 sm:p-6 max-w-4xl mx-auto">
             <h2 className="text-xl font-semibold mb-4">Search users</h2>
 
-            <div className="mb-4 flex gap-3">
+            <form onSubmit={onSubmit} className="mb-4 flex gap-2 sm:gap-3">
                 <Input
                     placeholder="Search by name, username or email..."
                     value={q}
                     onChange={e => setQ(e.target.value)}
+                    className="flex-1"
                 />
-                <Button onClick={() => {}} disabled={loading || q.trim().length === 0}>
-                    Search
+                <Button type="submit" disabled={isPending || q.trim().length === 0}>
+                    {isPending ? "Searching…" : "Search"}
                 </Button>
-            </div>
+            </form>
 
             <div className="space-y-3">
-                {loading && <div className="text-sm text-muted-foreground">Searching…</div>}
-                {!loading && results.length === 0 && q.trim().length > 0 && (
+                {isPending && !users.length && <div className="text-sm text-muted-foreground">Searching…</div>}
+
+                {!isPending && hasQuery && users.length === 0 && (
                     <div className="text-sm text-muted-foreground">No users found.</div>
                 )}
 
-                {results.map(u => (
-                    <Card key={u._id} className="p-3">
-                        <CardContent className="flex items-center justify-between gap-4 p-3">
-                            <div className="flex items-center gap-3">
-                                <Avatar className="h-10 w-10">
-                                    {u.image ? (
-                                        <AvatarImage src={u.image} />
-                                    ) : (
-                                        <AvatarFallback>{(u.name || u.username || "U").slice(0, 2)}</AvatarFallback>
-                                    )}
-                                </Avatar>
-
-                                <div>
-                                    <div className="font-medium">{u.name ?? u.username ?? "Unnamed"}</div>
-                                    <div className="text-xs text-muted-foreground flex items-center gap-2">
-                                        <Mail className="h-3 w-3" /> {u.email ?? "—"}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex gap-2">
-                                <Button size="sm" onClick={() => {}}>
-                                    <UsersIcon className="mr-2 h-3 w-3" /> Invite to team
-                                </Button>
-                                <Button size="sm" variant="ghost" onClick={() => {}}>
-                                    Invite to thread
-                                </Button>
-                            </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                {list}
             </div>
         </div>
     );
-}
+};
+
+export default SearchUsersPage;
