@@ -10,7 +10,7 @@ import { useDebounced } from "@/hooks/useDebounced";
 
 const SearchUsersPage = () => {
     const [q, setQ] = useState("");
-    const debouncedQ = useDebounced(q, 350);
+    const debouncedQ = useDebounced<string>(q, 350);
 
     const { data: users = [], isPending } = useGetUsers(debouncedQ);
 
@@ -24,7 +24,7 @@ const SearchUsersPage = () => {
 
     return (
         <div className="p-4 sm:p-6 max-w-4xl mx-auto">
-            <h2 className="text-xl font-semibold mb-4">Search users</h2>
+            <h2 className="text-lg font-semibold mb-4">Search users</h2>
 
             <form onSubmit={onSubmit} className="mb-4 flex gap-2 sm:gap-3">
                 <Input
@@ -33,7 +33,7 @@ const SearchUsersPage = () => {
                     onChange={e => setQ(e.target.value)}
                     className="flex-1"
                 />
-                <Button type="submit" disabled={isPending || q.trim().length === 0}>
+                <Button type="submit" className="text-xs" disabled={isPending || q.trim().length === 0}>
                     {isPending ? "Searching…" : "Search"}
                 </Button>
             </form>

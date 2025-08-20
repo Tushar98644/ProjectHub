@@ -1,11 +1,14 @@
 import { threadService } from "@/services/threadService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const useFetchThreads = () => {
+export const useFetchThreads = (email?: string) => {
+    const hasEmail = typeof email === "string" && email.trim().length > 0;
+
     return useQuery({
-        queryKey: ["threads"],
-        queryFn: threadService.getAllThreads,
-        staleTime: 5 * 1000 * 60,
+        queryKey: ["threads", hasEmail ? { email } : { all: true }],
+        queryFn: () => (hasEmail ? threadService.getThreadsByEmail(email!) : threadService.getAllThreads()),
+        enabled: hasEmail ? true : true,
+        staleTime: 5 * 60 * 1000,
     });
 };
 

@@ -7,6 +7,14 @@ export async function GET(req: Request) {
         await requireAuth(req);
         await connectToDB();
 
+        const { searchParams } = new URL(req.url);
+        const email = searchParams.get("email");
+
+        if (email) {
+            const threads = await Thread.find({ author: email }).sort({ createdAt: -1 });
+            return Response.json(threads, { status: 200 });
+        }
+
         const threads = await Thread.find().sort({ createdAt: -1 });
         return Response.json(threads, { status: 200 });
     } catch (err) {
@@ -24,10 +32,10 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { title, description, projectId, tags } = body;
 
-        if (!author || !title || !description || !projectId)
+        if (!author || !title || !description)
             return Response.json({ message: "Please fill all fields" }, { status: 400 });
 
-        const data = { author, title, description, projectId, tags };
+        const data = { author, title, description, tags };
         const thread = await Thread.create(data);
 
         return Response.json(thread, { status: 200 });

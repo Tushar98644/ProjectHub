@@ -1,9 +1,7 @@
 import mongoose, { models, Schema } from "mongoose";
-import { CommentSchema } from "./comment";
 
 const ThreadSchema = new Schema(
     {
-        projectId: String,
         title: String,
         author: String,
         description: String,

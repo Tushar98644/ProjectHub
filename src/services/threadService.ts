@@ -1,17 +1,24 @@
 import axios from "axios";
 
 class ThreadService {
-    public getAllThreads = async () => {
+    public async getAllThreads() {
         const res = await axios.get("/api/v1/threads");
         return res.data;
-    };
+    }
 
-    public getThread = async (id: string) => {
+    public async getThreadsByEmail(email: string) {
+        const res = await axios.get("/api/v1/threads", {
+            params: { email },
+        });
+        return res.data;
+    }
+
+    public async getThread(id: string) {
         const res = await axios.get(`/api/v1/threads/${id}`);
         return res.data;
-    };
+    }
 
-    public createThread = async (projectId: string, title: string, description: string, tags: string[]) => {
+    public async createThread(projectId: string, title: string, description: string, tags: string[]) {
         const res = await axios.post("/api/v1/threads", {
             projectId,
             title,
@@ -19,7 +26,7 @@ class ThreadService {
             tags,
         });
         return res.data;
-    };
+    }
 }
 
 export const threadService = new ThreadService();

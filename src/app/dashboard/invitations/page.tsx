@@ -4,109 +4,104 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
-const receivedInvites = [
-    {
-        _id: "inv1",
-        type: "team",
-        senderName: "Alex Chen",
-        createdAt: "2025-08-19T12:00:00Z",
-    },
-    {
-        _id: "inv2",
-        type: "thread",
-        senderName: "Sarah Nguyen",
-        createdAt: "2025-08-20T14:30:00Z",
-    },
-];
-
-const sentInvites = [
-    {
-        _id: "inv3",
-        type: "team",
-        targetName: "John Smith",
-        createdAt: "2025-08-18T09:15:00Z",
-        status: "pending",
-    },
-    {
-        _id: "inv4",
-        type: "thread",
-        targetName: "Alex Chen",
-        createdAt: "2025-08-16T18:05:00Z",
-        status: "pending",
-    },
-];
+import { useFetchInvites } from "@/hooks/queries/useInviteQuery";
 
 export default function InvitationsPage() {
-    const [tab, setTab] = useState("received");
+    const [tab, setTab] = useState<"received" | "sent">("received");
+    const { data, isLoading, isError } = useFetchInvites();
+
+    const receivedInvites = Array.isArray(data?.received) ? data!.received : [];
+    const sentInvites = Array.isArray(data?.sent) ? data!.sent : [];
 
     return (
-        <div className="mx-auto max-w-3xl p-6 space-y-8">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8">
             <h1 className="text-xl font-semibold">Invitations</h1>
 
-            <Tabs value={tab} onValueChange={setTab}>
-                <TabsList>
-                    <TabsTrigger value="received">Received</TabsTrigger>
-                    <TabsTrigger value="sent">Sent</TabsTrigger>
-                </TabsList>
+            {isLoading ? (
+                <p className="text-sm text-muted-foreground">Loading…</p>
+            ) : isError ? (
+                <p className="text-sm text-destructive">Failed to load invitations.</p>
+            ) : (
+                <Tabs value={tab} onValueChange={v => setTab(v as "received" | "sent")} className="w-full">
+                    <TabsList className="w-full sm:w-auto">
+                        <TabsTrigger value="received" className="flex-1 sm:flex-none">
+                            Received
+                        </TabsTrigger>
+                        <TabsTrigger value="sent" className="flex-1 sm:flex-none">
+                            Sent
+                        </TabsTrigger>
+                    </TabsList>
 
-                <TabsContent value="received">
-                    {receivedInvites.length === 0 ? (
-                        <p className="text-sm text-muted-foreground mt-4">No invitations received.</p>
-                    ) : (
-                        <div className="space-y-3 mt-4">
-                            {receivedInvites.map(inv => (
-                                <Card key={inv._id}>
-                                    <CardContent className="p-4 flex justify-between">
-                                        <div>
-                                            <p className="font-medium">
-                                                {inv.senderName} invited you to a{" "}
-                                                {inv.type === "team" ? "team" : "thread"}
-                                            </p>
-                                            <p className="text-xs text-muted-foreground">
-                                                {new Date(inv.createdAt).toLocaleString()}
-                                            </p>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <Button size="sm">Accept</Button>
-                                            <Button size="sm" variant="outline">
-                                                Decline
-                                            </Button>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
-                </TabsContent>
+                    <TabsContent value="received" className="mt-4 sm:mt-6">
+                        {receivedInvites.length === 0 ? (
+                            <p className="text-sm text-muted-foreground">No invitations received.</p>
+                        ) : (
+                            <ul className="space-y-3 sm:space-y-4">
+                                {receivedInvites.map((inv: any) => (
+                                    <li key={inv._id}>
+                                        <Card>
+                                            <CardContent className="p-4 sm:p-5">
+                                                <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                                    <div className="min-w-0">
+                                                        <p className="font-medium truncate">
+                                                            {inv.senderEmail} invited you to a thread
+                                                        </p>
+                                                        <p className="text-xs text-muted-foreground mt-1">
+                                                            {new Date(inv.createdAt).toLocaleString()}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex gap-2 sm:shrink-0">
+                                                        <Button size="sm" aria-label="Accept invitation">
+                                                            Accept
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline"
+                                                            aria-label="Decline invitation"
+                                                        >
+                                                            Decline
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </TabsContent>
 
-                <TabsContent value="sent">
-                    {sentInvites.length === 0 ? (
-                        <p className="text-sm text-muted-foreground mt-4">You haven’t sent any invitations.</p>
-                    ) : (
-                        <div className="space-y-3 mt-4">
-                            {sentInvites.map(inv => (
-                                <Card key={inv._id}>
-                                    <CardContent className="p-4 flex justify-between">
-                                        <div>
-                                            <p className="font-medium">
-                                                You invited {inv.targetName} to a{" "}
-                                                {inv.type === "team" ? "team" : "thread"}
-                                            </p>
-                                            <p className="text-xs text-muted-foreground">
-                                                {new Date(inv.createdAt).toLocaleString()}
-                                            </p>
-                                        </div>
-                                        <div className="text-xs text-muted-foreground flex items-center">
-                                            {inv.status}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
-                </TabsContent>
-            </Tabs>
+                    <TabsContent value="sent" className="mt-4 sm:mt-6">
+                        {sentInvites.length === 0 ? (
+                            <p className="text-sm text-muted-foreground">You haven’t sent any invitations.</p>
+                        ) : (
+                            <ul className="space-y-3 sm:space-y-4">
+                                {sentInvites.map((inv: any) => (
+                                    <li key={inv._id}>
+                                        <Card>
+                                            <CardContent className="p-4 sm:p-5">
+                                                <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                                    <div className="min-w-0">
+                                                        <p className="font-medium truncate">
+                                                            You invited {inv.receiverEmail} to a thread
+                                                        </p>
+                                                        <p className="text-xs text-muted-foreground mt-1">
+                                                            {new Date(inv.createdAt).toLocaleString()}
+                                                        </p>
+                                                    </div>
+                                                    <div className="text-xs text-muted-foreground sm:shrink-0">
+                                                        {inv.status ?? "PENDING"}
+                                                    </div>
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </TabsContent>
+                </Tabs>
+            )}
         </div>
     );
 }
