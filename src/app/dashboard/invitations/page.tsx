@@ -2,100 +2,89 @@
 
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useFetchInvites } from "@/hooks/queries/useInviteQuery";
+import { useFetchInvites, useAcceptInvite, useDeclineInvite } from "@/hooks/queries/useInviteQuery";
+import { toast } from "sonner";
+import { Invite } from "@/types/invitation";
+import { InviteItem } from "@/features/invitations/components/invite-item";
 
 export default function InvitationsPage() {
     const [tab, setTab] = useState<"received" | "sent">("received");
-    const { data, isLoading, isError } = useFetchInvites();
+    const { data, isPending, isError } = useFetchInvites();
+    const accept = useAcceptInvite();
+    const decline = useDeclineInvite();
 
-    const receivedInvites = Array.isArray(data?.received) ? data!.received : [];
-    const sentInvites = Array.isArray(data?.sent) ? data!.sent : [];
+    const receivedInvites: Invite[] = Array.isArray(data?.received) ? data!.received : [];
+    const sentInvites: Invite[] = Array.isArray(data?.sent) ? data!.sent : [];
+
+    const isActingOn = (id: string) =>
+        (accept.isPending && accept.variables === id) || (decline.isPending && decline.variables === id);
+
+    const onAccept = (id: string) =>
+        accept.mutate(id, {
+            onSuccess: () => toast.success("Invitation accepted!"),
+            onError: () => toast.error("Failed to accept invitation."),
+        });
+
+    const onDecline = (id: string) =>
+        decline.mutate(id, {
+            onSuccess: () => toast.success("Invitation declined!"),
+            onError: () => toast.error("Failed to decline invitation."),
+        });
 
     return (
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8">
-            <h1 className="text-xl font-semibold">Invitations</h1>
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-4 sm:py-6 space-y-5 sm:space-y-7">
+            <h1 className="text-lg sm:text-xl font-semibold">Invitations</h1>
 
-            {isLoading ? (
-                <p className="text-sm text-muted-foreground">Loading…</p>
+            {isPending ? (
+                <p className="text-xs sm:text-sm text-muted-foreground">Loading…</p>
             ) : isError ? (
-                <p className="text-sm text-destructive">Failed to load invitations.</p>
+                <p className="text-xs sm:text-sm text-destructive">Failed to load invitations.</p>
             ) : (
                 <Tabs value={tab} onValueChange={v => setTab(v as "received" | "sent")} className="w-full">
                     <TabsList className="w-full sm:w-auto">
-                        <TabsTrigger value="received" className="flex-1 sm:flex-none">
+                        <TabsTrigger value="received" className="flex-1 sm:flex-none text-xs sm:text-sm">
                             Received
                         </TabsTrigger>
-                        <TabsTrigger value="sent" className="flex-1 sm:flex-none">
+                        <TabsTrigger value="sent" className="flex-1 sm:flex-none text-xs sm:text-sm">
                             Sent
                         </TabsTrigger>
                     </TabsList>
 
-                    <TabsContent value="received" className="mt-4 sm:mt-6">
+                    <TabsContent value="received" className="mt-4 sm:mt-5">
                         {receivedInvites.length === 0 ? (
-                            <p className="text-sm text-muted-foreground">No invitations received.</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">No invitations received.</p>
                         ) : (
                             <ul className="space-y-3 sm:space-y-4">
-                                {receivedInvites.map((inv: any) => (
-                                    <li key={inv._id}>
-                                        <Card>
-                                            <CardContent className="p-4 sm:p-5">
-                                                <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
-                                                    <div className="min-w-0">
-                                                        <p className="font-medium truncate">
-                                                            {inv.senderEmail} invited you to a thread
-                                                        </p>
-                                                        <p className="text-xs text-muted-foreground mt-1">
-                                                            {new Date(inv.createdAt).toLocaleString()}
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex gap-2 sm:shrink-0">
-                                                        <Button size="sm" aria-label="Accept invitation">
-                                                            Accept
-                                                        </Button>
-                                                        <Button
-                                                            size="sm"
-                                                            variant="outline"
-                                                            aria-label="Decline invitation"
-                                                        >
-                                                            Decline
-                                                        </Button>
-                                                    </div>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    </li>
+                                {receivedInvites.map(inv => (
+                                    <InviteItem
+                                        key={inv._id}
+                                        inv={inv}
+                                        variant="received"
+                                        isActing={isActingOn(inv._id)}
+                                        onAccept={onAccept}
+                                        onDecline={onDecline}
+                                    />
                                 ))}
                             </ul>
                         )}
                     </TabsContent>
 
-                    <TabsContent value="sent" className="mt-4 sm:mt-6">
+                    <TabsContent value="sent" className="mt-4 sm:mt-5">
                         {sentInvites.length === 0 ? (
-                            <p className="text-sm text-muted-foreground">You haven’t sent any invitations.</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
+                                You haven’t sent any invitations.
+                            </p>
                         ) : (
                             <ul className="space-y-3 sm:space-y-4">
-                                {sentInvites.map((inv: any) => (
-                                    <li key={inv._id}>
-                                        <Card>
-                                            <CardContent className="p-4 sm:p-5">
-                                                <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
-                                                    <div className="min-w-0">
-                                                        <p className="font-medium truncate">
-                                                            You invited {inv.receiverEmail} to a thread
-                                                        </p>
-                                                        <p className="text-xs text-muted-foreground mt-1">
-                                                            {new Date(inv.createdAt).toLocaleString()}
-                                                        </p>
-                                                    </div>
-                                                    <div className="text-xs text-muted-foreground sm:shrink-0">
-                                                        {inv.status ?? "PENDING"}
-                                                    </div>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    </li>
+                                {sentInvites.map(inv => (
+                                    <InviteItem
+                                        key={inv._id}
+                                        inv={inv}
+                                        variant="sent"
+                                        isActing={false}
+                                        onAccept={() => {}}
+                                        onDecline={() => {}}
+                                    />
                                 ))}
                             </ul>
                         )}

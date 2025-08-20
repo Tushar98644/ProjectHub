@@ -10,6 +10,22 @@ class InviteService {
         const res = await axios.post("/api/v1/invitations", payload);
         return res.data;
     }
+
+    public async acceptInvite(invitationId: string) {
+        const res = await axios.patch(`/api/v1/invitations`, {
+            invitationId,
+            status: "ACCEPTED",
+        });
+        return res.data;
+    }
+
+    public async declineInvite(invitationId: string) {
+        const res = await axios.patch(`/api/v1/invitations`, {
+            invitationId,
+            status: "DECLINED",
+        });
+        return res.data;
+    }
 }
 
 export default new InviteService();

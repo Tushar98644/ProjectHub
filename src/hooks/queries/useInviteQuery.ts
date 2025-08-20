@@ -19,3 +19,25 @@ export const useSendInvite = () => {
         },
     });
 };
+
+export const useAcceptInvite = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (invitationId: string) => inviteService.acceptInvite(invitationId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["invites"] });
+        },
+    });
+};
+
+export const useDeclineInvite = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (invitationId: string) => inviteService.declineInvite(invitationId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["invites"] });
+        },
+    });
+};
