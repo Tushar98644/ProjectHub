@@ -1,7 +1,12 @@
 export interface Member {
+    _id: string;
+    threadId: string;
+    threadTitle: string;
     email: string;
-    name?: string;
-    avatar?: string;
+    name: string;
+    avatar: string;
+    authorEmail: string;
     role?: "member" | "admin";
-    joinedAt?: string | Date;
+    createdAt: Date;
+    updatedAt: Date;
 }

@@ -1,7 +1,7 @@
 import connectToDB from "@/lib/mongoose";
 import { requireAuth } from "@/lib/requireAuth";
 import Invitation from "@/db/models/invitation";
-import { Thread } from "@/db/models";
+import Member from "@/db/models/member";
 
 export async function GET(req: Request) {
     try {
@@ -29,9 +29,9 @@ export async function POST(req: Request) {
         if (!session) return Response.json({ message: "Unauthorized" }, { status: 401 });
 
         const body = await req.json();
-        const { threadId, receiverEmail, role } = body;
+        const { threadId, threadTitle, receiverEmail, role } = body;
 
-        if (!threadId || !receiverEmail || !role) {
+        if (!threadId || !threadTitle || !receiverEmail || !role) {
             return Response.json({ message: "Missing fields" }, { status: 400 });
         }
 
@@ -42,6 +42,7 @@ export async function POST(req: Request) {
 
         const invitation = await Invitation.create({
             threadId,
+            threadTitle,
             senderEmail: session?.user?.email,
             receiverEmail,
             role,
@@ -61,36 +62,40 @@ export async function PATCH(req: Request) {
         if (!invitationId || !status) {
             return Response.json({ message: "invitationId and status are required" }, { status: 400 });
         }
-
         if (!["ACCEPTED", "DECLINED"].includes(status)) {
             return Response.json({ message: "Invalid status" }, { status: 400 });
         }
 
         await connectToDB();
 
-        const invitation = await Invitation.findById(invitationId);
-        if (!invitation) return Response.json({ message: "Not found" }, { status: 404 });
+        const inv = await Invitation.findById(invitationId);
+        if (!inv) return Response.json({ message: "Not found" }, { status: 404 });
 
-        const user = session?.user;
-        if (invitation.receiverEmail !== user.email) {
+        const user = session.user;
+        if (inv.receiverEmail !== user.email) {
             return Response.json({ message: "Forbidden" }, { status: 403 });
         }
 
-        if (invitation.status && invitation.status !== "PENDING") {
-            return Response.json({ ok: true, status: invitation.status }, { status: 200 });
+        if (inv.status && inv.status !== "PENDING") {
+            return Response.json({ ok: true, status: inv.status }, { status: 200 });
         }
 
-        invitation.status = status;
-        await invitation.save();
+        await Invitation.updateOne({ _id: invitationId }, { $set: { status } });
 
         if (status === "ACCEPTED") {
-            await Thread.updateOne(
-                { _id: invitation.threadId, "members.email": { $ne: user.email } },
+            await Member.updateOne(
+                { threadId: String(inv.threadId), email: user.email },
                 {
-                    $push: {
-                        members: { email: user.email, role: invitation.role, joinedAt: new Date(), avatar: user.image },
+                    $setOnInsert: {
+                        authorEmail: inv.senderEmail || "",
                     },
-                }
+                    $set: {
+                        role: inv.role,
+                        avatar: user.image || "",
+                        threadTitle: inv.threadTitle || "",
+                    },
+                },
+                { upsert: true }
             );
         }
 

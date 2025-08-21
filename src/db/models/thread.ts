@@ -1,12 +1,5 @@
 import mongoose, { models, Schema } from "mongoose";
 
-const MemberSchema = new Schema({
-    email: { type: String, required: true },
-    role: { type: String, required: true },
-    joinedAt: { type: Date, required: true },
-    avatar: { type: String, required: true },
-});
-
 const ThreadSchema = new Schema(
     {
         title: { type: String, required: true, trim: true },
@@ -15,7 +8,6 @@ const ThreadSchema = new Schema(
         likes: { type: Number, default: 0, min: 0 },
         popular: { type: Boolean, default: false },
         tags: { type: [String], default: [] },
-        members: { type: [MemberSchema], default: [] },
     },
     { timestamps: true }
 );

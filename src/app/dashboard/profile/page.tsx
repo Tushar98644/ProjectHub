@@ -7,14 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Github, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
-
-type Integration = {
-    id: string;
-    name: string;
-    description?: string;
-    connected?: boolean;
-    account?: { accountName?: string; avatarUrl?: string } | null;
-};
+import { useSession } from "@/config/auth/client";
 
 type ImportedResource = {
     providerId: string;
@@ -23,15 +16,6 @@ type ImportedResource = {
     displayName?: string;
     url?: string;
     importedAt?: string;
-};
-
-const user = {
-    name: "Tushar Banik",
-    username: "tushar",
-    avatar: "/avatar-placeholder.png",
-    bio: "Building things. Loves clean UX and good defaults.",
-    joinDate: "2025-08-19",
-    stats: { projects: 3 },
 };
 
 const integrations = [
@@ -54,6 +38,8 @@ const integrations = [
 const ProfilePage = () => {
     const [tab, setTab] = useState("overview");
     const [imports, setImports] = useState<ImportedResource[]>([]);
+    const { data: session } = useSession();
+    const user = session?.user!;
 
     const importedFor = (providerId: string) => imports.filter(i => i.providerId === providerId).slice(0, 3);
 
@@ -62,20 +48,20 @@ const ProfilePage = () => {
             {/* Profile Header */}
             <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <Avatar className="h-16 w-16 sm:h-20 sm:w-20 shadow">
-                    <AvatarImage src={user.avatar} />
+                    <AvatarImage src={user?.image || "/avatar-placeholder.png"} />
                     <AvatarFallback>
-                        {user.name
+                        {user?.name
                             .split(" ")
                             .map(n => n[0])
                             .join("")}
                     </AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
-                    <h1 className="text-xl sm:text-2xl font-semibold">{user.name}</h1>
+                    <h1 className="text-xl sm:text-2xl font-semibold">{user?.name}</h1>
                     <p className="text-sm text-muted-foreground">
-                        @{user.username} · Joined {new Date(user.joinDate).getFullYear()}
+                        {user?.email} · Joined {new Date(user?.createdAt).getFullYear()}
                     </p>
-                    <p className="mt-2 text-sm text-foreground max-w-xl">{user.bio}</p>
+                    <p className="mt-2 text-sm text-foreground max-w-xl">{"Bio"}</p>
                 </div>
                 <Button size="sm" asChild className="self-start sm:self-auto">
                     <Link href="/settings">Settings</Link>
@@ -87,7 +73,7 @@ const ProfilePage = () => {
                 <Card>
                     <CardContent className="p-4 text-center">
                         <div className="text-xs text-muted-foreground">Projects</div>
-                        <div className="text-xl font-semibold mt-1">{user.stats.projects}</div>
+                        <div className="text-xl font-semibold mt-1">{}</div>
                     </CardContent>
                 </Card>
                 <Card className="sm:col-span-2">

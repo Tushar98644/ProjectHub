@@ -3,6 +3,7 @@ import mongoose, { Schema, models } from "mongoose";
 const InvitationSchema = new Schema(
     {
         threadId: { type: String, required: true },
+        threadTitle: { type: String, required: true },
         senderEmail: { type: String, required: true },
         receiverEmail: { type: String, required: true },
         role: { type: String, required: true },

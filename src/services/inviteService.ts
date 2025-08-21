@@ -6,7 +6,12 @@ class InviteService {
         return res.data;
     }
 
-    public async sendInvite(payload: { threadId: string; receiverEmail: string; role: "admin" | "member" }) {
+    public async sendInvite(payload: {
+        threadId: string;
+        threadTitle: string;
+        receiverEmail: string;
+        role: "admin" | "member";
+    }) {
         const res = await axios.post("/api/v1/invitations", payload);
         return res.data;
     }

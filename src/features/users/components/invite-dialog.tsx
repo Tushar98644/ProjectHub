@@ -22,7 +22,6 @@ export function InviteDialog({
     onOpenChange: (v: boolean) => void;
     user: User;
 }) {
-    const [query, setQuery] = useState("");
     const [threadId, setThreadId] = useState<string>("");
     const [role, setRole] = useState<"admin" | "member">("member");
 
@@ -30,22 +29,16 @@ export function InviteDialog({
     const { data: threads = [] } = useFetchThreads(session?.user?.email);
     const { mutate: sendInvite } = useSendInvite();
 
-    const filtered = useMemo(() => {
-        const q = query.trim().toLowerCase();
-        if (!q) return threads;
-        return threads.filter((t: Thread) => t.title.toLowerCase().includes(q));
-    }, [threads, query]);
-
+    const threadTitle = threads.filter((x: Thread) => x._id === threadId)[0]?.title;
     const onConfirm = async () => {
         if (!threadId) return toast.error("Pick a thread");
         if (!user.email) return toast.error("User has no email");
         try {
-            sendInvite({ threadId, receiverEmail: user.email, role });
+            sendInvite({ threadId, threadTitle, receiverEmail: user.email, role });
             toast.success("Invitation sent");
             onOpenChange(false);
             setThreadId("");
             setRole("member");
-            setQuery("");
         } catch (e) {
             toast.error((e as Error).message);
         } finally {
@@ -75,15 +68,11 @@ export function InviteDialog({
                                 <SelectValue placeholder="Choose a thread" />
                             </SelectTrigger>
                             <SelectContent className="max-h-64">
-                                {filtered.length === 0 ? (
-                                    <div className="px-3 py-2 text-sm text-muted-foreground">No threads match</div>
-                                ) : (
-                                    filtered.map((t: Thread) => (
-                                        <SelectItem key={t._id} value={t._id}>
-                                            {t.title}
-                                        </SelectItem>
-                                    ))
-                                )}
+                                {threads.map((t: Thread) => (
+                                    <SelectItem key={t._id} value={t._id}>
+                                        {t.title}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>

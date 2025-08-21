@@ -7,57 +7,27 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { SearchBar } from "@/components/common/search-bar";
-
-type Member = {
-    id: string;
-    name: string;
-    role: "admin" | "team" | "member";
-    image?: string;
-    context: "team" | "thread";
-};
-
-const dummyMembers: Member[] = [
-    {
-        id: "1",
-        name: "Tushar Banik",
-        role: "admin",
-        context: "team",
-        image: "https://i.pravatar.cc/150?img=3",
-    },
-    {
-        id: "2",
-        name: "Alex Chen",
-        role: "member",
-        context: "thread",
-        image: "https://i.pravatar.cc/150?img=4",
-    },
-    {
-        id: "3",
-        name: "Sarah Nguyen",
-        role: "team",
-        context: "thread",
-        image: "https://i.pravatar.cc/150?img=5",
-    },
-    {
-        id: "4",
-        name: "John Doe",
-        role: "member",
-        context: "team",
-        image: "https://i.pravatar.cc/150?img=6",
-    },
-];
+import { useFetchMembers } from "@/hooks/queries/useMemberQuery";
+import { Member } from "@/types/member";
 
 function TeamsPage() {
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedRole, setSelectedRole] = useState("all");
+    const [selectedRole, setSelectedRole] = useState<"all" | "admin" | "member">("all");
 
-    const roles = useMemo(() => ["all", "admin", "team", "member"], []);
+    const roles = useMemo(() => ["all", "admin", "member"] as const, []);
+    const { data: members = [] } = useFetchMembers();
 
-    const filtered = dummyMembers.filter(m => {
-        const matchesRole = selectedRole === "all" || m.role === selectedRole;
-        const matchesSearch = m.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesRole && matchesSearch;
-    });
+    const filtered = useMemo(() => {
+        const q = searchQuery.trim().toLowerCase();
+        return (members as Member[]).filter(m => {
+            const matchesRole = selectedRole === "all" || m.role === selectedRole;
+            const name = (m.name || "").toLowerCase(); // guard against undefined
+            const email = (m.email || "").toLowerCase();
+            const thread = (m.threadTitle || "").toLowerCase();
+            const matchesSearch = !q || name.includes(q) || email.includes(q) || thread.includes(q);
+            return matchesRole && matchesSearch;
+        });
+    }, [members, selectedRole, searchQuery]);
 
     return (
         <div className="h-full flex flex-col bg-gradient-to-b from-background via-background to-background">
@@ -89,31 +59,34 @@ function TeamsPage() {
 
                 <Card className="h-96 overflow-auto rounded-2xl border bg-background/60 p-0">
                     <CardContent className="p-4 space-y-3">
-                        {filtered.map(m => (
-                            <div key={m.id} className="flex items-center justify-between rounded-md border p-3">
-                                <div className="flex items-center gap-3">
-                                    <Avatar className="h-8 w-8">
-                                        {m.image ? (
-                                            <AvatarImage src={m.image} />
-                                        ) : (
-                                            <AvatarFallback>
-                                                {m.name
-                                                    .split(" ")
-                                                    .map(n => n[0])
-                                                    .join("")}
-                                            </AvatarFallback>
-                                        )}
-                                    </Avatar>
-
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-medium">{m.name}</span>
-                                        <span className="text-xs text-muted-foreground capitalize">
-                                            {m.context === "thread" ? "Thread" : "Team"} · {m.role}
-                                        </span>
+                        {filtered.map(m => {
+                            const initials =
+                                (m.name || m.email || "")
+                                    .split(" ")
+                                    .map(n => n[0])
+                                    .join("")
+                                    .slice(0, 2)
+                                    .toUpperCase() || "U";
+                            return (
+                                <div key={m._id} className="flex items-center justify-between rounded-md border p-3">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="h-8 w-8">
+                                            {m.avatar ? (
+                                                <AvatarImage src={m.avatar} />
+                                            ) : (
+                                                <AvatarFallback>{initials}</AvatarFallback>
+                                            )}
+                                        </Avatar>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-medium">{m.name || m.email}</span>
+                                            <span className="text-xs text-muted-foreground capitalize">
+                                                {m.threadTitle || "Thread"} · {m.role}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
 
                         {filtered.length === 0 && <p className="text-sm text-muted-foreground">No members found.</p>}
                     </CardContent>

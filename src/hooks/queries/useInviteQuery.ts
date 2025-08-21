@@ -12,8 +12,12 @@ export const useSendInvite = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (payload: { threadId: string; receiverEmail: string; role: "admin" | "member" }) =>
-            inviteService.sendInvite(payload),
+        mutationFn: (payload: {
+            threadId: string;
+            threadTitle: string;
+            receiverEmail: string;
+            role: "admin" | "member";
+        }) => inviteService.sendInvite(payload),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["invites"] });
         },
