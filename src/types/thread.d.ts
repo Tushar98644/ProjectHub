@@ -10,6 +10,7 @@ export interface Thread {
     tags: string[];
     likes: number;
     popular: boolean;
+    isPublic: boolean;
     createdAt: Date;
     updatedAt: Date;
 }

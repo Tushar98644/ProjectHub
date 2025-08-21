@@ -27,9 +27,9 @@ export const MembersPanel = ({ members }: { members: Member[] }) => {
                                     <Badge variant="secondary" className="text-[10px]">
                                         {m.role || "member"}
                                     </Badge>
-                                    {m.joinedAt && (
+                                    {m.createdAt && (
                                         <span className="text-[10px] text-muted-foreground">
-                                            Joined {timeAgo(String(m.joinedAt))}
+                                            Joined {timeAgo(String(m.createdAt))}
                                         </span>
                                     )}
                                 </div>

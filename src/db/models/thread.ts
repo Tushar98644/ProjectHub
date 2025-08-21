@@ -1,5 +1,19 @@
 import mongoose, { models, Schema } from "mongoose";
 
+const IntegrationSchema = new Schema(
+    {
+        provider: { type: String, enum: ["github", "slack"], required: true },
+        githubId: { type: String, default: "" },
+        githubOwner: { type: String, default: "" },
+        githubRepo: { type: String, default: "" },
+        githubUrl: { type: String, default: "" },
+        slackTeamId: { type: String, default: "" },
+        slackChannelId: { type: String, default: "" },
+        slackChannelName: { type: String, default: "" },
+    },
+    { _id: false }
+);
+
 const ThreadSchema = new Schema(
     {
         title: { type: String, required: true, trim: true },
@@ -8,6 +22,8 @@ const ThreadSchema = new Schema(
         likes: { type: Number, default: 0, min: 0 },
         popular: { type: Boolean, default: false },
         tags: { type: [String], default: [] },
+        integration: { type: IntegrationSchema, default: {} },
+        isPublic: { type: Boolean, default: true },
     },
     { timestamps: true }
 );

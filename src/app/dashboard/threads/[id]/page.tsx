@@ -18,6 +18,7 @@ import { ChatItem } from "@/features/threads/components/chat-item";
 import { MembersPanel } from "@/features/threads/components/members-panel";
 import { EmptyState } from "@/features/threads/components/empty-state";
 import { Member } from "@/types/member";
+import { useFetchMembers } from "@/hooks/queries/useMemberQuery";
 
 const ThreadPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -27,25 +28,11 @@ const ThreadPage = () => {
 
     const { data: thread, isPending, isError } = useFetchThread(id);
     const { data: comments = [] } = useCommentsQuery(id);
+    const { data: members = [] } = useFetchMembers(id);
     const { mutate: createComment } = useCommentsMuation();
 
     const [newComment, setNewComment] = useState("");
     const listRef = useRef<HTMLDivElement>(null);
-
-    const members: Member[] = useMemo(() => {
-        const raw = Array.isArray(thread?.members) ? thread?.members : [];
-        return raw.map((m: any) =>
-            typeof m === "string"
-                ? { email: m, name: m.split("@")[0], role: "member" }
-                : {
-                      email: m.email ?? m,
-                      name: m.name ?? String(m.email || "").split("@"),
-                      avatar: m.avatar ?? "",
-                      role: m.role ?? "member",
-                      joinedAt: m.joinedAt,
-                  }
-        );
-    }, [thread?.members]);
 
     const sortedAsc: Comment[] = useMemo(() => {
         const list = [...comments];

@@ -7,18 +7,54 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Github, Plus, Check } from "lucide-react";
 import { Repo } from "@/types/repo";
 import { useFetchRepos } from "@/hooks/queries/useGithubQuery";
+import { useImportRepo } from "@/hooks/queries/useGithubQuery";
+import { useRouter } from "next/navigation";
 
 const GithubImportPage = () => {
-    const [connected, setConnected] = useState<boolean | null>(null);
+    const [connected, setConnected] = useState<boolean | null>(true);
     const [query, setQuery] = useState("");
-    const [selected, setSelected] = useState<Record<string, boolean>>({});
-    const [importing, setImporting] = useState(false);
+    const [selected, setSelected] = useState<string | null>(null);
+
+    const router = useRouter();
 
     const { data: repos = [], isPending, refetch, isRefetching } = useFetchRepos();
+    const importRepo = useImportRepo();
 
     const filtered: Repo[] = repos.filter((r: Repo) =>
         `${r.full_name} ${r.description || ""}`.toLowerCase().includes(query.toLowerCase())
     );
+
+    const handleImport = async () => {
+        if (!selected) return;
+
+        const selectedRepo = repos.find((r: any) => r.full_name === selected);
+        if (!selectedRepo) return;
+
+        try {
+            await importRepo.mutateAsync(
+                {
+                    provider: "github",
+                    data: {
+                        id: selectedRepo.id,
+                        full_name: selectedRepo.full_name,
+                        html_url: selectedRepo.html_url,
+                        description: selectedRepo.description || "",
+                        tags: selectedRepo.topics,
+                    },
+                },
+                {
+                    onSuccess: data => {
+                        console.log("Import successful", data);
+                        router.push(`/dashboard/threads/${data.threadId}`);
+                    },
+                }
+            );
+
+            setSelected(null);
+        } catch (err) {
+            console.error("Import failed", err);
+        }
+    };
 
     return (
         <div className="p-2 sm:p-2 h-full">
@@ -34,7 +70,7 @@ const GithubImportPage = () => {
                                 <div>
                                     <h1 className="text-lg font-semibold">Import projects from GitHub</h1>
                                     <p className="text-sm text-muted-foreground">
-                                        Select repositories to import into your workspace.
+                                        Select one repository to import into your workspace.
                                     </p>
                                 </div>
                             </div>
@@ -74,23 +110,22 @@ const GithubImportPage = () => {
                                 filtered.map(repo => (
                                     <div
                                         key={repo.full_name}
-                                        className="flex items-center justify-between gap-4 p-3 rounded-md border hover:shadow-sm"
+                                        className={`flex items-center justify-between gap-4 p-3 rounded-md border hover:shadow-sm cursor-pointer ${
+                                            selected === repo.full_name ? "border-primary bg-primary/5" : ""
+                                        }`}
+                                        onClick={() => setSelected(repo.full_name)}
                                     >
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-1">
-                                                <button
-                                                    onClick={() =>
-                                                        setSelected(prev => ({
-                                                            ...prev,
-                                                            [repo.full_name]: !prev[repo.full_name],
-                                                        }))
-                                                    }
+                                                <div
                                                     className={`h-6 w-6 rounded-sm border flex items-center justify-center ${
-                                                        selected[repo.full_name] ? "bg-primary/10 border-primary" : ""
+                                                        selected === repo.full_name
+                                                            ? "bg-primary/10 border-primary"
+                                                            : ""
                                                     }`}
                                                 >
-                                                    {selected[repo.full_name] && <Check className="h-3 w-3" />}
-                                                </button>
+                                                    {selected === repo.full_name && <Check className="h-3 w-3" />}
+                                                </div>
                                                 <a
                                                     href={repo.html_url}
                                                     target="_blank"
@@ -113,11 +148,15 @@ const GithubImportPage = () => {
 
                         {/* Actions */}
                         <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
-                            <Button variant="ghost" onClick={() => setSelected({})} className="sm:w-auto">
+                            <Button variant="ghost" onClick={() => setSelected(null)} className="sm:w-auto">
                                 Clear
                             </Button>
-                            <Button onClick={() => {}} disabled={importing || !connected} className="sm:w-auto">
-                                {importing ? "Importing…" : "Import selected"}
+                            <Button
+                                onClick={handleImport}
+                                disabled={importRepo.isPending || !connected || !selected}
+                                className="sm:w-auto"
+                            >
+                                {importRepo.isPending ? "Importing…" : "Import selected"}
                             </Button>
                         </div>
                     </CardContent>

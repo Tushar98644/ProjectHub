@@ -9,7 +9,6 @@ const MemberSchema = new Schema(
         avatar: { type: String, default: "" },
         authorEmail: { type: String, required: true, index: true },
         role: { type: String, enum: ["admin", "member"], required: true },
-        joinedAt: { type: Date, default: Date.now },
     },
     { timestamps: true }
 );

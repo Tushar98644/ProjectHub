@@ -148,36 +148,83 @@ const ThreadsPage = () => {
                 </div>
 
                 {/* Thread List */}
-                <div className="flex-1 overflow-y-auto flex flex-col gap-3">
-                    {filtered.map(t => (
-                        <Card key={t._id} className="p-4 rounded-2xl hover:shadow-lg transition">
-                            <div className="md:flex md:items-start md:justify-between gap-3">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-3">
-                                        <h3 className="text-md font-semibold leading-tight">{t.title}</h3>
-                                        {/* hide badge on mobile */}
-                                        <Badge className="hidden md:inline-flex" variant="outline">
-                                            {t.title}
-                                        </Badge>
+                <div className="flex-1 overflow-y-auto flex flex-col gap-3 sm:pb-28 pb-32">
+                    {filtered.map(t => {
+                        const maxTagsMobile = 2;
+                        const extraTags = t.tags?.length > maxTagsMobile ? t.tags.length - maxTagsMobile : 0;
+
+                        return (
+                            <Card key={t._id} className="p-4 rounded-2xl hover:shadow-lg transition">
+                                <div className="md:flex md:items-start md:justify-between gap-3">
+                                    <div className="flex-1">
+                                        <div className="flex flex-col items-start gap-3 flex-wrap">
+                                            <div className="flex flex-row gap-4">
+                                                <h3 className="text-md font-semibold leading-tight">{t.title}</h3>
+
+                                                {/* Public/Private badge */}
+                                                <Badge variant={t.isPublic ? "secondary" : "destructive"}>
+                                                    {t.isPublic ? "Public" : "Private"}
+                                                </Badge>
+                                            </div>
+
+                                            {/* Tags (desktop full, mobile limited + scrollable) */}
+                                            {t.tags?.length > 0 && (
+                                                <div className="flex gap-1 flex-wrap max-w-full overflow-x-auto md:overflow-visible md:flex-nowrap">
+                                                    {/* On mobile show limited tags */}
+                                                    <div className="flex gap-1 md:hidden">
+                                                        {t.tags.slice(0, maxTagsMobile).map(tag => (
+                                                            <Badge
+                                                                key={tag}
+                                                                variant="outline"
+                                                                className="truncate max-w-[100px]"
+                                                            >
+                                                                {tag}
+                                                            </Badge>
+                                                        ))}
+                                                        {extraTags > 0 && (
+                                                            <Badge variant="outline" className="truncate max-w-[60px]">
+                                                                +{extraTags} more
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+
+                                                    {/* On desktop show all tags */}
+                                                    <div className="hidden md:flex gap-1 flex-wrap">
+                                                        {t.tags.map(tag => (
+                                                            <Badge
+                                                                key={tag}
+                                                                variant="outline"
+                                                                className="truncate max-w-[120px]"
+                                                            >
+                                                                {tag}
+                                                            </Badge>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                                            {t.description}
+                                        </p>
+                                        <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                                            <Clock className="h-3 w-3" />
+                                            <span>{timeAgo(t.updatedAt.toString())} ago</span>
+                                            <span>•</span>
+                                            <span>
+                                                {t.comments?.length || 0} comments • {t.likes} likes
+                                            </span>
+                                        </div>
                                     </div>
-                                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{t.description}</p>
-                                    <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                                        <Clock className="h-3 w-3" />
-                                        <span>{timeAgo(t.updatedAt.toString())} ago</span>
-                                        <span>•</span>
-                                        <span>
-                                            {t.comments?.length || 0} comments • {t.likes} likes
-                                        </span>
-                                    </div>
+                                    <Link href={`/dashboard/threads/${t._id}`} className="mt-4 md:mt-0 md:ml-4">
+                                        <Button size="sm" className="mt-4 md:mt-0 flex items-center gap-2">
+                                            Open <ArrowRight className="h-4 w-4" />
+                                        </Button>
+                                    </Link>
                                 </div>
-                                <Link href={`/dashboard/threads/${t._id}`} className="mt-4 md:mt-0 md:ml-4">
-                                    <Button size="sm" className="mt-4 md:mt-0 flex items-center gap-2">
-                                        Open <ArrowRight className="h-4 w-4" />
-                                    </Button>
-                                </Link>
-                            </div>
-                        </Card>
-                    ))}
+                            </Card>
+                        );
+                    })}
                 </div>
             </div>
         </div>
