@@ -11,6 +11,7 @@ export interface Thread {
     likes: number;
     popular: boolean;
     isPublic: boolean;
+    integration: any;
     createdAt: Date;
     updatedAt: Date;
 }
