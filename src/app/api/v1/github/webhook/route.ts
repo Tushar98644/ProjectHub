@@ -157,8 +157,7 @@ Keep it under 150 words and use simple, clear language.`;
             const formattedComment = formatCommitComment(commit, aiSummary, repoFullName);
 
             const thread = await Thread.findOne({
-                "integration.provider": "github",
-                "integration.githubFullName": repoFullName,
+                "integration.githubId": payload.repository?.id,
             });
 
             if (thread) {
@@ -200,8 +199,7 @@ Keep it under 200 words and use clear, non-technical language when possible.`;
         const formattedComment = formatPRComment(pr, payload.action, aiSummary, repoFullName);
 
         const thread = await Thread.findOne({
-            "integration.provider": "github",
-            "integration.githubFullName": repoFullName,
+            "integration.githubId": payload.repository?.id,
         });
 
         if (thread) {
