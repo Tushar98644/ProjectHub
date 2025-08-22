@@ -65,8 +65,8 @@ export async function POST(req: Request) {
         for (const commit of commits) {
             const summary = await summarizeCommit(commit);
             const thread = await Thread.findOne({ "integration.githubId": payload.repository.id });
-            const comment = await Comment.create({
-                thread: thread?._id,
+            await Comment.create({
+                threadId: thread?._id,
                 author: "AI",
                 authorAvatar:
                     "https://www.shutterstock.com/image-vector/chat-bot-icon-virtual-smart-600nw-2478937555.jpg",
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
         const thread = await Thread.findOne({ "integration.githubId": payload.repository.id });
 
         const comment = await Comment.create({
-            thread: thread?._id,
+            threadId: thread?._id,
             author: "AI",
             authorAvatar: "https://www.shutterstock.com/image-vector/chat-bot-icon-virtual-smart-600nw-2478937555.jpg",
             content: summary,
