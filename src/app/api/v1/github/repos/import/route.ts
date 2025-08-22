@@ -2,8 +2,8 @@ import connectToDB from "@/lib/mongoose";
 import { requireAuth } from "@/lib/requireAuth";
 import Thread from "@/db/models/thread";
 import Member from "@/db/models/member";
-import axios from "axios";
-import jwt from "jsonwebtoken";
+import { Octokit } from "@octokit/rest";
+import { createAppAuth } from "@octokit/auth-app";
 
 export async function POST(req: Request) {
     try {
@@ -95,29 +95,26 @@ export async function POST(req: Request) {
 
 async function getInstallationId(owner: string, repo: string): Promise<number | null> {
     try {
-        const jwt = generateGitHubAppJWT();
-        const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/installation`, {
-            headers: {
-                Authorization: `Bearer ${jwt}`,
-                Accept: "application/vnd.github+json",
+        const octokitApp = new Octokit({
+            authStrategy: createAppAuth,
+            auth: {
+                appId: Number(process.env.GITHUB_APP_ID),
+                privateKey: process.env.GITHUB_APP_PRIVATE_KEY?.replace(/\\n/g, "\n") || "",
             },
         });
-        return response.data.id;
-    } catch (error: any) {
-        console.warn("GitHub App not installed or error querying installation", error.response?.data || error.message);
+
+        const resp = await octokitApp.request("GET /repos/{owner}/{repo}/installation", {
+            owner,
+            repo,
+        });
+
+        return resp.data?.id ?? null;
+    } catch (err: any) {
+        console.error("getInstallationId error:", {
+            status: err.status || err.response?.status,
+            message: err.message,
+            data: err.response?.data,
+        });
         return null;
     }
-}
-
-function generateGitHubAppJWT(): string {
-    const now = Math.floor(Date.now() / 1000);
-    const payload = {
-        iat: now - 60,
-        exp: now + 10 * 60,
-        iss: process.env.GITHUB_APP_ID,
-    };
-    const privateKey = process.env.GITHUB_APP_PRIVATE_KEY?.replace(/\\n/g, "\n") || "";
-    return jwt.sign(payload, privateKey, {
-        algorithm: "RS256",
-    });
 }

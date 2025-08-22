@@ -10,14 +10,20 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GOOGLE_API_KEY,
 });
 
-function generateGitHubAppJWT(): string {
+export function generateGitHubAppJWT(): string {
     const now = Math.floor(Date.now() / 1000);
     const payload = {
         iat: now - 60,
         exp: now + 10 * 60,
         iss: process.env.GITHUB_APP_ID,
     };
+
     const privateKey = process.env.GITHUB_APP_PRIVATE_KEY?.replace(/\\n/g, "\n") || "";
+
+    if (!privateKey) {
+        throw new Error("GitHub App private key is missing or invalid");
+    }
+
     return jwt.sign(payload, privateKey, {
         algorithm: "RS256",
     });
