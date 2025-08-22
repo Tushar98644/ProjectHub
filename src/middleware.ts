@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-const publicRoutes = ["/sign-in"];
+const publicRoutes = ["/sign-in", "/api/v1/github/webhook"];
 
 export async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
