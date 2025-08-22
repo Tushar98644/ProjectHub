@@ -2,79 +2,53 @@ import { Thread } from "@/db/models";
 import connectToDB from "@/lib/mongoose";
 import crypto from "crypto";
 import Comment from "@/db/models/comment";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
+import axios from "axios";
 
-const gemini = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
+const ai = new GoogleGenAI({
+    apiKey: process.env.GOOGLE_API_KEY,
+});
 
-const summarizeCommit = async (commit: any, repoFullName: string) => {
-    const diffUrl = `https://api.github.com/repos/${repoFullName}/commits/${commit.id}`;
-    const diffRes = await fetch(diffUrl, {
+async function streamSummarize(prompt: string): Promise<string> {
+    const stream = await ai.models.generateContentStream({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+    });
+
+    let result = "";
+    for await (const chunk of stream) {
+        if (chunk.text) result += chunk.text;
+    }
+    return result;
+}
+
+async function fetchDiff(url: string, token: string): Promise<string> {
+    const res = await axios.get(url, {
         headers: {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+            Authorization: `Bearer ${token}`,
             Accept: "application/vnd.github.v3.diff",
         },
     });
-    const diffText = await diffRes.text();
-
-    const prompt = `
-You are a helpful Git commit summarizer. 
-Summarize the following commit including code changes.
-
-Commit message:
-${commit.message}
-
-Diff:
-${diffText}
-  `;
-
-    const model = gemini.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent(prompt);
-
-    return result.response.text();
-};
-
-const summarizePR = async (pr: any, action: string) => {
-    const diffRes = await fetch(pr.diff_url, {
-        headers: {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-            Accept: "application/vnd.github.v3.diff",
-        },
-    });
-    const diffText = await diffRes.text();
-
-    const prompt = `
-You are a helpful Pull Request summarizer. 
-Summarize the PR including the changes.
-
-PR Title: ${pr.title}
-Action: ${action}
-Description: ${pr.body || ""}
-
-Diff:
-${diffText}
-  `;
-
-    const model = gemini.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent(prompt);
-
-    return result.response.text();
-};
+    return res.data;
+}
 
 export async function POST(req: Request) {
-    const rawBody = await req.text();
+    const raw = await req.text();
     const sig = req.headers.get("X-Hub-Signature-256");
     const event = req.headers.get("X-Github-Event");
     const secret = process.env.GITHUB_WEBHOOK_SECRET;
+    const token = process.env.GITHUB_TOKEN;
 
-    if (!sig || !secret) return Response.json({ message: "Invalid request" }, { status: 400 });
+    if (!sig || !secret || !token) {
+        return Response.json({ message: "Missing credentials" }, { status: 400 });
+    }
 
-    const hmac = crypto.createHmac("sha256", secret).update(rawBody).digest("hex");
-    const computed = `sha256=${hmac}`;
-    if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(computed))) {
+    const hmac = crypto.createHmac("sha256", secret).update(raw).digest("hex");
+    if (!crypto.timingSafeEqual(Buffer.from(`sha256=${hmac}`), Buffer.from(sig))) {
         return Response.json({ message: "Invalid signature" }, { status: 400 });
     }
 
-    const payload = JSON.parse(rawBody);
+    const payload = JSON.parse(raw);
     await connectToDB();
 
     if (event === "ping") {
@@ -82,13 +56,22 @@ export async function POST(req: Request) {
     }
 
     if (event === "push") {
-        const commits = Array.isArray(payload?.commits) ? payload.commits : [];
-        for (const commit of commits) {
-            const summary = await summarizeCommit(commit, payload.repository.full_name);
-            const thread = await Thread.findOne({
-                "integration.githubId": payload.repository.id,
-            });
+        for (const commit of payload.commits || []) {
+            const diff = await fetchDiff(
+                `https://api.github.com/repos/${payload.repository.full_name}/commits/${commit.id}`,
+                token
+            );
 
+            const prompt = `
+Commit Summary:
+Message: ${commit.message}
+Diff:
+${diff}
+      `;
+
+            const summary = await streamSummarize(prompt);
+
+            const thread = await Thread.findOne({ "integration.githubId": payload.repository.id });
             if (thread) {
                 await Comment.create({
                     threadId: thread._id,
@@ -104,11 +87,19 @@ export async function POST(req: Request) {
 
     if (event === "pull_request") {
         const pr = payload.pull_request;
-        const summary = await summarizePR(pr, payload.action);
-        const thread = await Thread.findOne({
-            "integration.githubId": payload.repository.id,
-        });
+        const diff = await fetchDiff(pr.diff_url, token);
 
+        const prompt = `
+PR Summary (${payload.action}):
+Title: ${pr.title}
+Body: ${pr.body}
+Diff:
+${diff}
+    `;
+
+        const summary = await streamSummarize(prompt);
+
+        const thread = await Thread.findOne({ "integration.githubId": payload.repository.id });
         if (thread) {
             const comment = await Comment.create({
                 threadId: thread._id,
