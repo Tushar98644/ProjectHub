@@ -10,10 +10,14 @@ import { useFetchRepos } from "@/hooks/queries/useGithubQuery";
 import { useImportRepo } from "@/hooks/queries/useGithubQuery";
 import { useRouter } from "next/navigation";
 
+const GITHUB_APP_NAME = "/insentra-ai-assistant";
+
 const GithubImportPage = () => {
     const [connected, setConnected] = useState<boolean | null>(true);
     const [query, setQuery] = useState("");
     const [selected, setSelected] = useState<string | null>(null);
+    const [enableAI, setEnableAI] = useState(false);
+    const [appInstalled, setAppInstalled] = useState(false);
 
     const router = useRouter();
 
@@ -23,6 +27,12 @@ const GithubImportPage = () => {
     const filtered: Repo[] = repos.filter((r: Repo) =>
         `${r.full_name} ${r.description || ""}`.toLowerCase().includes(query.toLowerCase())
     );
+
+    const installAppForRepo = (repoId: number) => {
+        const installationUrl = `https://github.com/apps/${GITHUB_APP_NAME}/installations/new/`;
+        window.location.assign(installationUrl);
+        setAppInstalled(true);
+    };
 
     const handleImport = async () => {
         if (!selected) return;
@@ -40,6 +50,7 @@ const GithubImportPage = () => {
                         html_url: selectedRepo.html_url,
                         description: selectedRepo.description || "",
                         tags: selectedRepo.topics,
+                        enableAI,
                     },
                 },
                 {
@@ -51,6 +62,7 @@ const GithubImportPage = () => {
             );
 
             setSelected(null);
+            setAppInstalled(false);
         } catch (err) {
             console.error("Import failed", err);
         }
@@ -94,12 +106,30 @@ const GithubImportPage = () => {
                             className="mb-4"
                         />
 
+                        {/* Enable AI */}
+                        <div className="mb-4 p-3 border rounded-lg bg-muted/30">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h3 className="font-medium">🤖 AI Summaries</h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        Get AI-generated summaries for commits and pull requests
+                                    </p>
+                                </div>
+                                <Button
+                                    variant={enableAI ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setEnableAI(!enableAI)}
+                                >
+                                    {enableAI ? "✓ Enabled" : "Enable"}
+                                </Button>
+                            </div>
+                        </div>
+
                         {/* Repo List */}
                         <div className="space-y-2 max-h-96 overflow-auto">
-                            {isPending ||
-                                (isRefetching && (
-                                    <div className="p-4 text-sm text-muted-foreground">Loading repos…</div>
-                                ))}
+                            {(isPending || isRefetching) && (
+                                <div className="p-4 text-sm text-muted-foreground">Loading repos…</div>
+                            )}
 
                             {!isPending && filtered.length === 0 && (
                                 <div className="p-4 text-sm text-muted-foreground">No repositories found.</div>
@@ -113,7 +143,10 @@ const GithubImportPage = () => {
                                         className={`flex items-center justify-between gap-4 p-3 rounded-md border hover:shadow-sm cursor-pointer ${
                                             selected === repo.full_name ? "border-primary bg-primary/5" : ""
                                         }`}
-                                        onClick={() => setSelected(repo.full_name)}
+                                        onClick={() => {
+                                            setSelected(repo.full_name);
+                                            setAppInstalled(false); // Reset app installed state on selection
+                                        }}
                                     >
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-1">
@@ -148,16 +181,40 @@ const GithubImportPage = () => {
 
                         {/* Actions */}
                         <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
-                            <Button variant="ghost" onClick={() => setSelected(null)} className="sm:w-auto">
+                            <Button
+                                variant="ghost"
+                                onClick={() => {
+                                    setSelected(null);
+                                    setAppInstalled(false);
+                                }}
+                            >
                                 Clear
                             </Button>
-                            <Button
-                                onClick={handleImport}
-                                disabled={importRepo.isPending || !connected || !selected}
-                                className="sm:w-auto"
-                            >
-                                {importRepo.isPending ? "Importing…" : "Import selected"}
-                            </Button>
+
+                            {!appInstalled ? (
+                                <Button
+                                    onClick={() => {
+                                        if (selected) {
+                                            const selectedRepo = repos.find((r: Repo) => r.full_name === selected);
+                                            if (selectedRepo) installAppForRepo(selectedRepo.id);
+                                        }
+                                    }}
+                                    disabled={!connected || !selected}
+                                >
+                                    Install GitHub App
+                                </Button>
+                            ) : (
+                                <Button
+                                    onClick={handleImport}
+                                    disabled={importRepo.isPending || !connected || !selected}
+                                >
+                                    {importRepo.isPending
+                                        ? "Importing…"
+                                        : enableAI
+                                          ? "Import with AI ✨"
+                                          : "Import selected"}
+                                </Button>
+                            )}
                         </div>
                     </CardContent>
                 </Card>

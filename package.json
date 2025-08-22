@@ -40,6 +40,7 @@
         "clsx": "^2.1.1",
         "framer-motion": "^12.23.12",
         "iconsax-reactjs": "^0.0.8",
+        "jsonwebtoken": "^9.0.2",
         "lottie-react": "^2.4.1",
         "lucide-react": "^0.539.0",
         "mongodb": "^6.18.0",
@@ -61,6 +62,7 @@
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
+        "@types/jsonwebtoken": "^9.0.10",
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",

@@ -44,7 +44,7 @@ export const auth = betterAuth({
             prompt: "select_account",
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-            scope: ["read:user", "user:email", "repo:read"],
+            scope: ["read:user", "user:email", "repo"],
         },
     },
     plugins: [nextCookies(), userSearchPlugin()],
