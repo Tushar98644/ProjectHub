@@ -43,12 +43,12 @@ export async function POST(req: Request) {
             const [owner, name] = fullName.includes("/") ? fullName.split("/") : ["", fullName];
 
             const installationId = await getInstallationId(owner, name);
-            if (!installationId) {
-                return Response.json(
-                    { message: `GitHub App is not installed on repository ${fullName}` },
-                    { status: 400 }
-                );
-            }
+            // if (!installationId) {
+            //     return Response.json(
+            //         { message: `GitHub App is not installed on repository ${fullName}` },
+            //         { status: 400 }
+            //     );
+            // }
 
             title = `${name} • GitHub`;
 
@@ -56,7 +56,6 @@ export async function POST(req: Request) {
             integration.githubRepo = name || "";
             integration.githubUrl = data.html_url;
             integration.githubId = String(data.id);
-            integration.githubInstallationId = installationId;
         } else if (provider === "slack") {
             integration.slackTeamId = data.teamId || "";
             integration.slackChannelId = data.channelId || "";
