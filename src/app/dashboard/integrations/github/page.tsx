@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Github, Plus, Check } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Github, Check, Sparkles, RefreshCw, Search } from "lucide-react";
 import { Repo } from "@/types/repo";
 import { useFetchRepos } from "@/hooks/queries/useGithubQuery";
 import { useImportRepo } from "@/hooks/queries/useGithubQuery";
@@ -39,6 +40,11 @@ const GithubImportPage = () => {
 
         const selectedRepo = repos.find((r: any) => r.full_name === selected);
         if (!selectedRepo) return;
+
+        if (enableAI && !appInstalled) {
+            installAppForRepo(selectedRepo.id);
+            return;
+        }
 
         try {
             await importRepo.mutateAsync(
@@ -87,30 +93,31 @@ const GithubImportPage = () => {
                                 </div>
                             </div>
 
-                            {connected === false ? (
-                                <Button className="gap-2">
-                                    <Plus className="h-4 w-4" /> Connect GitHub
-                                </Button>
-                            ) : (
-                                <Button variant="outline" onClick={() => refetch()} disabled={isPending}>
-                                    Refresh
-                                </Button>
-                            )}
+                            <Button variant="outline" onClick={() => refetch()} disabled={isPending || isRefetching}>
+                                <RefreshCw className={`h-4 w-4 mr-2 ${isRefetching ? "animate-spin" : ""}`} />
+                                Refresh
+                            </Button>
                         </div>
 
                         {/* Search */}
-                        <Input
-                            placeholder="Search repositories..."
-                            value={query}
-                            onChange={e => setQuery(e.target.value)}
-                            className="mb-4"
-                        />
+                        <div className="relative mb-4">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Search repositories..."
+                                value={query}
+                                onChange={e => setQuery(e.target.value)}
+                                className="pl-10"
+                            />
+                        </div>
 
                         {/* Enable AI */}
                         <div className="mb-4 p-3 border rounded-lg bg-muted/30">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <h3 className="font-medium">🤖 AI Summaries</h3>
+                                    <h3 className="font-medium flex items-center gap-2">
+                                        <Sparkles className="h-4 w-4" />
+                                        AI Features
+                                    </h3>
                                     <p className="text-sm text-muted-foreground">
                                         Get AI-generated summaries for commits and pull requests
                                     </p>
@@ -120,19 +127,31 @@ const GithubImportPage = () => {
                                     size="sm"
                                     onClick={() => setEnableAI(!enableAI)}
                                 >
-                                    {enableAI ? "✓ Enabled" : "Enable"}
+                                    {enableAI ? (
+                                        <>
+                                            <Check className="h-3 w-3 mr-1" />
+                                            Enabled
+                                        </>
+                                    ) : (
+                                        "Enable"
+                                    )}
                                 </Button>
                             </div>
                         </div>
 
                         {/* Repo List */}
-                        <div className="space-y-2 max-h-96 overflow-auto">
+                        <div className="space-y-2 max-h-96 overflow-auto mb-4">
                             {(isPending || isRefetching) && (
-                                <div className="p-4 text-sm text-muted-foreground">Loading repos…</div>
+                                <div className="p-4 text-sm text-muted-foreground text-center">
+                                    <RefreshCw className="h-4 w-4 animate-spin mx-auto mb-2" />
+                                    Loading repos…
+                                </div>
                             )}
 
-                            {!isPending && filtered.length === 0 && (
-                                <div className="p-4 text-sm text-muted-foreground">No repositories found.</div>
+                            {!isPending && filtered.length === 0 && !isRefetching && (
+                                <div className="p-4 text-sm text-muted-foreground text-center">
+                                    No repositories found.
+                                </div>
                             )}
 
                             {!isPending &&
@@ -145,7 +164,7 @@ const GithubImportPage = () => {
                                         }`}
                                         onClick={() => {
                                             setSelected(repo.full_name);
-                                            setAppInstalled(false); // Reset app installed state on selection
+                                            setAppInstalled(false);
                                         }}
                                     >
                                         <div className="flex-1 min-w-0">
@@ -164,23 +183,27 @@ const GithubImportPage = () => {
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="font-medium truncate hover:underline"
+                                                    onClick={e => e.stopPropagation()}
                                                 >
                                                     {repo.full_name}
                                                 </a>
+                                                <Badge
+                                                    variant={repo.private ? "secondary" : "outline"}
+                                                    className="text-xs"
+                                                >
+                                                    {repo.private ? "Private" : "Public"}
+                                                </Badge>
                                             </div>
                                             <p className="text-xs text-muted-foreground mx-8 truncate">
                                                 {repo.description}
                                             </p>
-                                        </div>
-                                        <div className="text-xs text-muted-foreground shrink-0">
-                                            {repo.private ? "Private" : "Public"}
                                         </div>
                                     </div>
                                 ))}
                         </div>
 
                         {/* Actions */}
-                        <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
+                        <div className="flex flex-col sm:flex-row justify-end gap-2">
                             <Button
                                 variant="ghost"
                                 onClick={() => {
@@ -191,30 +214,26 @@ const GithubImportPage = () => {
                                 Clear
                             </Button>
 
-                            {!appInstalled ? (
-                                <Button
-                                    onClick={() => {
-                                        if (selected) {
-                                            const selectedRepo = repos.find((r: Repo) => r.full_name === selected);
-                                            if (selectedRepo) installAppForRepo(selectedRepo.id);
-                                        }
-                                    }}
-                                    disabled={!connected || !selected}
-                                >
-                                    Install GitHub App
-                                </Button>
-                            ) : (
-                                <Button
-                                    onClick={handleImport}
-                                    disabled={importRepo.isPending || !connected || !selected}
-                                >
-                                    {importRepo.isPending
-                                        ? "Importing…"
-                                        : enableAI
-                                          ? "Import with AI ✨"
-                                          : "Import selected"}
-                                </Button>
-                            )}
+                            <Button onClick={handleImport} disabled={importRepo.isPending || !connected || !selected}>
+                                {importRepo.isPending ? (
+                                    <>
+                                        <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                                        Importing…
+                                    </>
+                                ) : enableAI && !appInstalled ? (
+                                    <>
+                                        <Github className="h-4 w-4 mr-2" />
+                                        Install App & Import
+                                    </>
+                                ) : enableAI ? (
+                                    <>
+                                        <Sparkles className="h-4 w-4 mr-2" />
+                                        Import with AI ✨
+                                    </>
+                                ) : (
+                                    "Import selected"
+                                )}
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>

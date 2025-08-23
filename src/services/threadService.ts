@@ -45,6 +45,26 @@ class ThreadService {
         const thread = await Thread.create(threadDoc);
         return thread;
     }
+
+    async createBasicThread(repoData: any, userEmail: string, tags: string[]) {
+        const fullName = repoData.full_name;
+        const [owner, name] = fullName.includes("/") ? fullName.split("/") : ["", fullName];
+        const thread = new Thread({
+            title: `${name} • GitHub`,
+            author: userEmail,
+            description: repoData.description,
+            tags,
+            integration: {
+                provider: repoData.provider,
+                githubOwner: owner || "",
+                githubRepo: name || "",
+                githubUrl: repoData.html_url,
+                githubId: String(repoData.id),
+            },
+        });
+
+        return await thread.save();
+    }
 }
 
 export const threadService = new ThreadService();
