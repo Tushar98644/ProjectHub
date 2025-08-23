@@ -2,7 +2,7 @@ import mongoose, { models, Schema } from "mongoose";
 
 const IntegrationSchema = new Schema(
     {
-        provider: { type: String, enum: ["github", "slack"], required: true },
+        provider: { type: String, enum: ["github", "slack"] },
         githubId: { type: String, default: "" },
         githubOwner: { type: String, default: "" },
         githubRepo: { type: String, default: "" },
@@ -22,7 +22,7 @@ const ThreadSchema = new Schema(
         likes: { type: Number, default: 0, min: 0 },
         popular: { type: Boolean, default: false },
         tags: { type: [String], default: [] },
-        integration: { type: IntegrationSchema, default: {} },
+        integration: { type: IntegrationSchema, default: {}, required: false },
         isPublic: { type: Boolean, default: true },
     },
     { timestamps: true }

@@ -1,52 +1,58 @@
-import Comment from "@/db/models/comment";
-import connectToDB from "@/lib/mongoose";
+import { commentService } from "@/services/commentService";
 import { requireAuth } from "@/lib/requireAuth";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
     try {
-        await requireAuth(req);
+        await requireAuth(req as any);
 
         const { searchParams } = new URL(req.url);
         const threadId = searchParams.get("threadId");
 
-        await connectToDB();
+        if (!threadId) {
+            return NextResponse.json({ message: "threadId is required" }, { status: 400 });
+        }
 
-        const comments = await Comment.find({ threadId });
-        return Response.json(comments, { status: 200 });
+        const comments = await commentService.getComments(threadId);
+        return NextResponse.json(comments, { status: 200 });
     } catch (err) {
-        return Response.json({ message: "Failed to fetch comments" }, { status: 400 });
+        console.error("Failed to fetch comments", err);
+        return NextResponse.json({ message: "Failed to fetch comments" }, { status: 500 });
     }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
-        const session = await requireAuth(req);
+        const session = await requireAuth(req as any);
         const author = session?.user?.email;
         const authorAvatar = session?.user?.image;
 
-        await connectToDB();
+        if (!author || !authorAvatar) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
 
         const { searchParams } = new URL(req.url);
         const threadId = searchParams.get("threadId");
-
-        console.log(`threadId from api: ${threadId}`);
+        if (!threadId) {
+            return NextResponse.json({ message: "threadId is required" }, { status: 400 });
+        }
 
         const body = await req.json();
         const { content } = body;
 
-        console.log(threadId, author, authorAvatar, content);
+        if (!content) {
+            return NextResponse.json({ message: "Content is required" }, { status: 400 });
+        }
 
-        if (!author || !content || !threadId || !authorAvatar)
-            return Response.json({ message: "Please fill all fields" }, { status: 400 });
-
-        const comment = await Comment.create({
+        const comment = await commentService.createComment({
             threadId,
             author,
             authorAvatar,
             content,
         });
-        return Response.json(comment, { status: 200 });
+        return NextResponse.json(comment, { status: 201 });
     } catch (err) {
-        return Response.json({ message: "Error creating message" }, { status: 400 });
+        console.error("Error creating message", err);
+        return NextResponse.json({ message: "Error creating message" }, { status: 500 });
     }
 }

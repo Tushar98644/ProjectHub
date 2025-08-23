@@ -1,13 +1,10 @@
-import { threadService } from "@/services/threadService";
+import { threadApi } from "@/lib/api/threadApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFetchThreads = (email?: string) => {
-    const hasEmail = typeof email === "string" && email.trim().length > 0;
-
     return useQuery({
-        queryKey: ["threads", hasEmail ? { email } : { all: true }],
-        queryFn: () => (hasEmail ? threadService.getThreadsByEmail(email!) : threadService.getAllThreads()),
-        enabled: hasEmail ? true : true,
+        queryKey: ["threads", email],
+        queryFn: () => threadApi.getThreads(email),
         staleTime: 5 * 60 * 1000,
     });
 };
@@ -15,7 +12,7 @@ export const useFetchThreads = (email?: string) => {
 export const useFetchThread = (id: string) => {
     return useQuery({
         queryKey: ["thread", id],
-        queryFn: () => threadService.getThread(id),
+        queryFn: () => threadApi.getThread(id),
         staleTime: 5 * 1000 * 60,
         enabled: !!id,
     });
@@ -25,10 +22,11 @@ export const useCreateThread = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ projectId, title, description, tags }: any) =>
-            threadService.createThread(projectId, title, description, tags),
+        mutationFn: (data: { title: string; description: string; tags: string[] }) => threadApi.createThread(data),
         onSuccess: () => {
+            queryClient.removeQueries({ queryKey: ["threads"] });
             queryClient.invalidateQueries({ queryKey: ["threads"] });
+            queryClient.refetchQueries({ queryKey: ["threads"] });
         },
     });
 };

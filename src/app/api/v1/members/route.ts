@@ -1,29 +1,27 @@
-import connectToDB from "@/lib/mongoose";
+import { memberService } from "@/services/memberService";
 import { requireAuth } from "@/lib/requireAuth";
-import Member from "@/db/models/member";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
     try {
-        const session = await requireAuth(req);
-        if (!session) return Response.json({ message: "Unauthorized" }, { status: 401 });
-
-        const email = session?.user?.email;
-
-        const threadId = new URL(req.url).searchParams.get("threadId");
-
-        await connectToDB();
-
-        if (email) {
-            const member = await Member.find({ authorEmail: email });
-            if (!member) return Response.json({ message: "Not found" }, { status: 404 });
-            return Response.json(member, { status: 200 });
+        const session = await requireAuth(req as any);
+        if (!session) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
-        const member = await Member.find({ threadId });
-        if (!member) return Response.json({ message: "Not found" }, { status: 404 });
+        const email = session?.user?.email;
+        const searchParams = new URL(req.url).searchParams;
+        const threadId = searchParams.get("threadId") ?? undefined;
 
-        return Response.json(member, { status: 200 });
-    } catch (err) {
-        return Response.json({ message: "Failed to fetch member" }, { status: 400 });
+        const members = await memberService.getMembers(threadId, email);
+
+        if (!members || members.length === 0) {
+            return NextResponse.json({ message: "No members found" }, { status: 200 });
+        }
+
+        return NextResponse.json(members, { status: 200 });
+    } catch (error) {
+        console.error("Failed to fetch members", error);
+        return NextResponse.json({ message: "Failed to fetch members" }, { status: 500 });
     }
 }

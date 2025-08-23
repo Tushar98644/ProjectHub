@@ -1,13 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { memberService } from "@/services/memberService";
+import { memberApi } from "@/lib/api/memberApi";
 
 export const useFetchMembers = (threadId?: string) => {
-    const hasThreadId = typeof threadId === "string" && threadId.trim().length > 0;
-
     return useQuery({
-        queryKey: hasThreadId ? ["members", threadId] : ["members"],
-        queryFn: () => (hasThreadId ? memberService.getMembers(threadId!) : memberService.getTeamMembers()),
+        queryKey: ["members", threadId],
+        queryFn: () => memberApi.getMembers(threadId),
         staleTime: 5 * 60 * 1000,
-        enabled: hasThreadId ? true : true,
     });
 };

@@ -11,13 +11,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { MessageSquare, Send, Users } from "lucide-react";
 import { timeAgo } from "@/utils/timeAgo";
 import { useFetchThread } from "@/hooks/queries/useThreadQuery";
-import { useCommentsQuery, useCommentsMuation } from "@/hooks/queries/useCommentQuery";
-import { Comment } from "@/types/comment";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ChatItem } from "@/features/threads/components/chat-item";
 import { MembersPanel } from "@/features/threads/components/members-panel";
 import { EmptyState } from "@/features/threads/components/empty-state";
-import { Member } from "@/types/member";
+import { Comment } from "@/types/comment";
+import { useGetComments, useCreateComment } from "@/hooks/queries/useCommentQuery";
 import { useFetchMembers } from "@/hooks/queries/useMemberQuery";
 
 const ThreadPage = () => {
@@ -27,17 +26,12 @@ const ThreadPage = () => {
     const meAvatar = session?.user?.image || "";
 
     const { data: thread, isPending, isError } = useFetchThread(id);
-    const { data: comments = [] } = useCommentsQuery(id);
+    const { data: comments = [] } = useGetComments(id);
     const { data: members = [] } = useFetchMembers(id);
-    const { mutate: createComment } = useCommentsMuation();
+    const { mutate: createComment } = useCreateComment();
 
     const [newComment, setNewComment] = useState("");
     const listRef = useRef<HTMLDivElement>(null);
-
-    const sortedAsc: Comment[] = useMemo(() => {
-        const list = [...comments];
-        return list.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt));
-    }, [comments]);
 
     useEffect(() => {
         const el = listRef.current;
@@ -46,7 +40,7 @@ const ThreadPage = () => {
             el.scrollTop = el.scrollHeight;
         });
         return () => cancelAnimationFrame(id);
-    }, [sortedAsc.length]);
+    }, []);
 
     const handlePost = () => {
         const content = newComment.trim();
@@ -106,10 +100,10 @@ const ThreadPage = () => {
 
             {/* Messages */}
             <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-                {sortedAsc.length === 0 ? (
+                {comments.length === 0 ? (
                     <EmptyState />
                 ) : (
-                    sortedAsc.map(c => {
+                    comments.map(c => {
                         const isMe =
                             typeof c.author === "string" ? c.author === meEmail : c.author === session?.user?.name;
                         return (

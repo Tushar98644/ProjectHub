@@ -25,15 +25,9 @@ const ThreadsPage = () => {
 
     const filtered = useMemo((): Thread[] => {
         const q = query.trim().toLowerCase();
-        return threads
-            .filter((t: Thread) => !q || t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q))
-            .sort((a: Thread, b: Thread) =>
-                sort === "recent"
-                    ? +new Date(b.updatedAt) - +new Date(a.updatedAt)
-                    : sort === "comments"
-                      ? (b.comments?.length || 0) - (a.comments?.length || 0)
-                      : b.likes * 2 + (b.comments?.length || 0) * 3 - (a.likes * 2 + (a.comments?.length || 0) * 3)
-            );
+        return threads.filter(
+            (t: Thread) => !q || t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)
+        );
     }, [query, sort, threads]);
 
     if (isPending)
@@ -211,9 +205,6 @@ const ThreadsPage = () => {
                                             <Clock className="h-3 w-3" />
                                             <span>{timeAgo(t.updatedAt.toString())} ago</span>
                                             <span>•</span>
-                                            <span>
-                                                {t.comments?.length || 0} comments • {t.likes} likes
-                                            </span>
                                         </div>
                                     </div>
                                     <Link href={`/dashboard/threads/${t._id}`} className="mt-4 md:mt-0 md:ml-4">

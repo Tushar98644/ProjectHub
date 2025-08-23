@@ -1,10 +1,10 @@
-import inviteService from "@/services/inviteService";
+import { inviteApi } from "@/lib/api/inviteApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFetchInvites = () => {
     return useQuery({
         queryKey: ["invites"],
-        queryFn: () => inviteService.getInvites(),
+        queryFn: () => inviteApi.getInvites(),
     });
 };
 
@@ -17,7 +17,7 @@ export const useSendInvite = () => {
             threadTitle: string;
             receiverEmail: string;
             role: "admin" | "member";
-        }) => inviteService.sendInvite(payload),
+        }) => inviteApi.sendInvite(payload),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["invites"] });
         },
@@ -28,7 +28,7 @@ export const useAcceptInvite = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (invitationId: string) => inviteService.acceptInvite(invitationId),
+        mutationFn: (invitationId: string) => inviteApi.acceptInvite(invitationId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["invites"] });
         },
@@ -39,7 +39,7 @@ export const useDeclineInvite = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (invitationId: string) => inviteService.declineInvite(invitationId),
+        mutationFn: (invitationId: string) => inviteApi.declineInvite(invitationId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["invites"] });
         },

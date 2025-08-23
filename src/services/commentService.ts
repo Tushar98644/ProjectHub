@@ -1,16 +1,22 @@
-import axios from "axios";
+import Comment from "@/db/models/comment";
+import { Comment as CommentType } from "@/types/comment";
+import connectToDB from "@/lib/mongoose";
 
 class CommentService {
-    async getComments(threadId: string) {
-        const res = await axios.get("/api/v1/comments", {
-            params: { threadId },
-        });
-        return res.data;
+    public async getComments(threadId: string) {
+        await connectToDB();
+        return await Comment.find({ threadId });
     }
 
-    async createComment(content: string, threadId: string) {
-        const res = await axios.post("/api/v1/comments", { content }, { params: { threadId } });
-        return res.data;
+    public async createComment(commentData: {
+        threadId: string;
+        content: string;
+        author: string;
+        authorAvatar: string;
+    }): Promise<CommentType> {
+        await connectToDB();
+        const comment = new Comment(commentData);
+        return await comment.save();
     }
 }
 

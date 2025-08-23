@@ -7,16 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Sparkles, Eye, Tag as TagIcon } from "lucide-react";
-import { useFetchProjects } from "@/hooks/queries/useProjectQuery";
 import { useCreateThread } from "@/hooks/queries/useThreadQuery";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
 const CreateThreadPage = () => {
     const router = useRouter();
-    const { data: projects = [] } = useFetchProjects();
     const { mutate: createThread, isPending } = useCreateThread();
 
-    const [projectId, setProjectID] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [tagInput, setTagInput] = useState("");
@@ -56,7 +52,7 @@ const CreateThreadPage = () => {
         if (!description.trim()) return setError("Please add the first message for this discussion");
 
         createThread(
-            { projectId, title, description, tags },
+            { title, description, tags },
             {
                 onSuccess: () => {
                     reset();
@@ -86,24 +82,6 @@ const CreateThreadPage = () => {
                         <Card className="p-5">
                             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
                                 <div className="md:col-span-7 space-y-4">
-                                    {projects?.length > 0 && (
-                                        <>
-                                            <label className="text-sm font-medium mx-2">Project</label>
-                                            <Select>
-                                                <SelectTrigger className="w-[180px]">
-                                                    <SelectValue placeholder="Select a Project" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {projects.map(p => (
-                                                        <SelectItem key={p._id} value={p._id as string}>
-                                                            {p.title}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </>
-                                    )}
-
                                     <Input
                                         value={title}
                                         onChange={e => setTitle(e.target.value)}

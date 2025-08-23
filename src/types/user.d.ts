@@ -6,8 +6,4 @@ export interface User {
     image: string;
     createdAt: Date;
     updatedAt: Date;
-    // integrations: {
-    //     github: boolean;
-    //     slack: boolean;
-    // };
 }

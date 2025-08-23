@@ -1,22 +1,22 @@
-import { Project } from "@/types/project";
-import axios from "axios";
+import Project from "@/db/models/project";
+import { Project as ProjectType } from "@/types/project";
+import connectToDB from "@/lib/mongoose";
 
 class ProjectService {
-    public async getAllProjects(): Promise<Project[]> {
-        const res = await axios.get("/api/v1/projects");
-        return res.data;
+    public async getAllProjects(): Promise<ProjectType[]> {
+        await connectToDB();
+        return await Project.find({});
     }
 
-    public async getProject(id: string): Promise<Project> {
-        const res = await axios.get("/api/v1/projects", {
-            params: { projectId: id },
-        });
-        return res.data;
+    public async getProject(id: string): Promise<ProjectType | null> {
+        await connectToDB();
+        return await Project.findById(id);
     }
 
-    public async createProject(project: Project) {
-        const res = await axios.post("/api/v1/projects", project);
-        return res.data;
+    public async createProject(projectData: ProjectType): Promise<ProjectType> {
+        await connectToDB();
+        const project = new Project(projectData);
+        return await project.save();
     }
 }
 

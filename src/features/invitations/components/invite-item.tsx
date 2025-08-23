@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Invite } from "@/types/invitation";
+import { Invitation } from "@/types/invitation";
 import { memo } from "react";
 
 export const InviteItem = memo(function InviteItem({
@@ -10,7 +10,7 @@ export const InviteItem = memo(function InviteItem({
     onDecline,
     variant,
 }: {
-    inv: Invite;
+    inv: Invitation;
     isActing: boolean;
     onAccept: (id: string) => void;
     onDecline: (id: string) => void;

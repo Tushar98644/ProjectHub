@@ -4,7 +4,6 @@ export interface Comment {
     author: string;
     authorAvatar: string;
     content: string;
-    likes: number;
     createdAt: Date;
     updatedAt: Date;
 }

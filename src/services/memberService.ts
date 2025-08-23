@@ -1,7 +1,8 @@
-import axios from "axios";
 import Member from "@/db/models/member";
+import { Member as MemberType } from "@/types/member";
+import connectToDB from "@/lib/mongoose";
 
-export interface CreateMemberData {
+interface CreateMemberData {
     threadId: string;
     threadTitle: string;
     email: string;
@@ -12,16 +13,15 @@ export interface CreateMemberData {
 }
 
 class MemberService {
-    public async getMembers(threadId: string) {
-        const res = await axios.get(`/api/v1/members`, {
-            params: { threadId },
-        });
-        return res.data;
-    }
-
-    public async getTeamMembers() {
-        const res = await axios.get("/api/v1/members");
-        return res.data;
+    public async getMembers(threadId?: string, email?: string): Promise<MemberType[]> {
+        await connectToDB();
+        if (threadId) {
+            return await Member.find({ threadId });
+        }
+        if (email) {
+            return await Member.find({ authorEmail: email });
+        }
+        return [];
     }
 
     public async createThreadAdmin(threadId: string, threadTitle: string, user: any): Promise<any> {

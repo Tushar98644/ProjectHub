@@ -1,4 +1,4 @@
-export interface Invite {
+export interface Invitation {
     _id: string;
     threadId: string;
     threadTitle: string;

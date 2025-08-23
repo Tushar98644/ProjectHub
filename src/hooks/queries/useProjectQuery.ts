@@ -1,11 +1,11 @@
-import { projectService } from "@/services/projectService";
+import { projectApi } from "@/lib/api/projectApi";
 import { Project } from "@/types/project";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useFetchProjects = () => {
     return useQuery({
         queryKey: ["projects"],
-        queryFn: projectService.getAllProjects,
+        queryFn: projectApi.getProjects,
         staleTime: 5 * 1000 * 60,
     });
 };
@@ -13,7 +13,7 @@ export const useFetchProjects = () => {
 export const useFetchProject = (id: string) => {
     return useQuery({
         queryKey: ["project", id],
-        queryFn: () => projectService.getProject(id),
+        queryFn: () => projectApi.getProject(id),
         staleTime: 5 * 1000 * 60,
     });
 };
@@ -22,7 +22,7 @@ export const useCreateProject = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (project: Project) => projectService.createProject(project),
+        mutationFn: (project: Project) => projectApi.createProject(project),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["projects"] });
         },

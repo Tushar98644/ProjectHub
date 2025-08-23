@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useFetchInvites, useAcceptInvite, useDeclineInvite } from "@/hooks/queries/useInviteQuery";
 import { toast } from "sonner";
-import { Invite } from "@/types/invitation";
+import { Invitation } from "@/types/invitation";
 import { InviteItem } from "@/features/invitations/components/invite-item";
 
 export default function InvitationsPage() {
@@ -13,8 +13,8 @@ export default function InvitationsPage() {
     const accept = useAcceptInvite();
     const decline = useDeclineInvite();
 
-    const receivedInvites: Invite[] = Array.isArray(data?.received) ? data!.received : [];
-    const sentInvites: Invite[] = Array.isArray(data?.sent) ? data!.sent : [];
+    const receivedInvites: Invitation[] = Array.isArray(data?.received) ? data!.received : [];
+    const sentInvites: Invitation[] = Array.isArray(data?.sent) ? data!.sent : [];
 
     const isActingOn = (id: string) =>
         (accept.isPending && accept.variables === id) || (decline.isPending && decline.variables === id);

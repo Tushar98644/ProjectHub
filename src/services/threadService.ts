@@ -1,6 +1,7 @@
-import axios from "axios";
+import Thread from "@/db/models/thread";
+import { Thread as ThreadType } from "@/types/thread";
+import connectToDB from "@/lib/mongoose";
 import { IntegrationData } from "./integrationService";
-import { Thread } from "@/db/models";
 
 export interface CreateThreadData {
     title: string;
@@ -11,31 +12,21 @@ export interface CreateThreadData {
 }
 
 class ThreadService {
-    public async getAllThreads() {
-        const res = await axios.get("/api/v1/threads");
-        return res.data;
+    public async getThreads(email?: string): Promise<ThreadType[]> {
+        await connectToDB();
+        const query = email ? { author: email } : {};
+        return await Thread.find(query).sort({ createdAt: -1 });
     }
 
-    public async getThreadsByEmail(email: string) {
-        const res = await axios.get("/api/v1/threads", {
-            params: { email },
-        });
-        return res.data;
+    public async getThread(id: string): Promise<ThreadType | null> {
+        await connectToDB();
+        return await Thread.findById(id);
     }
 
-    public async getThread(id: string) {
-        const res = await axios.get(`/api/v1/threads/${id}`);
-        return res.data;
-    }
-
-    public async createThread(projectId: string, title: string, description: string, tags: string[]) {
-        const res = await axios.post("/api/v1/threads", {
-            projectId,
-            title,
-            description,
-            tags,
-        });
-        return res.data;
+    public async createThread(threadData: { title: string; description: string; tags: string[]; author: string }) {
+        await connectToDB();
+        const thread = new Thread(threadData);
+        return await thread.save();
     }
 
     public async createThreadWithIntegration(

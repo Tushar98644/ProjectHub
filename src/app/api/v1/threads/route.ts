@@ -1,45 +1,41 @@
-import { Thread } from "@/db/models";
-import connectToDB from "@/lib/mongoose";
+import { threadService } from "@/services/threadService";
 import { requireAuth } from "@/lib/requireAuth";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
     try {
-        await requireAuth(req);
-        await connectToDB();
-
+        await requireAuth(req as any);
         const { searchParams } = new URL(req.url);
-        const email = searchParams.get("email");
+        const email = searchParams.get("email") ?? undefined;
 
-        if (email) {
-            const threads = await Thread.find({ author: email }).sort({ createdAt: -1 });
-            return Response.json(threads, { status: 200 });
-        }
-
-        const threads = await Thread.find().sort({ createdAt: -1 });
-        return Response.json(threads, { status: 200 });
-    } catch (err) {
-        return Response.json({ message: "Failed to fetch threads" }, { status: 401 });
+        const threads = await threadService.getThreads(email);
+        return NextResponse.json(threads, { status: 200 });
+    } catch (error) {
+        console.error("Failed to fetch threads", error);
+        return NextResponse.json({ message: "Failed to fetch threads" }, { status: 500 });
     }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
-        const session = await requireAuth(req);
+        const session = await requireAuth(req as any);
         const author = session?.user?.email;
 
-        await connectToDB();
+        if (!author) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
 
         const body = await req.json();
-        const { title, description, projectId, tags } = body;
+        const { title, description, tags } = body;
 
-        if (!author || !title || !description)
-            return Response.json({ message: "Please fill all fields" }, { status: 400 });
+        if (!title || !description) {
+            return NextResponse.json({ message: "Please fill all fields" }, { status: 400 });
+        }
 
-        const data = { author, title, description, tags };
-        const thread = await Thread.create(data);
-
-        return Response.json(thread, { status: 200 });
-    } catch (err) {
-        return Response.json({ message: "Error creating discussion" }, { status: 400 });
+        const thread = await threadService.createThread({ author, title, description, tags });
+        return NextResponse.json(thread, { status: 201 });
+    } catch (error) {
+        console.error("Error creating discussion", error);
+        return NextResponse.json({ message: "Error creating discussion" }, { status: 500 });
     }
 }
